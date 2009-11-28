@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:TitleWindow   xmlns:mx="http://www.adobe.com/2006/mxml"   x="168" y="86" width="668" height="336"  borderColor="#DDEDFA" fontWeight="bold" fontSize="11">
+<mx:Canvas width="625" height="278">
+<mx:Script>
+        <![CDATA[
+        	import mx.controls.Tree;
+        	//import flash.trace.Trace;
+            import mx.rpc.events.FaultEvent;
+            import mx.rpc.events.ResultEvent;
+        	import mx.controls.Alert;
+        	import Clases.Database;
+        	import mx.collections.XMLListCollection;
+        	import flash.data.SQLResult;
+        	import mx.collections.ArrayCollection;
+        	import Clases.IDEComponentes;
+        	import mx.controls.DataGrid;
+        	public var objects:Object = {};
+        	public var id_modulo:String="";
+        	public var tabla_relacionada:String="";
+        	public var id_relacionado:String="";
+           [Bindable] public var temp:ArrayCollection = new ArrayCollection();
+           [Bindable] public var temp1:ArrayCollection = new ArrayCollection();
+           public var myTree:Tree;
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+   public function Create_Tree (e:Event):void
+          {
+            myTree.dataProvider= IDEComponentes.getInstance().Crear_arbol(Database.getInstance().personData);
+	       var node:XMLList =new XMLList  (IDEComponentes.getInstance().Crear_arbol(Database.getInstance().personData));
+           var MailBox:XMLListCollection=new XMLListCollection(node);
+           myTree.expandItem(MailBox.getItemAt(0), true);
+          }
+      public function buscar_modelo_To_Tree():void
+          {
+             Database.getInstance().dbStatement.addEventListener(SQLEvent.RESULT, Create_Tree);
+             Database.getInstance().getDatos("select id_modulo,nombre,name_prural from modulos");
+        
+          }            
+
+
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////           
+         public function relultado_buscar_todos_componentes(e:Event):void
+         {
+          if (Database.getInstance().personData!=null){
+             modulos_names.dataProvider=Database.getInstance().personData;  
+            }else{
+            modulos_names.dataProvider="No Disponible";
+            } 
+         }
+         
+           public function buscar_todos_componentes(id:String):void
+          {
+              Database.getInstance().dbStatement.addEventListener(SQLEvent.RESULT, relultado_buscar_todos_componentes);
+             Database.getInstance().getDatos("select id_modulo,nombre,name_prural from modulos where id_modulo not in (select modulo_principal from relaciones where modulo_relacionado='"+id+"'  union  select modulo_relacionado from relaciones where modulo_principal='"+id+"' ) and id_modulo!='"+id+"'");
+            
+  
+          }
+////////////////////////////////////////////////////////////////////////////////////////////////////////////           
+           public function buscar_relaciones():void
+          {
+          	   Database.getInstance().getDatos("select id,REPLACE(REPLACE(REPLACE(tipo_relacion,'0','Uno a uno'),'1','Muchos a uno'),'2','Muchos a muchos') as tiporelacion,(select nombre from modulos where id_modulo=modulo_principal) as modulo_principal,(select nombre from modulos where id_modulo=modulo_relacionado) as modulo_relacionado from relaciones");
+               datos.dataProvider=Database.getInstance().personData;  
+               buscar_todos_componentes(this.id_modulo);
+          }          
+ 
+ //////////////////////////////////////////////////////////////////////////////////////////             
+      public function Ingresar_relacion_BD():void
+         {
+          if(this.id_modulo!=""&&modulos_names.selectedItem.id_modulo){
+          	tabla_relacionada=modulos_names.selectedItem.nombre;
+          	id_relacionado=modulos_names.selectedItem.id_modulo;
+           if(this.tiporelaciones.selectedItem.data!="2"){ 
+                Database.getInstance().SetDatos("insert into relaciones values (null,'"+this.id_modulo+"','"+this.tiporelaciones.selectedItem.data+"','"+this.modulos_names.selectedItem.id_modulo+"')");
+               	buscar_relaciones();
+              }else{
+              	Database.getInstance().dbStatement.addEventListener(SQLEvent.RESULT, ingresar_tabla_principal);
+              	Database.getInstance().SetDatos("insert into modulos values (null,'"+Modulo_name.text+"_"+this.tabla_relacionada+"','','','"+Modulo_name.text+"')");
+         }
+           }else{
+          	Alert.show("Error al ingresar el modulo !");
+          }
+         } 
+         
+       public function ingresar_tabla_principal(e:Event):void
+       {
+       	  Database.getInstance().dbStatement.removeEventListener(SQLEvent.RESULT, ingresar_tabla_principal);
+       	  Database.getInstance().dbStatement.addEventListener(SQLEvent.RESULT, ingresar_tabla_relacionada);
+          Database.getInstance().SetDatos("insert into relaciones select null,id_modulo,'1','"+this.id_relacionado+"' from modulos where nombre='"+Modulo_name.text+"_"+this.tabla_relacionada+"'");
+        }  
+         
+         
+        public function ingresar_tabla_relacionada(e:Event):void
+       {
+       	  Database.getInstance().dbStatement.removeEventListener(SQLEvent.RESULT, ingresar_tabla_relacionada);
+          Database.getInstance().SetDatos("insert into relaciones select null,id_modulo,'1','"+this.id_modulo+"' from modulos where nombre='"+Modulo_name.text+"_"+this.tabla_relacionada+"'");
+          buscar_relaciones();
+          buscar_modelo_To_Tree();
+       } 
+         
+
+//////////////////////////////////////////////////////////////////////////////////////////             
+           
+         public function Delete_relaciones():void
+         {
+         	 if(datos.selectedIndex>0){
+         	  Database.getInstance().SetDatos("Delete from relaciones where id='"+datos.selectedItem.id+"'");
+              buscar_relaciones();
+           }else{
+           	Alert.show("Seleccione un elemento !");
+           }
+         } 	
+                  
+//////////////////////////////////////////////////////////////////////////////////////////         
+        ]]>
+    </mx:Script>
+	<mx:TextInput x="67" y="32" width="152" id="Modulo_name" editable="false" enabled="false"/>
+	<mx:Label x="10" y="35" text="Modulo" id="modulo_lable_name"/>
+	<mx:ComboBox  x="229.5" y="31.5" id="tiporelaciones" width="178"></mx:ComboBox>
+	<mx:ComboBox labelField="nombre"  x="424" y="31.5" id="modulos_names" width="185"></mx:ComboBox>
+	<mx:DataGrid id="datos" x="10" y="73" width="599" height="169" fontWeight="normal">
+		<mx:columns>
+		    <mx:DataGridColumn visible="false" id="idrelaciones"  headerText="id" dataField="id"/>
+			<mx:DataGridColumn id="Modulo_principal"  headerText="Modulo Principal" dataField="modulo_principal"/>
+			<mx:DataGridColumn id="tipo_relacion" headerText="Tipo Relacion" dataField="tiporelacion"/>
+			<mx:DataGridColumn id="Modulo_relacionado" headerText="Modulo Relacionado" dataField="modulo_relacionado"/>
+		</mx:columns>
+	</mx:DataGrid>
+	<mx:Label x="69" y="10" text="Modulo Principal" color="#39727E" id="M_principal"/>
+	<mx:Label x="244.5" y="10" text="Tipo de Relación" color="#39727E" id="T_relacion"/>
+	<mx:Label x="446" y="10" text="Modulo Relacionado" color="#39727E" id="M_Relacionado"/>
+	<mx:Button x="10" y="246" label="Adicionar" width="97" click="Ingresar_relacion_BD()"/>
+	<mx:Button click="Delete_relaciones()" x="115" y="246" label="Borrar" width="89"/>
+
+
+</mx:Canvas> 
+</mx:TitleWindow>  
