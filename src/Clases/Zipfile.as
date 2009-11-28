@@ -78,7 +78,7 @@ package Clases
 		}	
 		
 		private function onOpen(evt:Event):void {
-       	   zip.addEventListener(Event.ENTER_FRAME, onEnterFrame);
+		zip.addEventListener(Event.ENTER_FRAME, onEnterFrame);
 		}
 		
 		private function onComplete(evt:Event):void {
@@ -86,8 +86,8 @@ package Clases
      }
      
       private function onEnterFrame(evt:Event):void {
-       	  
-	      if(zip.getFileCount() > index) {
+       	     	  Alert.show("3");
+	    /*  if(zip.getFileCount() > index) {
 					// yeah, get it
 					var file:FZipFile = zip.getFileAt(index);
 					// is this a png in the icons folder?
@@ -101,7 +101,7 @@ package Clases
 			 zip.removeEventListener(Event.ENTER_FRAME, onEnterFrame);
 			}
 
-	      }
+	      }*/
 		}
 		
 }
