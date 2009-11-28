@@ -1,108 +1,102 @@
 package Clases
 {
-	  import deng.fzip.FZip;
-      import deng.fzip.FZipLibrary;
-      import deng.fzip.FZipFile;
-      import flash.filesystem.*;
-      import flash.events.Event;
-      import flash.net.FileFilter;
-      import flash.net.FileReference;
-      import flash.events.Event;
-      import flash.utils.ByteArray;
-      import flash.display.Sprite;
-	  import flash.display.StageAlign;
-	  import flash.display.StageScaleMode;
-	  import flash.events.*;
-	  import mx.controls.Alert;
-	  import flash.net.URLRequest;
-      //public var fileRef:FileReference;
-	  import mx.controls.Alert;
-	  
+	import deng.fzip.FZip;
+	import deng.fzip.FZipFile;
+	
+	import flash.events.*;
+	import flash.filesystem.*;
+	import flash.net.URLRequest;
+	import flash.utils.ByteArray;
+	
+	import mx.controls.Alert;
+
+	
 	public class Zipfile
 	{  private static var instancia:Zipfile;
-	    var zip:FZip = new FZip();
-	    var index:uint = 0;
-	    var done:Boolean = false;
+		public var zip:FZip = new FZip();
+		public var New_zip:FZip = new FZip();
+		public var index:uint = 0;
+		public var done:Boolean = false;
+		public var proyecto_zip:String="cake_1.2.3.8166.zip";
+		
 		public function Zipfile()
 		{
 		}
 		
-      public static function getInstance():Zipfile
+		public static function getInstance():Zipfile
 		{
 			if( instancia==null ) 
-			instancia = new Zipfile();
+				instancia = new Zipfile();
 			return instancia;
 		}
 		
 		
-		  public function openSite():void
-         {
-         var archivo:ByteArray = new ByteArray();
-         archivo.writeUTFBytes("Hello World!");
-         zip.addFile("Ejemplo/hello.txt", archivo);
-         var docsDir:File = File.applicationDirectory
-         try
-          {
-  	       docsDir.browseForDirectory("Select Directory for extract");  
-  	       docsDir.addEventListener(Event.SELECT, saveData);
-          }
-        catch (error:Error)
-         {
-         Alert.show("Failed:", error.message);
-        }
-     }
-     
-     
-     public function open_zip():void
-     {
-     	
-     }
-     
-   
-      public function saveData(event:Event):void 
-       {
-        var file:File = event.target as File;
-        file = file.resolvePath("hello.zip");
-        var stream:FileStream = new FileStream();
-        stream.open(file, FileMode.WRITE);
-        zip.serialize(stream);
-        stream.close();
-       }
-       
-       
-       public function Load_File() {
-         zip = new FZip();
-		 zip.addEventListener(Event.OPEN, onOpen);
-		 zip.addEventListener(Event.COMPLETE, onComplete);
-		 zip.load(new URLRequest("Ejemplos.zip"));
+		public function openSite():void
+		{
+			//add_file("Ejemplo/hello.txt","Hello World!")
+			/*var docsDir:File = File.applicationDirectory
+			try
+			{
+				docsDir.browseForDirectory("Select Directory for extract");  
+				docsDir.addEventListener(Event.SELECT, saveData);
+			}
+			catch (error:Error)
+			{
+				Alert.show("Failed:", error.message);
+			}*/
+		}
+		
+		public function add_file(path:String,file:String):void
+		{
+			var archivo:ByteArray = new ByteArray();
+			archivo.writeUTFBytes(file);
+			zip.addFile(path, archivo);
+		}
+		
+		
+		public function open():void
+		{
+			var docsDir:File = File.applicationDirectory
+			try
+			{
+				docsDir.browseForDirectory("Select Directory for extract");  
+				docsDir.addEventListener(Event.SELECT, saveData);
+			}
+			catch (error:Error)
+			{
+				Alert.show("Failed:", error.message);
+			}	
+			
+		}
+		
+		
+		public function saveData(event:Event):void 
+		{
+			var file:File = event.target as File;
+			file = file.resolvePath("Proyecto.zip");
+			var stream:FileStream = new FileStream();
+			stream.open(file, FileMode.WRITE);
+			zip.serialize(stream);
+			stream.close();
+		}
+		
+		
+		public function Load_File(file:String):void {
+			New_zip = new FZip();
+			New_zip.addEventListener(Event.COMPLETE, onComplete);
+			New_zip.load(new URLRequest(file));
 		}	
 		
-		private function onOpen(evt:Event):void {
-		zip.addEventListener(Event.ENTER_FRAME, onEnterFrame);
-		}
+		
 		
 		private function onComplete(evt:Event):void {
-	         done = true;
-     }
-     
-      private function onEnterFrame(evt:Event):void {
-       	     	  Alert.show("3");
-	    /*  if(zip.getFileCount() > index) {
-					// yeah, get it
-					var file:FZipFile = zip.getFileAt(index);
-					// is this a png in the icons folder?
-				// if(file.filename.indexOf("ejemplo/Datos") == 0 && file.filename.indexOf(".txt") != -1) {
-					// yeah, display it
-					    Alert.show(file.filename,file.content.toString());
-				//	}
-					index++;   
-	      }else{
-	      	if(done) {
-			 zip.removeEventListener(Event.ENTER_FRAME, onEnterFrame);
-			}
-
-	      }*/
+			for(var i=0;i<=New_zip.getFileCount()-1;i++) {
+				var file:FZipFile = New_zip.getFileAt(i);
+				  add_file(file.filename,file.content.toString())
+				}	
+			open();
 		}
 		
-}
+		
+	}
 }
