@@ -5,10 +5,6 @@
 	<mx:Script>
 		<![CDATA[
 			import mx.collections.XMLListCollection;
-			import mx.events.TreeEvent;
-			import mx.events.StateChangeEvent;
-			import mx.events.ListEvent;
-			import mx.events.FlexEvent;
 			
 			
 			[Bindable]
@@ -17,7 +13,7 @@
 			import mx.collections.ArrayCollection;
 			import mx.rpc.events.FaultEvent;
 			import mx.rpc.events.ResultEvent
-				import mx.controls.Alert;
+			import mx.controls.Alert;
 			import Clases.IDEComponentes;
 			import Clases.MC_RubyonRails;
 			import Clases.Zipfile;
@@ -39,6 +35,7 @@
 			public var objects:Object = {};
 			public var elementos:Object = {};
 			public var ventana:Modelo_Relaciones;
+			public var ventanadownload:Download;
 			[Bindable]
 			public var selectedNode:XML;
 			[Bindable] public var lista_componentes:ArrayCollection = new ArrayCollection([{label:"Campo de Texto", data:1},{label:"Área de texto", data:2},/*{label:"Moneda", data:3},*/{label:"Fecha", data:4},{label:"Encriptado", data:5},/*{label:"Teléfono", data:6},*/{label:"Opción", data:7}/*,{label:"Desplegable (solo para relaciones 'llaves foraneas')", data:8}*/]);
@@ -116,6 +113,19 @@
 			}             
 			///////////////////////////////////////////////////////////////////////////////////////////
 			
+			private function showWindowDownload():void
+			{
+				var abrir:Download=Download(PopUpManager.createPopUp(this, Download , true));
+				abrir.showCloseButton=true;
+				this.setVentanaDownload(abrir);
+				abrir.addEventListener("close", removeDownload);
+				PopUpManager.centerPopUp(abrir);	
+				
+			}
+			
+			///////////////////////////////////////////////////////////////////////////////////////////
+			
+			
 			private function showWindow():void
 			{
 				if(Modulo_name.text!=""){	
@@ -143,12 +153,21 @@
 			//////////////////////////////////////////////////////////////////////////////////////////
 			private function removeMe(event:Event):void {
 				PopUpManager.removePopUp(this.ventana); 
+			 }
+			private function removeDownload(event:Event):void {
+				PopUpManager.removePopUp(this.ventanadownload); 
 			}
 			
 			public function setVentana(ventana:Modelo_Relaciones):void
 			{
 				this.ventana=ventana;
-			}             
+			} 
+			
+			public function setVentanaDownload(ventana:Download):void
+			{
+				this.ventanadownload=ventana;
+			}  
+			
 			//////////////////////////////////////////////////////////////////////////////////////////             
 			
 			public function Create_Tree (e:Event):void
@@ -292,7 +311,7 @@
 				<mx:Button click="Crear_elemento(dataset)"   id="agregar" x="163" y="262"  width="100" enabled="false"/>
 				<mx:Button click="showWindow()"  x="271" y="262" width="117" id="relacionship"/>
 				<mx:Button click="Delete_componente_BD();"  id="borrar" width="95" x="10" y="{(dataset.y+dataset.height)+8}" enabled="false"/>
-				<mx:Button click="Zipfile.getInstance().Load_File(Zipfile.getInstance().proyecto_zip)"  x="110" y="{(dataset.y+dataset.height)+8}" enabled="false" id="boton_upload" width="77"/>
+				<mx:Button click="/*Zipfile.getInstance().Load_File(Zipfile.getInstance().proyecto_zip)*/showWindowDownload()"  x="110" y="{(dataset.y+dataset.height)+8}" enabled="false" id="boton_upload" width="77"/>
 				<mx:Label id="tipo_valores" x="10" y="234" fontSize="11" fontWeight="normal"/>
 				<mx:Label id="datos" x="10" y="295"/>
 				<mx:DataGrid horizontalScrollPolicy="auto" id="dataset" x="10" y="315" width="98%" height="40%"  enabled="false">

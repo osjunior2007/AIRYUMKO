@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:TitleWindow   xmlns:mx="http://www.adobe.com/2006/mxml"   x="168" y="86" width="358" height="136"  borderColor="#DDEDFA" fontWeight="bold" fontSize="11" title="Download App">
+	<mx:Canvas width="100%" height="100%">
+		<mx:Script>
+			<![CDATA[
+				import Clases.Zipfile;
+				import mx.collections.ArrayCollection;
+				[Bindable] public var TipoFrameWork:ArrayCollection = new ArrayCollection([{label:"Ralis", data:"Rails.zip"},{label:"CakePhp", data:"cake_1.2.3.8166.zip"}]);
+			]]>
+		</mx:Script>			
+		<mx:ComboBox id="framework" dataProvider="{TipoFrameWork}" x="99" y="9.5" width="229"></mx:ComboBox>
+		<mx:Label x="10" y="14" text="FrameWork"/>
+		<mx:Button click="Zipfile.getInstance().Load_File(framework.selectedItem.data)" x="99" y="40" label="Download"/>
+	</mx:Canvas> 
+</mx:TitleWindow>  

@@ -2,14 +2,12 @@ package Clases
 {
 	import deng.fzip.FZip;
 	import deng.fzip.FZipFile;
-	
 	import flash.events.*;
 	import flash.filesystem.*;
 	import flash.net.URLRequest;
 	import flash.utils.ByteArray;
-	
 	import mx.controls.Alert;
-
+	
 	
 	public class Zipfile
 	{  private static var instancia:Zipfile;
@@ -17,7 +15,7 @@ package Clases
 		public var New_zip:FZip = new FZip();
 		public var index:uint = 0;
 		public var done:Boolean = false;
-		public var proyecto_zip:String="cake_1.2.3.8166.zip";
+		public var proyecto_zip:String="Rails.zip";
 		
 		public function Zipfile()
 		{
@@ -64,6 +62,7 @@ package Clases
 			stream.open(file, FileMode.WRITE);
 			zip.serialize(stream);
 			stream.close();
+			Alert.show("Downloades File !!");
 		}
 		
 		
@@ -78,8 +77,8 @@ package Clases
 		private function onComplete(evt:Event):void {
 			for(var i=0;i<=New_zip.getFileCount()-1;i++) {
 				var file:FZipFile = New_zip.getFileAt(i);
-				  add_file(file.filename,file.content.toString())
-				}	
+				add_file(file.filename,file.content.toString())
+			}	
 			open();
 		}
 		
