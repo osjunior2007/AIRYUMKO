@@ -31,20 +31,6 @@ package Clases
 		}
 		
 		
-		public function openSite():void
-		{
-			//add_file("Ejemplo/hello.txt","Hello World!")
-			/*var docsDir:File = File.applicationDirectory
-			try
-			{
-				docsDir.browseForDirectory("Select Directory for extract");  
-				docsDir.addEventListener(Event.SELECT, saveData);
-			}
-			catch (error:Error)
-			{
-				Alert.show("Failed:", error.message);
-			}*/
-		}
 		
 		public function add_file(path:String,file:String):void
 		{
