@@ -313,7 +313,7 @@
 				<mx:Button click="Crear_elemento(dataset)"   id="agregar" x="163" y="262"  width="100" enabled="false"/>
 				<mx:Button click="showWindow()"  x="271" y="262" width="117" id="relacionship"/>
 				<mx:Button click="Delete_componente_BD();"  id="borrar" width="95" x="10" y="{(dataset.y+dataset.height)+8}" enabled="false"/>
-				<mx:Button click="showWindowDownload()/*Zipfile.getInstance().build_MainMXML()*/"  x="110" y="{(dataset.y+dataset.height)+8}" enabled="false" id="boton_upload" width="77"/>
+				<mx:Button click="showWindowDownload()"  x="110" y="{(dataset.y+dataset.height)+8}" enabled="false" id="boton_upload" width="77"/>
 				<mx:Label id="tipo_valores" x="10" y="234" fontSize="11" fontWeight="normal"/>
 				<mx:Label id="datos" x="10" y="295"/>
 				<mx:DataGrid horizontalScrollPolicy="auto" id="dataset" x="10" y="315" width="98%" height="40%"  enabled="false">

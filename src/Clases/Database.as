@@ -31,6 +31,7 @@ package Clases
 			public function initAndOpenDatabase():void
 			{       		
 				exampleDBFile = File.applicationStorageDirectory.resolvePath( "Yomko.db" );
+                //Alert.show(File.applicationStorageDirectory.nativePath);
 				exampleDB = new SQLConnection();
 				exampleDB.addEventListener(SQLEvent.OPEN, onExampleDBOpened);
 				exampleDB.addEventListener(SQLErrorEvent.ERROR, onExampleDBError);

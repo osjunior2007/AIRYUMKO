@@ -8,7 +8,7 @@ package Clases
 	import flash.utils.ByteArray;
 	import mx.controls.Alert;
 	import Clases.Database;
-	
+	import mx.collections.ArrayCollection;
 	public class Zipfile
 	{  private static var instancia:Zipfile;
 		public var zip:FZip = new FZip();
@@ -16,6 +16,7 @@ package Clases
 		public var index:uint = 0;
 		public var done:Boolean = false;
 		public var proyecto_zip:String="Rails.zip";
+	   [Bindable] public var list_components:Array = new Array();
 		
 		public function Zipfile()
 		{
@@ -79,8 +80,7 @@ package Clases
 				var file:FZipFile = New_zip.getFileAt(i);
 				add_file(file.filename,file.content.toString());
 			}
-			build_MainMXML()
-			//open();
+			get_components();
 		}
 		
 		
@@ -106,15 +106,29 @@ package Clases
 			 MainApp='<?xml version="1.0" encoding="utf-8"?>'+" \n"+'<mx:Application  xmlns="Componentes.*" xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute">'+" \n"+'<mx:TabNavigator x="10" y="22" width="98%" height="95%">'+" \n"+MainApp;
 			 MainApp+="</mx:TabNavigator>"+" \n"+'<mx:Style source="css.css"/> '+" \n"+'</mx:Application>';
 			add_file("src/Main.mxml",MainApp);
+			Database.getInstance().dbStatement.removeEventListener(SQLEvent.RESULT,Result_build_MainMXML);
 			open();
 	    }
 		public function build_MainMXML():void
 		{
 		Database.getInstance().dbStatement.addEventListener(SQLEvent.RESULT, Result_build_MainMXML);
-		Database.getInstance().getDatos("select nombre,modelo,controlador,name_prural from modulos");
-		
+		Database.getInstance().getDatos("select nombre,id_modulo,modelo,controlador,name_prural from modulos");
 		}   
 		
+		public function get_components():void
+		{
+			Database.getInstance().dbStatement.addEventListener(SQLEvent.RESULT, Result_components);
+			Database.getInstance().getDatos("select * from componentes");
+		}
+		
+		public function Result_components(e:Event):void
+		{ 
+		   list_components=Database.getInstance().personData;
+		   Database.getInstance().dbStatement.removeEventListener(SQLEvent.RESULT,Result_components);
+		   Database.getInstance().exampleDB.close();
+		   Database.getInstance().initAndOpenDatabase();
+		   build_MainMXML();
+		}
 		
 		
 	}
