@@ -3,7 +3,6 @@ package Clases
 	import mx.collections.ArrayCollection;
 	import mx.controls.Alert;
 	import mx.controls.DataGrid;
-	import mx.controls.TextInput;
 	public class IDEComponentes
 	{
 		private static var instancia:IDEComponentes;
@@ -69,6 +68,11 @@ package Clases
 		 return '<mx:Label text="'+texto+'" x="'+posx+'" y="'+posy+'" />'; 	
 		}
 		
+		public function Crear_Button(texto,id,action,posx,posy,enable):String
+		{
+			return '<mx:Button click="'+action+'" id="'+id+'" label="'+texto+'" enabled="'+enable+'" width="86" x="'+posx+'" y="'+posy+'" />';
+		}
+		
 
 		public function Crear_Column_DataGrid(etiqueta:String,dato:String,longitud:int):String
 		{
@@ -108,6 +112,10 @@ package Clases
 			return cadena;
 		}
 		
+		public function Validation(idenficador:String):String
+		{
+			return "<mx:Validator id='reqValid_"+idenficador+"' required='true' source='{Att_"+idenficador+"}' property='text' valid='handleValid(event)' invalid='handleValid(event)'/> \n";
+		}
 		
 		public function Create_Script(nom_function:String,tabla:String,setupdate:String):String
 		{
