@@ -140,7 +140,7 @@ package Clases
 			cadena+="dataArray1.addItem(dataArray.getItemAt(i)."+tabla+");"+"\n";
 			cadena+="}"+"\n";
 			cadena+="datos.dataProvider=dataArray1;"+"\n";
-			cadena+="}'"+"\n";
+			cadena+="}"+"\n";
 			cadena+="private function deleteHandler(event:Event):void"+"\n";
 			cadena+="{"+"\n";
 			cadena+='Alert.show("Are you sure you want to delete this item?", "Delete Item", 3, this,';

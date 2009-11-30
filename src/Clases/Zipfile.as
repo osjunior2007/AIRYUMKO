@@ -30,6 +30,7 @@ package Clases
 		public var posx:int=10;
 		public var posy:int=20;
 		public var sw:int=0;
+		public var migrationHead:String="";
 		[Bindable] public var list_components:Array = new Array();
 		
 		public function Zipfile()
@@ -136,7 +137,7 @@ package Clases
 				MainApp+='<mx:Canvas label="'+Database.getInstance().personData[i].nombre+'" width="100%" height="100%" showEffect="WipeDown" hideEffect="WipeUp">'+" \n";
 				MainApp+='<'+Database.getInstance().personData[i].nombre+'  id="'+Database.getInstance().personData[i].nombre+'"  showEffect="WipeDown" hideEffect="WipeUp" width="98%" height="98%"  y="0" x="0" />'+" \n";
 				MainApp+='</mx:Canvas>'+" \n";
-				//Buil_Components_Mxml(Database.getInstance().personData[i].id_modulo,Database.getInstance().personData[i].nombre)
+				Buil_Components_Mxml(Database.getInstance().personData[i].id_modulo,Database.getInstance().personData[i].nombre,Database.getInstance().personData[i].name_prural)
 			}
 			MainApp='<?xml version="1.0" encoding="utf-8"?>'+" \n"+'<mx:Application  xmlns="Componentes.*" xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute">'+" \n"+'<mx:TabNavigator x="10" y="22" width="98%" height="95%">'+" \n"+MainApp;
 			MainApp+="</mx:TabNavigator>"+" \n"+'<mx:Style source="css.css"/> '+" \n"+'</mx:Application>';
@@ -165,7 +166,7 @@ package Clases
 			build_MainMXML();
 		}
 		
-		public function Buil_Components_Mxml(id:String,nombre:String):String
+		public function Buil_Components_Mxml(id:String,nombre:String,nombre_prural:String):String
 		{
 			init_value();
 			
@@ -203,12 +204,9 @@ package Clases
 				cadena+='</mx:Canvas>'+"\n"+'</mx:ViewStack>'+"\n"+'</mx:Canvas>';
 				add_file("src/Componentes/"+nombre+".mxml",cadena);
 				
-				/*$migrationHead="class CreateTable".$rowEmp['name_prural']." < ActiveRecord::Migration \n"."def self.up \n  create_table ".'"'.strtolower($rowEmp['name_prural'][0]).substr($rowEmp['name_prural'], 1,strlen($rowEmp['name_prural'])).'", '.":force => true do |t| \n";
-				$migrationHead.=$migrationBody."end \n end \n def self.down \n  drop_table ".'"'.strtolower($rowEmp['name_prural'][0]).substr($rowEmp['name_prural'], 1,strlen($rowEmp['name_prural'])).'"'."\n  end \n end \n";
-				$zipfile->add_file($migrationHead,$raiz."/db/migrate/".$migrationcant."_create_table_".strtolower($rowEmp['name_prural'][0]).substr($rowEmp['name_prural'], 1,strlen($rowEmp['name_prural'])).".rb");
-				$migrationcant++;*/
-				
-				
+			    migrationHead="class CreateTable"+nombre_prural+" < ActiveRecord::Migration \n"+"def self.up \n  create_table "+'"'+nombre_prural.substr(0,1).toLocaleUpperCase()+nombre_prural.substr(1,nombre.length)+'", '+":force => true do |t| \n";
+				migrationHead+=migrationBody+"end \n end \n def self.down \n  drop_table "+'"'+nombre_prural.substr(0,1).toLocaleUpperCase()+nombre_prural.substr(1,nombre.length)+'"'+"\n  end \n end \n";
+				add_file("db/migrate/"+new Date().time.toString()+"_create_table_"+nombre_prural.substr(0,1).toLocaleUpperCase()+nombre_prural.substr(1,nombre.length)+".rb",migrationHead);
 		 	}
 			return "";	
 		}
