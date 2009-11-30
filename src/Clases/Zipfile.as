@@ -105,6 +105,7 @@ package Clases
 		
 		public function Load_File(file:String):void {
 			New_zip = new FZip();
+			zip = new FZip();
 			New_zip.addEventListener(Event.COMPLETE, onComplete);
 			New_zip.load(new URLRequest(file));
 		}	
@@ -210,7 +211,10 @@ package Clases
 				Date_Today=new Date().fullYear.toString()+(new Date().month+1).toString()+new Date().date.toString()+new Date().getHours().toString()+new Date().getMinutes().toString()+new Date().getSeconds().toString()+migrationcant.toString();
 				add_file("db/migrate/"+Date_Today+"_create_table_"+nombre_prural.substr(0,1).toLocaleUpperCase()+nombre_prural.substr(1,nombre.length)+".rb",migrationHead);
 				migrationcant++;
-			    }
+			    }else{
+				 cadena='<?xml version="1.0" encoding="utf-8"?>'+" \n"+'<mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml" width="600" height="300" >'+"\n";	
+			     add_file("src/Componentes/"+nombre+".mxml",cadena+"\n"+'</mx:Canvas>');
+				}
 			return "";	
 		}
 		
