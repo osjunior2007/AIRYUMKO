@@ -231,54 +231,49 @@ package Clases
                 return datostree;
             }
             
-       public function crear_modulo(id_componente:String,nombre:String,etiqueta:String,tamano:String,tipodato:int,proyectos:ArrayCollection,Modulo_name:TextInput):String
+       public function Crear_Mxml(id_componente:String,nombre:String,etiqueta:String,tamano:String,tipodato:int):String
               {
                 var modulo:String="";
                 modulo=IDEComponentes.getInstance().HeadCanvas+'\n';
-              if(Modulo_name.text!=""){  
-               if(!proyectos.contains(Modulo_name.text)){ 
                 IDEComponentes.getInstance().posx=10;
 		        IDEComponentes.getInstance().posy=20;
               	 if(id_componente=="1"){
               	  modulo+=IDEComponentes.getInstance().Crear_label(etiqueta)+'\n';		
-              	  modulo+=IDEComponentes.getInstance().Crear_campo_de_texto(nombre,tamano,tipodato,0)+'\n';	
+				  IDEComponentes.getInstance().posy=IDEComponentes.getInstance().posy+20;
+				  modulo+=IDEComponentes.getInstance().Crear_campo_de_texto(nombre,tamano,tipodato,0)+'\n';	
               	  IDEComponentes.getInstance().posy=IDEComponentes.getInstance().posy+30;	
               	 }
               	 
               	 if(id_componente=="2"){
-              	  modulo+=IDEComponentes.getInstance().Crear_label(etiqueta)+'\n';		
-              	  modulo+=IDEComponentes.getInstance().Crear_Text_Area(nombre,tamano)+'\n';	
+              	  modulo+=IDEComponentes.getInstance().Crear_label(etiqueta)+'\n';
+				  IDEComponentes.getInstance().posy=IDEComponentes.getInstance().posy+20;
+				  modulo+=IDEComponentes.getInstance().Crear_Text_Area(nombre,tamano)+'\n';	
               	  IDEComponentes.getInstance().posy=IDEComponentes.getInstance().posy+130;	
               	 }	
               	 
               	  if(id_componente=="4"){
-              	   modulo+=IDEComponentes.getInstance().Crear_label(etiqueta)+'\n';		
+              	   modulo+=IDEComponentes.getInstance().Crear_label(etiqueta)+'\n';	
+				   IDEComponentes.getInstance().posy=IDEComponentes.getInstance().posy+20;
               	   modulo+=IDEComponentes.getInstance().Crear_campo_de_texto(nombre,tamano,tipodato,0)+'\n';	
-              	   modulo+=IDEComponentes.getInstance().Crear_Fecha("agregar",nombre)+'\n';	
+				   IDEComponentes.getInstance().posy=IDEComponentes.getInstance().posy+20;
+				   modulo+=IDEComponentes.getInstance().Crear_Fecha("agregar",nombre)+'\n';	
               	   IDEComponentes.getInstance().posy=IDEComponentes.getInstance().posy+30;	
               	  }	
               	 
               	if(id_componente=="5"){
-              	  modulo+=IDEComponentes.getInstance().Crear_label(etiqueta)+'\n';		
+              	  modulo+=IDEComponentes.getInstance().Crear_label(etiqueta)+'\n';	
+				  IDEComponentes.getInstance().posy=IDEComponentes.getInstance().posy+20;
               	  modulo+=IDEComponentes.getInstance().Crear_campo_de_texto(nombre,tamano,tipodato,1)+'\n';	
               	  IDEComponentes.getInstance().posy=IDEComponentes.getInstance().posy+30;	
               	 }
               	 
               	 if(id_componente=="7"){
-              	  modulo+=IDEComponentes.getInstance().Crear_label(etiqueta)+'\n';		
+              	  modulo+=IDEComponentes.getInstance().Crear_label(etiqueta)+'\n';	
+				  IDEComponentes.getInstance().posy=IDEComponentes.getInstance().posy+20;
               	  modulo+=IDEComponentes.getInstance().Crear_CheckBox(nombre)+'\n';	
-              	  IDEComponentes.getInstance().posy=IDEComponentes.getInstance().posy+30;	
+				  IDEComponentes.getInstance().posy=IDEComponentes.getInstance().posy+30;	
               	 }
-        
-              	 proyectos.addItem(Modulo_name.text);
-             	}else{
-              	 Alert.show("Este modulo ya esta registrado!");	
-              	 }
-              	}else{
-              	 Alert.show("El nombre del modulo no puede ser nulo");	
-              	}
-                 modulo+='</mx:Canvas>';
-                 Alert.show(modulo);
+                  modulo+='</mx:Canvas>';
                  return modulo;	
               }
               
