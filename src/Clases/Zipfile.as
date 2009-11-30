@@ -32,7 +32,8 @@ package Clases
 		public var sw:int=0;
 		public var migrationHead:String="";
 		[Bindable] public var list_components:Array = new Array();
-		
+ 	    public var Date_Today:String="";
+		public var migrationcant:int=0;
 		public function Zipfile()
 		{
 		}
@@ -206,8 +207,10 @@ package Clases
 				
 			    migrationHead="class CreateTable"+nombre_prural+" < ActiveRecord::Migration \n"+"def self.up \n  create_table "+'"'+nombre_prural.substr(0,1).toLocaleUpperCase()+nombre_prural.substr(1,nombre.length)+'", '+":force => true do |t| \n";
 				migrationHead+=migrationBody+"end \n end \n def self.down \n  drop_table "+'"'+nombre_prural.substr(0,1).toLocaleUpperCase()+nombre_prural.substr(1,nombre.length)+'"'+"\n  end \n end \n";
-				add_file("db/migrate/"+new Date().time.toString()+"_create_table_"+nombre_prural.substr(0,1).toLocaleUpperCase()+nombre_prural.substr(1,nombre.length)+".rb",migrationHead);
-		 	}
+				Date_Today=new Date().fullYear.toString()+(new Date().month+1).toString()+new Date().date.toString()+new Date().getHours().toString()+new Date().getMinutes().toString()+new Date().getSeconds().toString()+migrationcant.toString();
+				add_file("db/migrate/"+Date_Today+"_create_table_"+nombre_prural.substr(0,1).toLocaleUpperCase()+nombre_prural.substr(1,nombre.length)+".rb",migrationHead);
+				migrationcant++;
+			    }
 			return "";	
 		}
 		
