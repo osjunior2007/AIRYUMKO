@@ -4,6 +4,7 @@
 	</mx:HTTPService>
 	<mx:Script>
 		<![CDATA[
+			import mx.controls.Image;
 			import mx.collections.XMLListCollection;
 			
 			
@@ -40,9 +41,9 @@
 			[Bindable] public var relaciones:ArrayCollection = new ArrayCollection([{label:"Uno a Uno", data:1},{label:"Muchos a Uno", data:2},{label:"Muchos a Muchos", data:3}]);
 			[Bindable] public var tipo_dato:ArrayCollection = new ArrayCollection([{label:"Numerico", data:1},{label:"Alfanumerico", data:2}]);
 			//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-			
+			var stado:Boolean=false;
 			public function init():void
-			{
+			{ 
 				idiomas.send();
 				enabled_componente(false);
 				buscar_modelo_To_Tree();
@@ -261,15 +262,43 @@
 			}                            
 			////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 			
+		public function Hbox_divider():void
+		{
+		  if(!stado){  
+		     currentState == 'normal' ? currentState = 'panel_builder' : currentState = 'normal'
+		  }else{
+		  stado=false;	
+		  }
+		 }
+			
+			
 		]]>
+		
 	</mx:Script>
 	<mx:Style source="css.css"/> 
-	<mx:HDividedBox y="10"  width="99%" height="100%">  
-		<mx:Panel id="panel_arbol" width="95%" height="98%" >
-			<mx:Tree defaultLeafIcon="{ico}"  id="myTree" width="100%" height="100%" labelField="@label" showRoot="false" change="treeChanged(event)" />
+<mx:states>
+   <mx:State name="normal"/>
+
+        <mx:State name="panel_builder">
+            <mx:SetProperty target="{panel_arbol}" name="width" value="0"/>
+      </mx:State>
+    </mx:states>	
+	
+ <mx:transitions>
+        <mx:Transition fromState="*" toState="*" >
+            <mx:Parallel duration="700" >
+                <mx:Resize target="{panel_arbol}" />
+                <mx:Resize target="{panel_builder}" />
+            </mx:Parallel>
+        </mx:Transition>
+    </mx:transitions>	
+	
+	<mx:HDividedBox  creationComplete="hbox1.moveDivider(0,90);Hbox_divider()" id="hbox1" y="10"  width="99%" height="100%">  
+		<mx:Panel click=" Hbox_divider();" id="panel_arbol" width="95%" height="98%" >
+		   <mx:Tree click="stado=true;" defaultLeafIcon="{ico}"  id="myTree" width="100%" height="100%" labelField="@label" showRoot="false" change="treeChanged(event)" />
 		</mx:Panel>
-		<mx:Panel id="panel_builder" width="837" height="98%" >
-			<mx:Canvas  id="builder"  height="100%" width="100%">
+		<mx:Panel titleIcon="{ico}" click=" Hbox_divider();" id="panel_builder" width="837" height="98%" >
+			<mx:Canvas click="stado=true;" id="builder"  height="100%" width="100%">
 				<mx:Label id="modulo_name" x="10" y="36" fontWeight="normal" fontSize="11"/>
 				<mx:TextInput restrict="0-9a-z" id='Modulo_name' x="163" y="34" width="171"/>
 				<mx:TextInput restrict="0-9a-z" x="441" y="34" width="191" id="controller_name"/>
@@ -308,8 +337,6 @@
 				<mx:Button id="btn_crear_modulo" x="640" y="34"  click="buscar_modelo_To_Tree();validar_name()"/>
 				<mx:Button click="new_modulo_add()"   x="695" y="34" id="boton_nuevo_modulo"/>
 				<mx:Label x="345" y="36" id="controlador_name"/>
-				
-				
 				
 			</mx:Canvas>    
 		</mx:Panel>
