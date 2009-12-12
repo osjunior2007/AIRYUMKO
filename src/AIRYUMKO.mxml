@@ -58,7 +58,6 @@
 				if(event.message.body.toString()!=""){
 					titulo_modulo_name.text=servicio.lastResult.idioma.modulo_builder.titulo_modulo_name;
 					componentes.text=servicio.lastResult.idioma.modulo_builder.componentes;
-					controlador_name.text=servicio.lastResult.idioma.modulo_builder.controlador_name;
 					modulo_tipo.text=servicio.lastResult.idioma.modulo_builder.componente_tipo;
 					modulo_name.text=servicio.lastResult.idioma.modulo_builder.componente_name;
 					identificador.text=servicio.lastResult.idioma.modulo_builder.identificador;
@@ -103,7 +102,6 @@
 				if(selectedNode.@label!="App"){
 					Modulo_name.text=selectedNode.@label;
 					enabled_componente(true);
-					controller_name.text=selectedNode.@name_prural;
 					enabled_componente(true);
 					dataset.dataProvider={};
 					Crear_tabla_componente(selectedNode.@data)
@@ -160,7 +158,7 @@
 			public function buscar_modelo_To_Tree():void
 			{
 				Database.getInstance().dbStatement.addEventListener(SQLEvent.RESULT, Create_Tree);
-				Database.getInstance().getDatos("select id_modulo,nombre,name_prural from modulos");
+				Database.getInstance().getDatos("select id_modulo,nombre from modulos");
 				
 			}              
 			///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -177,7 +175,6 @@
 			{
 				enabled_componente(false);
 				Modulo_name.text='';
-				controller_name.text='';
 				dataset.dataProvider={};
 			}         
 			////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -185,11 +182,9 @@
 			{
 				if(estado){
 					Modulo_name.enabled=false;
-					controller_name.enabled=false;
 					btn_crear_modulo.enabled=false;
 				}else{
 					Modulo_name.enabled=true;
-					controller_name.enabled=true;	
 					btn_crear_modulo.enabled=true;
 					
 				}
@@ -210,7 +205,7 @@
 			///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 			public function validar_name():void
 			{
-				if(Modulo_name.text!=''&& controller_name.text!='')
+				if(Modulo_name.text!='')
 				{
 					ingresar_modelo()
 				}else{
@@ -221,7 +216,7 @@
 			
 			public function ingresar_modelo():void
 			{
-				Database.getInstance().SetDatos("insert into modulos select distinct null ,'"+Modulo_name.text+"','"+MC_RubyonRails.getInstance().set_controllador((Modulo_name.text.substr(0,1).toLocaleUpperCase()+Modulo_name.text.substr(1,Modulo_name.text.length))+"s")+"','"+MC_RubyonRails.getInstance().set_modelo(Modulo_name.text)+"','"+(controller_name.text.substr(0,1).toLocaleUpperCase()+controller_name.text.substr(1,controller_name.text.length))+"' from modulos where not exists (select * from modulos where nombre='"+Modulo_name.text+"') union select null ,'"+Modulo_name.text+"','"+MC_RubyonRails.getInstance().set_controllador((Modulo_name.text.substr(0,1).toLocaleUpperCase()+Modulo_name.text.substr(1,Modulo_name.text.length))+"s")+"','"+MC_RubyonRails.getInstance().set_modelo(Modulo_name.text)+"','"+(controller_name.text.substr(0,1).toLocaleUpperCase()+controller_name.text.substr(1,controller_name.text.length))+"'");
+				Database.getInstance().SetDatos("insert into modulos select distinct null ,'"+Modulo_name.text+"s','"+MC_RubyonRails.getInstance().set_controllador((Modulo_name.text.substr(0,1).toLocaleUpperCase()+Modulo_name.text.substr(1,Modulo_name.text.length))+"s")+"','"+MC_RubyonRails.getInstance().set_modelo(Modulo_name.text)+"' from modulos where not exists (select * from modulos where nombre='"+Modulo_name.text+"') union select null ,'"+Modulo_name.text+"s','"+MC_RubyonRails.getInstance().set_controllador((Modulo_name.text.substr(0,1).toLocaleUpperCase()+Modulo_name.text.substr(1,Modulo_name.text.length))+"s")+"','"+MC_RubyonRails.getInstance().set_modelo(Modulo_name.text)+"'");
 				buscar_modelo_To_Tree();
 				enabled_componente(true);
 				
@@ -300,8 +295,7 @@
 		<mx:Panel titleIcon="{ico}" click=" Hbox_divider();" id="panel_builder" width="837" height="98%" >
 			<mx:Canvas click="stado=true;" id="builder"  height="100%" width="100%">
 				<mx:Label id="modulo_name" x="10" y="36" fontWeight="normal" fontSize="11"/>
-				<mx:TextInput restrict="0-9a-z" id='Modulo_name' x="163" y="34" width="171"/>
-				<mx:TextInput restrict="0-9a-z" x="441" y="34" width="191" id="controller_name"/>
+				<mx:TextInput restrict="0-9a-z" id='Modulo_name' x="163" y="34" width="469"/>
 				<mx:Label id="modulo_tipo" x="10" y="91"  fontWeight="normal" fontSize="11"/>
 				<mx:ComboBox dataProvider="{lista_componentes}"  id="componentes_text"  x="163" y="90" width="469" enabled="false"></mx:ComboBox>
 				<mx:Label id="etiqueta" x="10" y="123" fontWeight="normal"/>
@@ -336,7 +330,6 @@
 				<mx:Label id="requerido" x="10" y="208" fontWeight="normal"/>
 				<mx:Button id="btn_crear_modulo" x="640" y="34"  click="buscar_modelo_To_Tree();validar_name()"/>
 				<mx:Button click="new_modulo_add()"   x="695" y="34" id="boton_nuevo_modulo"/>
-				<mx:Label x="345" y="36" id="controlador_name"/>
 				
 			</mx:Canvas>    
 		</mx:Panel>

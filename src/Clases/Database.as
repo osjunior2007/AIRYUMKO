@@ -69,8 +69,7 @@ package Clases
                 sqlQuery+="id_modulo INTEGER PRIMARY KEY AUTOINCREMENT,";
                 sqlQuery+="nombre TEXT NOT NULL,";
                 sqlQuery+="controlador TEXT NOT NULL,";
-                sqlQuery+="modelo TEXT NOT NULL,";
-                sqlQuery+="name_prural TEXT NOT NULL";
+                sqlQuery+="modelo TEXT NOT NULL";
                 sqlQuery+="); ";
                 dbStatement = new SQLStatement();
 				dbStatement.sqlConnection = exampleDB;

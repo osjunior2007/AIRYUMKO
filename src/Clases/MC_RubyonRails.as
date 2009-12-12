@@ -61,7 +61,7 @@ package Clases
 		{ 
 			cadena="def update"+'\n';
 			cadena+="@"+nombre+"= "+nombre.substr(0,nombre.length-1)+".find(params[:objetos][:id])"+'\n'; 
-			cadena+="if @"+nombre+".update_attributes([:objetos])"+'\n'; 
+			cadena+="if @"+nombre+".update_attributes(params[:objetos])"+'\n'; 
 			cadena+="render :xml => 0 "+'\n';
 			cadena+="else"+'\n';
 			cadena+="render :xml => 1 "+'\n';

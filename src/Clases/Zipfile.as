@@ -16,6 +16,9 @@ package Clases
 		public var index:uint = 0;
 		public var done:Boolean = false;
 		public var proyecto_zip:String="Rails.zip";
+		public var proyecto_name:String="Proyecto";
+		public var user_database:String="root";
+		public var password_database:String="";
 		////////////////////////////////////////////////////////////////////////
 		public var cadena:String='<?xml version="1.0" encoding="utf-8"?>'+" \n"+'<mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml" width="600" height="300" creationComplete="ListRequest.send();">'+"\n";
 		public var canvasdatagrid:String='<mx:Canvas x="0" y="0"  width="98%" height="98%" showEffect="WipeDown" hideEffect="WipeUp">'+"\n";
@@ -127,36 +130,37 @@ package Clases
 			var name:String="";
 			var MainApp:String="";	
 			for(var i:int=0;i<=Database.getInstance().personData.length-1;i++){
-				name=Database.getInstance().personData[i].nombre;
-				name=name.substr(0,1).toLocaleUpperCase()+name.substr(1,name.length);
+				//name=name.substr(0,1).toLocaleUpperCase()+name.substr(1,name.length);
 				//build controller
 				add_file("app/controllers/"+name+"_controller.rb",Database.getInstance().personData[i].controlador);
 				//build models
 				add_file("app/models/"+name+".rb",Database.getInstance().personData[i].modelo);
 				//build helpers
-				add_file("app/helpers/"+name+"_helper.rb","module "+name+"sHelper \n end");
+				add_file("app/helpers/"+name+"_helper.rb","module "+name.substr(0,1).toLocaleUpperCase()+name.substr(1,name.length)+"Helper \n end");
 				//Main Canvas
 				MainApp+='<mx:Canvas label="'+Database.getInstance().personData[i].nombre+'" width="100%" height="100%" showEffect="WipeDown" hideEffect="WipeUp">'+" \n";
 				MainApp+='<'+Database.getInstance().personData[i].nombre+'  id="'+Database.getInstance().personData[i].nombre+'"  showEffect="WipeDown" hideEffect="WipeUp" width="98%" height="98%"  y="0" x="0" />'+" \n";
 				MainApp+='</mx:Canvas>'+" \n";
-				Buil_Components_Mxml(Database.getInstance().personData[i].id_modulo,Database.getInstance().personData[i].nombre,Database.getInstance().personData[i].name_prural)
+				Buil_Components_Mxml(Database.getInstance().personData[i].id_modulo,Database.getInstance().personData[i].nombre)
 			}
 			MainApp='<?xml version="1.0" encoding="utf-8"?>'+" \n"+'<mx:Application  xmlns="Componentes.*" xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute">'+" \n"+'<mx:TabNavigator x="10" y="22" width="98%" height="95%">'+" \n"+MainApp;
 			MainApp+="</mx:TabNavigator>"+" \n"+'<mx:Style source="css.css"/> '+" \n"+'</mx:Application>';
 			add_file("src/Main.mxml",MainApp);
+			add_file("config/database.yml",IDEComponentes.getInstance().database_yml (proyecto_name,user_database,password_database));
+			
 			Database.getInstance().dbStatement.removeEventListener(SQLEvent.RESULT,Result_build_MainMXML);
 			open();
 		}
 		public function build_MainMXML():void
 		{
 			Database.getInstance().dbStatement.addEventListener(SQLEvent.RESULT, Result_build_MainMXML);
-			Database.getInstance().getDatos("select nombre,id_modulo,modelo,controlador,name_prural from modulos");
+			Database.getInstance().getDatos("select nombre,id_modulo,modelo,controlador from modulos");
 		}   
 		
 		public function get_components():void
 		{
 			Database.getInstance().dbStatement.addEventListener(SQLEvent.RESULT, Result_components);
-			Database.getInstance().getDatos("select * from componentes");
+			Database.getInstance().getDatos("select componente_id,id_modulo,etiqueta,identificador,tamano,replace(replace(tipo,'Numerico','0'),'Alfanumerico','1') as tipo,requerido from componentes");
 		}
 		
 		public function Result_components(e:Event):void
@@ -168,7 +172,7 @@ package Clases
 			build_MainMXML();
 		}
 		
-		public function Buil_Components_Mxml(id:String,nombre:String,nombre_prural:String):String
+		public function Buil_Components_Mxml(id:String,nombre:String):String
 		{
 			init_value();
 			
@@ -177,7 +181,7 @@ package Clases
 					sw=1;
 					datagridHead+=IDEComponentes.getInstance().Crear_Column_DataGrid(list_components[i].etiqueta,list_components[i].identificador,list_components[i].tamano);
 					HeadService+=IDEComponentes.getInstance().Http_service_Create(list_components[i].identificador);
-					canvascomponente+=IDEComponentes.getInstance().Crear_Mxml(list_components[i].componente_id,list_components[i].identificador,list_components[i].etiqueta,list_components[i].tamano,list_components[i].componente_id);
+					canvascomponente+=IDEComponentes.getInstance().Crear_Mxml(list_components[i].componente_id,list_components[i].identificador,list_components[i].etiqueta,list_components[i].tamano,list_components[i].tipo);
 				   if(list_components[i].requerido=="true"){
 					 validate+=IDEComponentes.getInstance().Validation(list_components[i].identificador);   
 				   }
@@ -206,10 +210,10 @@ package Clases
 				cadena+='</mx:Canvas>'+"\n"+'</mx:ViewStack>'+"\n"+'</mx:Canvas>';
 				add_file("src/Componentes/"+nombre+".mxml",cadena);
 				
-			    migrationHead="class CreateTable"+nombre_prural+" < ActiveRecord::Migration \n"+"def self.up \n  create_table "+'"'+nombre_prural.substr(0,1).toLocaleUpperCase()+nombre_prural.substr(1,nombre.length)+'", '+":force => true do |t| \n";
-				migrationHead+=migrationBody+"end \n end \n def self.down \n  drop_table "+'"'+nombre_prural.substr(0,1).toLocaleUpperCase()+nombre_prural.substr(1,nombre.length)+'"'+"\n  end \n end \n";
+			    migrationHead="class CreateTable"+nombre.substr(0,1).toLocaleUpperCase()+nombre.substr(1,nombre.length)+" < ActiveRecord::Migration \n"+"def self.up \n  create_table "+'"'+nombre+'", '+":force => true do |t| \n";
+				migrationHead+=migrationBody+"end \n end \n def self.down \n  drop_table "+'"'+nombre+'"'+"\n  end \n end \n";
 				Date_Today=new Date().fullYear.toString()+(new Date().month+1).toString()+new Date().date.toString()+new Date().getHours().toString()+new Date().getMinutes().toString()+new Date().getSeconds().toString()+migrationcant.toString();
-				add_file("db/migrate/"+Date_Today+"_create_table_"+nombre_prural.substr(0,1).toLocaleUpperCase()+nombre_prural.substr(1,nombre.length)+".rb",migrationHead);
+				add_file("db/migrate/"+Date_Today+"_create_table_"+nombre+".rb",migrationHead);
 				migrationcant++;
 			    }else{
 				 cadena='<?xml version="1.0" encoding="utf-8"?>'+" \n"+'<mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml" width="600" height="300" >'+"\n";	

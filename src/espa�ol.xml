@@ -2,8 +2,7 @@
 <modulo_builder>
 <titulo_modulo_name>Modulo</titulo_modulo_name>
 <componentes>Componentes</componentes>
-<componente_name>Modelo</componente_name>
-<controlador_name>Controlador</controlador_name>
+<componente_name>Nombre (Singular)</componente_name>
 <componente_tipo>Tipo de Componente</componente_tipo>
 <identificador>Identificador</identificador>
 <Max_caracter>Tamaño Máximo</Max_caracter>

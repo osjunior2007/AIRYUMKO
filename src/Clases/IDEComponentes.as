@@ -33,7 +33,7 @@ package Clases
 		   cadena='<mx:TextInput displayAsPassword="true" width="350" x="'+(posx)+'" y="'+posy+'"';	
 		 }
 		 cadena+=" ";
-	      	cadena+='id="'+idenficador+'" '+'maxChars="'+longitud+'"';
+	      	cadena+='id="Att_'+idenficador+'" '+'maxChars="'+longitud+'"';
 	      	if(restricion==0){
 	      	 cadena+=' restrict="0-9"'	
 	      	 }
@@ -51,14 +51,14 @@ package Clases
 		
 	   public function Crear_Text_Area(idenficador:String,longitud:String):String
 		{ var cadena:String="";
-		 cadena='<mx:TextArea height="120" width="350" x="'+(posx)+'" y="'+posy+'" '+ 'maxChars="'+longitud+'"';
+		 cadena='<mx:TextArea id="Att_'+idenficador+'" height="120" width="350" x="'+(posx)+'" y="'+posy+'" '+ 'maxChars="'+longitud+'"';
 		 cadena+=' />'	 
 	      return cadena; 	
 		}
 		
 		public function Crear_CheckBox(idenficador:String):String
 		{ var cadena:String="";
-		 cadena='<mx:CheckBox id="'+idenficador+'" x="'+(posx)+'" y="'+posy+'"';
+		 cadena='<mx:CheckBox id="Att_'+idenficador+'" x="'+(posx)+'" y="'+posy+'"';
 		 cadena+=' />'	 
 	      return cadena; 	
 		}
@@ -82,10 +82,10 @@ package Clases
 	    public function Head_Http_service(nombre:String):String
 		{
 			var cadena:String="";
-			nombre=nombre.substring(0,1).toUpperCase()+nombre.substring(1,nombre.length);
-			cadena=' <mx:HTTPService id="ListRequest" url="http://localhost:3000/'+nombre+'s/list" useProxy="false" result="onJSONLoad(event,datos)" resultFormat="text"/>'+"\n";
-			cadena+=' <mx:HTTPService id="DeleteRequest" result="ListRequest.send();" url="http://localhost:3000/'+nombre+'s/delete" useProxy="false"/>'+"\n";
-			cadena+='<mx:HTTPService contentType="application/xml" id="CreateRequest" url="http://localhost:3000/'+nombre+'s/create" result="resul_create(event)" useProxy="false" method="POST">'+"\n"+'<mx:request xmlns="">'+"\n"+'<objetos>'+"\n";
+			//nombre=nombre.substring(0,1).toUpperCase()+nombre.substring(1,nombre.length);
+			cadena=' <mx:HTTPService id="ListRequest" url="http://localhost:3000/'+nombre+'/list" useProxy="false" result="onJSONLoad(event,datos)" resultFormat="text"/>'+"\n";
+			cadena+=' <mx:HTTPService id="DeleteRequest" result="ListRequest.send();" url="http://localhost:3000/'+nombre+'/delete" useProxy="false"/>'+"\n";
+			cadena+='<mx:HTTPService contentType="application/xml" id="CreateRequest" url="http://localhost:3000/'+nombre+'/create" result="resul_create(event)" useProxy="false" method="POST">'+"\n"+'<mx:request xmlns="">'+"\n"+'<objetos>'+"\n";
 			return cadena;
 		}
 		
@@ -194,28 +194,28 @@ package Clases
 		public function database_yml (database:String,usuario:String,contrasena:String):String
 		{  var cadena:String="";
 			cadena+="development:"+"\n";
-			cadena+="adapter: mysql"+"\n";
-			cadena+="encoding: utf8"+"\n";
-			cadena+="database: "+database+"_development"+"\n";
-			cadena+="username: "+usuario+"\n";
-			cadena+="password: "+contrasena+"\n";
-			cadena+="host: localhost"+"\n\n\n";
+			cadena+=" adapter: mysql"+"\n";
+			cadena+=" encoding: utf8"+"\n";
+			cadena+=" database: "+database+"_development"+"\n";
+			cadena+=" username: "+usuario+"\n";
+			cadena+=" password: "+contrasena+"\n";
+			cadena+=" host: localhost"+"\n\n\n";
 			
 			cadena+="test:"+"\n";
-			cadena+="adapter: mysql"+"\n";
-			cadena+="encoding: utf8"+"\n";
-			cadena+="database: "+database+"_test"+"\n";
-			cadena+="username: "+usuario+"\n";
-			cadena+="password: "+contrasena+"\n";
-			cadena+="host: localhost"+"\n";
+			cadena+=" adapter: mysql"+"\n";
+			cadena+=" encoding: utf8"+"\n";
+			cadena+=" database: "+database+"_test"+"\n";
+			cadena+=" username: "+usuario+"\n";
+			cadena+=" password: "+contrasena+"\n";
+			cadena+=" host: localhost"+"\n";
 			
 			cadena+="production:"+"\n";
-			cadena+="adapter: mysql"+"\n";
-			cadena+="encoding: utf8"+"\n";
-			cadena+="database: "+database+"_production"+"\n";
-			cadena+="username: "+usuario+"\n";
-			cadena+="password: "+contrasena+"\n";
-			cadena+="host: localhost"+"\n";
+			cadena+=" adapter: mysql"+"\n";
+			cadena+=" encoding: utf8"+"\n";
+			cadena+=" database: "+database+"_production"+"\n";
+			cadena+=" username: "+usuario+"\n";
+			cadena+=" password: "+contrasena+"\n";
+			cadena+=" host: localhost"+"\n";
 	        return cadena;
 		}
 		
