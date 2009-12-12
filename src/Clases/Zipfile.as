@@ -130,7 +130,8 @@ package Clases
 			var name:String="";
 			var MainApp:String="";	
 			for(var i:int=0;i<=Database.getInstance().personData.length-1;i++){
-				//name=name.substr(0,1).toLocaleUpperCase()+name.substr(1,name.length);
+				name=Database.getInstance().personData[i].nombre;
+				name=name.substr(0,1).toLocaleUpperCase()+name.substr(1,name.length);
 				//build controller
 				add_file("app/controllers/"+name+"_controller.rb",Database.getInstance().personData[i].controlador);
 				//build models
@@ -186,7 +187,7 @@ package Clases
 					 validate+=IDEComponentes.getInstance().Validation(list_components[i].identificador);   
 				   }
 				   clearparam+="      "+"Att_"+list_components[i].identificador+".text=''\n";
-				   
+				   setupdate+="      "+"Att_"+list_components[i].identificador+".text=datos.selectedItem."+list_components[i].identificador+"\n";
 				   if(list_components[i].identificador!="id"&&list_components[i].identificador!="ID"){
 					 migrationBody+=IDEComponentes.getInstance().Create_migration(list_components[i].identificador,list_components[i].componente_id,list_components[i].tamano);
 				   }
@@ -196,11 +197,11 @@ package Clases
 			IDEComponentes.getInstance().posx=IDEComponentes.getInstance().posx+15;
 			if(sw==1)
 			{
-				HeadService=IDEComponentes.getInstance().Head_Http_service(nombre)+HeadService+'</objetos>'+"\n"+'</mx:request>'+"\n"+'</mx:HTTPService>'+"\n" +'<mx:HTTPService contentType="application/xml" id="UpdateRequest" result="updateHandler(event);" url="http://localhost:3000/'+nombre.substr(0,1).toLocaleUpperCase()+nombre.substr(1,nombre.length)+'s/update" useProxy="false"  method="POST">'+"\n"+'<mx:request xmlns="">'+"\n"+'<objetos>'+" \n" +"<id>{datos.selectedItem.id}</id>" +" \n"+HeadService+'</objetos>'+"\n"+'</mx:request>'+"\n"+'</mx:HTTPService>'+ "\n";
+				HeadService=IDEComponentes.getInstance().Head_Http_service(nombre)+HeadService+'</objetos>'+"\n"+'</mx:request>'+"\n"+'</mx:HTTPService>'+"\n" +'<mx:HTTPService contentType="application/xml" id="UpdateRequest" result="updateHandler(event);" url="http://localhost:3000/'+nombre+'s/update" useProxy="false"  method="POST">'+"\n"+'<mx:request xmlns="">'+"\n"+'<objetos>'+" \n" +"<id>{datos.selectedItem.id}</id>" +" \n"+HeadService+'</objetos>'+"\n"+'</mx:request>'+"\n"+'</mx:HTTPService>'+ "\n";
 				HeadService+=validate+'<mx:ViewStack x="0" y="0" id="View_01" width="100%" height="100%">'+"\n";
 				datagridHead+='</mx:columns>'+"\n"+'</mx:DataGrid>';
 				canvasdatagrid+=datagridHead+"\n"+IDEComponentes.getInstance().Crear_Button("Crear","crear","{wiew_sw=false;View_01.selectedIndex=1}",DataGridposx,"{datos.height+50}","true")+"\n"+IDEComponentes.getInstance().Crear_Button("Update","UpdateView","wiew_sw=true;validate_id_update();",DataGridposx+96,"{datos.height+50}","true")+"\n"+IDEComponentes.getInstance().Crear_Button("Delete","deletes","deleteHandler(event);",DataGridposx+196,"{datos.height+50}","true")+"\n"+'<mx:Label x="'+DataGridposx+'" y="25" text="Modulo - '+nombre+' "/>'+"\n"+'</mx:Canvas>'+"\n";
-				cadena+= HeadService+IDEComponentes.getInstance().Create_Script(clearparam,nombre.substr(0,1).toLocaleUpperCase()+nombre.substr(1,nombre.length),setupdate);
+				cadena+= HeadService+IDEComponentes.getInstance().Create_Script(clearparam,nombre,setupdate);
 				cadena+=canvasdatagrid;
 				cadena+=canvascomponente;
 				cadena+=IDEComponentes.getInstance().Crear_Button("Submit","submit","CreateRequest.send();",IDEComponentes.getInstance().posx,IDEComponentes.getInstance().posy,"false")+"\n";
