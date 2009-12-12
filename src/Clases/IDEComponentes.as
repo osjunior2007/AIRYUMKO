@@ -28,9 +28,9 @@ package Clases
 		public function Crear_campo_de_texto(idenficador:String,longitud:String,restricion:int,pass:int):String
 		{ var cadena:String="";
 		 if(pass==0){
-		  cadena='<mx:TextInput width="350" x="'+(posx+180)+'" y="'+posy+'"';
+		  cadena='<mx:TextInput width="350" x="'+(posx)+'" y="'+posy+'"';
 		 }else{
-		   cadena='<mx:TextInput displayAsPassword="true" width="350" x="'+(posx+180)+'" y="'+posy+'"';	
+		   cadena='<mx:TextInput displayAsPassword="true" width="350" x="'+(posx)+'" y="'+posy+'"';	
 		 }
 		 cadena+=" ";
 	      	cadena+='id="'+idenficador+'" '+'maxChars="'+longitud+'"';
@@ -51,14 +51,14 @@ package Clases
 		
 	   public function Crear_Text_Area(idenficador:String,longitud:String):String
 		{ var cadena:String="";
-		 cadena='<mx:TextArea height="120" width="350" x="'+(posx+180)+'" y="'+posy+'" '+ 'maxChars="'+longitud+'"';
+		 cadena='<mx:TextArea height="120" width="350" x="'+(posx)+'" y="'+posy+'" '+ 'maxChars="'+longitud+'"';
 		 cadena+=' />'	 
 	      return cadena; 	
 		}
 		
 		public function Crear_CheckBox(idenficador:String):String
 		{ var cadena:String="";
-		 cadena='<mx:CheckBox id="'+idenficador+'" x="'+(posx+180)+'" y="'+posy+'"';
+		 cadena='<mx:CheckBox id="'+idenficador+'" x="'+(posx)+'" y="'+posy+'"';
 		 cadena+=' />'	 
 	      return cadena; 	
 		}
@@ -242,10 +242,7 @@ package Clases
        public function Crear_Mxml(id_componente:String,nombre:String,etiqueta:String,tamano:String,tipodato:int):String
               {
                 var modulo:String="";
-                modulo=IDEComponentes.getInstance().HeadCanvas+'\n';
-                IDEComponentes.getInstance().posx=10;
-		        IDEComponentes.getInstance().posy=20;
-		        if(id_componente=="0"){
+               if(id_componente=="0"){
               	  modulo+=IDEComponentes.getInstance().Crear_label(etiqueta)+'\n';		
 				  IDEComponentes.getInstance().posy=IDEComponentes.getInstance().posy+20;
 				  modulo+=IDEComponentes.getInstance().Crear_campo_de_texto(nombre,tamano,tipodato,0)+'\n';	
@@ -281,7 +278,7 @@ package Clases
               	  modulo+=IDEComponentes.getInstance().Crear_CheckBox(nombre)+'\n';	
 				  IDEComponentes.getInstance().posy=IDEComponentes.getInstance().posy+30;	
               	 }
-                  modulo+='</mx:Canvas>';
+                 // modulo+='</mx:Canvas>';
                  return modulo;	
               }
               
