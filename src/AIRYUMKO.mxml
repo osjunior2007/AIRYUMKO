@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <mx:WindowedApplication  title="YUMKOO"  initialize="Database.getInstance().initAndOpenDatabase()"  backgroundGradientAlphas="[1.0, 0.32]" backgroundGradientColors="[#A0B8C0, #878A8D]" minWidth="930" minHeight="700" xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" creationComplete="init()">
 	<mx:HTTPService url="español.xml"   requestTimeout="0"   resultFormat="object" id="idiomas" result="Cargar_idioma(event,idiomas); "  useProxy="false"  method="POST" >
-	</mx:HTTPService>
-	<mx:Script>
+	</mx:HTTPService> 
+	<mx:Script> 
 		<![CDATA[
 			import mx.controls.Image;
 			import mx.collections.XMLListCollection;

@@ -11,6 +11,6 @@
 		</mx:Script>			
 		<mx:ComboBox id="framework" dataProvider="{TipoFrameWork}" x="99" y="9.5" width="229"></mx:ComboBox>
 		<mx:Label x="10" y="14" text="FrameWork"/>
-		<mx:Button click="Zipfile.getInstance().Load_File(framework.selectedItem.data);PopUpManager.removePopUp(this);" x="99" y="40" label="Download"/>
+		<mx:Button click="Zipfile.getInstance().proyecto_zip=framework.selectedItem.data;Zipfile.getInstance().Load_File(framework.selectedItem.data);PopUpManager.removePopUp(this);" x="99" y="40" label="Download"/>
 	</mx:Canvas> 
 </mx:TitleWindow>  

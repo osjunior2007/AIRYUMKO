@@ -177,7 +177,7 @@ package Clases
 					sw=1;
 					datagridHead+=IDEComponentes.getInstance().Crear_Column_DataGrid(list_components[i].etiqueta,list_components[i].identificador,list_components[i].tamano);
 					HeadService+=IDEComponentes.getInstance().Http_service_Create(list_components[i].identificador);
-					canvascomponente+=IDEComponentes.getInstance().Crear_Mxml(list_components[i].componente_id,list_components[i].identificador,list_components[i].etiqueta,list_components[i].tamano,list_components[i].tipo);
+					canvascomponente+=IDEComponentes.getInstance().Crear_Mxml(list_components[i].componente_id,list_components[i].identificador,list_components[i].etiqueta,list_components[i].tamano,list_components[i].componente_id);
 				   if(list_components[i].requerido=="true"){
 					 validate+=IDEComponentes.getInstance().Validation(list_components[i].identificador);   
 				   }

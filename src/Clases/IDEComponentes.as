@@ -245,21 +245,21 @@ package Clases
                 modulo=IDEComponentes.getInstance().HeadCanvas+'\n';
                 IDEComponentes.getInstance().posx=10;
 		        IDEComponentes.getInstance().posy=20;
-              	 if(id_componente=="1"){
+		        if(id_componente=="0"){
               	  modulo+=IDEComponentes.getInstance().Crear_label(etiqueta)+'\n';		
 				  IDEComponentes.getInstance().posy=IDEComponentes.getInstance().posy+20;
 				  modulo+=IDEComponentes.getInstance().Crear_campo_de_texto(nombre,tamano,tipodato,0)+'\n';	
               	  IDEComponentes.getInstance().posy=IDEComponentes.getInstance().posy+30;	
               	 }
               	 
-              	 if(id_componente=="2"){
+              	 if(id_componente=="1"){
               	  modulo+=IDEComponentes.getInstance().Crear_label(etiqueta)+'\n';
 				  IDEComponentes.getInstance().posy=IDEComponentes.getInstance().posy+20;
 				  modulo+=IDEComponentes.getInstance().Crear_Text_Area(nombre,tamano)+'\n';	
               	  IDEComponentes.getInstance().posy=IDEComponentes.getInstance().posy+130;	
               	 }	
               	 
-              	  if(id_componente=="4"){
+              	  if(id_componente=="3"){
               	   modulo+=IDEComponentes.getInstance().Crear_label(etiqueta)+'\n';	
 				   IDEComponentes.getInstance().posy=IDEComponentes.getInstance().posy+20;
               	   modulo+=IDEComponentes.getInstance().Crear_campo_de_texto(nombre,tamano,tipodato,0)+'\n';	
@@ -268,14 +268,14 @@ package Clases
               	   IDEComponentes.getInstance().posy=IDEComponentes.getInstance().posy+30;	
               	  }	
               	 
-              	if(id_componente=="5"){
+              	if(id_componente=="4"){
               	  modulo+=IDEComponentes.getInstance().Crear_label(etiqueta)+'\n';	
 				  IDEComponentes.getInstance().posy=IDEComponentes.getInstance().posy+20;
               	  modulo+=IDEComponentes.getInstance().Crear_campo_de_texto(nombre,tamano,tipodato,1)+'\n';	
               	  IDEComponentes.getInstance().posy=IDEComponentes.getInstance().posy+30;	
               	 }
               	 
-              	 if(id_componente=="7"){
+              	 if(id_componente=="6"){
               	  modulo+=IDEComponentes.getInstance().Crear_label(etiqueta)+'\n';	
 				  IDEComponentes.getInstance().posy=IDEComponentes.getInstance().posy+20;
               	  modulo+=IDEComponentes.getInstance().Crear_CheckBox(nombre)+'\n';	
