@@ -127,20 +127,22 @@ package Clases
 		
 		public function Result_build_MainMXML (e:Event):void
 		{    
+			var name_modelo:String="";
 			var name:String="";
 			var MainApp:String="";	
 			for(var i:int=0;i<=Database.getInstance().personData.length-1;i++){
 				name=Database.getInstance().personData[i].nombre;
+				name_modelo=Database.getInstance().personData[i].nombre;
 				name=name.substr(0,1).toLocaleUpperCase()+name.substr(1,name.length);
 				//build controller
 				add_file("app/controllers/"+name+"_controller.rb",Database.getInstance().personData[i].controlador);
 				//build models
-				add_file("app/models/"+name+".rb",Database.getInstance().personData[i].modelo);
+				add_file("app/models/"+name_modelo.substring(0,name_modelo.length-1)+".rb",Database.getInstance().personData[i].modelo);
 				//build helpers
 				add_file("app/helpers/"+name+"_helper.rb","module "+name.substr(0,1).toLocaleUpperCase()+name.substr(1,name.length)+"Helper \n end");
 				//Main Canvas
 				MainApp+='<mx:Canvas label="'+Database.getInstance().personData[i].nombre+'" width="100%" height="100%" showEffect="WipeDown" hideEffect="WipeUp">'+" \n";
-				MainApp+='<'+Database.getInstance().personData[i].nombre+'  id="'+Database.getInstance().personData[i].nombre+'"  showEffect="WipeDown" hideEffect="WipeUp" width="98%" height="98%"  y="0" x="0" />'+" \n";
+				MainApp+='<'+name_modelo+'  id="'+Database.getInstance().personData[i].nombre+'"  showEffect="WipeDown" hideEffect="WipeUp" width="98%" height="98%"  y="0" x="0" />'+" \n";
 				MainApp+='</mx:Canvas>'+" \n";
 				Buil_Components_Mxml(Database.getInstance().personData[i].id_modulo,Database.getInstance().personData[i].nombre)
 			}
@@ -175,9 +177,9 @@ package Clases
 		
 		public function Buil_Components_Mxml(id:String,nombre:String):String
 		{
+	
 			init_value();
-			
-			for(var i:int=0;i<=list_components.length-1;i++){
+		 	for(var i:int=0;i<=list_components.length-1;i++){
 				if(list_components[i].id_modulo==id){
 					sw=1;
 					datagridHead+=IDEComponentes.getInstance().Crear_Column_DataGrid(list_components[i].etiqueta,list_components[i].identificador,list_components[i].tamano);
@@ -197,11 +199,11 @@ package Clases
 			IDEComponentes.getInstance().posx=IDEComponentes.getInstance().posx+15;
 			if(sw==1)
 			{
-				HeadService=IDEComponentes.getInstance().Head_Http_service(nombre)+HeadService+'</objetos>'+"\n"+'</mx:request>'+"\n"+'</mx:HTTPService>'+"\n" +'<mx:HTTPService contentType="application/xml" id="UpdateRequest" result="updateHandler(event);" url="http://localhost:3000/'+nombre+'s/update" useProxy="false"  method="POST">'+"\n"+'<mx:request xmlns="">'+"\n"+'<objetos>'+" \n" +"<id>{datos.selectedItem.id}</id>" +" \n"+HeadService+'</objetos>'+"\n"+'</mx:request>'+"\n"+'</mx:HTTPService>'+ "\n";
+				HeadService=IDEComponentes.getInstance().Head_Http_service(nombre)+HeadService+'</objetos>'+"\n"+'</mx:request>'+"\n"+'</mx:HTTPService>'+"\n" +'<mx:HTTPService contentType="application/xml" id="UpdateRequest" result="updateHandler(event);" url="http://localhost:3000/'+nombre+'/update" useProxy="false"  method="POST">'+"\n"+'<mx:request xmlns="">'+"\n"+'<objetos>'+" \n" +"<id>{datos.selectedItem.id}</id>" +" \n"+HeadService+'</objetos>'+"\n"+'</mx:request>'+"\n"+'</mx:HTTPService>'+ "\n";
 				HeadService+=validate+'<mx:ViewStack x="0" y="0" id="View_01" width="100%" height="100%">'+"\n";
 				datagridHead+='</mx:columns>'+"\n"+'</mx:DataGrid>';
 				canvasdatagrid+=datagridHead+"\n"+IDEComponentes.getInstance().Crear_Button("Crear","crear","{wiew_sw=false;View_01.selectedIndex=1}",DataGridposx,"{datos.height+50}","true")+"\n"+IDEComponentes.getInstance().Crear_Button("Update","UpdateView","wiew_sw=true;validate_id_update();",DataGridposx+96,"{datos.height+50}","true")+"\n"+IDEComponentes.getInstance().Crear_Button("Delete","deletes","deleteHandler(event);",DataGridposx+196,"{datos.height+50}","true")+"\n"+'<mx:Label x="'+DataGridposx+'" y="25" text="Modulo - '+nombre+' "/>'+"\n"+'</mx:Canvas>'+"\n";
-				cadena+= HeadService+IDEComponentes.getInstance().Create_Script(clearparam,nombre,setupdate);
+				cadena+= HeadService+IDEComponentes.getInstance().Create_Script(clearparam,nombre.substring(0,nombre.length-1),setupdate);
 				cadena+=canvasdatagrid;
 				cadena+=canvascomponente;
 				cadena+=IDEComponentes.getInstance().Crear_Button("Submit","submit","CreateRequest.send();",IDEComponentes.getInstance().posx,IDEComponentes.getInstance().posy,"false")+"\n";
@@ -210,8 +212,7 @@ package Clases
 				cadena+=IDEComponentes.getInstance().Crear_Button("Back","back","View_01.selectedIndex=0;clear_field()",IDEComponentes.getInstance().posx+96,IDEComponentes.getInstance().posy,"true")+"\n";
 				cadena+='</mx:Canvas>'+"\n"+'</mx:ViewStack>'+"\n"+'</mx:Canvas>';
 				add_file("src/Componentes/"+nombre+".mxml",cadena);
-				
-			    migrationHead="class CreateTable"+nombre.substr(0,1).toLocaleUpperCase()+nombre.substr(1,nombre.length)+" < ActiveRecord::Migration \n"+"def self.up \n  create_table "+'"'+nombre+'", '+":force => true do |t| \n";
+				migrationHead="class CreateTable"+nombre.substr(0,1).toLocaleUpperCase()+nombre.substr(1,nombre.length)+" < ActiveRecord::Migration \n"+"def self.up \n  create_table "+'"'+nombre+'", '+":force => true do |t| \n";
 				migrationHead+=migrationBody+"end \n end \n def self.down \n  drop_table "+'"'+nombre+'"'+"\n  end \n end \n";
 				Date_Today=new Date().fullYear.toString()+(new Date().month+1).toString()+new Date().date.toString()+new Date().getHours().toString()+new Date().getMinutes().toString()+new Date().getSeconds().toString()+migrationcant.toString();
 				add_file("db/migrate/"+Date_Today+"_create_table_"+nombre+".rb",migrationHead);
@@ -220,7 +221,7 @@ package Clases
 				 cadena='<?xml version="1.0" encoding="utf-8"?>'+" \n"+'<mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml" width="600" height="300" >'+"\n";	
 			     add_file("src/Componentes/"+nombre+".mxml",cadena+"\n"+'</mx:Canvas>');
 				}
-			return "";	
+		 	return "";	
 		}
 		
 		

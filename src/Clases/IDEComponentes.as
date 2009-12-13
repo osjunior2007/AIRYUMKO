@@ -130,7 +130,7 @@ package Clases
 			cadena+="import mx.rpc.events.ResultEvent"+"\n";
 			cadena+="import mx.events.ValidationResultEvent"+"\n";
 			cadena+="public var wiew_sw:Boolean=false"+"\n";
-			cadena+="import com.adobe.serialization.json.JSON"+"\n";
+			cadena+="import com.adobe.serialization.json.JSON"+"\n"+"\n";
 			cadena+='[Bindable]private var dataArray:ArrayCollection;'+"\n"+'[Bindable]private var dataArray1:ArrayCollection;'+"\n";
 			cadena+='private function onJSONLoad(event:ResultEvent,datos:DataGrid):void'+"\n";
 			cadena+='{'+"\n";

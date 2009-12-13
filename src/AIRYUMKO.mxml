@@ -42,6 +42,7 @@
 			[Bindable] public var tipo_dato:ArrayCollection = new ArrayCollection([{label:"Numerico", data:1},{label:"Alfanumerico", data:2}]);
 			//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 			var stado:Boolean=false;
+			var cadena:String="";
 			public function init():void
 			{ 
 				idiomas.send();
@@ -206,8 +207,14 @@
 			public function validar_name():void
 			{
 				if(Modulo_name.text!='')
-				{
-					ingresar_modelo()
+				{ cadena=validar_modulo_nombre(Modulo_name.text);   
+				  if(cadena.length==1&&cadena=="s"){
+				  	Alert.show("Este nombre no puede ser utilizado,seleccione otro!");
+				    }else{
+				    Modulo_name.text=cadena;	
+				    ingresar_modelo();	
+				    }
+					
 				}else{
 					Alert.show(modulo_name_vacio);
 				}	
@@ -216,7 +223,7 @@
 			
 			public function ingresar_modelo():void
 			{
-				Database.getInstance().SetDatos("insert into modulos select distinct null ,'"+Modulo_name.text+"s','"+MC_RubyonRails.getInstance().set_controllador((Modulo_name.text.substr(0,1).toLocaleUpperCase()+Modulo_name.text.substr(1,Modulo_name.text.length))+"s")+"','"+MC_RubyonRails.getInstance().set_modelo(Modulo_name.text)+"' from modulos where not exists (select * from modulos where nombre='"+Modulo_name.text+"') union select null ,'"+Modulo_name.text+"s','"+MC_RubyonRails.getInstance().set_controllador((Modulo_name.text.substr(0,1).toLocaleUpperCase()+Modulo_name.text.substr(1,Modulo_name.text.length))+"s")+"','"+MC_RubyonRails.getInstance().set_modelo(Modulo_name.text)+"'");
+				Database.getInstance().SetDatos("insert into modulos select distinct null ,'"+cadena+"s','"+MC_RubyonRails.getInstance().set_controllador((cadena.substr(0,1).toLocaleUpperCase()+cadena.substr(1,cadena.length))+"s")+"','"+MC_RubyonRails.getInstance().set_modelo(cadena)+"' from modulos where not exists (select * from modulos where nombre='"+cadena+"') union select null ,'"+cadena+"s','"+MC_RubyonRails.getInstance().set_controllador((cadena.substr(0,1).toLocaleUpperCase()+cadena.substr(1,cadena.length))+"s")+"','"+MC_RubyonRails.getInstance().set_modelo(cadena)+"'");
 				buscar_modelo_To_Tree();
 				enabled_componente(true);
 				
@@ -255,7 +262,7 @@
 				agregar.enabled=true;
 				
 			}                            
-			////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 			
 		public function Hbox_divider():void
 		{
@@ -265,8 +272,27 @@
 		  stado=false;	
 		  }
 		 }
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 			
+		public function validar_modulo_nombre(nombre:String):String
+		{  var cadena:String=nombre;
+		   var last_caracter:String=""; 
+		   var sw:int=0;
+			while(cadena.length>1&&sw==0){
+			    last_caracter=nombre.substring(cadena.length-1,cadena.length);
+			   if (last_caracter!="s"){
+		 	        sw=1;
+		 	      }else{
+		             if (last_caracter=="s"){ 	
+		             cadena=cadena.substring(0,cadena.length-1);
+		              }else{
+		          	     sw=1;
+		    }
+		        }	
+			}
 			
+			 return cadena;
+		}	
 		]]>
 		
 	</mx:Script>
