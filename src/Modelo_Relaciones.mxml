@@ -32,7 +32,7 @@
       public function buscar_modelo_To_Tree():void
           {
              Database.getInstance().dbStatement.addEventListener(SQLEvent.RESULT, Create_Tree);
-             Database.getInstance().getDatos("select id_modulo,nombre,name_prural from modulos");
+             Database.getInstance().getDatos("select id_modulo,nombre from modulos");
         
           }            
 
@@ -51,7 +51,7 @@
            public function buscar_todos_componentes(id:String):void
           {
               Database.getInstance().dbStatement.addEventListener(SQLEvent.RESULT, relultado_buscar_todos_componentes);
-             Database.getInstance().getDatos("select id_modulo,nombre,name_prural from modulos where id_modulo not in (select modulo_principal from relaciones where modulo_relacionado='"+id+"'  union  select modulo_relacionado from relaciones where modulo_principal='"+id+"' ) and id_modulo!='"+id+"'");
+             Database.getInstance().getDatos("select id_modulo,nombre from modulos where id_modulo not in (select modulo_principal from relaciones where modulo_relacionado='"+id+"'  union  select modulo_relacionado from relaciones where modulo_principal='"+id+"' ) and id_modulo!='"+id+"'");
             
   
           }

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <mx:WindowedApplication  title="YUMKOO"  initialize="Database.getInstance().initAndOpenDatabase()"  backgroundGradientAlphas="[1.0, 0.32]" backgroundGradientColors="[#A0B8C0, #878A8D]" minWidth="930" minHeight="700" xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" creationComplete="init()">
 	<mx:HTTPService url="español.xml"   requestTimeout="0"   resultFormat="object" id="idiomas" result="Cargar_idioma(event,idiomas); "  useProxy="false"  method="POST" >
-	</mx:HTTPService> 
+	</mx:HTTPService>  
 	<mx:Script> 
 		<![CDATA[
 			import mx.controls.Image;
@@ -16,7 +16,7 @@
 			import mx.rpc.events.ResultEvent
 			import mx.controls.Alert;
 			import Clases.IDEComponentes;
-			import Clases.MC_RubyonRails;
+			import Clases.ActiveRecords;
 			import Clases.Zipfile;
 			import mx.managers.PopUpManager;
 			import Clases.Database;
@@ -223,7 +223,7 @@
 			
 			public function ingresar_modelo():void
 			{
-				Database.getInstance().SetDatos("insert into modulos select distinct null ,'"+cadena+"s','"+MC_RubyonRails.getInstance().set_controllador((cadena.substr(0,1).toLocaleUpperCase()+cadena.substr(1,cadena.length))+"s")+"','"+MC_RubyonRails.getInstance().set_modelo(cadena)+"' from modulos where not exists (select * from modulos where nombre='"+cadena+"') union select null ,'"+cadena+"s','"+MC_RubyonRails.getInstance().set_controllador((cadena.substr(0,1).toLocaleUpperCase()+cadena.substr(1,cadena.length))+"s")+"','"+MC_RubyonRails.getInstance().set_modelo(cadena)+"'");
+				Database.getInstance().SetDatos("insert into modulos select distinct null ,'"+cadena+"s' from modulos where not exists (select * from modulos where nombre='"+cadena+"') union select null ,'"+cadena+"s'");
 				buscar_modelo_To_Tree();
 				enabled_componente(true);
 				

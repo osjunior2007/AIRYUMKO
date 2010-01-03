@@ -79,20 +79,19 @@ package Clases
 			return '<mx:DataGridColumn width="'+(longitud*10)+'" headerText="'+etiqueta+'" dataField="'+dato+'"/>'+"\n";
 		}
 		
-	    public function Head_Http_service(nombre:String):String
+	    public function Head_RemoteObject(name:String):String
 		{
 			var cadena:String="";
-			//nombre=nombre.substring(0,1).toUpperCase()+nombre.substring(1,nombre.length);
-			cadena=' <mx:HTTPService id="ListRequest" url="http://localhost:3000/'+nombre+'/list" useProxy="false" result="onJSONLoad(event,datos)" resultFormat="text"/>'+"\n";
-			cadena+=' <mx:HTTPService id="DeleteRequest" result="ListRequest.send();" url="http://localhost:3000/'+nombre+'/delete" useProxy="false"/>'+"\n";
-			cadena+='<mx:HTTPService contentType="application/xml" id="CreateRequest" url="http://localhost:3000/'+nombre+'/create" result="resul_create(event)" useProxy="false" method="POST">'+"\n"+'<mx:request xmlns="">'+"\n"+'<objetos>'+"\n";
-			return cadena;
+		   cadena='<mx:RemoteObject id="amf" source="'+name+'Controller" destination="amfphp">'+"\n";
+		   cadena+='<mx:method name="index" result="App.getInstance().handlerResult(event);" fault="App.getInstance().handlerFault(event);"/>'+"\n";
+		   cadena+='<mx:method name="create" result="App.getInstance().handlerResult(event);" fault="App.getInstance().handlerFault(event);"/>'+"\n";
+		   cadena+='<mx:method name="update" result="App.getInstance().handlerResult(event);"  fault="App.getInstance().handlerFault(event);"/>'+"\n";
+		   cadena+=' <mx:method name="destroy" result="App.getInstance().handlerResult(event);" fault="App.getInstance().handlerFault(event);"/>'+"\n";
+		   cadena+='</mx:RemoteObject>'+"\n";
+		   return cadena;
 		}
 		
-		public function Http_service_Create(identificador:String):String
-		{
-			return '<'+identificador+'>{Att_'+identificador+'.text}</'+identificador+'>'+"\n";
-		}
+
 		
 		public function Create_migration(nombre:String,tipo:String,tamano:String):String
 		{
@@ -114,81 +113,21 @@ package Clases
 		
 		public function Validation(idenficador:String):String
 		{
-			return "<mx:Validator id='reqValid_"+idenficador+"' required='true' source='{Att_"+idenficador+"}' property='text' valid='handleValid(event)' invalid='handleValid(event)'/> \n";
+			return "<mx:Validator id='reqValid_"+idenficador+"' required='true' source='{Att_"+idenficador+"}' property='text' valid='DataModels.getInstance().handleValid(event)' invalid='DataModels.getInstance().handleValid(event)'/> \n";
 		}
 		
-		public function Create_Script(nom_function:String,tabla:String,setupdate:String):String
+		public function Create_Script(name:String,setupdate:String):String
 		{
 			var cadena:String="";
 			cadena+='<mx:Script>'+"\n";
 			cadena+='<![CDATA['+"\n";
-			cadena+="import mx.controls.Alert"+"\n";
-			cadena+="import mx.events.CloseEvent"+"\n";
-			cadena+="import mx.events.DataGridEvent"+"\n";
-			cadena+="import mx.events.DataGridEventReason"+"\n";
-			cadena+="import mx.collections.ArrayCollection"+"\n";
-			cadena+="import mx.rpc.events.ResultEvent"+"\n";
-			cadena+="import mx.events.ValidationResultEvent"+"\n";
-			cadena+="public var wiew_sw:Boolean=false"+"\n";
-			cadena+="import com.adobe.serialization.json.JSON"+"\n"+"\n";
-			cadena+='[Bindable]private var dataArray:ArrayCollection;'+"\n"+'[Bindable]private var dataArray1:ArrayCollection;'+"\n";
-			cadena+='private function onJSONLoad(event:ResultEvent,datos:DataGrid):void'+"\n";
-			cadena+='{'+"\n";
-			cadena+="dataArray = new ArrayCollection((JSON.decode(event.result as String))as Array)"+"\n";
-			cadena+="dataArray1=new ArrayCollection();"+"\n";
-			cadena+="for (var i:int=0;i<=dataArray.length-1;i++){"+"\n";
-			cadena+="dataArray1.addItem(dataArray.getItemAt(i)."+tabla+");"+"\n";
-			cadena+="}"+"\n";
-			cadena+="datos.dataProvider=dataArray1;"+"\n";
-			cadena+="}"+"\n";
-			cadena+="private function deleteHandler(event:Event):void"+"\n";
-			cadena+="{"+"\n";
-			cadena+='Alert.show("Are you sure you want to delete this item?", "Delete Item", 3, this,';
-			cadena+="function(event:CloseEvent):void"+"\n";
-			cadena+="{"+"\n";
-			cadena+="if (event.detail==Alert.YES)"+"\n";
-			cadena+="DeleteRequest.send({id: datos.selectedItem.id});"+"\n";
-			cadena+="});"+"\n";
-			cadena+="}"+"\n";
-			
-			cadena+=" private function updateHandler(event:Event) : void"+"\n";
-			cadena+="{"+"\n";
-			cadena+="View_01.selectedIndex=0;"+"\n";
-			cadena+="ListRequest.send();"+"\n";
-			cadena+="};"+"\n";
-			
-		    cadena+="public  function resul_create(event:ResultEvent):void"+"\n";
-			cadena+="{"+"\n";
-			cadena+='if(event.message.body.toString()=="0")'+"\n";
-			cadena+="{"+"\n";
-			cadena+="ListRequest.send();"+"\n";
-			cadena+="View_01.selectedIndex=0;"+"\n";
-			cadena+="clear_field();"+"\n";
-			cadena+="}else{"+"\n";
-			cadena+='Alert.show("No se pudo realizar la operación")';
-			cadena+="}"+"\n";
-			cadena+="}"+"\n";
-			
-			cadena+="\n public function clear_field():void { \n"+nom_function+"} \n";
-			cadena+="\n public function set_update():void { \n  if(wiew_sw){"+setupdate+" } "+"\n"+ " }"+ " \n";
-			cadena+="private function handleValid(eventObj:ValidationResultEvent):void {"+"\n";
-			cadena+="if(eventObj.type==ValidationResultEvent.VALID){"+"\n";
-			cadena+="submit.enabled = true;"+"\n";
-			cadena+="updates.enabled = true;"+"\n";
-			cadena+="}else{"+"\n";
-			cadena+="submit.enabled = false;"+"\n";
-			cadena+="updates.enabled= false;"+"\n";
-			cadena+="}"+"\n"
-			cadena+="}"+"\n";
-			cadena+="\n  public function validate_id_update():void"+"\n";
-			cadena+="{"+"\n";
-			cadena+="if(datos.selectedIndex>=0){"+"\n";
-			cadena+="View_01.selectedIndex=1"+"\n";
-			cadena+="}else{"+"\n";
-			cadena+="Alert.show('Seleccione un elemento..');"+"\n";
-			cadena+="}"+"\n";
-			cadena+="} \n";
-			return cadena+"]]>"+"\n"+"</mx:Script>"+"\n";
+			cadena+="  import mx.controls.Alert"+"\n";
+			cadena+="  import mx.rpc.events.ResultEvent"+"\n";
+			cadena+="  import mx.events.ValidationResultEvent"+"\n";
+			cadena+="  public var wiew_sw:Boolean=false"+"\n";
+			cadena+="  import Clases."+name+";"+"\n"+"\n";
+		    cadena+="\n public function set_update():void {"+"\n"+"if(wiew_sw){\n"+setupdate+"}"+"\n"+ "}"+ "\n";
+		    return cadena+"]]>"+"\n"+"</mx:Script>"+"\n";
 		}
 		
 		public function database_yml (database:String,usuario:String,contrasena:String):String

@@ -90,22 +90,7 @@ package Clases
 		   Modelo_nombre+="end";
 		   return Modelo_nombre;
 		}
+		
+
 	}
 }
-
-
-
-/*has_many :audience_ethnicities
-  has_many :audience_marital_statuses
-  belongs_to :request_for_idea
-  belongs_to :education_level
-  belongs_to :planning_category
- 
-  def audience_ethnicities=(attrs)
-    if new_record? 
-      attrs.each do |att|
-        audience_ethnicities.build(att)
-      end
-    else
-    end
-  end*/

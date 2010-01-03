@@ -6,7 +6,7 @@
 				import Clases.Zipfile;
 				import mx.collections.ArrayCollection;
 				import mx.managers.PopUpManager;
-				[Bindable] public var TipoFrameWork:ArrayCollection = new ArrayCollection([{label:"Ralis", data:"Rails.zip"},{label:"CakePhp", data:"cake_1.2.3.8166.zip"}]);
+				[Bindable] public var TipoFrameWork:ArrayCollection = new ArrayCollection([{label:"Ruby on Ralis", data:"Rails.zip"},{label:"CakePhp", data:"cake_1.2.3.8166.zip"},{label:"PhpActiveRecords", data:"amfphp.zip"}]);
 			]]>
 		</mx:Script>			
 		<mx:ComboBox id="framework" dataProvider="{TipoFrameWork}" x="99" y="9.5" width="229"></mx:ComboBox>

@@ -67,9 +67,7 @@ package Clases
 				dbStatement.execute();    
                 sqlQuery="CREATE TABLE IF NOT EXISTS modulos (";
                 sqlQuery+="id_modulo INTEGER PRIMARY KEY AUTOINCREMENT,";
-                sqlQuery+="nombre TEXT NOT NULL,";
-                sqlQuery+="controlador TEXT NOT NULL,";
-                sqlQuery+="modelo TEXT NOT NULL";
+                sqlQuery+="nombre TEXT NOT NULL";
                 sqlQuery+="); ";
                 dbStatement = new SQLStatement();
 				dbStatement.sqlConnection = exampleDB;
@@ -93,7 +91,7 @@ package Clases
 	      	public function getDatos(query:String):void
 			{  
 				dbStatement.text = query;
-			    dbStatement.removeEventListener(SQLEvent.RESULT, onDBStatementInsertResult);
+				dbStatement.removeEventListener(SQLEvent.RESULT, onDBStatementInsertResult);
 			    dbStatement.addEventListener(SQLEvent.RESULT, onDBStatementSelectResult);
 				dbStatement.execute();
 			}
