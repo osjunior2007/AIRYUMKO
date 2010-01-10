@@ -103,11 +103,11 @@
 				if(selectedNode.@label!="App"){
 					Modulo_name.text=selectedNode.@label;
 					enabled_componente(true);
-					enabled_componente(true);
-					dataset.dataProvider={};
+			 		dataset.dataProvider={};
 					Crear_tabla_componente(selectedNode.@data)
 					this.id_modulo=selectedNode.@data;
 				}
+			
 			}             
 			///////////////////////////////////////////////////////////////////////////////////////////
 			
@@ -211,7 +211,7 @@
 				  if(cadena.length==1&&cadena=="s"){
 				  	Alert.show("Este nombre no puede ser utilizado,seleccione otro!");
 				    }else{
-				    Modulo_name.text=cadena;	
+				    Modulo_name.text=cadena+"s";	
 				    ingresar_modelo();	
 				    }
 					
@@ -243,7 +243,9 @@
 				}
 			} 
 			///////////////////////////////////////////////////////////////////////////             
-			public function Crear_elemento(datagrid:DataGrid):void{
+			public function Crear_elemento(datagrid:DataGrid):void
+			{
+				this.id_modulo=IDEComponentes.getInstance().last_modulo_insert;
 				if(identificador_text.text!=""&&Max_caracter_text.text!=""&&componente_etiqueta.text!=""){ 
 					cont_id++;
 					Database.getInstance().dbStatement.addEventListener(SQLEvent.RESULT,resultado_componentes);
@@ -354,7 +356,7 @@
 					</mx:columns>
 				</mx:DataGrid>
 				<mx:Label id="requerido" x="10" y="208" fontWeight="normal"/>
-				<mx:Button id="btn_crear_modulo" x="640" y="34"  click="buscar_modelo_To_Tree();validar_name()"/>
+				<mx:Button id="btn_crear_modulo" x="640" y="34"  click="validar_name()"/>
 				<mx:Button click="new_modulo_add()"   x="695" y="34" id="boton_nuevo_modulo"/>
 				
 			</mx:Canvas>    

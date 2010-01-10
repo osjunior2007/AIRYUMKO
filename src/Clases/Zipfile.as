@@ -45,7 +45,7 @@ package Clases
 		
 		public function init_value():void
 		{
-		  	cadena='<?xml version="1.0" encoding="utf-8"?>'+" \n"+'<mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml" width="600" height="300" creationComplete="ListRequest.send();">'+"\n";
+		  	cadena='<?xml version="1.0" encoding="utf-8"?>'+" \n"+'<mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml" width="600" height="300" creationComplete="App.getInstance().set_canvas(this);App.getInstance().operation('+"'index'"+',{})";>'+"\n";
 		  	canvasdatagrid='<mx:Canvas x="0" y="0"  width="98%" height="98%" showEffect="WipeDown" hideEffect="WipeUp">'+"\n";
 		  	DataGridposx=20;
 		  	datagridHead='<mx:DataGrid horizontalScrollPolicy="auto" id="datos" x="'+DataGridposx+'" y="46" width="98%" height="85%" >'+"\n"+"<mx:columns>"+"\n";
@@ -166,13 +166,19 @@ package Clases
 				
 				//Main Canvas
 				MainApp+='<mx:Canvas label="'+Database.getInstance().personData[i].nombre+'" width="100%" height="100%" showEffect="WipeDown" hideEffect="WipeUp">'+"\n";
-			    MainApp+='<'+name_modelo+'  id="'+Database.getInstance().personData[i].nombre+'"  showEffect="WipeDown" hideEffect="WipeUp" width="98%" height="98%"  y="0" x="0" />'+" \n";
+			    MainApp+='<'+name+'  id="'+Database.getInstance().personData[i].nombre+'"  showEffect="WipeDown" hideEffect="WipeUp" width="98%" height="98%"  y="0" x="0" />'+" \n";
 				MainApp+='</mx:Canvas>'+" \n";
 				Buil_Components_Mxml(Database.getInstance().personData[i].id_modulo,name)
 	           }
 	      
 			    MainApp='<?xml version="1.0" encoding="utf-8"?>'+" \n"+'<mx:Application  xmlns="Componentes.*" xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute">'+" \n"+'<mx:TabNavigator x="10" y="22" width="98%" height="95%">'+" \n"+MainApp;
-			    MainApp+="</mx:TabNavigator>"+" \n"+'<mx:Style source="css.css"/> '+" \n"+'</mx:Application>';
+			    MainApp+="</mx:TabNavigator>"+" \n"+'<mx:Style source="css.css"/> '+" \n";
+			    MainApp+="<mx:Script>"+" \n";
+		        MainApp+="          <![CDATA["+" \n";
+			    MainApp+="         import Clases."+name+""+" \n";
+			    MainApp+="        import Clases.App;"+" \n";
+		        MainApp+="       ]]>"+" \n";
+	            MainApp+=" </mx:Script>"+"\n"+'</mx:Application>';
 			    add_file("src/Main.mxml",MainApp);
 			
 			  
@@ -216,7 +222,7 @@ package Clases
 				   if(list_components[i].requerido=="true"){
 					 validate+=IDEComponentes.getInstance().Validation(list_components[i].identificador);   
 				   }
-				   Objectparam+="  objeto."+list_components[i].identificador+"=this.canvas['datos'].selectedItem."+list_components[i].identificador+"\n";
+				   Objectparam+="  objeto."+list_components[i].identificador+"="+"this.canvas['Att_"+list_components[i].identificador+"'].text"+"\n";
 				   setupdate+=" "+"Att_"+list_components[i].identificador+".text=datos.selectedItem."+list_components[i].identificador+"\n";
 
 				  
@@ -235,14 +241,14 @@ package Clases
 				HeadService=IDEComponentes.getInstance().Head_RemoteObject(nombre)+"\n";
 				HeadService+=validate+'<mx:ViewStack x="0" y="0" id="View_01" width="100%" height="100%">'+"\n";
 				datagridHead+='</mx:columns>'+"\n"+'</mx:DataGrid>';
-				canvasdatagrid+=datagridHead+"\n"+IDEComponentes.getInstance().Crear_Button("Crear","crear","{wiew_sw=false;View_01.selectedIndex=1}",DataGridposx,"{datos.height+50}","true")+"\n"+IDEComponentes.getInstance().Crear_Button("Update","UpdateView","wiew_sw=true;DataModels.getInstance().validate_id_update(event);",DataGridposx+96,"{datos.height+50}","true")+"\n"+IDEComponentes.getInstance().Crear_Button("Delete","deletes","DataModels.getInstance().deleteHandler(event);",DataGridposx+196,"{datos.height+50}","true")+"\n"+'<mx:Label x="'+DataGridposx+'" y="25" text="Modulo - '+nombre+' "/>'+"\n"+'</mx:Canvas>'+"\n";
+				canvasdatagrid+=datagridHead+"\n"+IDEComponentes.getInstance().Crear_Button("Crear","crear","{wiew_sw=false;View_01.selectedIndex=1}",DataGridposx,"{datos.height+50}","true")+"\n"+IDEComponentes.getInstance().Crear_Button("Update","UpdateView","wiew_sw=true;App.getInstance().validate_id_update(event);",DataGridposx+96,"{datos.height+50}","true")+"\n"+IDEComponentes.getInstance().Crear_Button("Delete","deletes",""+nombre+".getInstance().create_object()",DataGridposx+196,"{datos.height+50}","true")+"\n"+'<mx:Label x="'+DataGridposx+'" y="25" text="Modulo - '+nombre+' "/>'+"\n"+'</mx:Canvas>'+"\n";
 				cadena+= HeadService+IDEComponentes.getInstance().Create_Script(nombre,setupdate);
 				cadena+=canvasdatagrid;
 				cadena+=canvascomponente;
-				cadena+=IDEComponentes.getInstance().Crear_Button("Submit","submit","CreateRequest.send();",IDEComponentes.getInstance().posx,IDEComponentes.getInstance().posy,"false")+"\n";
-				cadena+=IDEComponentes.getInstance().Crear_Button("Update","updates","UpdateRequest.send()",IDEComponentes.getInstance().posx+96,IDEComponentes.getInstance().posy,"false")+"\n";
+				cadena+=IDEComponentes.getInstance().Crear_Button("Create","submit","App.getInstance().operation('create',"+nombre+".getInstance().create_object());",IDEComponentes.getInstance().posx,IDEComponentes.getInstance().posy,"false")+"\n";
+				cadena+=IDEComponentes.getInstance().Crear_Button("Update","updates","App.getInstance().operation('update',"+nombre+".getInstance().create_object());",IDEComponentes.getInstance().posx+96,IDEComponentes.getInstance().posy,"false")+"\n";
 				IDEComponentes.getInstance().posx=IDEComponentes.getInstance().posx+96;
-				cadena+=IDEComponentes.getInstance().Crear_Button("Back","back","View_01.selectedIndex=0;DataModels.getInstance().clear_field()",IDEComponentes.getInstance().posx+96,IDEComponentes.getInstance().posy,"true")+"\n";
+				cadena+=IDEComponentes.getInstance().Crear_Button("Back","back","View_01.selectedIndex=0;",IDEComponentes.getInstance().posx+96,IDEComponentes.getInstance().posy,"true")+"\n";
 				cadena+='</mx:Canvas>'+"\n"+'</mx:ViewStack>'+"\n"+'</mx:Canvas>';
 				add_file("src/Componentes/"+nombre+".mxml",cadena);
 				

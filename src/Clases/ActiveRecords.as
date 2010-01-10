@@ -33,7 +33,7 @@ package Clases
         public  function metodo_Crear(nombre:String):String
 		{ 
 			cadena=" function create($param) {"+'\n';
-			cadena+="$"+nombre.substr(0,nombre.length-1)+" = new "+nombre.substr(0,nombre.length-1)+"($params);"+'\n'; 
+			cadena+="$"+nombre.substr(0,nombre.length-1)+" = new "+nombre.substr(0,nombre.length-1)+"($param);"+'\n'; 
 			cadena+="if ($"+nombre.substr(0,nombre.length-1)+"->is_valid()){"+'\n'; 
 			cadena+="$"+nombre.substr(0,nombre.length-1)+"->save();"+'\n';
 			cadena+='return 0;';
@@ -47,7 +47,7 @@ package Clases
 		  public  function metodo_actualizar(nombre:String):String
 		{ 
 			cadena=" function update($param) {"+'\n';
-			cadena+="$"+nombre.substr(0,nombre.length-1)+" = "+nombre.substr(0,nombre.length-1)+"::find_by_id($params[id]);"+'\n'; 
+			cadena+="$"+nombre.substr(0,nombre.length-1)+" = "+nombre.substr(0,nombre.length-1)+"::find_by_id($param[id]);"+'\n'; 
 			cadena+="if ($"+nombre.substr(0,nombre.length-1)+"->is_valid()){"+'\n'; 
 			cadena+="$"+nombre.substr(0,nombre.length-1)+"->update_attributes($param);"+'\n';
 			cadena+="return 0; "+'\n';
@@ -91,17 +91,18 @@ package Clases
 		{
 		   modelo=modelo.substring(0,1).toUpperCase()+modelo.substring(1,cadena.length)
 		   Modelo_nombre="<?php"+'\n\n';
-		   Modelo_nombre+="class "+modelo+" extends ActiveRecordModel"+'\n';
+		   Modelo_nombre+="class "+modelo+" extends ActiveRecord\\\Model"+'\n';
 		   Modelo_nombre+="{"+'\n\n';
+		   Modelo_nombre+=" static $table_name = '"+modelo+"';"+"\n";
 		   Modelo_nombre+="}"+'\n\n';
-		   Modelo_nombre+="?>"+'\n\n';
+		   Modelo_nombre+="?>";
 		   return Modelo_nombre;
 		}
 		
 		public function Data_Base(name:String,user:String,pass:String):String
 		{
 		 cadena="<?php \n require_once ('ActiveRecord.php');\n\n"
-		 cadena+="ActiveRecord\Config::initialize(function($cfg)"+"\n";
+		 cadena+="ActiveRecord\\\Config::initialize(function($cfg)"+"\n";
 		 cadena+="{"+"\n";	
 		 cadena+=" $cfg->set_model_directory('models');"+"\n";	
 		 cadena+="$cfg->set_connections(array('development' => 'mysql://"+user+":@127.0.0.1/"+name+"'));"+"\n\n";
@@ -135,38 +136,39 @@ package Clases
 		    cadena+="  import mx.rpc.remoting.RemoteObject;"+"\n";
 		    cadena+="  import mx.utils.ArrayUtil;"+"\n\n"; 
             cadena+="  public class "+name+""+"\n";
-		    cadena+="  {\n private static var instancia: "+name+";"+"\n";
-	        cadena+="  private var datos:DataGrid;"+"\n";
-	        cadena+="  private var canvas:Canvas;"+"\n";
-	        cadena+="  import mx.controls.Alert;"+"\n";
-	        cadena+="  public var objeto:Object={};"+"\n";
-	        cadena+="  private var serilizacion:Array=new Array();"+"\n";
-			cadena+="  public function "+name+"()"+"\n";
-			cadena+="  {"+"\n";
-			cadena+="  }"+"\n";
-			cadena+=""+"\n";
-			cadena+="  public function set_canvas(canvas:Canvas):void"+"\n";
-			cadena+="  {"+"\n";
-			cadena+="  this.canvas=canvas;"+"\n";
-			cadena+="  }"+"\n";
-			cadena+="  public function create_object():Object"+"\n";
-	        cadena+="  {"+"\n";
-	        cadena+=attibute;
-	        cadena+="  if(this.canvas['datos'].selectedIndex>=0){"+"\n";
-	        cadena+="  objeto.id=this.canvas['datos'].selectedItem.id"+"\n";
-	        cadena+="  }else{"+"\n";
-	        cadena+="    objeto.id='';"+"\n";
-	        cadena+="  }"+"\n";
-	        cadena+="  return objeto;"+"\n";
-	        cadena+=" }"+"\n";
-			cadena+="  public static function getInstance():"+name+""+"\n";
-			cadena+="  {"+"\n";
-			cadena+="  if( instancia==null )"+"\n";
-			cadena+="   instancia = new "+name+"();"+"\n";
-			cadena+="   return instancia;"+"\n";
+		    cadena+="  {"+"\n\n"+" private static var instancia: "+name+";"+"\n";
+	        cadena+="   private var datos:DataGrid;"+"\n";
+	        cadena+="   private var canvas:Canvas;"+"\n";
+	        cadena+="   import mx.controls.Alert;"+"\n";
+	        cadena+="   public var objeto:Object={};"+"\n";
+	        cadena+="   private var serilizacion:Array=new Array();"+"\n";
+			cadena+="   public function "+name+"()"+"\n";
+			cadena+="   {"+"\n";
 			cadena+="   }"+"\n";
-	        cadena+="  }"+"\n";
-	        cadena+="}"+"\n";
+			cadena+=""+"\n";
+			cadena+="   public function set_canvas(canvas:Canvas):void"+"\n";
+			cadena+="   {"+"\n";
+			cadena+="   this.canvas=canvas;"+"\n";
+			cadena+="   }"+"\n";
+			cadena+="   public function create_object():Object"+"\n";
+	        cadena+="   {"+"\n";
+	        cadena+=attibute;
+	        cadena+=" this.canvas=App.getInstance().canvas;"+"\n";
+	        cadena+="   if(this.canvas['datos'].selectedIndex>=0){"+"\n";
+	        cadena+="   objeto.id=this.canvas['datos'].selectedItem.id"+"\n";
+	        cadena+="   }else{"+"\n";
+	        cadena+="    objeto.id='';"+"\n";
+	        cadena+="   }"+"\n";
+	        cadena+="    return objeto;"+"\n";
+	        cadena+="   }"+"\n";
+			cadena+="   public static function getInstance():"+name+""+"\n";
+			cadena+="   {"+"\n";
+			cadena+="   if( instancia==null )"+"\n";
+			cadena+="     instancia = new "+name+"();"+"\n";
+			cadena+="      return instancia;"+"\n";
+			cadena+="     }"+"\n";
+	        cadena+="   }"+"\n";
+	        cadena+=" }"+"\n";
 			return cadena;
 		}
 		

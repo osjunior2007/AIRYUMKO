@@ -10,7 +10,7 @@ package Clases
 		public var posy:int=20;
 		public var HeadCanvas:String='<?xml version="1.0" encoding="utf-8"?>\n<mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml" width="600" height="300">'
 		public var MainCanvas:String='<?xml version="1.0" encoding="utf-8"?>'+" \n"+'<mx:Application  xmlns="Componentes.*" xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute">'+" \n"+'<mx:TabNavigator x="10" y="22" width="98%" height="95%">'+" \n";
-
+       public var last_modulo_insert:String="";
 		
 		public function IDEComponentes()
 		{
@@ -113,7 +113,7 @@ package Clases
 		
 		public function Validation(idenficador:String):String
 		{
-			return "<mx:Validator id='reqValid_"+idenficador+"' required='true' source='{Att_"+idenficador+"}' property='text' valid='DataModels.getInstance().handleValid(event)' invalid='DataModels.getInstance().handleValid(event)'/> \n";
+			return "<mx:Validator id='reqValid_"+idenficador+"' required='true' source='{Att_"+idenficador+"}' property='text' valid='App.getInstance().handleValid(event)' invalid='App.getInstance().handleValid(event)'/> \n";
 		}
 		
 		public function Create_Script(name:String,setupdate:String):String
@@ -125,7 +125,8 @@ package Clases
 			cadena+="  import mx.rpc.events.ResultEvent"+"\n";
 			cadena+="  import mx.events.ValidationResultEvent"+"\n";
 			cadena+="  public var wiew_sw:Boolean=false"+"\n";
-			cadena+="  import Clases."+name+";"+"\n"+"\n";
+			cadena+="  import Clases."+name+";"+"\n";
+            cadena+="  import Clases.App;"+" \n";
 		    cadena+="\n public function set_update():void {"+"\n"+"if(wiew_sw){\n"+setupdate+"}"+"\n"+ "}"+ "\n";
 		    return cadena+"]]>"+"\n"+"</mx:Script>"+"\n";
 		}
@@ -255,8 +256,9 @@ package Clases
                  if(datos!=null){	
                	   for(var i:int=0;i<=datos.length-1;i++)
                 	  {
-              	      datostree+="<node label='"+datos[i].nombre+"' name_prural='"+datos[i].name_prural+"'  data='"+datos[i].id_modulo+"' />"	
+              	      datostree+="<node label='"+datos[i].nombre+"'  data='"+datos[i].id_modulo+"' />"	
               	      }  
+              	      this.last_modulo_insert=datos[datos.length-1].id_modulo
                      datostree+="</node>";
                     return datostree;
                   }else{

@@ -99,7 +99,7 @@ package Clases
 			 public function SetDatos(query:String):void
 		     {
 		       dbStatement.text = query;
-	           dbStatement.removeEventListener(SQLEvent.RESULT, onDBStatementSelectResult);
+		       dbStatement.removeEventListener(SQLEvent.RESULT, onDBStatementSelectResult);
 			   dbStatement.addEventListener(SQLEvent.RESULT, onDBStatementInsertResult);
 			   dbStatement.execute();
 	        }
