@@ -45,7 +45,7 @@ package Clases
 		
 		public function init_value():void
 		{
-		  	cadena='<?xml version="1.0" encoding="utf-8"?>'+" \n"+'<mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml" width="600" height="300" creationComplete="App.getInstance().set_canvas(this);App.getInstance().operation('+"'index'"+',{})";>'+"\n";
+		  	cadena='<?xml version="1.0" encoding="utf-8"?>'+" \n"+'<mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml" width="600" height="300" creationComplete="App.getInstance().set_canvas(this);App.getInstance().operation('+"'index'"+',{});">'+"\n";
 		  	canvasdatagrid='<mx:Canvas x="0" y="0"  width="98%" height="98%" showEffect="WipeDown" hideEffect="WipeUp">'+"\n";
 		  	DataGridposx=20;
 		  	datagridHead='<mx:DataGrid horizontalScrollPolicy="auto" id="datos" x="'+DataGridposx+'" y="46" width="98%" height="85%" >'+"\n"+"<mx:columns>"+"\n";
