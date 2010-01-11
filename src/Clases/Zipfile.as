@@ -55,9 +55,9 @@ package Clases
 		  	DataGridposx=20;
 		  	datagridHead='<mx:DataGrid horizontalScrollPolicy="auto" id="datos" x="'+DataGridposx+'" y="46" width="98%" height="85%" >'+"\n"+"<mx:columns>"+"\n";
 		  	 if(IDEComponentes.getInstance().RequeriedEfecctCanvas==0){
-		     canvascomponente='<mx:Canvas updateComplete="set_update()" x="0" y="0"  width="98%" height="98%" showEffect="'+IDEComponentes.getInstance().EfecctCanvas.getItemAt(0).showEffect+'" hideEffect="'+IDEComponentes.getInstance().EfecctCanvas.getItemAt(0).hideEffect+'">'+"\n";
+		     canvascomponente='<mx:Canvas id="InputsObjects" updateComplete="set_update()" x="0" y="0"  width="98%" height="98%" showEffect="'+IDEComponentes.getInstance().EfecctCanvas.getItemAt(0).showEffect+'" hideEffect="'+IDEComponentes.getInstance().EfecctCanvas.getItemAt(0).hideEffect+'">'+"\n";
 		     }else{
-		     canvascomponente='<mx:Canvas updateComplete="set_update()" x="0" y="0"  width="98%" height="98%" >'+"\n";
+		     canvascomponente='<mx:Canvas id="InputsObjects" updateComplete="set_update()" x="0" y="0"  width="98%" height="98%" >'+"\n";
 		     }
 		  	HeadService="";
 		  	Objectparam="";
@@ -177,10 +177,10 @@ package Clases
 				//Main Canvas
 			    if(IDEComponentes.getInstance().RequeriedEfecctCanvas==0){
 		        MainApp+='<mx:Canvas click="App.getInstance().set_canvas('+Database.getInstance().personData[i].nombre+');" label="'+Database.getInstance().personData[i].nombre+'" width="100%" height="100%" showEffect="'+IDEComponentes.getInstance().EfecctCanvas.getItemAt(0).showEffect+'" hideEffect="'+IDEComponentes.getInstance().EfecctCanvas.getItemAt(0).hideEffect+'">'+"\n";
-			    MainApp+='<'+name.substr(0,name.length-1)+' creationComplete="Productos.getInstance().set_canvas('+Database.getInstance().personData[i].nombre+');"  id="'+Database.getInstance().personData[i].nombre+'"  showEffect="'+IDEComponentes.getInstance().EfecctCanvas.getItemAt(0).showEffect+'" hideEffect="'+IDEComponentes.getInstance().EfecctCanvas.getItemAt(0).hideEffect+'" width="98%" height="98%"  y="0" x="0" />'+" \n";
+			    MainApp+='<'+name.substr(0,name.length-1)+' creationComplete="'+name+'.getInstance().set_canvas('+Database.getInstance().personData[i].nombre+');"  id="'+Database.getInstance().personData[i].nombre+'"  showEffect="'+IDEComponentes.getInstance().EfecctCanvas.getItemAt(0).showEffect+'" hideEffect="'+IDEComponentes.getInstance().EfecctCanvas.getItemAt(0).hideEffect+'" width="98%" height="98%"  y="0" x="0" />'+" \n";
 		        }else{
 		        MainApp+='<mx:Canvas click="App.getInstance().set_canvas('+Database.getInstance().personData[i].nombre+');" label="'+Database.getInstance().personData[i].nombre+'" width="100%" height="100%" >'+"\n";
-			    MainApp+='<'+name.substr(0,name.length-1)+' creationComplete="Productos.getInstance().set_canvas('+Database.getInstance().personData[i].nombre+');"  id="'+Database.getInstance().personData[i].nombre+'"  width="98%" height="98%"  y="0" x="0" />'+" \n";  
+			    MainApp+='<'+name.substr(0,name.length-1)+' creationComplete="'+name+'.getInstance().set_canvas('+Database.getInstance().personData[i].nombre+');"  id="'+Database.getInstance().personData[i].nombre+'"  width="98%" height="98%"  y="0" x="0" />'+" \n";  
 			    }
 			    
 				MainApp+='</mx:Canvas>'+" \n";
