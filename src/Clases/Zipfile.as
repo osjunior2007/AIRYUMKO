@@ -19,12 +19,12 @@ package Clases
 		public var proyecto_name:String="Proyecto";
 		public var user_database:String="root";
 		public var password_database:String="";
+		public var canvascomponente:String="";
 		////////////////////////////////////////////////////////////////////////
 		public var cadena:String='<?xml version="1.0" encoding="utf-8"?>'+" \n"+'<mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml" width="600" height="300" creationComplete="DataModels.getInstance().set_canvas(this,CanvasDataInpust);ListRequest.send();">'+"\n";
 		public var canvasdatagrid:String='<mx:Canvas x="0" y="0"  width="98%" height="98%" showEffect="WipeDown" hideEffect="WipeUp">'+"\n";
 		public var DataGridposx:int=20;
 		public var datagridHead:String='<mx:DataGrid horizontalScrollPolicy="auto" id="datos" x="'+DataGridposx+'" y="46" width="98%" height="85%" >'+"\n"+"<mx:columns>"+"\n";
-		public var canvascomponente:String='<mx:Canvas updateComplete="set_update()" x="0" y="0"  width="98%" height="98%" showEffect="WipeDown" hideEffect="WipeUp">'+"\n";
 		public var HeadService:String="";
 		public var Objectparam:String="";
 		public var setupdate:String="";
@@ -34,6 +34,7 @@ package Clases
 		public var posy:int=20;
 		public var sw:int=0;
 		public var migrationHead:String="";
+		public var nameclases:String="";
 		[Bindable] public var list_components:Array = new Array();
  	    public var Date_Today:String="";
 		public var migrationcant:int=0;
@@ -46,10 +47,18 @@ package Clases
 		public function init_value():void
 		{
 		  	cadena='<?xml version="1.0" encoding="utf-8"?>'+" \n"+'<mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml" width="600" height="300" creationComplete="App.getInstance().set_canvas(this);App.getInstance().operation('+"'index'"+',{});">'+"\n";
-		  	canvasdatagrid='<mx:Canvas x="0" y="0"  width="98%" height="98%" showEffect="WipeDown" hideEffect="WipeUp">'+"\n";
+		   if(IDEComponentes.getInstance().RequeriedEfecctCanvas==0){
+		  	canvasdatagrid='<mx:Canvas x="0" y="0"  width="98%" height="98%" showEffect="'+IDEComponentes.getInstance().EfecctCanvas.getItemAt(0).showEffect+'" hideEffect="'+IDEComponentes.getInstance().EfecctCanvas.getItemAt(0).hideEffect+'">'+"\n";
+		  	}else{
+		     canvasdatagrid='<mx:Canvas x="0" y="0"  width="98%" height="98%" >'+"\n";
+		  	}
 		  	DataGridposx=20;
 		  	datagridHead='<mx:DataGrid horizontalScrollPolicy="auto" id="datos" x="'+DataGridposx+'" y="46" width="98%" height="85%" >'+"\n"+"<mx:columns>"+"\n";
-		  	canvascomponente='<mx:Canvas updateComplete="set_update()" x="0" y="0"  width="98%" height="98%" showEffect="WipeDown" hideEffect="WipeUp">'+"\n";
+		  	 if(IDEComponentes.getInstance().RequeriedEfecctCanvas==0){
+		     canvascomponente='<mx:Canvas updateComplete="set_update()" x="0" y="0"  width="98%" height="98%" showEffect="'+IDEComponentes.getInstance().EfecctCanvas.getItemAt(0).showEffect+'" hideEffect="'+IDEComponentes.getInstance().EfecctCanvas.getItemAt(0).hideEffect+'">'+"\n";
+		     }else{
+		     canvascomponente='<mx:Canvas updateComplete="set_update()" x="0" y="0"  width="98%" height="98%" >'+"\n";
+		     }
 		  	HeadService="";
 		  	Objectparam="";
 		  	setupdate="";
@@ -131,6 +140,7 @@ package Clases
 			var name_modelo:String="";
 			var name:String="";
 			var MainApp:String="";	
+			nameclases="";
 		  if(Database.getInstance().personData!=null){	
 			for(var i:int=0;i<=Database.getInstance().personData.length-1;i++){
 				name=Database.getInstance().personData[i].nombre;
@@ -165,18 +175,26 @@ package Clases
 				}
 				
 				//Main Canvas
-				MainApp+='<mx:Canvas label="'+Database.getInstance().personData[i].nombre+'" width="100%" height="100%" showEffect="WipeDown" hideEffect="WipeUp">'+"\n";
-			    MainApp+='<'+name+'  id="'+Database.getInstance().personData[i].nombre+'"  showEffect="WipeDown" hideEffect="WipeUp" width="98%" height="98%"  y="0" x="0" />'+" \n";
+			    if(IDEComponentes.getInstance().RequeriedEfecctCanvas==0){
+		        MainApp+='<mx:Canvas click="App.getInstance().set_canvas('+Database.getInstance().personData[i].nombre+');" label="'+Database.getInstance().personData[i].nombre+'" width="100%" height="100%" showEffect="'+IDEComponentes.getInstance().EfecctCanvas.getItemAt(0).showEffect+'" hideEffect="'+IDEComponentes.getInstance().EfecctCanvas.getItemAt(0).hideEffect+'">'+"\n";
+			    MainApp+='<'+name.substr(0,name.length-1)+' creationComplete="Productos.getInstance().set_canvas('+Database.getInstance().personData[i].nombre+');"  id="'+Database.getInstance().personData[i].nombre+'"  showEffect="'+IDEComponentes.getInstance().EfecctCanvas.getItemAt(0).showEffect+'" hideEffect="'+IDEComponentes.getInstance().EfecctCanvas.getItemAt(0).hideEffect+'" width="98%" height="98%"  y="0" x="0" />'+" \n";
+		        }else{
+		        MainApp+='<mx:Canvas click="App.getInstance().set_canvas('+Database.getInstance().personData[i].nombre+');" label="'+Database.getInstance().personData[i].nombre+'" width="100%" height="100%" >'+"\n";
+			    MainApp+='<'+name.substr(0,name.length-1)+' creationComplete="Productos.getInstance().set_canvas('+Database.getInstance().personData[i].nombre+');"  id="'+Database.getInstance().personData[i].nombre+'"  width="98%" height="98%"  y="0" x="0" />'+" \n";  
+			    }
+			    
 				MainApp+='</mx:Canvas>'+" \n";
 				Buil_Components_Mxml(Database.getInstance().personData[i].id_modulo,name)
+	            nameclases+="         import Clases."+name+""+" \n";
 	           }
 	      
 			    MainApp='<?xml version="1.0" encoding="utf-8"?>'+" \n"+'<mx:Application  xmlns="Componentes.*" xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute">'+" \n"+'<mx:TabNavigator x="10" y="22" width="98%" height="95%">'+" \n"+MainApp;
-			    MainApp+="</mx:TabNavigator>"+" \n"+'<mx:Style source="css.css"/> '+" \n";
+			    //MainApp+="</mx:TabNavigator>"+" \n"+'<mx:Style source="css.css"/> '+" \n";
+			    MainApp+="</mx:TabNavigator>"+" \n";
 			    MainApp+="<mx:Script>"+" \n";
 		        MainApp+="          <![CDATA["+" \n";
-			    MainApp+="         import Clases."+name+""+" \n";
-			    MainApp+="        import Clases.App;"+" \n";
+			    MainApp+=nameclases;
+			    MainApp+="         import Clases.App;"+" \n";
 		        MainApp+="       ]]>"+" \n";
 	            MainApp+=" </mx:Script>"+"\n"+'</mx:Application>';
 			    add_file("src/Main.mxml",MainApp);

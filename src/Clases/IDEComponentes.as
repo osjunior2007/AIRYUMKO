@@ -8,6 +8,8 @@ package Clases
 		private static var instancia:IDEComponentes;
 		public var posx:int=10;
 		public var posy:int=20;
+		public var RequeriedEfecctCanvas:int=1;
+	    [Bindable] public var EfecctCanvas:ArrayCollection = new ArrayCollection([{showEffect:"WipeDown", hideEffect:"WipeUp"}]);
 		public var HeadCanvas:String='<?xml version="1.0" encoding="utf-8"?>\n<mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml" width="600" height="300">'
 		public var MainCanvas:String='<?xml version="1.0" encoding="utf-8"?>'+" \n"+'<mx:Application  xmlns="Componentes.*" xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute">'+" \n"+'<mx:TabNavigator x="10" y="22" width="98%" height="95%">'+" \n";
        public var last_modulo_insert:String="";
@@ -83,8 +85,8 @@ package Clases
 		{
 			var cadena:String="";
 		   cadena='<mx:RemoteObject id="amf" source="'+name+'Controller" destination="amfphp">'+"\n";
-		   cadena+='<mx:method name="index" result="App.getInstance().handlerResult(event);" fault="App.getInstance().handlerFault(event);"/>'+"\n";
-		   cadena+='<mx:method name="create" result="App.getInstance().handlerResult(event);" fault="App.getInstance().handlerFault(event);"/>'+"\n";
+		   cadena+='<mx:method name="index" result="'+name+'.getInstance().Result(event);" fault="App.getInstance().handlerFault(event);"/>'+"\n";
+		   cadena+='<mx:method name="create" result="'+name+'.getInstance().ResultCreate(event);" fault="App.getInstance().handlerFault(event);"/>'+"\n";
 		   cadena+='<mx:method name="update" result="App.getInstance().handlerResult(event);"  fault="App.getInstance().handlerFault(event);"/>'+"\n";
 		   cadena+=' <mx:method name="destroy" result="App.getInstance().handlerResult(event);" fault="App.getInstance().handlerFault(event);"/>'+"\n";
 		   cadena+='</mx:RemoteObject>'+"\n";
@@ -113,7 +115,7 @@ package Clases
 		
 		public function Validation(idenficador:String):String
 		{
-			return "<mx:Validator id='reqValid_"+idenficador+"' required='true' source='{Att_"+idenficador+"}' property='text' valid='App.getInstance().handleValid(event)' invalid='App.getInstance().handleValid(event)'/> \n";
+			return "<mx:Validator id='reqValid_"+idenficador+"' required='true' source='{Att_"+idenficador+"}' property='text' valid='App.getInstance().handleValid(event,Att_"+idenficador+")' invalid='App.getInstance().handleValid(event,Att_"+idenficador+")'/> \n";
 		}
 		
 		public function Create_Script(name:String,setupdate:String):String

@@ -152,8 +152,8 @@ package Clases
 			cadena+="   }"+"\n";
 			cadena+="   public function create_object():Object"+"\n";
 	        cadena+="   {"+"\n";
-	        cadena+=attibute;
 	        cadena+=" this.canvas=App.getInstance().canvas;"+"\n";
+	        cadena+=attibute;
 	        cadena+="   if(this.canvas['datos'].selectedIndex>=0){"+"\n";
 	        cadena+="   objeto.id=this.canvas['datos'].selectedItem.id"+"\n";
 	        cadena+="   }else{"+"\n";
@@ -168,6 +168,13 @@ package Clases
 			cadena+="      return instancia;"+"\n";
 			cadena+="     }"+"\n";
 	        cadena+="   }"+"\n";
+	        cadena+=" public function Result(e:ResultEvent):void {"+"\n";
+			cadena+="     serilizacion=new Array()"+"\n";
+		    cadena+="     for (var i:String in ArrayUtil.toArray(e.result)){"+"\n";
+	  	    cadena+="          serilizacion.push(ArrayUtil.toArray(e.result)[i][0]);"+"\n";
+	        cadena+="       }"+"\n";
+	        cadena+="         this.canvas['datos'].dataProvider=serilizacion;"+"\n";
+	        cadena+="    }"+"\n";
 	        cadena+=" }"+"\n";
 			return cadena;
 		}
