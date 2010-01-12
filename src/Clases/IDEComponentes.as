@@ -115,7 +115,7 @@ package Clases
 		
 		public function Validation(idenficador:String):String
 		{
-			return "<mx:Validator id='reqValid_"+idenficador+"' required='true' source='{Att_"+idenficador+"}' property='text' valid='App.getInstance().handleValid(event,Att_"+idenficador+")' invalid='App.getInstance().handleValid(event,Att_"+idenficador+")'/> \n";
+			return "<mx:Validator requiredFieldError='"+idenficador+" is required' id='reqValid_"+idenficador+"' required='true' source='{Att_"+idenficador+"}' property='text' valid='App.getInstance().handleValid(event,Att_"+idenficador+")' invalid='App.getInstance().handleValid(event,Att_"+idenficador+")'/> \n";
 		}
 		
 		public function Create_Script(name:String,setupdate:String):String

@@ -288,7 +288,8 @@ package Clases
 				 cadena='<?xml version="1.0" encoding="utf-8"?>'+" \n"+'<mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml" width="600" height="300" >'+"\n";	
 			     add_file("src/Componentes/"+nombre+".mxml",cadena+"\n"+'</mx:Canvas>');
 				}
-		
+		  IDEComponentes.getInstance().posx=10;
+		  IDEComponentes.getInstance().posy=20;
 		  }//If not is null	
 		  return "";	
 		}
