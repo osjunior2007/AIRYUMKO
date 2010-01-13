@@ -259,14 +259,14 @@ package Clases
 				HeadService=IDEComponentes.getInstance().Head_RemoteObject(nombre)+"\n";
 				HeadService+=validate+'<mx:ViewStack x="0" y="0" id="View_01" width="100%" height="100%">'+"\n";
 				datagridHead+='</mx:columns>'+"\n"+'</mx:DataGrid>';
-				canvasdatagrid+=datagridHead+"\n"+IDEComponentes.getInstance().Crear_Button("Crear","crear","{wiew_sw=false;View_01.selectedIndex=1}",DataGridposx,"{datos.height+50}","true")+"\n"+IDEComponentes.getInstance().Crear_Button("Update","UpdateView","wiew_sw=true;App.getInstance().validate_id_update(event);",DataGridposx+96,"{datos.height+50}","true")+"\n"+IDEComponentes.getInstance().Crear_Button("Delete","deletes",""+nombre+".getInstance().create_object()",DataGridposx+196,"{datos.height+50}","true")+"\n"+'<mx:Label x="'+DataGridposx+'" y="25" text="Modulo - '+nombre+' "/>'+"\n"+'</mx:Canvas>'+"\n";
+				canvasdatagrid+=datagridHead+"\n"+IDEComponentes.getInstance().Crear_Button("Crear","crear","{wiew_sw=false;App.getInstance().View_Operation('create')}",DataGridposx,"{datos.height+50}","true")+"\n"+IDEComponentes.getInstance().Crear_Button("Update","UpdateView","wiew_sw=true;App.getInstance().View_Operation('update')",DataGridposx+96,"{datos.height+50}","true")+"\n"+IDEComponentes.getInstance().Crear_Button("Delete","deletes",""+nombre+".getInstance().create_object()",DataGridposx+196,"{datos.height+50}","true")+"\n"+'<mx:Label x="'+DataGridposx+'" y="25" text="Modulo - '+nombre+' "/>'+"\n"+'</mx:Canvas>'+"\n";
 				cadena+= HeadService+IDEComponentes.getInstance().Create_Script(nombre,setupdate);
 				cadena+=canvasdatagrid;
 				cadena+=canvascomponente;
 				cadena+=IDEComponentes.getInstance().Crear_Button("Create","submit","App.getInstance().operation('create',"+nombre+".getInstance().create_object());",IDEComponentes.getInstance().posx,IDEComponentes.getInstance().posy,"false")+"\n";
 				cadena+=IDEComponentes.getInstance().Crear_Button("Update","updates","App.getInstance().operation('update',"+nombre+".getInstance().create_object());",IDEComponentes.getInstance().posx+96,IDEComponentes.getInstance().posy,"false")+"\n";
 				IDEComponentes.getInstance().posx=IDEComponentes.getInstance().posx+96;
-				cadena+=IDEComponentes.getInstance().Crear_Button("Back","back","View_01.selectedIndex=0;",IDEComponentes.getInstance().posx+96,IDEComponentes.getInstance().posy,"true")+"\n";
+				cadena+=IDEComponentes.getInstance().Crear_Button("Back","back","App.getInstance().Back_To_List()",IDEComponentes.getInstance().posx+96,IDEComponentes.getInstance().posy,"true")+"\n";
 				cadena+='</mx:Canvas>'+"\n"+'</mx:ViewStack>'+"\n"+'</mx:Canvas>';
 				add_file("src/Componentes/"+nombre+".mxml",cadena);
 				

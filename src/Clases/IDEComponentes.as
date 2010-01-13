@@ -85,10 +85,10 @@ package Clases
 		{
 			var cadena:String="";
 		   cadena='<mx:RemoteObject id="amf" source="'+name+'Controller" destination="amfphp">'+"\n";
-		   cadena+='<mx:method name="index" result="'+name+'.getInstance().Result(event);" fault="App.getInstance().handlerFault(event);"/>'+"\n";
+		   cadena+='<mx:method name="index" result="'+name+'.getInstance().ResultList(event);" fault="App.getInstance().handlerFault(event);"/>'+"\n";
 		   cadena+='<mx:method name="create" result="'+name+'.getInstance().ResultCreate(event);" fault="App.getInstance().handlerFault(event);"/>'+"\n";
-		   cadena+='<mx:method name="update" result="App.getInstance().handlerResult(event);"  fault="App.getInstance().handlerFault(event);"/>'+"\n";
-		   cadena+=' <mx:method name="destroy" result="App.getInstance().handlerResult(event);" fault="App.getInstance().handlerFault(event);"/>'+"\n";
+		   cadena+='<mx:method name="update" result="'+name+'.getInstance().ResultCreate(event);"  fault="App.getInstance().handlerFault(event);"/>'+"\n";
+		   cadena+=' <mx:method name="destroy" result="'+name+'.getInstance().ResultCreate(event);" fault="App.getInstance().handlerFault(event);"/>'+"\n";
 		   cadena+='</mx:RemoteObject>'+"\n";
 		   return cadena;
 		}
