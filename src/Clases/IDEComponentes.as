@@ -27,7 +27,7 @@ package Clases
 			return instancia;
 		}
 		
-		public function Crear_campo_de_texto(idenficador:String,longitud:String,restricion:int,pass:int):String
+		public function Crear_campo_de_texto(idenficador:String,longitud:String,restricion:int,pass:int,requiredtype:String):String
 		{ var cadena:String="";
 		 if(pass==0){
 		  cadena='<mx:TextInput width="350" x="'+(posx)+'" y="'+posy+'"';
@@ -38,6 +38,9 @@ package Clases
 	      	cadena+='id="Att_'+idenficador+'" '+'maxChars="'+longitud+'"';
 	      	if(restricion==0){
 	      	 cadena+=' restrict="0-9"'	
+	      	 }
+	      	 if(requiredtype=="true"){
+	      	 cadena+=' name="required"'		
 	      	 }
 	      cadena+=' />'	 
 	      return cadena; 	
@@ -84,11 +87,11 @@ package Clases
 	    public function Head_RemoteObject(name:String):String
 		{
 			var cadena:String="";
-		   cadena='<mx:RemoteObject id="amf" source="'+name+'Controller" destination="amfphp">'+"\n";
-		   cadena+='<mx:method name="index" result="'+name+'.getInstance().ResultList(event);" fault="App.getInstance().handlerFault(event);"/>'+"\n";
-		   cadena+='<mx:method name="create" result="'+name+'.getInstance().ResultCreate(event);" fault="App.getInstance().handlerFault(event);"/>'+"\n";
-		   cadena+='<mx:method name="update" result="'+name+'.getInstance().ResultCreate(event);"  fault="App.getInstance().handlerFault(event);"/>'+"\n";
-		   cadena+=' <mx:method name="destroy" result="'+name+'.getInstance().ResultCreate(event);" fault="App.getInstance().handlerFault(event);"/>'+"\n";
+		   cadena='<mx:RemoteObject endpoint="{App.getInstance().AMFurl}" id="amf" source="'+name+'Controller" destination="amfphp">'+"\n";
+		   cadena+='<mx:method name="index" result="'+name+'.getInstance().GET_LIST(event,this);" fault="App.getInstance().REQUEST_FAULT(event);"/>'+"\n";
+		   cadena+='<mx:method name="create" result="App.getInstance().SUCCESS_REQUEST(event);" fault="App.getInstance().REQUEST_FAULT(event);"/>'+"\n";
+		   cadena+='<mx:method name="update" result="App.getInstance().SUCCESS_REQUEST(event);"  fault="App.getInstance().REQUEST_FAULT(event);"/>'+"\n";
+		   cadena+=' <mx:method name="destroy" result="App.getInstance().SUCCESS_REQUEST(event);" fault="App.getInstance().REQUEST_FAULT(event);"/>'+"\n";
 		   cadena+='</mx:RemoteObject>'+"\n";
 		   return cadena;
 		}
@@ -123,13 +126,12 @@ package Clases
 			var cadena:String="";
 			cadena+='<mx:Script>'+"\n";
 			cadena+='<![CDATA['+"\n";
-			cadena+="  import mx.controls.Alert"+"\n";
-			cadena+="  import mx.rpc.events.ResultEvent"+"\n";
-			cadena+="  import mx.events.ValidationResultEvent"+"\n";
-			cadena+="  public var wiew_sw:Boolean=false"+"\n";
+			cadena+="  import mx.controls.Alert;"+"\n";
+			cadena+="  import mx.events.ValidationResultEvent;"+"\n";
+			cadena+="  import Clases.App;"+"\n";
 			cadena+="  import Clases."+name+";"+"\n";
-            cadena+="  import Clases.App;"+" \n";
-		    cadena+="\n public function set_update():void {"+"\n"+"if(wiew_sw){\n"+setupdate+"}"+"\n"+ "}"+ "\n";
+			cadena+="  public var sw:Boolean=false;"+"\n";
+            cadena+="  public var canvas_complete:Boolean=false;"+" \n";
 		    return cadena+"]]>"+"\n"+"</mx:Script>"+"\n";
 		}
 		
@@ -181,13 +183,13 @@ package Clases
                 return datostree;
             }
             
-       public function Crear_Mxml(id_componente:String,nombre:String,etiqueta:String,tamano:String,tipodato:int):String
+       public function Crear_Mxml(id_componente:String,nombre:String,etiqueta:String,tamano:String,tipodato:int,requiredtype:String):String
               {
                 var modulo:String="";
                if(id_componente=="0"){
               	  modulo+=IDEComponentes.getInstance().Crear_label(etiqueta)+'\n';		
 				  IDEComponentes.getInstance().posy=IDEComponentes.getInstance().posy+20;
-				  modulo+=IDEComponentes.getInstance().Crear_campo_de_texto(nombre,tamano,tipodato,0)+'\n';	
+				  modulo+=IDEComponentes.getInstance().Crear_campo_de_texto(nombre,tamano,tipodato,0,requiredtype)+'\n';	
               	  IDEComponentes.getInstance().posy=IDEComponentes.getInstance().posy+30;	
               	 }
               	 
@@ -201,7 +203,7 @@ package Clases
               	  if(id_componente=="3"){
               	   modulo+=IDEComponentes.getInstance().Crear_label(etiqueta)+'\n';	
 				   IDEComponentes.getInstance().posy=IDEComponentes.getInstance().posy+20;
-              	   modulo+=IDEComponentes.getInstance().Crear_campo_de_texto(nombre,tamano,tipodato,0)+'\n';	
+              	   modulo+=IDEComponentes.getInstance().Crear_campo_de_texto(nombre,tamano,tipodato,0,requiredtype)+'\n';	
 				   IDEComponentes.getInstance().posy=IDEComponentes.getInstance().posy+20;
 				   modulo+=IDEComponentes.getInstance().Crear_Fecha("agregar",nombre)+'\n';	
               	   IDEComponentes.getInstance().posy=IDEComponentes.getInstance().posy+30;	
@@ -210,7 +212,7 @@ package Clases
               	if(id_componente=="4"){
               	  modulo+=IDEComponentes.getInstance().Crear_label(etiqueta)+'\n';	
 				  IDEComponentes.getInstance().posy=IDEComponentes.getInstance().posy+20;
-              	  modulo+=IDEComponentes.getInstance().Crear_campo_de_texto(nombre,tamano,tipodato,1)+'\n';	
+              	  modulo+=IDEComponentes.getInstance().Crear_campo_de_texto(nombre,tamano,tipodato,1,requiredtype)+'\n';	
               	  IDEComponentes.getInstance().posy=IDEComponentes.getInstance().posy+30;	
               	 }
               	 

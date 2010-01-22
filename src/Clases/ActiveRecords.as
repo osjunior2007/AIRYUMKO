@@ -7,13 +7,8 @@ package Clases
 		public var cadena:String="";
 		public var Controlador_nombre:String="";
 		public var Modelo_nombre:String="";
-		public function MC_RubyonRails()
-		{
-		}
-		
-		
-		
-		  public static function getInstance():ActiveRecords
+	
+		 public static function getInstance():ActiveRecords
 		{
 			if( instancia==null ) 
 			instancia = new ActiveRecords();
@@ -127,69 +122,35 @@ package Clases
             cadena+="{"+"\n";   
 		    cadena+="  import mx.collections.ArrayCollection;"+"\n";
 		    cadena+="  import mx.containers.Canvas;"+"\n";
-		    cadena+="  import mx.controls.Alert;"+"\n";
-		    cadena+="  import mx.controls.DataGrid;"+"\n";
-		    cadena+="  import mx.events.CloseEvent;"+"\n";
-		    cadena+="  import mx.events.ValidationResultEvent;"+"\n";
-		    cadena+="  import mx.rpc.events.FaultEvent;"+"\n";
-		    cadena+="  import mx.rpc.events.ResultEvent;"+"\n";
 		    cadena+="  import mx.rpc.remoting.RemoteObject;"+"\n";
-		    cadena+="  import mx.utils.ArrayUtil;"+"\n\n"; 
+		    cadena+="  import mx.messaging.channels.AMFChannel;"+"\n";
+		    cadena+="  import mx.rpc.remoting.RemoteObject;"+"\n";
+	        cadena+="  import mx.utils.ArrayUtil;"+"\n\n"; 
+	        cadena+="  import mx.rpc.events.ResultEvent;"+"\n";
+            cadena+="  import mx.messaging.ChannelSet;"+"\n";
+
+	        
             cadena+=" public class "+name+""+"\n";
 		    cadena+="  {"+"\n\n"+" private static var instancia: "+name+";"+"\n";
-	        cadena+="   private var datos:DataGrid;"+"\n";
-	        cadena+="   private var canvas:Canvas;"+"\n";
-	        cadena+="   import mx.controls.Alert;"+"\n";
-	        cadena+="   public var objeto:Object={};"+"\n";
 	        cadena+="   private var serilizacion:Array=new Array();"+"\n";
-			cadena+="   public function "+name+"()"+"\n";
+	        cadena+="   public function "+name+"()"+"\n";
 			cadena+="   {"+"\n";
 			cadena+="   }"+"\n";
 			cadena+=""+"\n";
-			cadena+="  public function set_canvas(canvas:Canvas):void"+"\n";
-			cadena+="   {"+"\n";
-			cadena+="   this.canvas=canvas;"+"\n";
-			cadena+="   }"+"\n";
-			cadena+="   public function create_object():Object"+"\n";
-	        cadena+="   {"+"\n";
-	        cadena+="    this.canvas=App.getInstance().canvas;"+"\n";
-	        cadena+=attibute;
-	        cadena+="   if(this.canvas['datos'].selectedIndex>=0){"+"\n";
-	        cadena+="   objeto.id=this.canvas['datos'].selectedItem.id"+"\n";
-	        cadena+="   }else{"+"\n";
-	        cadena+="    objeto.id='';"+"\n";
-	        cadena+="   }"+"\n";
-	        cadena+="    return objeto;"+"\n";
-	        cadena+="   }"+"\n";
-			cadena+="   public static function getInstance():"+name+""+"\n";
+            cadena+=" public function GET_LIST(e:ResultEvent,canvas:Canvas):void {"+"\n";
+			cadena+="     serilizacion=new Array()"+"\n";
+		    cadena+="     for (var i:String in ArrayUtil.toArray(e.result)){"+"\n";
+	  	    cadena+="          serilizacion.push(ArrayUtil.toArray(e.result)[i][0]);"+"\n";
+	        cadena+="       }"+"\n";
+	        cadena+="        canvas['datos'].dataProvider=serilizacion;"+"\n";
+	        cadena+="    }"+"\n";
+	        cadena+="   public static function getInstance():"+name+""+"\n";
 			cadena+="   {"+"\n";
 			cadena+="   if( instancia==null )"+"\n";
 			cadena+="     instancia = new "+name+"();"+"\n";
 			cadena+="      return instancia;"+"\n";
 			cadena+="     }"+"\n";
 	        cadena+="   }"+"\n";
-	        cadena+=" public function ResultList(e:ResultEvent):void {"+"\n";
-			cadena+="     serilizacion=new Array()"+"\n";
-		    cadena+="     for (var i:String in ArrayUtil.toArray(e.result)){"+"\n";
-	  	    cadena+="          serilizacion.push(ArrayUtil.toArray(e.result)[i][0]);"+"\n";
-	        cadena+="       }"+"\n";
-	        cadena+="         this.canvas['datos'].dataProvider=serilizacion;"+"\n";
-	        cadena+="    }"+"\n";
-	        cadena+=" public  function ResultOperation(event:ResultEvent):void"+"\n";
-	        cadena+="  {  "+"\n";
-			cadena+="	this.canvas['View_01'].selectedIndex=0;"+"\n";
-			cadena+="	App.getInstance().clear_fields();"+"\n";
-			cadena+="	this.canvas['amf'].index.send();"+"\n";
-	        cadena+="  }"+"\n";
-	        cadena+=" public function clear_fields():void"+"\n";
-            cadena+="  {   "+"\n";
-      	    cadena+="   for(var i:int=0;i<=this.canvas['InputsObjects'].getChildren().length-1;i++) "+"\n";
-	 	    cadena+="   { if((this.canvas['InputsObjects'].getChildAt(i) as Object).className=='TextInput'||(this.canvas['InputsObjects'].getChildAt(i) as Object).className=='TextArea'){"+"\n";
-	 	    cadena+="     (this.canvas['InputsObjects'].getChildAt(i) as Object).text='';	"+"\n";
-	 	    cadena+="      (this.canvas['InputsObjects'].getChildAt(i) as Object).errorString='';"+"\n";
-	 	    cadena+="     }"+"\n";
-	        cadena+="     }"+"\n";
-            cadena+="  } "+"\n";
             cadena+=" }"+"\n";
 			return cadena;
 		}

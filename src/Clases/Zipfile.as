@@ -46,18 +46,17 @@ package Clases
 		
 		public function init_value():void
 		{
-		  	cadena='<?xml version="1.0" encoding="utf-8"?>'+" \n"+'<mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml" width="600" height="300" creationComplete="App.getInstance().set_canvas(this);App.getInstance().operation('+"'index'"+',{});">'+"\n";
 		   if(IDEComponentes.getInstance().RequeriedEfecctCanvas==0){
-		  	canvasdatagrid='<mx:Canvas x="0" y="0"  width="98%" height="98%" showEffect="'+IDEComponentes.getInstance().EfecctCanvas.getItemAt(0).showEffect+'" hideEffect="'+IDEComponentes.getInstance().EfecctCanvas.getItemAt(0).hideEffect+'">'+"\n";
+		  	canvasdatagrid='<mx:Canvas id="OutputsObjects" x="0" y="0"  width="98%" height="98%" showEffect="'+IDEComponentes.getInstance().EfecctCanvas.getItemAt(0).showEffect+'" hideEffect="'+IDEComponentes.getInstance().EfecctCanvas.getItemAt(0).hideEffect+'">'+"\n";
 		  	}else{
-		     canvasdatagrid='<mx:Canvas x="0" y="0"  width="98%" height="98%" >'+"\n";
+		     canvasdatagrid='<mx:Canvas id="OutputsObjects" x="0" y="0"  width="98%" height="98%" >'+"\n";
 		  	}
 		  	DataGridposx=20;
 		  	datagridHead='<mx:DataGrid horizontalScrollPolicy="auto" id="datos" x="'+DataGridposx+'" y="46" width="98%" height="85%" >'+"\n"+"<mx:columns>"+"\n";
 		  	 if(IDEComponentes.getInstance().RequeriedEfecctCanvas==0){
-		     canvascomponente='<mx:Canvas id="InputsObjects" updateComplete="set_update()" x="0" y="0"  width="98%" height="98%" showEffect="'+IDEComponentes.getInstance().EfecctCanvas.getItemAt(0).showEffect+'" hideEffect="'+IDEComponentes.getInstance().EfecctCanvas.getItemAt(0).hideEffect+'">'+"\n";
+		     canvascomponente='<mx:Canvas id="InputsObjects" creationComplete="App.getInstance().SET_CANVAS_COMPLETE();" x="0" y="0"  width="98%" height="98%" showEffect="'+IDEComponentes.getInstance().EfecctCanvas.getItemAt(0).showEffect+'" hideEffect="'+IDEComponentes.getInstance().EfecctCanvas.getItemAt(0).hideEffect+'">'+"\n";
 		     }else{
-		     canvascomponente='<mx:Canvas id="InputsObjects" updateComplete="set_update()" x="0" y="0"  width="98%" height="98%" >'+"\n";
+		     canvascomponente='<mx:Canvas id="InputsObjects" creationComplete="App.getInstance().SET_CANVAS_COMPLETE();" x="0" y="0"  width="98%" height="98%" >'+"\n";
 		     }
 		  	HeadService="";
 		  	Objectparam="";
@@ -176,11 +175,11 @@ package Clases
 				
 				//Main Canvas
 			    if(IDEComponentes.getInstance().RequeriedEfecctCanvas==0){
-		        MainApp+='<mx:Canvas click="App.getInstance().set_canvas('+Database.getInstance().personData[i].nombre+');" label="'+Database.getInstance().personData[i].nombre+'" width="100%" height="100%" showEffect="'+IDEComponentes.getInstance().EfecctCanvas.getItemAt(0).showEffect+'" hideEffect="'+IDEComponentes.getInstance().EfecctCanvas.getItemAt(0).hideEffect+'">'+"\n";
-			    MainApp+='<'+name.substr(0,name.length-1)+' creationComplete="'+name+'.getInstance().set_canvas('+Database.getInstance().personData[i].nombre+');"  id="'+Database.getInstance().personData[i].nombre+'"  showEffect="'+IDEComponentes.getInstance().EfecctCanvas.getItemAt(0).showEffect+'" hideEffect="'+IDEComponentes.getInstance().EfecctCanvas.getItemAt(0).hideEffect+'" width="98%" height="98%"  y="0" x="0" />'+" \n";
+		        MainApp+='<mx:Canvas  label="'+Database.getInstance().personData[i].nombre+'" width="100%" height="100%" showEffect="'+IDEComponentes.getInstance().EfecctCanvas.getItemAt(0).showEffect+'" hideEffect="'+IDEComponentes.getInstance().EfecctCanvas.getItemAt(0).hideEffect+'">'+"\n";
+			    MainApp+='<'+name.substr(0,name.length-1)+'   id="'+Database.getInstance().personData[i].nombre+'"  showEffect="'+IDEComponentes.getInstance().EfecctCanvas.getItemAt(0).showEffect+'" hideEffect="'+IDEComponentes.getInstance().EfecctCanvas.getItemAt(0).hideEffect+'" width="98%" height="98%"  y="0" x="0" />'+" \n";
 		        }else{
-		        MainApp+='<mx:Canvas click="App.getInstance().set_canvas('+Database.getInstance().personData[i].nombre+');" label="'+Database.getInstance().personData[i].nombre+'" width="100%" height="100%" >'+"\n";
-			    MainApp+='<'+name.substr(0,name.length-1)+' creationComplete="'+name+'.getInstance().set_canvas('+Database.getInstance().personData[i].nombre+');"  id="'+Database.getInstance().personData[i].nombre+'"  width="98%" height="98%"  y="0" x="0" />'+" \n";  
+		        MainApp+='<mx:Canvas  label="'+Database.getInstance().personData[i].nombre+'" width="100%" height="100%" >'+"\n";
+			    MainApp+='<'+name.substr(0,name.length-1)+'   id="'+Database.getInstance().personData[i].nombre+'"  width="98%" height="98%"  y="0" x="0" />'+" \n";  
 			    }
 			    
 				MainApp+='</mx:Canvas>'+" \n";
@@ -188,7 +187,7 @@ package Clases
 	            nameclases+="         import Clases."+name+""+" \n";
 	           }
 	      
-			    MainApp='<?xml version="1.0" encoding="utf-8"?>'+" \n"+'<mx:Application  xmlns="Componentes.*" xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute">'+" \n"+'<mx:TabNavigator x="10" y="22" width="98%" height="95%">'+" \n"+MainApp;
+			    MainApp='<?xml version="1.0" encoding="utf-8"?>'+" \n"+'<mx:Application  xmlns="Componentes.*" xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute">'+" \n"+'<mx:TabNavigator change="App.getInstance().GET_LIST(Header)" id="Header" x="10" y="22" width="98%" height="95%">'+" \n"+MainApp;
 			    //MainApp+="</mx:TabNavigator>"+" \n"+'<mx:Style source="css.css"/> '+" \n";
 			    MainApp+="</mx:TabNavigator>"+" \n";
 			    MainApp+="<mx:Script>"+" \n";
@@ -236,13 +235,13 @@ package Clases
 				if(list_components[i].id_modulo==id){
 					sw=1;
 					datagridHead+=IDEComponentes.getInstance().Crear_Column_DataGrid(list_components[i].etiqueta,list_components[i].identificador,list_components[i].tamano);
-					canvascomponente+=IDEComponentes.getInstance().Crear_Mxml(list_components[i].componente_id,list_components[i].identificador,list_components[i].etiqueta,list_components[i].tamano,list_components[i].tipo);
-				   if(list_components[i].requerido=="true"){
+					canvascomponente+=IDEComponentes.getInstance().Crear_Mxml(list_components[i].componente_id,list_components[i].identificador,list_components[i].etiqueta,list_components[i].tamano,list_components[i].tipo,list_components[i].requerido);
+				   /*if(list_components[i].requerido=="true"){
 					 validate+=IDEComponentes.getInstance().Validation(list_components[i].identificador);   
 				   }
 				   Objectparam+="  objeto."+list_components[i].identificador+"="+"this.canvas['Att_"+list_components[i].identificador+"'].text"+"\n";
 				   setupdate+=" "+"Att_"+list_components[i].identificador+".text=datos.selectedItem."+list_components[i].identificador+"\n";
-
+                  */
 				  
 				  //Only ROR
 				  if(proyecto_zip=="Rails.zip"){
@@ -259,17 +258,17 @@ package Clases
 				HeadService=IDEComponentes.getInstance().Head_RemoteObject(nombre)+"\n";
 				HeadService+=validate+'<mx:ViewStack x="0" y="0" id="View_01" width="100%" height="100%">'+"\n";
 				datagridHead+='</mx:columns>'+"\n"+'</mx:DataGrid>';
-				canvasdatagrid+=datagridHead+"\n"+IDEComponentes.getInstance().Crear_Button("Crear","crear","{wiew_sw=false;App.getInstance().View_Operation('create')}",DataGridposx,"{datos.height+50}","true")+"\n"+IDEComponentes.getInstance().Crear_Button("Update","UpdateView","wiew_sw=true;App.getInstance().View_Operation('update')",DataGridposx+96,"{datos.height+50}","true")+"\n"+IDEComponentes.getInstance().Crear_Button("Delete","deletes",""+nombre+".getInstance().create_object()",DataGridposx+196,"{datos.height+50}","true")+"\n"+'<mx:Label x="'+DataGridposx+'" y="25" text="Modulo - '+nombre+' "/>'+"\n"+'</mx:Canvas>'+"\n";
-				cadena+= HeadService+IDEComponentes.getInstance().Create_Script(nombre,setupdate);
+				canvasdatagrid+=datagridHead+"\n"+IDEComponentes.getInstance().Crear_Button("Crear","crear","{App.getInstance().CHANGE_VIEW('create')}",DataGridposx,"{datos.height+50}","true")+"\n"+IDEComponentes.getInstance().Crear_Button("Update","UpdateView","{App.getInstance().CHANGE_VIEW('update')}",DataGridposx+96,"{datos.height+50}","true")+"\n"+IDEComponentes.getInstance().Crear_Button("Delete","deletes","{App.getInstance().VALIDATE_DELETE_ID(event)}",DataGridposx+196,"{datos.height+50}","true")+"\n"+'<mx:Label x="'+DataGridposx+'" y="25" text="Modulo - '+nombre+' "/>'+"\n"+'</mx:Canvas>'+"\n";
+				cadena='<?xml version="1.0" encoding="utf-8"?>'+" \n"+'<mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml" width="600" height="300" creationComplete="App.getInstance().SET_CANVAS(this);App.getInstance().REMOTE_ACCESS('+"'"+"index"+"'"+',{});">'+"\n";
+		     	cadena+= HeadService+IDEComponentes.getInstance().Create_Script(nombre,setupdate);
 				cadena+=canvasdatagrid;
 				cadena+=canvascomponente;
-				cadena+=IDEComponentes.getInstance().Crear_Button("Create","submit","App.getInstance().operation('create',"+nombre+".getInstance().create_object());",IDEComponentes.getInstance().posx,IDEComponentes.getInstance().posy,"false")+"\n";
-				cadena+=IDEComponentes.getInstance().Crear_Button("Update","updates","App.getInstance().operation('update',"+nombre+".getInstance().create_object());",IDEComponentes.getInstance().posx+96,IDEComponentes.getInstance().posy,"false")+"\n";
+				cadena+=IDEComponentes.getInstance().Crear_Button("Create","submit","{App.getInstance().REMOTE_ACCESS('create',App.getInstance().ADD_OBJECT());}",IDEComponentes.getInstance().posx,IDEComponentes.getInstance().posy,"false")+"\n";
+				cadena+=IDEComponentes.getInstance().Crear_Button("Update","updates","{App.getInstance().REMOTE_ACCESS('update',App.getInstance().ADD_OBJECT());}",IDEComponentes.getInstance().posx+96,IDEComponentes.getInstance().posy,"false")+"\n";
 				IDEComponentes.getInstance().posx=IDEComponentes.getInstance().posx+96;
-				cadena+=IDEComponentes.getInstance().Crear_Button("Back","back","App.getInstance().Back_To_List()",IDEComponentes.getInstance().posx+96,IDEComponentes.getInstance().posy,"true")+"\n";
+				cadena+=IDEComponentes.getInstance().Crear_Button("Back","back","{App.getInstance().BACK_TO_LIST()}",IDEComponentes.getInstance().posx+96,IDEComponentes.getInstance().posy,"true")+"\n";
 				cadena+='</mx:Canvas>'+"\n"+'</mx:ViewStack>'+"\n"+'</mx:Canvas>';
-				add_file("src/Componentes/"+nombre+".mxml",cadena);
-				
+				add_file("src/Componentes/"+nombre.substr(0,1).toLocaleUpperCase()+nombre.substr(1,nombre.length)+".mxml",cadena);
 				if(proyecto_zip=="amfphp.zip"){
 			     add_file("src/Clases/"+nombre+".as",ActiveRecords.getInstance().Create_Class_object(nombre,Objectparam));
 			     }

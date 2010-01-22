@@ -6,9 +6,7 @@
 		<![CDATA[
 			import mx.controls.Image;
 			import mx.collections.XMLListCollection;
-			
-			
-			[Bindable]
+		    [Bindable]
 			[Embed(source="img/flexicono.png")]
 			private var ico:Class;
 			import mx.collections.ArrayCollection;
