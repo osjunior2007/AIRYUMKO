@@ -16,7 +16,8 @@ package Clases
 		public var index:uint = 0;
 		public var done:Boolean = false;
 		public var proyecto_zip:String="amfphp.zip";
-		public var proyecto_name:String="Proyecto";
+		public var proyecto_name:String="Escuela";
+		public var database_name:String="Escuela";
 		public var user_database:String="root";
 		public var password_database:String="";
 		public var canvascomponente:String="";
@@ -34,6 +35,8 @@ package Clases
 		public var posy:int=20;
 		public var sw:int=0;
 		public var migrationHead:String="";
+		public var database_sql:String="";
+		public var Head_database_sql:String="";
 		public var nameclases:String="";
 		[Bindable] public var list_components:Array = new Array();
  	    public var Date_Today:String="";
@@ -62,7 +65,7 @@ package Clases
 		  	Objectparam="";
 		  	setupdate="";
 		  	migrationBody="";
-		  	validate="";
+		    validate="";
 		  	posx=10;
 		  	posy=20;
 		  	sw=0;
@@ -125,9 +128,32 @@ package Clases
 		
 		
 		private function onComplete(evt:Event):void {
-			for(var i=0;i<=New_zip.getFileCount()-1;i++) {
+			for(var i:int=0;i<=New_zip.getFileCount()-1;i++) {
 				var file:FZipFile = New_zip.getFileAt(i);
-				add_file(file.filename,file.content.toString());
+				if (file.filename=="src/Clases/App.as"||file.filename==".settings/org.eclipse.core.resources.prefs"||file.filename=="bin-debug/history/history.css"
+				 ||file.filename=="bin-debug/history/historyFrame.html"||file.filename=="bin-debug/history/history.js"
+				 ||file.filename=="bin-debug/ejemplo.html"||file.filename=="bin-debug/ejemplo.swf"||file.filename=="bin-debug/AC_OETags.js"||file.filename=="bin-debug/playerProductInstall.swf"
+				 ||file.filename=="html-template/index.template.html"||file.filename=="html-template/AC_OETags.js"||file.filename=="html-template/playerProductInstall.swf"||file.filename=="html-template/history/history.css"
+				 ||file.filename=="html-template/history/history.js" ||file.filename=="html-template/history/historyFrame.html"){
+				 if (file.filename=="bin-debug/ejemplo.html"||file.filename!="bin-debug/ejemplo.swf"){
+				  add_file(this.proyecto_name+"/"+file.filename,file.content.toString());
+			     }else{
+			        if (file.filename=="bin-debug/ejemplo.html"){
+			          add_file(this.proyecto_name+"/bin-debug/"+this.proyecto_name+".html",file.content.toString());
+			        }
+			        if (file.filename=="bin-debug/ejemplo.swf"){
+			        add_file(this.proyecto_name+"/bin-debug/"+this.proyecto_name+".swf",file.content.toString());
+			        }
+			     } 
+				}else{
+				  if(file.filename!="src/Clases/"&&file.filename!="src/"&&file.filename!=".settings/"&&file.filename!=".settings/org.eclipse.core.resources.prefs"&&file.filename!="bin-debug/history/history.css"
+				  &&file.filename!="bin-debug/"&&file.filename!="bin-debug/history/"&&file.filename!="bin-debug/history/historyFrame.html"&&file.filename!="bin-debug/history/history.js"
+				  &&file.filename!="bin-debug/ejemplo.html"&&file.filename!="bin-debug/ejemplo.swf"&&file.filename!="bin-debug/AC_OETags.js"&&file.filename!="bin-debug/playerProductInstall.swf"
+				  &&file.filename!="html-template/history/"&&file.filename!="html-template/"&&file.filename!="html-template/index.template.html"&&file.filename!="html-template/AC_OETags.js"&&file.filename!="html-template/playerProductInstall.swf"&&file.filename!="html-template/history/history.css"
+				  &&file.filename!="html-template/history/history.js"&&file.filename!="html-template/history/historyFrame.html"){	
+				  add_file(file.filename,file.content.toString());	
+				  }
+				}
 			}
 			get_components();
 		}
@@ -150,9 +176,9 @@ package Clases
 				//PhpActiveRecoreds
 				if(proyecto_zip=="amfphp.zip"){
 				   add_file("amfphp/services/"+name+"Controller.php",ActiveRecords.getInstance().set_controllador(name));
-				   add_file("amfphp/services/models/"+name_modelo+".php",ActiveRecords.getInstance().set_modelo(name_modelo.substr(0,1).toLocaleUpperCase()+name_modelo.substr(1,name_modelo.length)));
+				   add_file("amfphp/services/models/"+name_modelo+".php",ActiveRecords.getInstance().set_modelo(name_modelo));
 				   if(i==0){
-				    add_file("amfphp/services/lib/database.php",ActiveRecords.getInstance().Data_Base("Proyecto","root",""));
+				    add_file("amfphp/services/lib/database.php",ActiveRecords.getInstance().Data_Base(database_name.toLowerCase(),"root",""));
 				   }
 				}
 				
@@ -188,7 +214,6 @@ package Clases
 	           }
 	      
 			    MainApp='<?xml version="1.0" encoding="utf-8"?>'+" \n"+'<mx:Application  xmlns="Componentes.*" xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute">'+" \n"+'<mx:TabNavigator change="App.getInstance().GET_LIST(Header)" id="Header" x="10" y="22" width="98%" height="95%">'+" \n"+MainApp;
-			    //MainApp+="</mx:TabNavigator>"+" \n"+'<mx:Style source="css.css"/> '+" \n";
 			    MainApp+="</mx:TabNavigator>"+" \n";
 			    MainApp+="<mx:Script>"+" \n";
 		        MainApp+="          <![CDATA["+" \n";
@@ -196,12 +221,19 @@ package Clases
 			    MainApp+="         import Clases.App;"+" \n";
 		        MainApp+="       ]]>"+" \n";
 	            MainApp+=" </mx:Script>"+"\n"+'</mx:Application>';
-			    add_file("src/Main.mxml",MainApp);
-			
-			  
+			    add_file(proyecto_name+"/src/"+proyecto_name+".mxml",MainApp);
+			    Database.getInstance().dbStatement.removeEventListener(SQLEvent.RESULT,Result_build_MainMXML);
 			    
-			 Database.getInstance().dbStatement.removeEventListener(SQLEvent.RESULT,Result_build_MainMXML);
-			 open();
+			    //Add the sql file to zip
+			    if(proyecto_zip=="amfphp.zip"){
+			      Head_database_sql="CREATE DATABASE /*!32312 IF NOT EXISTS*/`"+database_name.toLowerCase()+"` /*!40100 DEFAULT CHARACTER SET latin1 */;"+"\n"+"USE `"+database_name.toLowerCase()+"`;"+"\n"+Head_database_sql;
+		          add_file("amfphp/database.sql",Head_database_sql);
+			    }
+			   add_file(proyecto_name+"/.actionScriptProperties",IDEComponentes.getInstance().Create_Flex_ActionScript_Properties(proyecto_name));
+			   add_file(proyecto_name+"/.flexProperties",IDEComponentes.getInstance().Create_Flex_Properties());
+			   add_file(proyecto_name+"/.project",IDEComponentes.getInstance().Create_Proyect_Flex(proyecto_name));
+			   add_file(proyecto_name+"/libs/","");
+			   open();
 		  }//If not is null 	 
 		}
 		
@@ -236,14 +268,13 @@ package Clases
 					sw=1;
 					datagridHead+=IDEComponentes.getInstance().Crear_Column_DataGrid(list_components[i].etiqueta,list_components[i].identificador,list_components[i].tamano);
 					canvascomponente+=IDEComponentes.getInstance().Crear_Mxml(list_components[i].componente_id,list_components[i].identificador,list_components[i].etiqueta,list_components[i].tamano,list_components[i].tipo,list_components[i].requerido);
-				   /*if(list_components[i].requerido=="true"){
-					 validate+=IDEComponentes.getInstance().Validation(list_components[i].identificador);   
-				   }
-				   Objectparam+="  objeto."+list_components[i].identificador+"="+"this.canvas['Att_"+list_components[i].identificador+"'].text"+"\n";
-				   setupdate+=" "+"Att_"+list_components[i].identificador+".text=datos.selectedItem."+list_components[i].identificador+"\n";
-                  */
 				  
-				  //Only ROR
+				   if(proyecto_zip=="amfphp.zip"){
+				    if(list_components[i].identificador!="id"&&list_components[i].identificador!="ID"){
+					  database_sql+=IDEComponentes.getInstance().Create_database_sql(list_components[i].identificador,list_components[i].componente_id,list_components[i].tamano);
+				     }
+				  }
+				  
 				  if(proyecto_zip=="Rails.zip"){
 				    if(list_components[i].identificador!="id"&&list_components[i].identificador!="ID"){
 					  migrationBody+=IDEComponentes.getInstance().Create_migration(list_components[i].identificador,list_components[i].componente_id,list_components[i].tamano);
@@ -268,9 +299,14 @@ package Clases
 				IDEComponentes.getInstance().posx=IDEComponentes.getInstance().posx+96;
 				cadena+=IDEComponentes.getInstance().Crear_Button("Back","back","{App.getInstance().BACK_TO_LIST()}",IDEComponentes.getInstance().posx+96,IDEComponentes.getInstance().posy,"true")+"\n";
 				cadena+='</mx:Canvas>'+"\n"+'</mx:ViewStack>'+"\n"+'</mx:Canvas>';
-				add_file("src/Componentes/"+nombre.substr(0,1).toLocaleUpperCase()+nombre.substr(1,nombre.length)+".mxml",cadena);
+				add_file(proyecto_name+"/src/Componentes/"+nombre.substr(0,nombre.length-1)+".mxml",cadena);
+				
 				if(proyecto_zip=="amfphp.zip"){
-			     add_file("src/Clases/"+nombre+".as",ActiveRecords.getInstance().Create_Class_object(nombre,Objectparam));
+			      database_sql="CREATE TABLE"+"`"+nombre.toLowerCase()+"` ("+"\n"+"`id` bigint(11) NOT NULL AUTO_INCREMENT,"+"\n"+database_sql;
+			      database_sql+="PRIMARY KEY (`id`)"+" \n"+")"+"ENGINE=MyISAM AUTO_INCREMENT=40001 DEFAULT CHARSET=latin1;"+"\n"+"\n";
+				  Head_database_sql+=database_sql;
+				  database_sql="";
+				  add_file(proyecto_name+"/src/Clases/"+nombre+".as",ActiveRecords.getInstance().Create_Class_object(nombre,Objectparam));
 			     }
 			   
 			   //Only ROR
@@ -285,12 +321,12 @@ package Clases
 				
 			    }else{
 				 cadena='<?xml version="1.0" encoding="utf-8"?>'+" \n"+'<mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml" width="600" height="300" >'+"\n";	
-			     add_file("src/Componentes/"+nombre+".mxml",cadena+"\n"+'</mx:Canvas>');
+			     add_file(proyecto_name+"/src/Componentes/"+nombre+".mxml",cadena+"\n"+'</mx:Canvas>');
 				}
 		  IDEComponentes.getInstance().posx=10;
 		  IDEComponentes.getInstance().posy=20;
 		  }//If not is null	
-		  return "";	
+		   return "";	
 		}
 		
 		

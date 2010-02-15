@@ -88,7 +88,7 @@ package Clases
 		   Modelo_nombre="<?php"+'\n\n';
 		   Modelo_nombre+="class "+modelo+" extends ActiveRecord\\\Model"+'\n';
 		   Modelo_nombre+="{"+'\n\n';
-		   Modelo_nombre+=" static $table_name = '"+modelo+"';"+"\n";
+		   Modelo_nombre+=" static $table_name = '"+modelo+"s';"+"\n";
 		   Modelo_nombre+="}"+'\n\n';
 		   Modelo_nombre+="?>";
 		   return Modelo_nombre;

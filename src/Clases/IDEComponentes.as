@@ -35,7 +35,7 @@ package Clases
 		   cadena='<mx:TextInput displayAsPassword="true" width="350" x="'+(posx)+'" y="'+posy+'"';	
 		 }
 		 cadena+=" ";
-	      	cadena+='id="Att_'+idenficador+'" '+'maxChars="'+longitud+'"';
+	      	cadena+='id="Att_'+idenficador.toLowerCase()+'" '+'maxChars="'+longitud+'"';
 	      	if(restricion==0){
 	      	 cadena+=' restrict="0-9"'	
 	      	 }
@@ -56,14 +56,14 @@ package Clases
 		
 	   public function Crear_Text_Area(idenficador:String,longitud:String):String
 		{ var cadena:String="";
-		 cadena='<mx:TextArea id="Att_'+idenficador+'" height="120" width="350" x="'+(posx)+'" y="'+posy+'" '+ 'maxChars="'+longitud+'"';
+		 cadena='<mx:TextArea id="Att_'+idenficador.toLowerCase()+'" height="120" width="350" x="'+(posx)+'" y="'+posy+'" '+ 'maxChars="'+longitud+'"';
 		 cadena+=' />'	 
 	      return cadena; 	
 		}
 		
 		public function Crear_CheckBox(idenficador:String):String
 		{ var cadena:String="";
-		 cadena='<mx:CheckBox id="Att_'+idenficador+'" x="'+(posx)+'" y="'+posy+'"';
+		 cadena='<mx:CheckBox id="Att_'+idenficador.toLowerCase()+'" x="'+(posx)+'" y="'+posy+'"';
 		 cadena+=' />'	 
 	      return cadena; 	
 		}
@@ -81,13 +81,13 @@ package Clases
 
 		public function Crear_Column_DataGrid(etiqueta:String,dato:String,longitud:int):String
 		{
-			return '<mx:DataGridColumn width="'+(longitud*10)+'" headerText="'+etiqueta+'" dataField="'+dato+'"/>'+"\n";
+			return '<mx:DataGridColumn width="'+(longitud*10)+'" headerText="'+etiqueta+'" dataField="'+dato.toLowerCase()+'"/>'+"\n";
 		}
 		
 	    public function Head_RemoteObject(name:String):String
 		{
 			var cadena:String="";
-		   cadena='<mx:RemoteObject endpoint="{App.getInstance().AMFurl}" id="amf" source="'+name+'Controller" destination="amfphp">'+"\n";
+		   cadena='<mx:RemoteObject showBusyCursor="true" endpoint="{App.getInstance().AMFurl}" id="amf" source="'+name+'Controller" destination="amfphp">'+"\n";
 		   cadena+='<mx:method name="index" result="'+name+'.getInstance().GET_LIST(event,this);" fault="App.getInstance().REQUEST_FAULT(event);"/>'+"\n";
 		   cadena+='<mx:method name="create" result="App.getInstance().SUCCESS_REQUEST(event);" fault="App.getInstance().REQUEST_FAULT(event);"/>'+"\n";
 		   cadena+='<mx:method name="update" result="App.getInstance().SUCCESS_REQUEST(event);"  fault="App.getInstance().REQUEST_FAULT(event);"/>'+"\n";
@@ -102,23 +102,66 @@ package Clases
 		{
 			var cadena:String="";
 			if(tipo=="0"||tipo=="4"){
-				cadena+=" t.column :"+nombre+", :string, :limit => "+tamano+"\n";
+				cadena+=" t.column :"+nombre.toLowerCase()+", :string, :limit => "+tamano+"\n";
 			}
 			
 			if(tipo=="1"){
-				cadena+=" t.column :"+nombre+", :text, :limit => "+tamano+"\n";
+				cadena+=" t.column :"+nombre.toLowerCase()+", :text, :limit => "+tamano+"\n";
 			}
 			
 			if(tipo=="2"){
-				cadena+=" t.column :"+nombre+", :datetime \n";
+				cadena+=" t.column :"+nombre.toLowerCase()+", :datetime \n";
 			}
 			
 			return cadena;
 		}
 		
+		
+			public function Create_database_sql(nombre:String,tipo:String,tamano:String):String
+		{
+			var cadena:String="";
+			if(tipo=="0"||tipo=="4"){
+				cadena+="`"+nombre.toLowerCase()+"` varchar ("+tamano+") DEFAULT NULL,"+"\n";
+			}
+			
+			if(tipo=="1"){
+				cadena+="`"+nombre.toLowerCase()+"` text,"+"\n";
+			}
+			
+			if(tipo=="2"){
+				cadena+="`"+nombre.toLowerCase()+"` datetime DEFAULT NULL,"+" \n";
+			}
+			//Boolean
+			if(tipo=="3"){
+				cadena+="`"+nombre.toLowerCase()+"` tinyint(1) DEFAULT NULL,"+" \n";
+			}
+			//Float
+			if(tipo=="5"){
+				cadena+="`"+nombre.toLowerCase()+"` double DEFAULT NULL,"+" \n";
+			}
+			//Decimal
+			if(tipo=="6"){
+				cadena+="`"+nombre.toLowerCase()+"` decimal ("+tamano+",0) DEFAULT NULL,"+" \n";
+			}
+				//Char
+			if(tipo=="7"){
+				cadena+="`"+nombre.toLowerCase()+"` char ("+tamano+") DEFAULT NULL,"+" \n";
+			}
+			//int
+			if(tipo=="8"){
+				cadena+="`"+nombre.toLowerCase()+"` int ("+tamano+") DEFAULT NULL,"+" \n";
+			}
+			//date
+			if(tipo=="9"){
+				cadena+="`"+nombre.toLowerCase()+"` date NULL,"+" \n";
+			}
+         return cadena;
+		}
+		
+		
 		public function Validation(idenficador:String):String
 		{
-			return "<mx:Validator requiredFieldError='"+idenficador+" is required' id='reqValid_"+idenficador+"' required='true' source='{Att_"+idenficador+"}' property='text' valid='App.getInstance().handleValid(event,Att_"+idenficador+")' invalid='App.getInstance().handleValid(event,Att_"+idenficador+")'/> \n";
+			return "<mx:Validator requiredFieldError='"+idenficador.toLowerCase()+" is required' id='reqValid_"+idenficador.toLowerCase()+"' required='true' source='{Att_"+idenficador.toLowerCase()+"}' property='text' valid='App.getInstance().handleValid(event,Att_"+idenficador.toLowerCase()+")' invalid='App.getInstance().handleValid(event,Att_"+idenficador.toLowerCase()+")'/> \n";
 		}
 		
 		public function Create_Script(name:String,setupdate:String):String
@@ -268,6 +311,56 @@ package Clases
                   }else{
                	   return "<node label='Arbol'><node label='App'/></node>";
                   }
+              }
+              
+              public function Create_Proyect_Flex(nombre:String):String
+              {
+              	var cadena:String="";
+              	cadena+='<?xml version="1.0" encoding="UTF-8"?>'+"\n";
+                cadena+="<projectDescription>"+"\n";
+	            cadena+="<name>"+nombre+"</name>"+"\n";
+	            cadena+="<comment></comment>"+"\n";
+	            cadena+="<projects>"+"\n";
+	            cadena+="</projects>"+"\n";
+	            cadena+="<buildSpec>"+"\n";
+	   	        cadena+="<buildCommand>"+"\n";
+			    cadena+="<name>com.adobe.flexbuilder.project.flexbuildercadena</name>"+"\n";
+			    cadena+="<arguments>"+"\n";
+			    cadena+="</arguments>"+"\n";
+		        cadena+="</buildCommand>"+"\n";
+	            cadena+="</buildSpec>"+"\n";
+	            cadena+="<natures>"+"\n";
+		        cadena+="<nature>com.adobe.flexbuilder.project.flexnaturecadena</nature>"+"\n";
+		        cadena+="<nature>com.adobe.flexbuilder.project.actionscriptnaturecadena</nature>"+"\n";
+	            cadena+="</natures>"+"\n";
+                cadena+="</projectDescription>"+"\n";
+        	    return cadena;
+              }
+              
+              public function Create_Flex_Properties():String
+              {
+              	return '<?xml version="1.0" encoding="UTF-8"?><flexProperties flexServerType="0" toolCompile="true" useServerFlexSDK="false" version="1"/>';
+              }
+              public function Create_Flex_ActionScript_Properties(nombre:String):String
+              {
+              	var cadena:String="";
+              	cadena+='<?xml version="1.0" encoding="UTF-8"?>'+"\n";
+                cadena+='<actionScriptProperties mainApplicationPath="'+nombre+'.mxml" version="3">'+"\n";
+                cadena+='<compiler additionalCompilerArguments="-locale en_US" copyDependentFiles="true" enableModuleDebug="true" generateAccessible="false"  htmlExpressInstall="true" htmlGenerate="true" htmlHistoryManagement="true" htmlPlayerVersion="9.0.28" htmlPlayerVersionCheck="true" outputFolderPath="bin-debug" sourceFolderPath="src" strict="true" useApolloConfig="false" verifyDigests="true" warn="true">'+"\n";
+                cadena+="<compilerSourcePath/>"+"\n";
+                cadena+='<libraryPath defaultLinkType="1">'+"\n";
+                cadena+='<libraryPathEntry kind="4" path=""/>'+"\n";
+                cadena+='<libraryPathEntry kind="1" linkType="1" path="libs"/>'+"\n";
+                cadena+="</libraryPath>"+"\n";
+                cadena+="<sourceAttachmentPath/>"+"\n";
+                cadena+="</compiler>"+"\n";
+                cadena+="<applications>"+"\n";
+                cadena+='<application path="'+nombre+'.mxml"/>'+"\n";
+                cadena+="</applications>"+"\n";
+                cadena+="<modules/>"+"\n";
+                cadena+="<buildCSSFiles/>"+"\n";
+                cadena+="</actionScriptProperties>"+"\n";
+                return cadena;
               }
            
       }
