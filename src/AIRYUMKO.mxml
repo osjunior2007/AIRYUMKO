@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<mx:WindowedApplication  title="YUMKOO"  initialize="Database.getInstance().initAndOpenDatabase()"  backgroundGradientAlphas="[1.0, 0.32]" backgroundGradientColors="[#A0B8C0, #878A8D]" minWidth="930" minHeight="700" xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" creationComplete="init()">
+<mx:WindowedApplication title="YUMKOO"  initialize="Database.getInstance().initAndOpenDatabase()"  backgroundGradientAlphas="[1.0, 0.32]" backgroundGradientColors="[#A0B8C0, #878A8D]" minWidth="930" minHeight="700" xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" >
 	<mx:HTTPService url="español.xml"   requestTimeout="0"   resultFormat="object" id="idiomas" result="Cargar_idioma(event,idiomas); "  useProxy="false"  method="POST" >
 	</mx:HTTPService>  
 	<mx:Script> 
 		<![CDATA[
-			import mx.controls.Image;
+		  	import mx.controls.Image;
 			import mx.collections.XMLListCollection;
-		    [Bindable]
+		    [Bindable] 
 			[Embed(source="img/flexicono.png")]
 			private var ico:Class;
 			import mx.collections.ArrayCollection;
@@ -18,6 +18,11 @@
 			import Clases.Zipfile;
 			import mx.managers.PopUpManager;
 			import Clases.Database;
+			
+			 import mx.controls.Menu;
+
+			
+         	////////////////////////////////////////////////////////////////////////
 			public var cont_id:int=0; 
 			public var mensaje_eliminar:String;
 			public var mensaje_modulo_name:String;
@@ -30,6 +35,7 @@
 			public var tipo_relacion:String;
 			public var relacion_modulo_name:String;
 			public var id_modulo:String;
+			public var last_id:String;
 			public var datostree:String="";
 			public var objects:Object = {};
 			public var elementos:Object = {};
@@ -39,6 +45,8 @@
 			[Bindable] public var relaciones:ArrayCollection = new ArrayCollection([{label:"Uno a Uno", data:1},{label:"Muchos a Uno", data:2},{label:"Muchos a Muchos", data:3}]);
 			[Bindable] public var tipo_dato:ArrayCollection = new ArrayCollection([{label:"Numerico", data:1},{label:"Alfanumerico", data:2}]);
 			//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+			import mx.events.MenuEvent;
+
 			var stado:Boolean=false;
 			var cadena:String="";
 			public function init():void
@@ -49,7 +57,24 @@
 				var screenBounds:Rectangle = Screen.mainScreen.bounds;
 				this.move((screenBounds.width-this.width)/2,(screenBounds.height-this.height)/2);
 				this.usePreloader=true;
-			}  
+	        }  
+	        
+	
+        public function showMenu(event:MouseEvent):void
+        {   if (myTree.selectedIndex>=0&&myTree.selectedItem.@label!="App"){
+            var menu:Menu = Menu.createMenu(null, menuData, false);
+            menu.labelField="@label"
+            menu.show(event.stageX, event.stageY)
+            menu.addEventListener(MenuEvent.ITEM_CLICK,menuClickHandler);
+          }
+         }
+         
+		 private function menuClickHandler(event:MenuEvent):void {
+		 	if (event.label=="Delete"){
+		 	  Eliminar_modulos(this.id_modulo)
+		 	  new_modulo_add()
+		 	}
+		  }
 			
 			//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 			
@@ -63,7 +88,7 @@
 					Max_caracter.text=servicio.lastResult.idioma.modulo_builder.Max_caracter;
 					tipo_valores.text=servicio.lastResult.idioma.modulo_builder.tipo_valores;
 					datos.text=servicio.lastResult.idioma.modulo_builder.datos;
-					data_nombre.headerText=servicio.lastResult.idioma.modulo_builder.data_nombre;
+					//data_nombre.headerText=servicio.lastResult.idioma.modulo_builder.data_nombre;
 					data_id.headerText=servicio.lastResult.idioma.modulo_builder.data_id;
 					data_Max_caracter.headerText=servicio.lastResult.idioma.modulo_builder.data_Max_caracter;
 					data_componente.headerText=servicio.lastResult.idioma.modulo_builder.data_componente;
@@ -93,6 +118,7 @@
 					modulo_relacionado=servicio.lastResult.idioma.modulo_builder.modulo_relacionado;
 					relacion_modulo_name=servicio.lastResult.idioma.modulo_builder.relacion_modulo_name;
 					tipo_relacion=servicio.lastResult.idioma.modulo_builder.tipo_relacionado;
+					btn_delete.toolTip=servicio.lastResult.idioma.modulo_builder.boton_delete_modulo;
 				}
 			}        
 			//////////////////////////////////////////////////////////////////
@@ -153,13 +179,39 @@
 				var node:XMLList =new XMLList  (IDEComponentes.getInstance().Crear_arbol(Database.getInstance().personData));
 				var MailBox:XMLListCollection=new XMLListCollection(node);
 				myTree.expandItem(MailBox.getItemAt(0), true);
+				this.id_modulo=null
+				this.last_id=MailBox.child(MailBox.children().length()-1).@data
 			}
+			
+			
+			
 			public function buscar_modelo_To_Tree():void
 			{
 				Database.getInstance().dbStatement.addEventListener(SQLEvent.RESULT, Create_Tree);
 				Database.getInstance().getDatos("select id_modulo,nombre from modulos");
 				
-			}              
+			}  
+			///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+			public function Eliminar_modulos(id_modulo:String):void
+			{
+				Database.getInstance().dbStatement.addEventListener(SQLEvent.RESULT, Eliminar_componentes);
+				Database.getInstance().getDatos("delete from modulos where id_modulo="+id_modulo+";");
+				
+			}  
+			public function Eliminar_componentes(e:Event):void
+			{
+			    Database.getInstance().dbStatement.removeEventListener(SQLEvent.RESULT,Eliminar_componentes);
+			    Database.getInstance().dbStatement.addEventListener(SQLEvent.RESULT,result_delete_components);
+				Database.getInstance().getDatos("delete from componentes where id_modulo="+this.id_modulo+";");
+			
+			}  
+			public function result_delete_components(e:Event):void
+			{  
+				Database.getInstance().dbStatement.removeEventListener(SQLEvent.RESULT,result_delete_components);
+				Database.getInstance().dbStatement.addEventListener(SQLEvent.RESULT,Create_Tree);
+				Database.getInstance().getDatos("select id_modulo,nombre from modulos");
+			} 
+			            
 			///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 			public function Crear_tabla_componente(id:String):void
 			{
@@ -243,12 +295,17 @@
 			///////////////////////////////////////////////////////////////////////////             
 			public function Crear_elemento(datagrid:DataGrid):void
 			{
-				this.id_modulo=IDEComponentes.getInstance().last_modulo_insert;
+				//this.id_modulo=IDEComponentes.getInstance().last_modulo_insert;
 				if(identificador_text.text!=""&&Max_caracter_text.text!=""&&componente_etiqueta.text!=""){ 
 					cont_id++;
 					Database.getInstance().dbStatement.addEventListener(SQLEvent.RESULT,resultado_componentes);
 					agregar.enabled=false;
+					if (this.id_modulo!=null){
 					Database.getInstance().SetDatos("insert into componentes values (null,"+this.id_modulo+",'"+componente_etiqueta.text+"','"+identificador_text.text+"','"+Max_caracter_text.text+"','"+componentes_text.selectedItem.label+"','"+componentes_text.selectedIndex.toString()+"','"+requerido_componente.selected+"','"+tipo_componente.selectedLabel+"')");
+					}else{
+					Database.getInstance().SetDatos("insert into componentes values (null,"+this.last_id+",'"+componente_etiqueta.text+"','"+identificador_text.text+"','"+Max_caracter_text.text+"','"+componentes_text.selectedItem.label+"','"+componentes_text.selectedIndex.toString()+"','"+requerido_componente.selected+"','"+tipo_componente.selectedLabel+"')");
+						
+					}
 					componente_etiqueta.text=Max_caracter_text.text=identificador_text.text="";
 				}else{
 					Alert.show(mensaje_validacion_vacio);
@@ -257,7 +314,11 @@
 			public function resultado_componentes(e:Event):void
 			{
 				Database.getInstance().dbStatement.removeEventListener(SQLEvent.RESULT,resultado_componentes);
+				if (this.id_modulo!=null){
 				Database.getInstance().getDatos("select id_componente,etiqueta,identificador,tamano,requerido,componente,tipo from componentes where id_modulo='"+this.id_modulo+"'");
+				}else{
+				Database.getInstance().getDatos("select id_componente,etiqueta,identificador,tamano,requerido,componente,tipo from componentes where id_modulo='"+this.last_id+"'");
+				}
 				dataset.dataProvider=Database.getInstance().personData;   	
 				agregar.enabled=true;
 				
@@ -297,6 +358,12 @@
 		
 	</mx:Script>
 	<mx:Style source="css.css"/> 
+	
+<mx:XML id="menuData">
+    <root>
+        <menuitem label="Delete" eventName="Delete"/>
+    </root>
+</mx:XML>
 <mx:states>
    <mx:State name="normal"/>
 
@@ -313,10 +380,28 @@
             </mx:Parallel>
         </mx:Transition>
     </mx:transitions>	
-	
-	<mx:HDividedBox  creationComplete="hbox1.moveDivider(0,90);Hbox_divider()" id="hbox1" y="10"  width="99%" height="100%">  
-		<mx:Panel click=" Hbox_divider();" id="panel_arbol" width="95%" height="98%" >
-		   <mx:Tree click="stado=true;" defaultLeafIcon="{ico}"  id="myTree" width="100%" height="100%" labelField="@label" showRoot="false" change="treeChanged(event)" />
+<mx:ViewStack x="10" y="10" id="viewstack1" width="100%" height="100%" >
+<mx:Canvas label="View 1" width="100%" height="100%">
+<mx:Panel x="7" y="10" width="97%" height="96%" layout="absolute">
+	<mx:Button click="{viewstack1.selectedIndex=1}" x="25" y="320" label="Button"/>
+	<mx:Label x="24" y="33" text="Proyecto"/>
+	<mx:Label x="25" y="93" text="Base de datos"/>
+	<mx:Label x="25" y="123" text="Nombre"/>
+	<mx:Label x="25" y="174" text="Host  (Preferiblementes es localhost)"/>
+	<mx:Label x="25" y="223" text="Usuario "/>
+	<mx:Label x="25" y="272" text="Contraseña"/>
+	<mx:TextInput x="25" y="52" width="386"/>
+	<mx:TextInput x="25" y="140" width="386"/>
+	<mx:TextInput x="25" y="192" width="386"/>
+	<mx:HRule x="25" y="110" width="93%" height="1"/>
+	<mx:TextInput x="25" y="241" width="386"/>
+	<mx:TextInput x="25" y="289" width="386"/>
+</mx:Panel>
+</mx:Canvas>
+<mx:Canvas label="Editor" width="100%" height="100%" showEffect="WipeDown" hideEffect="WipeUp">
+<mx:HDividedBox creationComplete="init();hbox1.moveDivider(0,90);Hbox_divider()" id="hbox1" y="10"  width="99%" height="100%">  
+		<mx:Panel  click=" Hbox_divider();" id="panel_arbol" width="95%" height="98%" >
+		   <mx:Tree rightClick="{showMenu(event)}" click="stado=true;" defaultLeafIcon="{ico}"  id="myTree" width="100%" height="100%" labelField="@label" showRoot="false" change="treeChanged(event)" />
 		</mx:Panel>
 		<mx:Panel titleIcon="{ico}" click=" Hbox_divider();" id="panel_builder" width="837" height="98%" >
 			<mx:Canvas click="stado=true;" id="builder"  height="100%" width="100%">
@@ -345,7 +430,6 @@
 				<mx:DataGrid horizontalScrollPolicy="auto" id="dataset" x="10" y="315" width="98%" height="40%"  enabled="false">
 					<mx:columns>
 						<mx:DataGridColumn visible="false" id="data_id" dataField="id_componente" width="40"/>
-						<mx:DataGridColumn id="data_nombre" dataField="identificador"/>
 						<mx:DataGridColumn id="data_etiqueta" dataField="etiqueta"/>
 						<mx:DataGridColumn width="130" id="data_Max_caracter" dataField="tamano"/>
 						<mx:DataGridColumn width="130" id="data_componente" dataField="componente"/>
@@ -356,8 +440,10 @@
 				<mx:Label id="requerido" x="10" y="208" fontWeight="normal"/>
 				<mx:Button id="btn_crear_modulo" x="640" y="34"  click="validar_name()"/>
 				<mx:Button click="new_modulo_add()"   x="695" y="34" id="boton_nuevo_modulo"/>
-				
+				<mx:Button click="Eliminar_modulos(this.id_modulo)" x="759" y="34" width="48" id="btn_delete"/>
 			</mx:Canvas>    
 		</mx:Panel>
 	</mx:HDividedBox>	
+</mx:Canvas>
+</mx:ViewStack>
 </mx:WindowedApplication>

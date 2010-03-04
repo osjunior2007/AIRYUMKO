@@ -21,7 +21,7 @@
 <requerido>Requerido</requerido>
 <boton_agregar>Adicionar</boton_agregar>
 <boton_borrar>Borrar</boton_borrar>
-<panel_arbol>Navegador de Modulos</panel_arbol>
+<panel_arbol>Navegador</panel_arbol>
 <panel_builder>Constructor de Modulos</panel_builder>
 <mensaje_eliminar>seleccione un elemento</mensaje_eliminar>
 <mensaje_modulo_name>Ingrese el nombre del modulo</mensaje_modulo_name>
@@ -41,5 +41,6 @@
 <relacion_modulo_name>Modulo</relacion_modulo_name>
 <mensaje_modulo_vacio>Selecciones un modelo</mensaje_modulo_vacio>
 <boton_ingresar_relacion>Ingresar</boton_ingresar_relacion>
+<boton_delete_modulo>Delete</boton_delete_modulo>
 </modulo_builder>
 </idioma>
