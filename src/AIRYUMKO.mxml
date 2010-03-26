@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <mx:WindowedApplication title="YUMKOO"  initialize="Database.getInstance().initAndOpenDatabase()"  backgroundGradientAlphas="[1.0, 0.32]" backgroundGradientColors="[#A0B8C0, #878A8D]" minWidth="930" minHeight="700" xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" >
-	<mx:HTTPService url="espaÃ±ol.xml"   requestTimeout="0"   resultFormat="object" id="idiomas" result="Cargar_idioma(event,idiomas); "  useProxy="false"  method="POST" >
-	</mx:HTTPService>  
-	<mx:Script> 
+	<mx:HTTPService url="español.xml"   requestTimeout="0"   resultFormat="object" id="idiomas" result="Cargar_idioma(event,idiomas); "  useProxy="false"  method="POST" >
+	</mx:HTTPService>
+	<mx:Script>
 		<![CDATA[
 		  	import mx.controls.Image;
 			import mx.collections.XMLListCollection;
-		    [Bindable] 
+		    [Bindable]
 			[Embed(source="img/flexicono.png")]
 			private var ico:Class;
 			import mx.collections.ArrayCollection;
@@ -18,12 +18,12 @@
 			import Clases.Zipfile;
 			import mx.managers.PopUpManager;
 			import Clases.Database;
-			
+
 			 import mx.controls.Menu;
 
-			
+
          	////////////////////////////////////////////////////////////////////////
-			public var cont_id:int=0; 
+			public var cont_id:int=0;
 			public var mensaje_eliminar:String;
 			public var mensaje_modulo_name:String;
 			public var mensaje_modulo_vacio:String;
@@ -41,8 +41,8 @@
 			public var elementos:Object = {};
 			[Bindable]
 			public var selectedNode:XML;
-			[Bindable] public var lista_componentes:ArrayCollection = new ArrayCollection([{label:"Campo de Texto", data:1},{label:"Ãrea de texto", data:2},/*{label:"Moneda", data:3},*/{label:"Fecha", data:4},{label:"Encriptado", data:5},/*{label:"TelÃ©fono", data:6},*/{label:"OpciÃ³n", data:7}/*,{label:"Desplegable (solo para relaciones 'llaves foraneas')", data:8}*/]);
-			[Bindable] public var relaciones:ArrayCollection = new ArrayCollection([{label:"Uno a Uno", data:1},{label:"Muchos a Uno", data:2},{label:"Muchos a Muchos", data:3}]);
+			[Bindable] public var lista_componentes:ArrayCollection = new ArrayCollection([{label:"Campo de Texto", data:1},{label:"Área de texto", data:2},/*{label:"Moneda", data:3},*/{label:"Fecha", data:4},{label:"Encriptado", data:5},/*{label:"Teléfono", data:6},*/{label:"Opción", data:7},{label:"Associación (solo para relaciones 'llaves foraneas')", data:8}]);
+			[Bindable] public var relaciones:ArrayCollection = new ArrayCollection([{label:"Ninguno", data:1},{label:"Uno a Uno", data:1},{label:"Uno a Muchos", data:2},{label:"Muchos a Muchos", data:3}]);
 			[Bindable] public var tipo_dato:ArrayCollection = new ArrayCollection([{label:"Numerico", data:1},{label:"Alfanumerico", data:2}]);
 			//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 			import mx.events.MenuEvent;
@@ -50,16 +50,16 @@
 			var stado:Boolean=false;
 			var cadena:String="";
 			public function init():void
-			{ 
+			{
 				idiomas.send();
 				enabled_componente(false);
 				buscar_modelo_To_Tree();
 				var screenBounds:Rectangle = Screen.mainScreen.bounds;
 				this.move((screenBounds.width-this.width)/2,(screenBounds.height-this.height)/2);
 				this.usePreloader=true;
-	        }  
-	        
-	
+	        }
+
+
         public function showMenu(event:MouseEvent):void
         {   if (myTree.selectedIndex>=0&&myTree.selectedItem.@label!="App"){
             var menu:Menu = Menu.createMenu(null, menuData, false);
@@ -68,16 +68,16 @@
             menu.addEventListener(MenuEvent.ITEM_CLICK,menuClickHandler);
           }
          }
-         
+
 		 private function menuClickHandler(event:MenuEvent):void {
 		 	if (event.label=="Delete"){
 		 	  Eliminar_modulos(this.id_modulo)
 		 	  new_modulo_add()
 		 	}
 		  }
-			
+
 			//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-			
+
 			public function Cargar_idioma(event:ResultEvent,servicio:HTTPService):void{
 				if(event.message.body.toString()!=""){
 					titulo_modulo_name.text=servicio.lastResult.idioma.modulo_builder.titulo_modulo_name;
@@ -88,7 +88,6 @@
 					Max_caracter.text=servicio.lastResult.idioma.modulo_builder.Max_caracter;
 					tipo_valores.text=servicio.lastResult.idioma.modulo_builder.tipo_valores;
 					datos.text=servicio.lastResult.idioma.modulo_builder.datos;
-					//data_nombre.headerText=servicio.lastResult.idioma.modulo_builder.data_nombre;
 					data_id.headerText=servicio.lastResult.idioma.modulo_builder.data_id;
 					data_Max_caracter.headerText=servicio.lastResult.idioma.modulo_builder.data_Max_caracter;
 					data_componente.headerText=servicio.lastResult.idioma.modulo_builder.data_componente;
@@ -109,18 +108,22 @@
 					btn_crear_modulo.label=servicio.lastResult.idioma.modulo_builder.boton_crear_modulo;
 					boton_nuevo_modulo.label=servicio.lastResult.idioma.modulo_builder.boton_nuevo_modulo;
 					boton_upload.label=servicio.lastResult.idioma.modulo_builder.boton_upload;
-					relacionship.label=servicio.lastResult.idioma.modulo_builder.relacionship;
 					mensaje_modulo_vacio=servicio.lastResult.idioma.modulo_builder.mensaje_modulo_vacio;
-					relaciones.setItemAt({label:servicio.lastResult.idioma.modulo_builder.relacionship_tipo_1, data:0},0);
-					relaciones.setItemAt({label:servicio.lastResult.idioma.modulo_builder.relacionship_tipo_2, data:1},1);
-					relaciones.setItemAt({label:servicio.lastResult.idioma.modulo_builder.relacionship_tipo_3, data:2},2);
+					relaciones.setItemAt({label:servicio.lastResult.idioma.modulo_builder.relacionship_tipo_0, data:0},0);
+					relaciones.setItemAt({label:servicio.lastResult.idioma.modulo_builder.relacionship_tipo_1, data:1},1);
+					relaciones.setItemAt({label:servicio.lastResult.idioma.modulo_builder.relacionship_tipo_2, data:2},2);
+					relaciones.setItemAt({label:servicio.lastResult.idioma.modulo_builder.relacionship_tipo_3, data:3},3);
+					combox_relaciones.dataProvider=relaciones;
 					modulo_principal=servicio.lastResult.idioma.modulo_builder.modulo_principal;
 					modulo_relacionado=servicio.lastResult.idioma.modulo_builder.modulo_relacionado;
 					relacion_modulo_name=servicio.lastResult.idioma.modulo_builder.relacion_modulo_name;
 					tipo_relacion=servicio.lastResult.idioma.modulo_builder.tipo_relacionado;
 					btn_delete.toolTip=servicio.lastResult.idioma.modulo_builder.boton_delete_modulo;
+					associacion.text=servicio.lastResult.idioma.modulo_builder.associacion;
+					pertencia.text=servicio.lastResult.idioma.modulo_builder.pertencia;
+
 				}
-			}        
+			}
 			//////////////////////////////////////////////////////////////////
 			public function treeChanged(event:Event):void {
 				selectedNode=Tree(event.target).selectedItem as XML;
@@ -130,30 +133,31 @@
 			 		dataset.dataProvider={};
 					Crear_tabla_componente(selectedNode.@data)
 					this.id_modulo=selectedNode.@data;
+				    Database.getInstance().getDatos("select id_modulo,nombre from modulos where id_modulo!="+this.id_modulo+"");
+                    combox_associaciones.dataProvider=Database.getInstance().personData;
 				}
-			
-			}             
+
+			}
 			///////////////////////////////////////////////////////////////////////////////////////////
-			
+
 			private function showWindowDownload():void
 			{
 				var abrir:Download=Download(PopUpManager.createPopUp(this, Download , true));
 				abrir.showCloseButton=true;
 			    abrir.addEventListener("close",function(){PopUpManager.removePopUp(abrir)});
-				PopUpManager.centerPopUp(abrir);	
-				
+				PopUpManager.centerPopUp(abrir);
+
 			}
-			
+
 			///////////////////////////////////////////////////////////////////////////////////////////
-			
-			
+
+
 			private function showWindow():void
 			{
-				if(Modulo_name.text!=""){	
+				if(Modulo_name.text!=""){
 					var abrir:Modelo_Relaciones=Modelo_Relaciones(PopUpManager.createPopUp(this, Modelo_Relaciones , true));
 					abrir.id_modulo=this.id_modulo;
 					abrir.showCloseButton=true;
-					abrir.title=relacionship.label;
 					abrir.Modulo_name.text=Modulo_name.text;
 					abrir.tiporelaciones.dataProvider=relaciones;
 					abrir.buscar_todos_componentes(this.id_modulo);
@@ -165,14 +169,14 @@
 					abrir.myTree=this.myTree;
 					PopUpManager.centerPopUp(abrir);
 					abrir.addEventListener("close",function(){PopUpManager.removePopUp(abrir)});
-					PopUpManager.centerPopUp(abrir);		
+					PopUpManager.centerPopUp(abrir);
 				}else{
 					Alert.show(mensaje_modulo_vacio);
 				}
 			}
-		
-			//////////////////////////////////////////////////////////////////////////////////////////             
-			
+
+			//////////////////////////////////////////////////////////////////////////////////////////
+
 			public function Create_Tree (e:Event):void
 			{
 				myTree.dataProvider= IDEComponentes.getInstance().Crear_arbol(Database.getInstance().personData);
@@ -182,52 +186,52 @@
 				this.id_modulo=null
 				this.last_id=MailBox.child(MailBox.children().length()-1).@data
 			}
-			
-			
-			
+
+
+
 			public function buscar_modelo_To_Tree():void
 			{
 				Database.getInstance().dbStatement.addEventListener(SQLEvent.RESULT, Create_Tree);
 				Database.getInstance().getDatos("select id_modulo,nombre from modulos");
-				
-			}  
+
+			}
 			///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 			public function Eliminar_modulos(id_modulo:String):void
 			{
 				Database.getInstance().dbStatement.addEventListener(SQLEvent.RESULT, Eliminar_componentes);
 				Database.getInstance().getDatos("delete from modulos where id_modulo="+id_modulo+";");
-				
-			}  
+
+			}
 			public function Eliminar_componentes(e:Event):void
 			{
 			    Database.getInstance().dbStatement.removeEventListener(SQLEvent.RESULT,Eliminar_componentes);
 			    Database.getInstance().dbStatement.addEventListener(SQLEvent.RESULT,result_delete_components);
 				Database.getInstance().getDatos("delete from componentes where id_modulo="+this.id_modulo+";");
-			
-			}  
+
+			}
 			public function result_delete_components(e:Event):void
-			{  
+			{
 				Database.getInstance().dbStatement.removeEventListener(SQLEvent.RESULT,result_delete_components);
 				Database.getInstance().dbStatement.addEventListener(SQLEvent.RESULT,Create_Tree);
 				Database.getInstance().getDatos("select id_modulo,nombre from modulos");
-			} 
-			            
+			}
+
 			///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 			public function Crear_tabla_componente(id:String):void
 			{
 				Database.getInstance().dbStatement.removeEventListener(SQLEvent.RESULT, Create_Tree);
 				Database.getInstance().getDatos("select id_componente,etiqueta,identificador,tamano,requerido,componente,tipo from componentes where id_modulo='"+id+"'");
 				dataset.dataProvider=Database.getInstance().personData;
-			}  
-			
-			
+			}
+
+
 			///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 			public function new_modulo_add():void
 			{
 				enabled_componente(false);
 				Modulo_name.text='';
 				dataset.dataProvider={};
-			}         
+			}
 			////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 			public function enabled_componente(estado:Boolean):void
 			{
@@ -237,7 +241,7 @@
 				}else{
 					Modulo_name.enabled=true;
 					btn_crear_modulo.enabled=true;
-					
+
 				}
 				boton_nuevo_modulo.enabled=estado;
 				componentes_text.enabled=estado;
@@ -247,56 +251,57 @@
 				requerido_componente.enabled=estado;
 				tipo_componente.enabled=estado;
 				agregar.enabled=estado;
-				relacionship.enabled=estado;
 				dataset.enabled=estado;
 				borrar.enabled=estado;
 				boton_upload.enabled=estado;
-				
-			}  
+				combox_relaciones.enabled=estado
+				combox_associaciones.enabled=estado
+
+			}
 			///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 			public function validar_name():void
 			{
 				if(Modulo_name.text!='')
-				{ cadena=validar_modulo_nombre(Modulo_name.text);   
+				{ cadena=validar_modulo_nombre(Modulo_name.text);
 				  if(cadena.length==1&&cadena=="s"){
 				  	Alert.show("Este nombre no puede ser utilizado,seleccione otro!");
 				    }else{
-				    Modulo_name.text=cadena+"s";	
-				    ingresar_modelo();	
+				    Modulo_name.text=cadena+"s";
+				    ingresar_modelo();
 				    }
-					
+
 				}else{
 					Alert.show(modulo_name_vacio);
-				}	
-			}    
+				}
+			}
 			////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-			
+
 			public function ingresar_modelo():void
 			{
 				Database.getInstance().SetDatos("insert into modulos select distinct null ,'"+cadena+"s' from modulos where not exists (select * from modulos where nombre='"+cadena+"') union select null ,'"+cadena+"s'");
 				buscar_modelo_To_Tree();
 				enabled_componente(true);
-				
+
 			}
-			
+
 			////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-			
+
 			public function Delete_componente_BD():void
 			{
 				if(dataset.selectedIndex>=0){
 					Database.getInstance().dbStatement.addEventListener(SQLEvent.RESULT,function(){dataset.dataProvider={}});
-					Database.getInstance().SetDatos("delete from componentes where id_componente='"+dataset.selectedItem.id_componente+"'");	
+					Database.getInstance().SetDatos("delete from componentes where id_componente='"+dataset.selectedItem.id_componente+"'");
 					Database.getInstance().getDatos("select id_componente,etiqueta,identificador,tamano,requerido,componente,tipo from componentes where id_modulo='"+this.id_modulo+"'");
 					dataset.dataProvider=Database.getInstance().personData;
 				}else{
 					Alert.show("Seleccione un elemento !");
 				}
-			} 
-			///////////////////////////////////////////////////////////////////////////             
+			}
+			///////////////////////////////////////////////////////////////////////////
 			public function Crear_elemento(datagrid:DataGrid):void
 			{
 				//this.id_modulo=IDEComponentes.getInstance().last_modulo_insert;
-				if(identificador_text.text!=""&&Max_caracter_text.text!=""&&componente_etiqueta.text!=""){ 
+				if(identificador_text.text!=""&&Max_caracter_text.text!=""&&componente_etiqueta.text!=""){
 					cont_id++;
 					Database.getInstance().dbStatement.addEventListener(SQLEvent.RESULT,resultado_componentes);
 					agregar.enabled=false;
@@ -304,13 +309,13 @@
 					Database.getInstance().SetDatos("insert into componentes values (null,"+this.id_modulo+",'"+componente_etiqueta.text+"','"+identificador_text.text+"','"+Max_caracter_text.text+"','"+componentes_text.selectedItem.label+"','"+componentes_text.selectedIndex.toString()+"','"+requerido_componente.selected+"','"+tipo_componente.selectedLabel+"')");
 					}else{
 					Database.getInstance().SetDatos("insert into componentes values (null,"+this.last_id+",'"+componente_etiqueta.text+"','"+identificador_text.text+"','"+Max_caracter_text.text+"','"+componentes_text.selectedItem.label+"','"+componentes_text.selectedIndex.toString()+"','"+requerido_componente.selected+"','"+tipo_componente.selectedLabel+"')");
-						
+
 					}
 					componente_etiqueta.text=Max_caracter_text.text=identificador_text.text="";
 				}else{
 					Alert.show(mensaje_validacion_vacio);
 				}
-			}   
+			}
 			public function resultado_componentes(e:Event):void
 			{
 				Database.getInstance().dbStatement.removeEventListener(SQLEvent.RESULT,resultado_componentes);
@@ -319,46 +324,81 @@
 				}else{
 				Database.getInstance().getDatos("select id_componente,etiqueta,identificador,tamano,requerido,componente,tipo from componentes where id_modulo='"+this.last_id+"'");
 				}
-				dataset.dataProvider=Database.getInstance().personData;   	
+				dataset.dataProvider=Database.getInstance().personData;
 				agregar.enabled=true;
-				
-			}                            
+
+			}
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-			
+
 		public function Hbox_divider():void
 		{
-		  if(!stado){  
+		  if(!stado){
 		     currentState == 'normal' ? currentState = 'panel_builder' : currentState = 'normal'
 		  }else{
-		  stado=false;	
+		  stado=false;
 		  }
 		 }
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-			
+
 		public function validar_modulo_nombre(nombre:String):String
 		{  var cadena:String=nombre;
-		   var last_caracter:String=""; 
+		   var last_caracter:String="";
 		   var sw:int=0;
 			while(cadena.length>1&&sw==0){
 			    last_caracter=nombre.substring(cadena.length-1,cadena.length);
 			   if (last_caracter!="s"){
 		 	        sw=1;
 		 	      }else{
-		             if (last_caracter=="s"){ 	
+		             if (last_caracter=="s"){
 		             cadena=cadena.substring(0,cadena.length-1);
 		              }else{
 		          	     sw=1;
 		    }
-		        }	
+		        }
 			}
-			
+
 			 return cadena;
-		}	
+		}
+
+		public function change_associacion():void
+		{
+			if (componentes_text.selectedItem.data=="8"&&combox_relaciones.selectedItem.data!=0){
+				pertencia.visible=true;
+				combox_associaciones.visible=true;
+				 Database.getInstance().getDatos("select id_modulo,nombre from modulos where id_modulo!="+this.id_modulo+"");
+                 combox_associaciones.dataProvider=Database.getInstance().personData;
+			}else
+			{
+			if (combox_relaciones.selectedItem.data!=0){
+			  pertencia.visible=false;
+		      combox_associaciones.visible=false;
+		      Alert.show("La relación "+combox_relaciones.selectedItem.label+" es solo para componentes tipo associación !");
+		      combox_relaciones.selectedIndex=0;
+		     }
+			}
+		}
+
+		public function change_componente_combox():void
+		{
+	      if (componentes_text.selectedItem.data!="8"){
+	      pertencia.visible=false;
+		  combox_associaciones.visible=false;
+		   combox_relaciones.selectedIndex=0;
+		  }else{
+		  	if(combox_relaciones.selectedItem.data!=0){
+		  	  pertencia.visible=true;
+		     combox_associaciones.visible=true;
+		  	}
+		  }
+	    }
+
+
+
 		]]>
-		
+
 	</mx:Script>
-	<mx:Style source="css.css"/> 
-	
+	<mx:Style source="css.css"/>
+
 <mx:XML id="menuData">
     <root>
         <menuitem label="Delete" eventName="Delete"/>
@@ -370,8 +410,8 @@
         <mx:State name="panel_builder">
             <mx:SetProperty target="{panel_arbol}" name="width" value="0"/>
       </mx:State>
-    </mx:states>	
-	
+    </mx:states>
+
  <mx:transitions>
         <mx:Transition fromState="*" toState="*" >
             <mx:Parallel duration="700" >
@@ -379,17 +419,17 @@
                 <mx:Resize target="{panel_builder}" />
             </mx:Parallel>
         </mx:Transition>
-    </mx:transitions>	
+    </mx:transitions>
 <mx:ViewStack x="10" y="10" id="viewstack1" width="100%" height="100%" >
 <mx:Canvas label="View 1" width="100%" height="100%">
-<mx:Panel x="7" y="10" width="97%" height="96%" layout="absolute">
+<mx:Panel x="7" y="10" width="97%" height="96%" layout="absolute" title="Yoomko work with Php &gt;= 5.3">
 	<mx:Button click="{viewstack1.selectedIndex=1}" x="25" y="320" label="Button"/>
 	<mx:Label x="24" y="33" text="Proyecto"/>
 	<mx:Label x="25" y="93" text="Base de datos"/>
 	<mx:Label x="25" y="123" text="Nombre"/>
 	<mx:Label x="25" y="174" text="Host  (Preferiblementes es localhost)"/>
 	<mx:Label x="25" y="223" text="Usuario "/>
-	<mx:Label x="25" y="272" text="ContraseÃ±a"/>
+	<mx:Label x="25" y="272" text="Contraseña"/>
 	<mx:TextInput x="25" y="52" width="386"/>
 	<mx:TextInput x="25" y="140" width="386"/>
 	<mx:TextInput x="25" y="192" width="386"/>
@@ -399,7 +439,7 @@
 </mx:Panel>
 </mx:Canvas>
 <mx:Canvas label="Editor" width="100%" height="100%" showEffect="WipeDown" hideEffect="WipeUp">
-<mx:HDividedBox creationComplete="init();hbox1.moveDivider(0,90);Hbox_divider()" id="hbox1" y="10"  width="99%" height="100%">  
+<mx:HDividedBox creationComplete="init();hbox1.moveDivider(0,90);Hbox_divider()" id="hbox1" y="10"  width="99%" height="100%">
 		<mx:Panel  click=" Hbox_divider();" id="panel_arbol" width="95%" height="98%" >
 		   <mx:Tree rightClick="{showMenu(event)}" click="stado=true;" defaultLeafIcon="{ico}"  id="myTree" width="100%" height="100%" labelField="@label" showRoot="false" change="treeChanged(event)" />
 		</mx:Panel>
@@ -408,7 +448,7 @@
 				<mx:Label id="modulo_name" x="10" y="36" fontWeight="normal" fontSize="11"/>
 				<mx:TextInput restrict="0-9a-z" id='Modulo_name' x="163" y="34" width="469"/>
 				<mx:Label id="modulo_tipo" x="10" y="91"  fontWeight="normal" fontSize="11"/>
-				<mx:ComboBox dataProvider="{lista_componentes}"  id="componentes_text"  x="163" y="90" width="469" enabled="false"></mx:ComboBox>
+				<mx:ComboBox change="change_componente_combox()" dataProvider="{lista_componentes}"  id="componentes_text"  x="163" y="90" width="469" enabled="false"></mx:ComboBox>
 				<mx:Label id="etiqueta" x="10" y="123" fontWeight="normal"/>
 				<mx:TextInput x="163" y="121" id="componente_etiqueta" width="469" enabled="false" maxChars="40"/>
 				<mx:Label id="identificador" x="10" y="151"  fontWeight="normal" fontSize="11"/>
@@ -420,14 +460,13 @@
 				<mx:Label id="Max_caracter" x="10" y="181" fontSize="11" fontWeight="normal"/>
 				<mx:TextInput restrict="0-9"  id="Max_caracter_text" x="163" y="179" width="469" maxChars="5" enabled="false"/>
 				<mx:CheckBox x="163" y="206" id="requerido_componente" enabled="true" selected="true"/>
-				<mx:ComboBox  dataProvider="{tipo_dato}" id="tipo_componente"  x="163" y="231" width="469" enabled="false"></mx:ComboBox>
-				<mx:Button click="Crear_elemento(dataset)"   id="agregar" x="163" y="262"  width="100" enabled="false"/>
-				<mx:Button click="showWindow()"  x="271" y="262" width="117" id="relacionship"/>
+				<mx:ComboBox  dataProvider="{tipo_dato}" id="tipo_componente"  x="163" y="271" width="469" enabled="false"></mx:ComboBox>
+				<mx:Button click="Crear_elemento(dataset)"   id="agregar" x="163" y="302"  width="100" enabled="false"/>
 				<mx:Button click="Delete_componente_BD();"  id="borrar" width="95" x="10" y="{(dataset.y+dataset.height)+8}" enabled="false"/>
 				<mx:Button click="showWindowDownload()"  x="110" y="{(dataset.y+dataset.height)+8}" enabled="false" id="boton_upload" width="77"/>
-				<mx:Label id="tipo_valores" x="10" y="234" fontSize="11" fontWeight="normal"/>
-				<mx:Label id="datos" x="10" y="295"/>
-				<mx:DataGrid horizontalScrollPolicy="auto" id="dataset" x="10" y="315" width="98%" height="40%"  enabled="false">
+				<mx:Label id="tipo_valores" x="10" y="274" fontSize="11" fontWeight="normal"/>
+				<mx:Label id="datos" x="10" y="335"/>
+				<mx:DataGrid horizontalScrollPolicy="auto" id="dataset" x="10" y="355" width="98%" height="204"  enabled="false">
 					<mx:columns>
 						<mx:DataGridColumn visible="false" id="data_id" dataField="id_componente" width="40"/>
 						<mx:DataGridColumn id="data_etiqueta" dataField="etiqueta"/>
@@ -438,12 +477,16 @@
 					</mx:columns>
 				</mx:DataGrid>
 				<mx:Label id="requerido" x="10" y="208" fontWeight="normal"/>
+				<mx:Label id="associacion" x="10" y="238" fontWeight="normal"/>
 				<mx:Button id="btn_crear_modulo" x="640" y="34"  click="validar_name()"/>
 				<mx:Button click="new_modulo_add()"   x="695" y="34" id="boton_nuevo_modulo"/>
-				<mx:Button click="Eliminar_modulos(this.id_modulo)" x="759" y="34" width="48" id="btn_delete"/>
-			</mx:Canvas>    
+				<mx:Button click="Eliminar_modulos(this.id_modulo)" x="749" y="34" width="43" id="btn_delete"/>
+				<mx:ComboBox change="change_associacion()"  x="163" y="232" id="combox_relaciones"></mx:ComboBox>
+				<mx:Label visible="false" x="329" y="234" id="pertencia" width="25"/>
+				<mx:ComboBox id="combox_associaciones" labelField="nombre"  visible="false"   x="362" y="231.5" width="270"></mx:ComboBox>
+			</mx:Canvas>
 		</mx:Panel>
-	</mx:HDividedBox>	
+	</mx:HDividedBox>
 </mx:Canvas>
 </mx:ViewStack>
 </mx:WindowedApplication>
