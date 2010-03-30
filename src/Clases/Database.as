@@ -1,5 +1,5 @@
 package Clases
-{  
+{
 	import flash.data.SQLResult;
     import flash.filesystem.File;
 	import flash.data.SQLStatement;
@@ -8,28 +8,28 @@ package Clases
 	import flash.events.SQLErrorEvent;
     import mx.controls.Alert;
 
-    
+
 	public class Database
 	{   private static var instancia:Database;
-	   	public var exampleDB:SQLConnection;			
+	   	public var exampleDB:SQLConnection;
 	    public var exampleDBFile:File;
 	    public var dbStatement:SQLStatement;
        [Bindable]
         public var personData:Array;
-        
+
 		public function Database()
 		{
 		}
-		
+
 		  public static function getInstance():Database
 		{
-			if( instancia==null ) 
+			if( instancia==null )
 			instancia = new Database();
 			return instancia;
 		}
-		
+
 			public function initAndOpenDatabase():void
-			{       		
+			{
 				exampleDBFile = File.applicationStorageDirectory.resolvePath( "Yomko.db" );
                 //Alert.show(File.applicationStorageDirectory.nativePath);
 				exampleDB = new SQLConnection();
@@ -47,7 +47,7 @@ package Clases
 			public function onExampleDBError(event:SQLEvent):void
 			{
 			}
-			
+
 				public function getRecords():void
 			{
 	           var sqlQuery:String="CREATE TABLE IF NOT EXISTS componentes ( id_componente INTEGER PRIMARY KEY AUTOINCREMENT,";
@@ -58,13 +58,15 @@ package Clases
                 sqlQuery+="componente TEXT  NOT NULL,";
                 sqlQuery+="componente_id TEXT NOT NULL,";
                 sqlQuery+="requerido TEXT NOT NULL,";
-                sqlQuery+="tipo TEXT NOT NULL";
-                sqlQuery+=");";  
+                sqlQuery+="tipo TEXT NOT NULL,";
+                sqlQuery+="modulo_relacionado TEXT NOT NULL,";
+                sqlQuery+="tipo_relacion TEXT NOT NULL";
+                sqlQuery+=");";
                 dbStatement = new SQLStatement();
 				dbStatement.sqlConnection = exampleDB;
 	            dbStatement.text = sqlQuery;
 				dbStatement.addEventListener(SQLEvent.RESULT, onDBStatementSelectResult);
-				dbStatement.execute();    
+				dbStatement.execute();
                 sqlQuery="CREATE TABLE IF NOT EXISTS modulos (";
                 sqlQuery+="id_modulo INTEGER PRIMARY KEY AUTOINCREMENT,";
                 sqlQuery+="nombre TEXT NOT NULL";
@@ -87,15 +89,15 @@ package Clases
 				dbStatement.execute();
 				///////////////////////////////////////////////
 	      }
-	      
+
 	      	public function getDatos(query:String):void
-			{  
+			{
 				dbStatement.text = query;
 				dbStatement.removeEventListener(SQLEvent.RESULT, onDBStatementInsertResult);
 			    dbStatement.addEventListener(SQLEvent.RESULT, onDBStatementSelectResult);
 				dbStatement.execute();
 			}
-			
+
 			 public function SetDatos(query:String):void
 		     {
 		       dbStatement.text = query;
@@ -103,10 +105,10 @@ package Clases
 			   dbStatement.addEventListener(SQLEvent.RESULT, onDBStatementInsertResult);
 			   dbStatement.execute();
 	        }
-		
-			
+
+
 			public function onDBStatementSelectResult(event:SQLEvent):void
-			{  
+			{
 				var result:SQLResult = dbStatement.getResult();
 			    if (result != null)
 			    {
@@ -114,7 +116,7 @@ package Clases
 			    }
 			}
 			public function onDBStatementInsertResult(event:SQLEvent):void
-			{ 
+			{
 			    if (exampleDB.totalChanges >= 1)
 			    {
 			    	getRecords();

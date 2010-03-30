@@ -41,7 +41,7 @@
 			public var elementos:Object = {};
 			[Bindable]
 			public var selectedNode:XML;
-			[Bindable] public var lista_componentes:ArrayCollection = new ArrayCollection([{label:"Campo de Texto", data:1},{label:"Área de texto", data:2},/*{label:"Moneda", data:3},*/{label:"Fecha", data:4},{label:"Encriptado", data:5},/*{label:"Teléfono", data:6},*/{label:"Opción", data:7},{label:"Associación (solo para relaciones 'llaves foraneas')", data:8}]);
+			[Bindable] public var lista_componentes:ArrayCollection = new ArrayCollection([{label:"Campo de Texto", data:0},{label:"Área de texto", data:1},/*{label:"Moneda", data:3},*/{label:"Fecha", data:2},{label:"Encriptado", data:3},/*{label:"Teléfono", data:6},*/{label:"Opción", data:4},{label:"Associación", data:5}]);
 			[Bindable] public var relaciones:ArrayCollection = new ArrayCollection([{label:"Ninguno", data:1},{label:"Uno a Uno", data:1},{label:"Uno a Muchos", data:2},{label:"Muchos a Muchos", data:3}]);
 			[Bindable] public var tipo_dato:ArrayCollection = new ArrayCollection([{label:"Numerico", data:1},{label:"Alfanumerico", data:2}]);
 			//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -49,7 +49,8 @@
 
 			var stado:Boolean=false;
 			var cadena:String="";
-			public function init():void
+			///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+		   public function init():void
 			{
 				idiomas.send();
 				enabled_componente(false);
@@ -286,36 +287,63 @@
 
 			////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+			public function Delete_relaciones_BD(e:Event):void
+			{
+			    Database.getInstance().dbStatement.removeEventListener(SQLEvent.RESULT,Delete_relaciones_BD);
+				Database.getInstance().dbStatement.addEventListener(SQLEvent.RESULT,Result_Delete_relaciones_BD);
+				Database.getInstance().SetDatos("delete from relaciones where modulo_principal='"+this.id_modulo+"' and tipo_relacion='"+combox_relaciones.selectedItem.data+"' and modulo_relacionado='"+this.modulo_relacionado+"'");
+		    }
+
+			public function Result_Delete_relaciones_BD(e:Event):void
+			{
+			    Database.getInstance().dbStatement.removeEventListener(SQLEvent.RESULT,Result_Delete_relaciones_BD);
+			    Database.getInstance().getDatos("select id_componente,etiqueta,identificador,tamano,requerido,componente,tipo from componentes where id_modulo='"+this.id_modulo+"'");
+			    dataset.dataProvider=Database.getInstance().personData
+			}
+
+			/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 			public function Delete_componente_BD():void
 			{
 				if(dataset.selectedIndex>=0){
-					Database.getInstance().dbStatement.addEventListener(SQLEvent.RESULT,function(){dataset.dataProvider={}});
+					Database.getInstance().dbStatement.addEventListener(SQLEvent.RESULT,Delete_relaciones_BD);
+					this.modulo_relacionado=dataset.selectedItem.modulo_relacionado;
+					this.tipo_relacion=dataset.selectedItem.tipo_relacion
 					Database.getInstance().SetDatos("delete from componentes where id_componente='"+dataset.selectedItem.id_componente+"'");
-					Database.getInstance().getDatos("select id_componente,etiqueta,identificador,tamano,requerido,componente,tipo from componentes where id_modulo='"+this.id_modulo+"'");
-					dataset.dataProvider=Database.getInstance().personData;
-				}else{
+	        	}else{
 					Alert.show("Seleccione un elemento !");
 				}
 			}
+
 			///////////////////////////////////////////////////////////////////////////
 			public function Crear_elemento(datagrid:DataGrid):void
 			{
 				//this.id_modulo=IDEComponentes.getInstance().last_modulo_insert;
 				if(identificador_text.text!=""&&Max_caracter_text.text!=""&&componente_etiqueta.text!=""){
 					cont_id++;
-					Database.getInstance().dbStatement.addEventListener(SQLEvent.RESULT,resultado_componentes);
+					Database.getInstance().dbStatement.addEventListener(SQLEvent.RESULT,Create_relaciones);
 					agregar.enabled=false;
-					if (this.id_modulo!=null){
-					Database.getInstance().SetDatos("insert into componentes values (null,"+this.id_modulo+",'"+componente_etiqueta.text+"','"+identificador_text.text+"','"+Max_caracter_text.text+"','"+componentes_text.selectedItem.label+"','"+componentes_text.selectedIndex.toString()+"','"+requerido_componente.selected+"','"+tipo_componente.selectedLabel+"')");
-					}else{
-					Database.getInstance().SetDatos("insert into componentes values (null,"+this.last_id+",'"+componente_etiqueta.text+"','"+identificador_text.text+"','"+Max_caracter_text.text+"','"+componentes_text.selectedItem.label+"','"+componentes_text.selectedIndex.toString()+"','"+requerido_componente.selected+"','"+tipo_componente.selectedLabel+"')");
-
+					 id=componentes_text.selectedItem.data;
+				  if (this.id_modulo!=null){
+				  	    if (id == "5" || id == "6" || id == "7"){
+			         	    Database.getInstance().SetDatos("insert into componentes values (null,"+this.id_modulo+",'"+componente_etiqueta.text+"','"+identificador_text.text+"','"+Max_caracter_text.text+"','"+componentes_text.selectedItem.label+"','"+componentes_text.selectedItem.data+"','"+requerido_componente.selected+"','"+tipo_componente.selectedLabel+"','"+combox_associaciones.selectedItem.id_modulo+"','"+combox_relaciones.selectedItem.data+"')");
+				         }else{
+				           Alert.show(id);
+				           Database.getInstance().SetDatos("insert into componentes values (null,"+this.id_modulo+",'"+componente_etiqueta.text+"','"+identificador_text.text+"','"+Max_caracter_text.text+"','"+componentes_text.selectedItem.label+"','"+componentes_text.selectedItem.data+"','"+requerido_componente.selected+"','"+tipo_componente.selectedLabel+"','0','0')");
+				         }
+				    }else{
+					     if (id == "5" || id == "6" || id == "7"){
+			         	    Database.getInstance().SetDatos("insert into componentes values (null,"+this.id_modulo+",'"+componente_etiqueta.text+"','"+identificador_text.text+"','"+Max_caracter_text.text+"','"+componentes_text.selectedItem.label+"','"+componentes_text.selectedItem.data+"','"+requerido_componente.selected+"','"+tipo_componente.selectedLabel+"','"+combox_associaciones.selectedItem.id_modulo+"','"+combox_relaciones.selectedItem.data+"')");
+				         }else{
+				          Database.getInstance().SetDatos("insert into componentes values (null,"+this.id_modulo+",'"+componente_etiqueta.text+"','"+identificador_text.text+"','"+Max_caracter_text.text+"','"+componentes_text.selectedItem.label+"','"+componentes_text.selectedItem.data+"','"+requerido_componente.selected+"','"+tipo_componente.selectedLabel+"','0')");
+				         }
 					}
 					componente_etiqueta.text=Max_caracter_text.text=identificador_text.text="";
 				}else{
 					Alert.show(mensaje_validacion_vacio);
 				}
+
 			}
+			//////////////////////////////////////////////////////////////////////////////
 			public function resultado_componentes(e:Event):void
 			{
 				Database.getInstance().dbStatement.removeEventListener(SQLEvent.RESULT,resultado_componentes);
@@ -328,6 +356,24 @@
 				agregar.enabled=true;
 
 			}
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+			public function Create_relaciones(e:Event):void
+			{
+				Database.getInstance().dbStatement.removeEventListener(SQLEvent.RESULT,Create_relaciones);
+			    if(combox_relaciones.selectedItem.data!="0"){
+			     Database.getInstance().SetDatos("insert into relaciones values (null,'"+this.id_modulo+"','"+combox_relaciones.selectedItem.data+"','"+combox_associaciones.selectedItem.id_modulo+"')");
+                }else{
+                  if (this.id_modulo!=null){
+				    Database.getInstance().getDatos("select id_componente,etiqueta,identificador,tamano,requerido,componente,tipo from componentes where id_modulo='"+this.id_modulo+"'");
+				     }else{
+				     Database.getInstance().getDatos("select id_componente,etiqueta,identificador,tamano,requerido,componente,tipo from componentes where id_modulo='"+this.last_id+"'");
+				   }
+				   dataset.dataProvider={}
+				   dataset.dataProvider=Database.getInstance().personData;
+				   agregar.enabled=true;
+                 }
+			}
+
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 		public function Hbox_divider():void
@@ -362,25 +408,26 @@
 
 		public function change_associacion():void
 		{
-			if (componentes_text.selectedItem.data=="8"&&combox_relaciones.selectedItem.data!=0){
+			if (componentes_text.selectedItem.data=="5"&&combox_relaciones.selectedItem.data!=0){
 				pertencia.visible=true;
 				combox_associaciones.visible=true;
 				 Database.getInstance().getDatos("select id_modulo,nombre from modulos where id_modulo!="+this.id_modulo+"");
                  combox_associaciones.dataProvider=Database.getInstance().personData;
 			}else
 			{
-			if (combox_relaciones.selectedItem.data!=0){
 			  pertencia.visible=false;
 		      combox_associaciones.visible=false;
-		      Alert.show("La relación "+combox_relaciones.selectedItem.label+" es solo para componentes tipo associación !");
+		      if (combox_relaciones.selectedItem.data!=0){
+			  Alert.show("La relación "+combox_relaciones.selectedItem.label+" es solo para componentes tipo associación !");
+		      }
 		      combox_relaciones.selectedIndex=0;
-		     }
+
 			}
 		}
-
+///////////////////////////////////////////////////////////////////////////////////////
 		public function change_componente_combox():void
 		{
-	      if (componentes_text.selectedItem.data!="8"){
+	      if (componentes_text.selectedItem.data!="5"){
 	      pertencia.visible=false;
 		  combox_associaciones.visible=false;
 		   combox_relaciones.selectedIndex=0;
