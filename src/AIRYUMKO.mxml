@@ -221,7 +221,7 @@
 			public function Crear_tabla_componente(id:String):void
 			{
 				Database.getInstance().dbStatement.removeEventListener(SQLEvent.RESULT, Create_Tree);
-				Database.getInstance().getDatos("select id_componente,etiqueta,identificador,tamano,requerido,componente,tipo from componentes where id_modulo='"+id+"'");
+				Database.getInstance().getDatos("select id_componente,etiqueta,identificador,tamano,requerido,componente,tipo,modulo_relacionado,tipo_relacion from componentes where id_modulo='"+id+"'");
 				dataset.dataProvider=Database.getInstance().personData;
 			}
 
@@ -291,7 +291,7 @@
 			{
 			    Database.getInstance().dbStatement.removeEventListener(SQLEvent.RESULT,Delete_relaciones_BD);
 				Database.getInstance().dbStatement.addEventListener(SQLEvent.RESULT,Result_Delete_relaciones_BD);
-				Database.getInstance().SetDatos("delete from relaciones where modulo_principal='"+this.id_modulo+"' and tipo_relacion='"+combox_relaciones.selectedItem.data+"' and modulo_relacionado='"+this.modulo_relacionado+"'");
+				Database.getInstance().SetDatos("delete from relaciones where modulo_principal='"+this.id_modulo+"' and tipo_relacion='"+this.tipo_relacion+"' and modulo_relacionado='"+this.modulo_relacionado+"'");
 		    }
 
 			public function Result_Delete_relaciones_BD(e:Event):void
@@ -327,7 +327,6 @@
 				  	    if (id == "5" || id == "6" || id == "7"){
 			         	    Database.getInstance().SetDatos("insert into componentes values (null,"+this.id_modulo+",'"+componente_etiqueta.text+"','"+identificador_text.text+"','"+Max_caracter_text.text+"','"+componentes_text.selectedItem.label+"','"+componentes_text.selectedItem.data+"','"+requerido_componente.selected+"','"+tipo_componente.selectedLabel+"','"+combox_associaciones.selectedItem.id_modulo+"','"+combox_relaciones.selectedItem.data+"')");
 				         }else{
-				           Alert.show(id);
 				           Database.getInstance().SetDatos("insert into componentes values (null,"+this.id_modulo+",'"+componente_etiqueta.text+"','"+identificador_text.text+"','"+Max_caracter_text.text+"','"+componentes_text.selectedItem.label+"','"+componentes_text.selectedItem.data+"','"+requerido_componente.selected+"','"+tipo_componente.selectedLabel+"','0','0')");
 				         }
 				    }else{
@@ -348,25 +347,43 @@
 			{
 				Database.getInstance().dbStatement.removeEventListener(SQLEvent.RESULT,resultado_componentes);
 				if (this.id_modulo!=null){
-				Database.getInstance().getDatos("select id_componente,etiqueta,identificador,tamano,requerido,componente,tipo from componentes where id_modulo='"+this.id_modulo+"'");
+				Database.getInstance().getDatos("select id_componente,etiqueta,identificador,tamano,requerido,componente,tipo,modulo_relacionado,tipo_relacion from componentes where id_modulo='"+this.id_modulo+"'");
 				}else{
-				Database.getInstance().getDatos("select id_componente,etiqueta,identificador,tamano,requerido,componente,tipo from componentes where id_modulo='"+this.last_id+"'");
+				Database.getInstance().getDatos("select id_componente,etiqueta,identificador,tamano,requerido,componente,tipo,modulo_relacionado,tipo_relacion from componentes where id_modulo='"+this.last_id+"'");
 				}
 				dataset.dataProvider=Database.getInstance().personData;
 				agregar.enabled=true;
 
 			}
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+			public function Resultado_Ingresar_relaciones(e:Event):void
+			{
+				Database.getInstance().dbStatement.removeEventListener(SQLEvent.RESULT,Resultado_Ingresar_relaciones);
+			     if (this.id_modulo!=null){
+				     Database.getInstance().getDatos("select id_componente,etiqueta,identificador,tamano,requerido,componente,tipo,modulo_relacionado,tipo_relacion from componentes where id_modulo='"+this.id_modulo+"'");
+				     }else{
+				     Database.getInstance().getDatos("select id_componente,etiqueta,identificador,tamano,requerido,componente,tipo,modulo_relacionado,tipo_relacion from componentes where id_modulo='"+this.last_id+"'");
+				   }
+				   dataset.dataProvider={}
+				   dataset.dataProvider=Database.getInstance().personData;
+				   agregar.enabled=true;
+			}
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
 			public function Create_relaciones(e:Event):void
 			{
 				Database.getInstance().dbStatement.removeEventListener(SQLEvent.RESULT,Create_relaciones);
 			    if(combox_relaciones.selectedItem.data!="0"){
-			     Database.getInstance().SetDatos("insert into relaciones values (null,'"+this.id_modulo+"','"+combox_relaciones.selectedItem.data+"','"+combox_associaciones.selectedItem.id_modulo+"')");
+			      Database.getInstance().dbStatement.addEventListener(SQLEvent.RESULT,Resultado_Ingresar_relaciones);
+			      Database.getInstance().SetDatos("insert into relaciones values (null,'"+this.id_modulo+"','"+combox_relaciones.selectedItem.data+"','"+combox_associaciones.selectedItem.id_modulo+"')");
                 }else{
                   if (this.id_modulo!=null){
-				    Database.getInstance().getDatos("select id_componente,etiqueta,identificador,tamano,requerido,componente,tipo from componentes where id_modulo='"+this.id_modulo+"'");
+				     Database.getInstance().getDatos("select id_componente,etiqueta,identificador,tamano,requerido,componente,tipo,modulo_relacionado,tipo_relacion from componentes where id_modulo='"+this.id_modulo+"'");
 				     }else{
-				     Database.getInstance().getDatos("select id_componente,etiqueta,identificador,tamano,requerido,componente,tipo from componentes where id_modulo='"+this.last_id+"'");
+				     Database.getInstance().getDatos("select id_componente,etiqueta,identificador,tamano,requerido,componente,tipo,modulo_relacionado,tipo_relacion from componentes where id_modulo='"+this.last_id+"'");
 				   }
 				   dataset.dataProvider={}
 				   dataset.dataProvider=Database.getInstance().personData;
