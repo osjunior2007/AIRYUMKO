@@ -130,7 +130,7 @@
 		</mx:columns>
 	</mx:DataGrid>
 	<mx:Label x="69" y="10" text="Modulo Principal" color="#39727E" id="M_principal"/>
-	<mx:Label x="244.5" y="10" text="Tipo de Relación" color="#39727E" id="T_relacion"/>
+	<mx:Label x="244.5" y="10" text="Tipo de Relacion" color="#39727E" id="T_relacion"/>
 	<mx:Label x="446" y="10" text="Modulo Relacionado" color="#39727E" id="M_Relacionado"/>
 	<mx:Button x="10" y="246" label="Adicionar" width="97" click="Ingresar_relacion_BD()"/>
 	<mx:Button click="Delete_relaciones()" x="115" y="246" label="Borrar" width="89"/>

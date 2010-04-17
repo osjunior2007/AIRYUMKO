@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <mx:WindowedApplication title="YUMKOO"  initialize="Database.getInstance().initAndOpenDatabase()"  backgroundGradientAlphas="[1.0, 0.32]" backgroundGradientColors="[#A0B8C0, #878A8D]" minWidth="930" minHeight="700" xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" >
-	<mx:HTTPService url="español.xml"   requestTimeout="0"   resultFormat="object" id="idiomas" result="Cargar_idioma(event,idiomas); "  useProxy="false"  method="POST" >
+	<mx:HTTPService url="espanol.xml"   requestTimeout="0"   resultFormat="object" id="idiomas" result="Cargar_idioma(event,idiomas); "  useProxy="false"  method="POST" >
 	</mx:HTTPService>
 	<mx:Script>
 		<![CDATA[
@@ -41,7 +41,7 @@
 			public var elementos:Object = {};
 			[Bindable]
 			public var selectedNode:XML;
-			[Bindable] public var lista_componentes:ArrayCollection = new ArrayCollection([{label:"Campo de Texto", data:0},{label:"Área de texto", data:1},/*{label:"Moneda", data:3},*/{label:"Fecha", data:2},{label:"Encriptado", data:3},/*{label:"Teléfono", data:6},*/{label:"Opción", data:4},{label:"Associación", data:5}]);
+			[Bindable] public var lista_componentes:ArrayCollection = new ArrayCollection([{label:"Campo de Texto", data:0},{label:"ï¿½rea de texto", data:1},/*{label:"Moneda", data:3},*/{label:"Fecha", data:2},{label:"Encriptado", data:3},/*{label:"Telï¿½fono", data:6},*/{label:"Opciï¿½n", data:4},{label:"Associaciï¿½n", data:5}]);
 			[Bindable] public var relaciones:ArrayCollection = new ArrayCollection([{label:"Ninguno", data:1},{label:"Uno a Uno", data:1},{label:"Uno a Muchos", data:2},{label:"Muchos a Muchos", data:3}]);
 			[Bindable] public var tipo_dato:ArrayCollection = new ArrayCollection([{label:"Numerico", data:1},{label:"Alfanumerico", data:2}]);
 			//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -435,7 +435,7 @@
 			  pertencia.visible=false;
 		      combox_associaciones.visible=false;
 		      if (combox_relaciones.selectedItem.data!=0){
-			  Alert.show("La relación "+combox_relaciones.selectedItem.label+" es solo para componentes tipo associación !");
+			  Alert.show("La relaciï¿½n "+combox_relaciones.selectedItem.label+" es solo para componentes tipo associaciï¿½n !");
 		      }
 		      combox_relaciones.selectedIndex=0;
 
@@ -493,7 +493,7 @@
 	<mx:Label x="25" y="123" text="Nombre"/>
 	<mx:Label x="25" y="174" text="Host  (Preferiblementes es localhost)"/>
 	<mx:Label x="25" y="223" text="Usuario "/>
-	<mx:Label x="25" y="272" text="Contraseña"/>
+	<mx:Label x="25" y="272" text="Contraseï¿½a"/>
 	<mx:TextInput x="25" y="52" width="386"/>
 	<mx:TextInput x="25" y="140" width="386"/>
 	<mx:TextInput x="25" y="192" width="386"/>

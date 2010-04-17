@@ -1,0 +1,46 @@
+<idioma>
+<modulo_builder>
+<titulo_modulo_name>Modulo</titulo_modulo_name>
+<componentes>Componentes</componentes>
+<componente_name>Nombre (Singular)</componente_name>
+<componente_tipo>Tipo de Componente</componente_tipo>
+<identificador>Identificador</identificador>
+<Max_caracter>Tamaño Máximo</Max_caracter>
+<tipo_valores>Tipo</tipo_valores>
+<relacion>Relación</relacion>
+<conector>Con</conector>
+<etiqueta>Etiqueta</etiqueta>
+<datos>Estructura de los Datos</datos>
+<data_nombre>Identificador</data_nombre>
+<data_id>Id</data_id>
+<data_Max_caracter>Tamaño maximo</data_Max_caracter>
+<data_componente>Componente</data_componente>
+<data_requerido>Requerido</data_requerido>
+<data_tipo>Tipo</data_tipo>
+<data_etiqueta>Etiqueta</data_etiqueta>
+<requerido>Requerido</requerido>
+<boton_agregar>Adicionar</boton_agregar>
+<boton_borrar>Borrar</boton_borrar>
+<panel_arbol>Navegador</panel_arbol>
+<panel_builder>Constructor de Modulos</panel_builder>
+<mensaje_eliminar>seleccione un elemento</mensaje_eliminar>
+<mensaje_modulo_name>Ingrese el nombre del modulo</mensaje_modulo_name>
+<mensaje_validacion_vacio>Ingrese todos los campos</mensaje_validacion_vacio>
+<resultado_modulo>Este modulo ya existe</resultado_modulo>
+<modulo_name_vacio>El nombre del modulo no puede ser vacio !</modulo_name_vacio>
+<boton_crear_modulo>add</boton_crear_modulo>
+<boton_nuevo_modulo>new</boton_nuevo_modulo>
+<boton_upload>Upload</boton_upload>
+<relacionship>Relaciones</relacionship>
+<relacionship_tipo_1>Uno a uno</relacionship_tipo_1>
+<relacionship_tipo_2>Muchos a uno</relacionship_tipo_2>
+<relacionship_tipo_3>Muchos a muchos</relacionship_tipo_3>
+<modulo_principal>Modulo Principal</modulo_principal>
+<modulo_relacionado>Modulo Relacionado</modulo_relacionado>
+<tipo_relacionado>Tipo de Relación</tipo_relacionado>
+<relacion_modulo_name>Modulo</relacion_modulo_name>
+<mensaje_modulo_vacio>Selecciones un modelo</mensaje_modulo_vacio>
+<boton_ingresar_relacion>Ingresar</boton_ingresar_relacion>
+<boton_delete_modulo>Delete</boton_delete_modulo>
+</modulo_builder>
+</idioma>
