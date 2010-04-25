@@ -153,7 +153,9 @@ package Clases
 				name_modelo=name_modelo.substring(0,name_modelo.length-1);
 				name=name.substr(0,1).toLocaleUpperCase()+name.substr(1,name.length);
 				BuildMxmlComponets.getInstance().Create_ControllerAndModels(name,name_modelo,user_database,password_database,i);
-             	BuildMxmlComponets.getInstance().Create_ComponentsMxml(Database.getInstance().personData[i].id_modulo,Database.getInstance().personData[i].id_nombre,name);
+             	add_file("/src/Componentes/Controllers/"+name.substr(0,name.length-1)+"Controller.as",CreateMVC.getInstance().Crete_Controller(name.substr(0,name.length-1)));
+             	add_file("/src/Componentes/Models/"+name.substr(0,name.length-1)+".as",CreateMVC.getInstance().Create_Model(name.substr(0,name.length-1),Database.getInstance().personData[i].id));
+         	    BuildMxmlComponets.getInstance().Create_ComponentsMxml(Database.getInstance().personData[i].id_modulo,Database.getInstance().personData[i].id_nombre,name.substr(0,name.length-1));
 			   }
 
                 if(proyecto_zip=="amfphp.zip"){
@@ -191,7 +193,7 @@ package Clases
        	     if(relaciones[i].modulo_principal==Elemento){
     	      for(var j:int=0;j<=modulos.length-1;j++){
     	       if (relaciones[i].modulo_relacionado==modulos[j].id_modulo){
-    	        cadena+="  import Clases."+modulos[j].nombre+";"+"\n";
+    	        cadena+="  import Clases."+modulos[j].nombre.substr(0,1).toLocaleUpperCase()+modulos[j].nombre.substr(1,modulos[j].nombre.length)+";"+"\n";
     	       }
     	      }
     	     }
