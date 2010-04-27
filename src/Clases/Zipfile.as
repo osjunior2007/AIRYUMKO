@@ -45,7 +45,7 @@ package Clases
 		public var migrationcant:int=0;
 		public var TipoFramework:int=0;
 		public var Position_Objets:String="";
-	    var MainApp:String="";
+	    public var MainApp:String="";
 
 		public function Zipfile()
 		{
@@ -153,8 +153,8 @@ package Clases
 				name_modelo=name_modelo.substring(0,name_modelo.length-1);
 				name=name.substr(0,1).toLocaleUpperCase()+name.substr(1,name.length);
 				BuildMxmlComponets.getInstance().Create_ControllerAndModels(name,name_modelo,user_database,password_database,i);
-             	add_file("/src/Componentes/Controllers/"+name.substr(0,name.length-1)+"Controller.as",CreateMVC.getInstance().Crete_Controller(name.substr(0,name.length-1)));
-             	add_file("/src/Componentes/Models/"+name.substr(0,name.length-1)+".as",CreateMVC.getInstance().Create_Model(name.substr(0,name.length-1),Database.getInstance().personData[i].id));
+             	add_file(this.proyecto_name+"/src/Controllers/"+name.substr(0,name.length-1)+"Controller.as",CreateMVC.getInstance().Crete_Controller(name.substr(0,name.length-1)));
+             	add_file(this.proyecto_name+"/src/Models/"+name.substr(0,name.length-1)+".as",CreateMVC.getInstance().Create_Model(name.substr(0,name.length-1),Database.getInstance().personData[i].id_modulo));
          	    BuildMxmlComponets.getInstance().Create_ComponentsMxml(Database.getInstance().personData[i].id_modulo,Database.getInstance().personData[i].id_nombre,name.substr(0,name.length-1));
 			   }
 
