@@ -155,7 +155,9 @@ package Clases
 				BuildMxmlComponets.getInstance().Create_ControllerAndModels(name,name_modelo,user_database,password_database,i);
              	add_file(this.proyecto_name+"/src/Controllers/"+name.substr(0,name.length-1)+"Controller.as",CreateMVC.getInstance().Crete_Controller(name.substr(0,name.length-1)));
              	add_file(this.proyecto_name+"/src/Models/"+name.substr(0,name.length-1)+".as",CreateMVC.getInstance().Create_Model(name.substr(0,name.length-1),Database.getInstance().personData[i].id_modulo));
-         	    BuildMxmlComponets.getInstance().Create_ComponentsMxml(Database.getInstance().personData[i].id_modulo,Database.getInstance().personData[i].id_nombre,name.substr(0,name.length-1));
+         	    BuildMxmlComponets.getInstance().Create_SQL_Migration(Database.getInstance().personData[i].id_modulo,Database.getInstance().personData[i].nombre,Zipfile.getInstance().list_components)
+         	    BuildMxmlComponets.getInstance().View_Mxml(Database.getInstance().personData[i].id_modulo,Database.getInstance().personData[i].nombre)
+         	    BuildMxmlComponets.getInstance().Create_Components_Mxml(Database.getInstance().personData[i].id_modulo,Database.getInstance().personData[i].id_nombre,name.substr(0,name.length-1));
 			   }
 
                 if(proyecto_zip=="amfphp.zip"){
