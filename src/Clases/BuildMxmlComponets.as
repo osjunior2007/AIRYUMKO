@@ -77,7 +77,7 @@ package Clases
 				Zipfile.getInstance().cadena+=IDEComponentes.getInstance().Crear_Button("Update","updates","{{"+nombre.substr(0,nombre.length-1)+"Controller.getInstance().Update(this);}",(IDEComponentes.getInstance().posx+96).toString(),IDEComponentes.getInstance().posy.toString(),"false")+"\n";
 				Zipfile.getInstance().cadena+=IDEComponentes.getInstance().Crear_Button("Back","back","{App.getInstance().BACK_TO_LIST()}",(IDEComponentes.getInstance().posx+96).toString(),(IDEComponentes.getInstance().posy).toString(),"true")+"\n";
 				Zipfile.getInstance().cadena+="</s:HGroup>"+"\n"+"</mx:FormItem>"+"\n"+"</mx:Form>"+"\n"+'</s:NavigatorContent>'+"\n"+'</mx:ViewStack>'+"\n"+'</s:Group>';
-			    Zipfile.getInstance().add_file(Zipfile.getInstance().proyecto_name+"/src/Componentes/"+nombre.substr(0,nombre.length-1)+".mxml",Zipfile.getInstance().cadena);
+			    Zipfile.getInstance().add_file(Zipfile.getInstance().proyecto_name+"/src/Views/"+nombre.substr(0,nombre.length-1)+".mxml",Zipfile.getInstance().cadena);
                }
 		     IDEComponentes.getInstance().posx=10;
 		     IDEComponentes.getInstance().posy=20;
@@ -149,7 +149,7 @@ package Clases
    public function Main_Mxml():void
 	{
 
-         Zipfile.getInstance().MainApp='<?xml version="1.0" encoding="utf-8"?>'+" \n"+'<s:Application  xmlns="Componentes.*" xmlns:fx="http://ns.adobe.com/mxml/2009" xmlns:s="library://ns.adobe.com/flex/spark" xmlns:mx="library://ns.adobe.com/flex/mx">'+" \n"+'<mx:TabNavigator change="App.getInstance().GET_LIST(Header)" id="Header" x="10" y="22" width="98%" height="95%">'+" \n"+ Zipfile.getInstance().MainApp;
+         Zipfile.getInstance().MainApp='<?xml version="1.0" encoding="utf-8"?>'+" \n"+'<s:Application  xmlns="Views.*" xmlns:fx="http://ns.adobe.com/mxml/2009" xmlns:s="library://ns.adobe.com/flex/spark" xmlns:mx="library://ns.adobe.com/flex/mx">'+" \n"+'<mx:TabNavigator change="App.getInstance().GET_LIST(Header)" id="Header" x="10" y="22" width="98%" height="95%">'+" \n"+ Zipfile.getInstance().MainApp;
 	     Zipfile.getInstance().MainApp+="</mx:TabNavigator>"+" \n";
 	     Zipfile.getInstance().MainApp+="<fx:Script>"+" \n";
          Zipfile.getInstance().MainApp+="          <![CDATA["+" \n";
