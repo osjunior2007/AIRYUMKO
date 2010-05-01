@@ -271,7 +271,6 @@ package Clases
               	  if(id_componente=="8"){
               	   modulo+="<mx:FormItem label='"+etiqueta+"'>"+"\n"+"</mx:FormItem>"+'\n';	
 			       }
-                 // modulo+='</mx:Canvas>';
                  return modulo;	
               }
               
