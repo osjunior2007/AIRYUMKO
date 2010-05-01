@@ -126,7 +126,6 @@ package Clases
 				Zipfile.getInstance().database_sql+="PRIMARY KEY (`id`)"+" \n"+")"+"ENGINE=MyISAM AUTO_INCREMENT=40001 DEFAULT CHARSET=latin1;"+"\n"+"\n";
 				Zipfile.getInstance().Head_database_sql+=Zipfile.getInstance().database_sql;
 				Zipfile.getInstance().database_sql="";
-				//Zipfile.getInstance().add_file(Zipfile.getInstance().proyecto_name+"/src/Clases/"+nombre+".as",ActiveRecords.getInstance().Create_Class_object(nombre));
 			}
 			
 			//Only ROR
