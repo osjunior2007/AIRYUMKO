@@ -51,8 +51,8 @@ package Clases
 				      Zipfile.getInstance().MainApp+='</s:NavigatorContent>'+" \n";
 	            }else{
 	             var componentes_dinamicos:String="";
-	             componentes_dinamicos=ActiveRecords.getInstance().Create_Dinamic_Components(Zipfile.getInstance().list_components,id_modulo);
-	             Zipfile.getInstance().add_file(Zipfile.getInstance().proyecto_name+"/src/Clases/"+name+".as",ActiveRecords.getInstance().Create_Class_object_Relations(name,componentes_dinamicos));
+	            // componentes_dinamicos=ActiveRecords.getInstance().Create_Dinamic_Components(Zipfile.getInstance().list_components,id_modulo);
+	            // Zipfile.getInstance().add_file(Zipfile.getInstance().proyecto_name+"/src/Clases/"+name+".as",ActiveRecords.getInstance().Create_Class_object_Relations(name,componentes_dinamicos));
 	            }
 	        Zipfile.getInstance().nameclases+="         import Clases."+name+""+" \n";
 	}
@@ -70,7 +70,7 @@ package Clases
 				Zipfile.getInstance().datagridHead+='</mx:columns>'+"\n"+'</mx:DataGrid>';
 				Zipfile.getInstance().canvasdatagrid+=Zipfile.getInstance().datagridHead+"\n"+IDEComponentes.getInstance().Crear_Button("Crear","crear","{App.getInstance().CHANGE_VIEW('create')}",Zipfile.getInstance().DataGridposx.toString(),"{datos.height+50}","true")+"\n"+IDEComponentes.getInstance().Crear_Button("Update","UpdateView","{App.getInstance().CHANGE_VIEW('update')}",(Zipfile.getInstance().DataGridposx+96).toString(),"{datos.height+50}","true")+"\n"+IDEComponentes.getInstance().Crear_Button("Delete","deletes","{App.getInstance().VALIDATE_DELETE_ID(event)}",(Zipfile.getInstance().DataGridposx+196).toString(),"{datos.height+50}","true")+"\n"+'<mx:Label x="'+Zipfile.getInstance().DataGridposx+'" y="25" text="Modulo - '+nombre+' "/>'+"\n"+'</s:NavigatorContent>'+"\n";
 				Zipfile.getInstance().cadena='<?xml version="1.0" encoding="utf-8"?>'+" \n"+'<s:Group xmlns:fx="http://ns.adobe.com/mxml/2009" xmlns:s="library://ns.adobe.com/flex/spark" xmlns:mx="library://ns.adobe.com/flex/mx" width="400" height="300" creationComplete="App.getInstance().SET_CANVAS(this);App.getInstance().REMOTE_ACCESS('+"'"+"index"+"'"+',{});">'+"\n";
-		        Zipfile.getInstance().cadena+= Zipfile.getInstance().HeadService+IDEComponentes.getInstance().Create_Script(nombre,Zipfile.getInstance().setupdate,Zipfile.getInstance().Modulos_relacionados);
+		       // Zipfile.getInstance().cadena+= Zipfile.getInstance().HeadService+IDEComponentes.getInstance().Create_Script(nombre,Zipfile.getInstance().setupdate,Zipfile.getInstance().Modulos_relacionados);
 				Zipfile.getInstance().cadena+=Zipfile.getInstance().canvasdatagrid;
 				Zipfile.getInstance().cadena+=Zipfile.getInstance().canvascomponente;
 				Zipfile.getInstance().cadena+="<mx:FormItem >"+"\n"+"<s:HGroup>"+"\n"+IDEComponentes.getInstance().Crear_Button("Create","submit","{"+nombre.substr(0,nombre.length-1)+"Controller.getInstance().Create(this);}",IDEComponentes.getInstance().posx.toString(),IDEComponentes.getInstance().posy.toString(),"false")+"\n";
@@ -130,7 +130,7 @@ package Clases
 		      Zipfile.getInstance().database_sql+="PRIMARY KEY (`id`)"+" \n"+")"+"ENGINE=MyISAM AUTO_INCREMENT=40001 DEFAULT CHARSET=latin1;"+"\n"+"\n";
 			  Zipfile.getInstance().Head_database_sql+=Zipfile.getInstance().database_sql;
 			  Zipfile.getInstance().database_sql="";
-			  Zipfile.getInstance().add_file(Zipfile.getInstance().proyecto_name+"/src/Clases/"+nombre+".as",ActiveRecords.getInstance().Create_Class_object(nombre));
+			  //Zipfile.getInstance().add_file(Zipfile.getInstance().proyecto_name+"/src/Clases/"+nombre+".as",ActiveRecords.getInstance().Create_Class_object(nombre));
 		   }
 
 		   //Only ROR
