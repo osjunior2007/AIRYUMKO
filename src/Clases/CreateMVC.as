@@ -41,7 +41,7 @@ package Clases
 		  return "public function "+value.substr(0,1).toLocaleUpperCase()+value.substr(1,value.length)+"Controller()"+"\n"+"{"+"\n"+"}"+"\n";
 		}
 
-		public function Crete_Controller(value:String):String
+		public function CREATE_CONTROLLER(value:String):String
 		{
 		  var cadena:String="";
 		  cadena="package Controllers"+"\n";
@@ -78,7 +78,7 @@ package Clases
 
 		//////////////////////////////////////////////////////////////////////////////////////
 
-		public function Create_Model(value:String,id:String):String
+		public function CREATE_MODEL(value:String,id:String):String
 		{
 		  var cadena:String="";
 		  var Global_Variables:String="";

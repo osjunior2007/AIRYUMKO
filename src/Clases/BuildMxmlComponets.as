@@ -97,7 +97,7 @@ package Clases
 		
 		
 		
-		public function Create_SQL_Migration(id:String,nombre:String,list_components:Array):void
+		public function CREATE_SQL_MIGRATION(id:String,nombre:String,list_components:Array):void
 		{
 			var sw:int=0;
 			for(var i:int=0;i<=list_components.length-1;i++){
