@@ -269,7 +269,10 @@ package Clases
 			return cadena;
 		}
 		
-		
+		public function DINAMIC_COMPONENTS():String
+		{
+			return "";
+		}
 		
 	}
 }
