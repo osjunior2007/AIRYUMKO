@@ -157,7 +157,7 @@ package Clases
              	add_file(this.proyecto_name+"/src/Models/"+name.substr(0,name.length-1)+".as",CreateMVC.getInstance().Create_Model(name.substr(0,name.length-1),Database.getInstance().personData[i].id_modulo));
          	    BuildMxmlComponets.getInstance().Create_SQL_Migration(Database.getInstance().personData[i].id_modulo,Database.getInstance().personData[i].nombre,Zipfile.getInstance().list_components)
          	    BuildMxmlComponets.getInstance().View_Mxml(Database.getInstance().personData[i].id_modulo,Database.getInstance().personData[i].nombre)
-         	    BuildMxmlComponets.getInstance().Create_Components_Mxml(Database.getInstance().personData[i].id_modulo,Database.getInstance().personData[i].id_nombre,name.substr(0,name.length-1));
+         	    BuildMxmlComponets.getInstance().CREATE_MXML_COMPONENTS(Database.getInstance().personData[i].id_modulo,Database.getInstance().personData[i].id_nombre,name.substr(0,name.length-1));
 			   }
 
                 if(proyecto_zip=="amfphp.zip"){

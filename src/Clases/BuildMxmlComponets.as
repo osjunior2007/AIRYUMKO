@@ -42,7 +42,7 @@ package Clases
          }
 
 
-		public function Create_Components_Mxml(id_modulo:String,name_componente:String,name:String):void
+		public function CREATE_MXML_COMPONENTS(id_modulo:String,name_componente:String,name:String):void
 	{
 	   	if(Zipfile.getInstance().Verificar_Modulo_Relacion(Zipfile.getInstance().list_relaciones,id_modulo)==false){
 					  Zipfile.getInstance().Modulos_relacionados=Zipfile.getInstance().Obtener_Clases_Relacionadas(Zipfile.getInstance().list_modulos,Zipfile.getInstance().list_relaciones,id_modulo)
