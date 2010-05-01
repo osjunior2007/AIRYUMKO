@@ -166,7 +166,7 @@ package Clases
 			return "<mx:Validator requiredFieldError='"+idenficador.toLowerCase()+" is required' id='reqValid_"+idenficador.toLowerCase()+"' required='true' source='{Att_"+idenficador.toLowerCase()+"}' property='text' valid='App.getInstance().handleValid(event,Att_"+idenficador.toLowerCase()+")' invalid='App.getInstance().handleValid(event,Att_"+idenficador.toLowerCase()+")'/> \n";
 		}
 		
-		public function Create_Script(name:String,setupdate:String):String
+		public function Create_Script(name:String):String
 		{
 			var cadena:String="";
 			cadena+='<mx:Script>'+"\n";
