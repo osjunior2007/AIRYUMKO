@@ -2,6 +2,7 @@ package Clases
 {
 	
 	import flash.events.*;
+	import mx.controls.Alert;
 	public class BuildMxmlComponets
 	{
 		private static var instancia:BuildMxmlComponets;
@@ -57,8 +58,7 @@ package Clases
 		public function CREATE_FORM(id:String,nombre:String):String
 		{
 			if(Zipfile.getInstance().list_components!=null){
-				BuildMxmlComponets.getInstance().init_value();
-				IDEComponentes.getInstance().posx=IDEComponentes.getInstance().posx+15;
+			   IDEComponentes.getInstance().posx=IDEComponentes.getInstance().posx+15;
 				if(IF_CONTAIN_COMPONENTS(id)==1)
 				{
 					Zipfile.getInstance().HeadService=IDEComponentes.getInstance().Head_RemoteObject(nombre)+"\n";
@@ -105,7 +105,6 @@ package Clases
 					sw=1;
 					Zipfile.getInstance().datagridHead+=IDEComponentes.getInstance().Crear_Column_DataGrid(list_components[i].etiqueta,list_components[i].identificador,list_components[i].tamano);
 					Zipfile.getInstance().canvascomponente+=IDEComponentes.getInstance().Crear_Mxml(list_components[i].componente_id,list_components[i].identificador,list_components[i].etiqueta,list_components[i].tamano,list_components[i].tipo,list_components[i].requerido);
-					
 					if(Zipfile.getInstance().proyecto_zip=="amfphp.zip"){
 						if(list_components[i].identificador!="id"&&list_components[i].identificador!="ID"){
 							Zipfile.getInstance().database_sql+=IDEComponentes.getInstance().Create_database_sql(list_components[i].identificador,list_components[i].componente_id,list_components[i].tamano);
