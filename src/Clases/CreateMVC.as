@@ -86,6 +86,8 @@ package Clases
 		  var Clear_Input:String="";
 		  var Init_Input:String="";
 		  var name_model:String="";
+		  var Dinamic_Component:String="";
+		
 			for(var i:int=1;i<=Zipfile.getInstance().list_components.length-1;i++){
   				if(Zipfile.getInstance().list_components[i].id_modulo==id){
   				 Global_Variables+="       public var "+Zipfile.getInstance().list_components[i].etiqueta+':String="";'+"\n";
@@ -93,6 +95,12 @@ package Clases
 	             Clear_Input+="            params['Att_"+Zipfile.getInstance().list_components[i].etiqueta+"'].text='';"+"\n";
   				 Init_Input+="             this."+Zipfile.getInstance().list_components[i].etiqueta+"=params['Att_"+Zipfile.getInstance().list_components[i].etiqueta+"'].text"+"\n";
   				}
+  				
+  			  if (Zipfile.getInstance().Verificar_Modulo_Relacion(Zipfile.getInstance().list_relaciones,id)==true)
+		       {
+		       	  Dinamic_Component+=BuildMxmlComponets.getInstance().DINAMIC_COMPONENTS(Zipfile.getInstance().list_components[i].etiqueta,Zipfile.getInstance().list_components[i].componente_id)
+		       }
+  				
   		    }
   		    cadena+="package Models "+"\n"+"{"+"\n";
 	        cadena+="import spark.components.Group;"+"\n"+"import mx.controls.Alert;"+"\n";
@@ -105,6 +113,7 @@ package Clases
 		    cadena+=Model_Update(Create_Object);
 		    cadena+=Model_Destroy();
 		    cadena+=Model_Clear_Form(Clear_Input);
+		    cadena+=Create_Dinamic_Form(Dinamic_Component);
 		    cadena+="}"+"\n"+"}";
 		    return cadena;
 		}
@@ -128,6 +137,11 @@ package Clases
 		public function Model_Clear_Form(value:String):String
 		{
 		 return "   public function Clear_Form():void {"+"\n"+value+"\n"+"   }"+"\n";
+		}
+		
+		public function Create_Dinamic_Form(form:String):String
+		{
+	      return "       public  function Create_Attributes(Root_VBox:VGroup):void  {"+"\n"+BuildMxmlComponets.getInstance().CREATE_DINAMIC_BOX()+"\n\n"+form+"\n";
 		}
 
 		public function Model_Init(name:String,value:String):String
