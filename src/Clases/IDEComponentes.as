@@ -268,11 +268,7 @@ package Clases
                  return modulo;	
               }
               
-			
-              
-              
-         
-              
+		     
               public function buscar_componente(identificador:String,temp:ArrayCollection):int{
               	  var i:int=0;
               	  var sw:int=0;
