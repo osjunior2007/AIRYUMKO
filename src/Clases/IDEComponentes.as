@@ -232,41 +232,35 @@ package Clases
               {
                 var modulo:String="";
                if(id_componente=="0"){
-              	  modulo+=IDEComponentes.getInstance().Crear_label(etiqueta)+'\n';		
-				  IDEComponentes.getInstance().posy=IDEComponentes.getInstance().posy+20;
+              	  modulo+="<mx:FormItem label='"+etiqueta+"'>"+"\n";
 				  modulo+=IDEComponentes.getInstance().Crear_campo_de_texto(nombre,tamano,tipodato,0,requiredtype)+'\n';	
-              	  IDEComponentes.getInstance().posy=IDEComponentes.getInstance().posy+30;	
+              	  modulo+="</mx:FormItem>"+"\n";
               	 }
               	 
               	 if(id_componente=="1"){
-              	  modulo+=IDEComponentes.getInstance().Crear_label(etiqueta)+'\n';
-				  IDEComponentes.getInstance().posy=IDEComponentes.getInstance().posy+20;
+              	  modulo+="<mx:FormItem label='"+etiqueta+"'>"+"\n";
 				  modulo+=IDEComponentes.getInstance().Crear_Text_Area(nombre,tamano)+'\n';	
-              	  IDEComponentes.getInstance().posy=IDEComponentes.getInstance().posy+130;	
+              	  modulo+="</mx:FormItem>"+"\n"
               	 }	
               	 
               	  if(id_componente=="3"){
-              	   modulo+=IDEComponentes.getInstance().Crear_label(etiqueta)+'\n';	
-				   IDEComponentes.getInstance().posy=IDEComponentes.getInstance().posy+20;
-              	   modulo+=IDEComponentes.getInstance().Crear_campo_de_texto(nombre,tamano,tipodato,0,requiredtype)+'\n';	
-				   IDEComponentes.getInstance().posy=IDEComponentes.getInstance().posy+20;
+              	   modulo+="<mx:FormItem label='"+etiqueta+"'>"+"\n";
+				   modulo+=IDEComponentes.getInstance().Crear_campo_de_texto(nombre,tamano,tipodato,0,requiredtype)+'\n';	
 				   modulo+=IDEComponentes.getInstance().Crear_Fecha("agregar",nombre)+'\n';	
-              	   IDEComponentes.getInstance().posy=IDEComponentes.getInstance().posy+30;	
+	               modulo+="</mx:FormItem>"+"\n"
               	  }	
               	 
               	if(id_componente=="4"){
-              	  modulo+=IDEComponentes.getInstance().Crear_label(etiqueta)+'\n';	
-				  IDEComponentes.getInstance().posy=IDEComponentes.getInstance().posy+20;
-              	  modulo+=IDEComponentes.getInstance().Crear_campo_de_texto(nombre,tamano,tipodato,1,requiredtype)+'\n';	
-              	  IDEComponentes.getInstance().posy=IDEComponentes.getInstance().posy+30;	
+              	  modulo+="<mx:FormItem label='"+etiqueta+"'>"+"\n";
+				  modulo+=IDEComponentes.getInstance().Crear_campo_de_texto(nombre,tamano,tipodato,1,requiredtype)+'\n';	
+              	  modulo+="</mx:FormItem>"+"\n"
               	 }
               	 
               	 if(id_componente=="6"){
-              	  modulo+=IDEComponentes.getInstance().Crear_label(etiqueta)+'\n';	
-				  IDEComponentes.getInstance().posy=IDEComponentes.getInstance().posy+20;
-              	  modulo+=IDEComponentes.getInstance().Crear_CheckBox(nombre)+'\n';	
-				  IDEComponentes.getInstance().posy=IDEComponentes.getInstance().posy+30;	
-              	 }
+              	  modulo+="<mx:FormItem label='"+etiqueta+"'>"+"\n";
+				  modulo+=IDEComponentes.getInstance().Crear_CheckBox(nombre)+'\n';	
+				  modulo+="</mx:FormItem>"+"\n"
+				 }
               	 
               	  if(id_componente=="8"){
               	   modulo+="<mx:FormItem label='"+etiqueta+"'>"+"\n"+"</mx:FormItem>"+'\n';	
