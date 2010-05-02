@@ -256,7 +256,7 @@ package Clases
               	  modulo+="</mx:FormItem>"+"\n"
               	 }
               	 
-              	  if(id_componente=="8"){
+              	  if(id_componente=="5"){
               	   modulo+="<mx:FormItem label='"+etiqueta+"'>"+"\n"
               	   modulo+='<s:VGroup x="24" y="43" width="100%" height="100%">'+"\n"+"</s:VGroup>"+"\n";
               	   modulo+="</mx:FormItem>"+"\n";	
