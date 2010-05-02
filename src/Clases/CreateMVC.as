@@ -88,10 +88,10 @@ package Clases
 		  var name_model:String="";
 			for(var i:int=1;i<=Zipfile.getInstance().list_components.length-1;i++){
   				if(Zipfile.getInstance().list_components[i].id_modulo==id){
-  				 Global_Variables+="   public var "+Zipfile.getInstance().list_components[i].etiqueta+':String="";'+"\n";
-  				 Create_Object+="      this.Objeto."+Zipfile.getInstance().list_components[i].etiqueta+"=this."+Zipfile.getInstance().list_components[i].etiqueta+""+"\n";
-	             Clear_Input+="        params['Att_"+Zipfile.getInstance().list_components[i].etiqueta+"'].text='';"+"\n";
-  				 Init_Input+="         this."+Zipfile.getInstance().list_components[i].etiqueta+"=params['Att_"+Zipfile.getInstance().list_components[i].etiqueta+"'].text"+"\n";
+  				 Global_Variables+="       public var "+Zipfile.getInstance().list_components[i].etiqueta+':String="";'+"\n";
+  				 Create_Object+="          this.Objeto."+Zipfile.getInstance().list_components[i].etiqueta+"=this."+Zipfile.getInstance().list_components[i].etiqueta+""+"\n";
+	             Clear_Input+="            params['Att_"+Zipfile.getInstance().list_components[i].etiqueta+"'].text='';"+"\n";
+  				 Init_Input+="             this."+Zipfile.getInstance().list_components[i].etiqueta+"=params['Att_"+Zipfile.getInstance().list_components[i].etiqueta+"'].text"+"\n";
   				}
   		    }
   		    cadena+="package Models "+"\n"+"{"+"\n";
@@ -99,7 +99,6 @@ package Clases
 		    cadena+="public class "+value.substr(0,1).toLocaleUpperCase()+value.substr(1,value.length)+" "+"\n"+"{"+"\n";
 		    cadena+="   public var Objeto:Object={};"+"\n"+"   public var params:Group;"+"\n";
 		    cadena+=Global_Variables;
-		    cadena+="public class "+value.substr(0,1).toLocaleUpperCase()+value.substr(1,value.length)+"\n";
 		    cadena+=Model_Init(value,Init_Input);
 		    cadena+=Model_Save(Create_Object);
 		    cadena+=Model_Update(Create_Object);
@@ -113,17 +112,17 @@ package Clases
 
 		public function Model_Save(value:String):String
 		{
-		 return "   public function Save():void {"+"\n"+value+"      this.params['amf'].create.send(this.Object);"+"\n"+"    }"+"\n";
+		 return "       public function Save():void {"+"\n"+value+"      this.params['amf'].create.send(this.Object);"+"\n"+"    }"+"\n";
 		}
 
 		public function Model_Update(value:String):String
 		{
-		 return "   public function Update():void {"+"\n"+value+"    this.params['amf'].update.send(this.Objeto);"+"\n"+"   }"+"\n";
+		 return "       public function Update():void {"+"\n"+value+"    this.params['amf'].update.send(this.Objeto);"+"\n"+"   }"+"\n";
 		}
 
 		public function Model_Destroy():String
 		{
-		 return "   public function Destroy(id:String):void {"+"     this.Objeto={}"+"\n"+"this.Objeto.id=id;"+"\n"+"this.params['amf'].destroy.send(this.Objeto);"+"\n"+"   }"+"\n";
+		 return "       public function Destroy(id:String):void {"+"\n"+"     this.Objeto={}"+"\n"+"    this.Objeto.id=id;"+"\n"+"    this.params['amf'].destroy.send(this.Objeto);"+"\n"+"      }"+"\n";
 		}
 
 		public function Model_Clear_Form(value:String):String
@@ -133,7 +132,7 @@ package Clases
 
 		public function Model_Init(name:String,value:String):String
 		{
-		 return "   public function "+name.substr(0,1).toLocaleUpperCase()+name.substr(1,name.length)+" (params:Group) {"+"\n"+value+"\n"+"   }"+"\n";
+		 return "       public function "+name.substr(0,1).toLocaleUpperCase()+name.substr(1,name.length)+" (params:Group) {"+"\n"+value+"\n"+"   }"+"\n";
 		}
 
 
