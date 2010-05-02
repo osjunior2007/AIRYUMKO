@@ -256,15 +256,19 @@ package Clases
               	  modulo+="</mx:FormItem>"+"\n"
               	 }
               	 
-              	 if(id_componente=="6"){
-              	  modulo+="<mx:FormItem label='"+etiqueta+"'>"+"\n";
-				  modulo+=IDEComponentes.getInstance().Crear_CheckBox(nombre)+'\n';	
-				  modulo+="</mx:FormItem>"+"\n"
-				 }
-              	 
               	  if(id_componente=="8"){
-              	   modulo+="<mx:FormItem label='"+etiqueta+"'>"+"\n"+"</mx:FormItem>"+'\n';	
+              	   modulo+="<mx:FormItem label='"+etiqueta+"'>"+"\n"
+              	   modulo+='<s:VGroup x="24" y="43" width="100%" height="100%">'+"\n"+"</s:VGroup>"+"\n";
+              	   modulo+="</mx:FormItem>"+"\n";	
 			       }
+              	 
+              	   if(id_componente=="6"){
+              	    modulo+="<mx:FormItem label='"+etiqueta+"'>"+"\n";
+				    modulo+=IDEComponentes.getInstance().Crear_CheckBox(nombre)+'\n';	
+				    modulo+="</mx:FormItem>"+"\n"
+				   }
+              	 
+              	 
                  return modulo;	
               }
               
