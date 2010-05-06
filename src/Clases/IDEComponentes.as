@@ -169,7 +169,7 @@ package Clases
 		public function Create_Script(name:String):String
 		{
 			var cadena:String="";
-			cadena+='<mx:Script>'+"\n";
+			cadena+='<fx:Script>'+"\n";
 			cadena+='<![CDATA['+"\n";
 			cadena+="  import mx.controls.Alert;"+"\n";
 			cadena+="  import mx.events.ValidationResultEvent;"+"\n";
@@ -177,7 +177,7 @@ package Clases
 			cadena+="  import Controllers."+name+";"+"\n";
 			cadena+="  public var sw:Boolean=false;"+"\n";
             cadena+="  public var canvas_complete:Boolean=false;"+" \n";
-		    return cadena+"]]>"+"\n"+"</mx:Script>"+"\n";
+		    return cadena+"]]>"+"\n"+"</fx:Script>"+"\n";
 		}
 		
 		public function database_yml (database:String,usuario:String,contrasena:String):String
