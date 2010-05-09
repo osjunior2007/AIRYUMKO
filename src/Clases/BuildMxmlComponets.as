@@ -276,7 +276,7 @@ package Clases
 		     cadena+='newVBox.setStyle("paddingRight", 5);'+"\n"
 		     cadena+='newVBox.setStyle("paddingLeft", 5);'+"\n"
 		     cadena+='newVBox.setStyle("paddingTop", 5);'+"\n"
-		     cadena+='newVBox.percentWidth ="95%"'+"\n"
+		     cadena+='newVBox.percentWidth =95'+"\n"
 		 
 		 return cadena;	
 		}
