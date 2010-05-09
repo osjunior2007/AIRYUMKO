@@ -28,7 +28,7 @@ package Clases
 		{
 			var cadena:String=""
 		    cadena+="public function Destroy(params:Group):void"+"\n"+" {"+"\n";
-			return cadena+"\n"+"   var "+value.toLocaleLowerCase()+":"+value.substr(0,1).toLocaleUpperCase()+value.substr(1,value.length)+"=new "+value.substr(0,1).toLocaleUpperCase()+value.substr(1,value.length)+"(params);"+"\n"+value+".Destroy("+value.toLocaleLowerCase()+".id);"+"\n"+"\n"+"}";;
+			return cadena+"\n"+"   var "+value.toLocaleLowerCase()+":"+value.substr(0,1).toLocaleUpperCase()+value.substr(1,value.length)+"=new "+value.substr(0,1).toLocaleUpperCase()+value.substr(1,value.length)+"(params);"+"\n"+value.toLocaleLowerCase()+".Destroy("+value.toLocaleLowerCase()+".id);"+"\n"+"\n"+"}";;
 		}
 
 		public function MVC_Controller_List(value:String):String
@@ -82,7 +82,7 @@ package Clases
 		public function CREATE_MODEL(value:String,id:String):String
 		{
 		  var cadena:String="";
-		  var Global_Variables:String="";
+		  var Global_Variables:String='         public var id:String=""'+"\n";	
 		  var Create_Object:String="";
 		  var Clear_Input:String="";
 		  var Init_Input:String="";
@@ -91,7 +91,6 @@ package Clases
 		
 			for(var i:int=1;i<=Zipfile.getInstance().list_components.length-1;i++){
   				if(Zipfile.getInstance().list_components[i].id_modulo==id){
-  				Global_Variables='         public var id:String=""'+"\n";	
   				 Global_Variables+="       public var "+Zipfile.getInstance().list_components[i].etiqueta+':String="";'+"\n";
   				 Create_Object+="          this.Objeto."+Zipfile.getInstance().list_components[i].etiqueta+"=this."+Zipfile.getInstance().list_components[i].etiqueta+""+"\n";
 	             Clear_Input+="            params['Att_"+Zipfile.getInstance().list_components[i].etiqueta+"'].text='';"+"\n";
@@ -106,7 +105,7 @@ package Clases
   		    }
   		    cadena+="package Models "+"\n"+"{"+"\n";
   		    cadena+="import spark.components.Group;"+"\n";
-  		    cadena+="import spark.components.Hroup;"+"\n";
+  		    cadena+="import spark.components.HGroup;"+"\n";
 	        cadena+="import spark.components.VGroup;"+"\n"+"import mx.controls.Alert;"+"\n";
 		    cadena+="public class "+value.substr(0,1).toLocaleUpperCase()+value.substr(1,value.length)+" "+"\n"+"{"+"\n";
 		    cadena+="   public var Objeto:Object={};"+"\n"+"   public var params:Group;"+"\n";
