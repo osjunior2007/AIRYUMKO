@@ -47,7 +47,7 @@ package Clases
 			if(Zipfile.getInstance().Verificar_Modulo_Relacion(Zipfile.getInstance().list_relaciones,id_modulo)==false){
 				Zipfile.getInstance().Modulos_relacionados=Zipfile.getInstance().Obtener_Clases_Relacionadas(Zipfile.getInstance().list_modulos,Zipfile.getInstance().list_relaciones,id_modulo)
 				Zipfile.getInstance().MainApp+='<s:NavigatorContent label="'+name+'" width="100%" height="100%" >'+"\n";
-				Zipfile.getInstance().MainApp+='<s:ModuleLoader  id="'+name+'"  width="98%" height="98%"  y="0" x="0" />'+" \n";
+				Zipfile.getInstance().MainApp+='<s:ModuleLoader url="Views/'+name.toLowerCase()+'.swf" id="'+name+'"  width="98%" height="98%"  y="0" x="0" />'+" \n";
 				Zipfile.getInstance().MainApp+='</s:NavigatorContent>'+" \n";
 			}
 			Zipfile.getInstance().nameclases+="         import Clases."+name+""+" \n";
@@ -64,14 +64,14 @@ package Clases
 					Zipfile.getInstance().HeadService+=Zipfile.getInstance().validate+IDEComponentes.getInstance().Create_Script(nombre)+'<mx:ViewStack x="0" y="0" id="View_01" width="100%" height="100%">'+"\n";
 					Zipfile.getInstance().datagridHead+='</mx:columns>'+"\n"+'</mx:DataGrid>';
 					Zipfile.getInstance().canvasdatagrid+=Zipfile.getInstance().datagridHead+"\n"+IDEComponentes.getInstance().Crear_Button("Crear","crear","{App.getInstance().CHANGE_VIEW('create')}",Zipfile.getInstance().DataGridposx.toString(),"{datos.height+50}","true")+"\n"+IDEComponentes.getInstance().Crear_Button("Update","UpdateView","{App.getInstance().CHANGE_VIEW('update')}",(Zipfile.getInstance().DataGridposx+96).toString(),"{datos.height+50}","true")+"\n"+IDEComponentes.getInstance().Crear_Button("Delete","deletes","{App.getInstance().VALIDATE_DELETE_ID(event)}",(Zipfile.getInstance().DataGridposx+196).toString(),"{datos.height+50}","true")+"\n"+'<mx:Label x="'+Zipfile.getInstance().DataGridposx+'" y="25" text="Modulo - '+nombre+' "/>'+"\n"+'</s:NavigatorContent>'+"\n";
-					Zipfile.getInstance().cadena='<?xml version="1.0" encoding="utf-8"?>'+" \n"+'<s:Group xmlns:fx="http://ns.adobe.com/mxml/2009" xmlns:s="library://ns.adobe.com/flex/spark" xmlns:mx="library://ns.adobe.com/flex/mx" width="400" height="300" creationComplete="App.getInstance().SET_CANVAS(this);App.getInstance().REMOTE_ACCESS('+"'"+"index"+"'"+',{});">'+"\n";
+					Zipfile.getInstance().cadena='<?xml version="1.0" encoding="utf-8"?>'+" \n"+'<mx:Module xmlns:fx="http://ns.adobe.com/mxml/2009"  xmlns:s="library://ns.adobe.com/flex/spark" xmlns:mx="library://ns.adobe.com/flex/mx" layout="absolute" width="400" height="300">'+"\n";
 					Zipfile.getInstance().cadena+=Zipfile.getInstance().HeadService;
 					Zipfile.getInstance().cadena+=Zipfile.getInstance().canvasdatagrid;
 					Zipfile.getInstance().cadena+=Zipfile.getInstance().canvascomponente;
 					Zipfile.getInstance().cadena+="<mx:FormItem >"+"\n"+"<s:HGroup>"+"\n"+IDEComponentes.getInstance().Crear_Button("Create","submit","{"+nombre.substr(0,nombre.length-1)+"Controller.getInstance().Create(this);}",IDEComponentes.getInstance().posx.toString(),IDEComponentes.getInstance().posy.toString(),"false")+"\n";
 					Zipfile.getInstance().cadena+=IDEComponentes.getInstance().Crear_Button("Update","updates","{{"+nombre.substr(0,nombre.length-1)+"Controller.getInstance().Update(this);}",(IDEComponentes.getInstance().posx+96).toString(),IDEComponentes.getInstance().posy.toString(),"false")+"\n";
 					Zipfile.getInstance().cadena+=IDEComponentes.getInstance().Crear_Button("Back","back","{App.getInstance().BACK_TO_LIST()}",(IDEComponentes.getInstance().posx+96).toString(),(IDEComponentes.getInstance().posy).toString(),"true")+"\n";
-					Zipfile.getInstance().cadena+="</s:HGroup>"+"\n"+"</mx:FormItem>"+"\n"+"</mx:Form>"+"\n"+'</s:NavigatorContent>'+"\n"+'</mx:ViewStack>'+"\n"+'</s:Group>';
+					Zipfile.getInstance().cadena+="</s:HGroup>"+"\n"+"</mx:FormItem>"+"\n"+"</mx:Form>"+"\n"+'</s:NavigatorContent>'+"\n"+'</mx:ViewStack>'+"\n"+'</mx:Module>';
 					Zipfile.getInstance().add_file(Zipfile.getInstance().proyecto_name+"/src/Views/"+nombre.substr(0,nombre.length-1)+".mxml",Zipfile.getInstance().cadena);
 				}
 				IDEComponentes.getInstance().posx=10;

@@ -242,8 +242,7 @@
 				}else{
 					Modulo_name.enabled=true;
 					btn_crear_modulo.enabled=true;
-
-				}
+            	}
 				boton_nuevo_modulo.enabled=estado;
 				componentes_text.enabled=estado;
 				componente_etiqueta.enabled=estado;
