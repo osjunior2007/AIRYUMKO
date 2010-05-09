@@ -14,21 +14,21 @@ package Clases
 		{
 		 var cadena:String=""
 		 cadena+="public function Create(params:Group):void"+"\n"+" {"+"\n";
-		 return cadena+"\n"+"   var "+value.toLocaleLowerCase()+":"+value.substr(0,1).toLocaleUpperCase()+ value.substr(1,value.length).toString()+"=new "+value.substr(0,1).toLocaleUpperCase()+ value.substr(1,value.length).toString()+"(params);"+"\n"+value+".Save();"+"\n"+"\n"+"}";
+		 return cadena+"\n"+"   var "+value.toLocaleLowerCase()+":"+value.substr(0,1).toLocaleUpperCase()+ value.substr(1,value.length).toString()+"=new "+value.substr(0,1).toLocaleUpperCase()+ value.substr(1,value.length).toString()+"(params);"+"\n"+value.toLocaleLowerCase()+".Save();"+"\n"+"\n"+"}";
 		}
 
 		public function MVC_Controller_Update(value:String):String
 		{
 			var cadena:String=""
 		    cadena+="public function Update(params:Group):void"+"\n"+" {"+"\n";
-			return cadena+"\n"+"   var "+value.toLocaleLowerCase()+":"+value.substr(0,1).toLocaleUpperCase()+value.substr(1,value.length)+"=new "+value.substr(0,1).toLocaleUpperCase()+value.substr(1,value.length)+"(params);"+"\n"+value+".Update();"+"\n"+"\n"+"}";;
+			return cadena+"\n"+"   var "+value.toLocaleLowerCase()+":"+value.substr(0,1).toLocaleUpperCase()+value.substr(1,value.length)+"=new "+value.substr(0,1).toLocaleUpperCase()+value.substr(1,value.length)+"(params);"+"\n"+value.toLocaleLowerCase()+".Update();"+"\n"+"\n"+"}";;
 		}
 
 		public function MVC_Controller_Destroy(value:String):String
 		{
 			var cadena:String=""
 		    cadena+="public function Destroy(params:Group):void"+"\n"+" {"+"\n";
-			return cadena+"\n"+"   var "+value.toLocaleLowerCase()+":"+value.substr(0,1).toLocaleUpperCase()+value.substr(1,value.length)+"=new "+value.substr(0,1).toLocaleUpperCase()+value.substr(1,value.length)+"(params);"+"\n"+value+".Destroy("+value+".id);"+"\n"+"\n"+"}";;
+			return cadena+"\n"+"   var "+value.toLocaleLowerCase()+":"+value.substr(0,1).toLocaleUpperCase()+value.substr(1,value.length)+"=new "+value.substr(0,1).toLocaleUpperCase()+value.substr(1,value.length)+"(params);"+"\n"+value+".Destroy("+value.toLocaleLowerCase()+".id);"+"\n"+"\n"+"}";;
 		}
 
 		public function MVC_Controller_List(value:String):String
@@ -48,8 +48,9 @@ package Clases
 		  cadena+="{"+"\n";
 		  cadena+="import Models."+value.substr(0,1).toLocaleUpperCase()+value.substr(1,value.length)+";"+"\n";
 		  cadena+="import spark.components.Group;"+"\n";
-		  cadena+="import Controllers."+value.substr(0,1).toLocaleUpperCase()+value.substr(1,value.length)+"Controller;"+"\n";
+		  cadena+="import Models."+value.substr(0,1).toLocaleUpperCase()+value.substr(1,value.length)+";"+"\n";
 		  cadena+="public class "+value.substr(0,1).toLocaleUpperCase()+value.substr(1,value.length)+"Controller"+"\n"+"{"+"\n";
+		  cadena+=" private static var instancia: "+value.substr(0,1).toLocaleUpperCase()+value.substr(1,value.length)+"Controller"+"\n";
 		  cadena+=MVC_Controller_Init(value)+"\n";
 		  cadena+=MVC_Controller_List(value)+"\n";
 		  cadena+=MVC_Controller_Create(value)+"\n";
@@ -90,6 +91,7 @@ package Clases
 		
 			for(var i:int=1;i<=Zipfile.getInstance().list_components.length-1;i++){
   				if(Zipfile.getInstance().list_components[i].id_modulo==id){
+  				Global_Variables='         public var id:String=""'+"\n";	
   				 Global_Variables+="       public var "+Zipfile.getInstance().list_components[i].etiqueta+':String="";'+"\n";
   				 Create_Object+="          this.Objeto."+Zipfile.getInstance().list_components[i].etiqueta+"=this."+Zipfile.getInstance().list_components[i].etiqueta+""+"\n";
 	             Clear_Input+="            params['Att_"+Zipfile.getInstance().list_components[i].etiqueta+"'].text='';"+"\n";
@@ -103,6 +105,7 @@ package Clases
   				
   		    }
   		    cadena+="package Models "+"\n"+"{"+"\n";
+  		     cadena+="import spark.components.Group;"+"\n";
 	        cadena+="import spark.components.Group;"+"\n"+"import mx.controls.Alert;"+"\n";
 		    cadena+="public class "+value.substr(0,1).toLocaleUpperCase()+value.substr(1,value.length)+" "+"\n"+"{"+"\n";
 		    cadena+="   public var Objeto:Object={};"+"\n"+"   public var params:Group;"+"\n";
@@ -110,18 +113,17 @@ package Clases
 		    cadena+=Model_Init(value,Init_Input);
 		    cadena+=Model_Save(Create_Object);
 		    cadena+=Model_Update(Create_Object);
-		    cadena+=Model_Update(Create_Object);
 		    cadena+=Model_Destroy();
 		    cadena+=Model_Clear_Form(Clear_Input);
 		    cadena+=Create_Dinamic_Form(Dinamic_Component);
-		    cadena+="}"+"\n"+"}";
+		    cadena+="  }"+"\n"+"   }"+"\n"+"    }";
 		    return cadena;
 		}
 
 
 		public function Model_Save(value:String):String
 		{
-		 return "       public function Save():void {"+"\n"+value+"      this.params['amf'].create.send(this.Object);"+"\n"+"    }"+"\n";
+		 return "       public function Save():void {"+"\n"+value+"      this.params['amf'].create.send(this.Objeto);"+"\n"+"    }"+"\n";
 		}
 
 		public function Model_Update(value:String):String

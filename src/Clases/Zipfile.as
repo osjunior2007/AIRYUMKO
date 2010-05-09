@@ -128,7 +128,7 @@ package Clases
 				}else{
 					if(file.filename!="src/Clases/"&&file.filename!="src/"&&file.filename!=".settings/"&&file.filename!=".settings/org.eclipse.core.resources.prefs"&&file.filename!="bin-debug/history/history.css"
 						&&file.filename!="bin-debug/"&&file.filename!="bin-debug/history/"&&file.filename!="bin-debug/history/historyFrame.html"&&file.filename!="bin-debug/history/history.js"
-						&&file.filename!="bin-debug/ejemplo.html"&&file.filename!="bin-debug/ejemplo.swf"&&file.filename!="bin-debug/AC_OETags.js"&&file.filename!="bin-debug/playerProductInstall.swf"
+						&&file.filename!="bin-debug/ejemplo.html"&&file.filename!="bin-debug/ejemplo.swf"&&file.filename!="bin-debug/swfobject.js"&&file.filename!="bin-debug/AC_OETags.js"&&file.filename!="bin-debug/playerProductInstall.swf"
 						&&file.filename!="html-template/history/"&&file.filename!="html-template/"&&file.filename!="html-template/index.template.html"&&file.filename!="html-template/AC_OETags.js"&&file.filename!="html-template/playerProductInstall.swf"&&file.filename!="html-template/history/history.css"
 						&&file.filename!="html-template/history/history.js"&&file.filename!="html-template/history/historyFrame.html"){
 						add_file(file.filename,file.content.toString());
@@ -158,7 +158,7 @@ package Clases
 					add_file(this.proyecto_name+"/src/Models/"+name.substr(0,name.length-1)+".as",CreateMVC.getInstance().CREATE_MODEL(name.substr(0,name.length-1),Database.getInstance().personData[i].id_modulo));
 					BuildMxmlComponets.getInstance().CREATE_SQL_MIGRATION(Database.getInstance().personData[i].id_modulo,Database.getInstance().personData[i].nombre,Zipfile.getInstance().list_components)
 					BuildMxmlComponets.getInstance().CREATE_FORM(Database.getInstance().personData[i].id_modulo,Database.getInstance().personData[i].nombre)
-					BuildMxmlComponets.getInstance().CREATE_MXML_COMPONENTS(Database.getInstance().personData[i].id_modulo,Database.getInstance().personData[i].id_nombre,name.substr(0,name.length-1));
+					BuildMxmlComponets.getInstance().CREATE_MXML_COMPONENTS(Database.getInstance().personData[i].id_modulo,Database.getInstance().personData[i].id_nombre,name_modelo.substr(0,name.length-1));
 				}
 				
 				if(proyecto_zip=="amfphp.zip"){

@@ -174,9 +174,7 @@ package Clases
 			cadena+="  import mx.controls.Alert;"+"\n";
 			cadena+="  import mx.events.ValidationResultEvent;"+"\n";
 			cadena+="  import Clases.App;"+"\n";
-			cadena+="  import Controllers."+name+";"+"\n";
-			cadena+="  public var sw:Boolean=false;"+"\n";
-            cadena+="  public var canvas_complete:Boolean=false;"+" \n";
+			cadena+="  import Controllers."+name+"Controller;"+"\n";
 		    return cadena+"]]>"+"\n"+"</fx:Script>"+"\n";
 		}
 		
