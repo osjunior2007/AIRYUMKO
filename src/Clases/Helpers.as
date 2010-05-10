@@ -58,12 +58,12 @@ package Clases
 		
 		public function Model_Clear_Form(value:String):String
 		{
-		 return "   public function Clear_Form():void {"+"\n"+value+"\n"+"   }"+"\n";
+		 return "     public function Clear_Form():void {"+"\n"+value+"\n"+"   }"+"\n";
 		}
 		
 		public function Create_Dinamic_Form(form:String):String
 		{
-	      return "       public  function Create_Attributes(Root_VBox:VGroup):void  {"+"\n"+BuildMxmlComponets.getInstance().CREATE_DINAMIC_BOX()+"\n\n"+form+"\n";
+	      return "     public  function Create_Attributes(Root_VBox:VGroup):void  {"+"\n"+BuildMxmlComponets.getInstance().CREATE_DINAMIC_BOX()+"\n\n"+form+"\n";
 		}
 		
 		public static function getInstance():Helpers

@@ -269,15 +269,15 @@ package Clases
 		public function CREATE_DINAMIC_BOX():String
 		{
 			 var cadena:String="";
-			 cadena+="     var newVBox:VGroup= new VGroup();"+"\n"
-		     cadena+="     var newHBox :HGroup = new HGroup();"+"\n"
-		     cadena+='     newVBox.setStyle( "borderColor", "#000000");'+"\n"
-		     cadena+='     newVBox.setStyle( "borderStyle", "solid" ); '  +"\n"
-		     cadena+='     newVBox.setStyle("paddingBottom", 5);'+"\n"
-		     cadena+='     newVBox.setStyle("paddingRight", 5);'+"\n"
-		     cadena+='     newVBox.setStyle("paddingLeft", 5);'+"\n"
-		     cadena+='     newVBox.setStyle("paddingTop", 5);'+"\n"
-		     cadena+='     newVBox.percentWidth =95';
+			 cadena+="          var newVBox:VGroup= new VGroup();"+"\n"
+		     cadena+="          var newHBox :HGroup = new HGroup();"+"\n"
+		     cadena+='          newVBox.setStyle( "borderColor", "#000000");'+"\n"
+		     cadena+='          newVBox.setStyle( "borderStyle", "solid" ); '  +"\n"
+		     cadena+='          newVBox.setStyle("paddingBottom", 5);'+"\n"
+		     cadena+='          newVBox.setStyle("paddingRight", 5);'+"\n"
+		     cadena+='          newVBox.setStyle("paddingLeft", 5);'+"\n"
+		     cadena+='          newVBox.setStyle("paddingTop", 5);'+"\n"
+		     cadena+='          newVBox.percentWidth =95';
 		 
 		 return cadena;	
 		}
