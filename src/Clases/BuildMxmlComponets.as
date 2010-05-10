@@ -55,7 +55,7 @@ package Clases
 		}
 		
 		
-		public function CREATE_FORM(id:String,nombre:String):String
+		public function CREATE_FORM(id:String,nombre:String):void
 		{
 			if(Zipfile.getInstance().list_components!=null){
 			   IDEComponentes.getInstance().posx=IDEComponentes.getInstance().posx+15;
@@ -78,7 +78,7 @@ package Clases
 				IDEComponentes.getInstance().posx=10;
 				IDEComponentes.getInstance().posy=20;
 			}//If not is null
-			return "";
+			
 		}
 		
 		public function IF_CONTAIN_COMPONENTS(id:String):int

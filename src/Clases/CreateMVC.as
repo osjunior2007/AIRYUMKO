@@ -114,8 +114,6 @@ package Clases
 		    cadena+=Model_Save(Create_Object);
 		    cadena+=Model_Update(Create_Object);
 		    cadena+=Model_Destroy();
-		    cadena+=Model_Clear_Form(Clear_Input);
-		    cadena+=Create_Dinamic_Form(Dinamic_Component);
 		    cadena+="  }"+"\n"+"   }"+"\n"+"    }";
 		    return cadena;
 		}
@@ -136,15 +134,7 @@ package Clases
 		 return "       public function Destroy(id:String):void {"+"\n"+"     this.Objeto={}"+"\n"+"    this.Objeto.id=id;"+"\n"+"    this.params['amf'].destroy.send(this.Objeto);"+"\n"+"      }"+"\n";
 		}
 
-		public function Model_Clear_Form(value:String):String
-		{
-		 return "   public function Clear_Form():void {"+"\n"+value+"\n"+"   }"+"\n";
-		}
-		
-		public function Create_Dinamic_Form(form:String):String
-		{
-	      return "       public  function Create_Attributes(Root_VBox:VGroup):void  {"+"\n"+BuildMxmlComponets.getInstance().CREATE_DINAMIC_BOX()+"\n\n"+form+"\n";
-		}
+
 
 		public function Model_Init(name:String,value:String):String
 		{
