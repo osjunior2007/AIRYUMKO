@@ -45,6 +45,8 @@ package Clases
 			      cadena="package Helpers"+"\n";
 				  cadena+="{"+"\n";
 				  cadena+="import spark.components.Group;"+"\n";
+                  cadena+="import spark.components.HGroup;"+"\n";
+                  cadena+="import spark.components.VGroup;"+"\n";
 				  cadena+="public class "+value.substr(0,1).toLocaleUpperCase()+value.substr(1,value.length)+"Helper"+"\n"+"{"+"\n";
 				  cadena+=" private static var instancia: "+value.substr(0,1).toLocaleUpperCase()+value.substr(1,value.length)+"Helper"+"\n";
 				  cadena+=Helper_Instance(value)+"\n";

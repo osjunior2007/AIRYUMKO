@@ -104,9 +104,7 @@ package Clases
   				
   		    }
   		    cadena+="package Models "+"\n"+"{"+"\n";
-  		    cadena+="import spark.components.Group;"+"\n";
-  		    cadena+="import spark.components.HGroup;"+"\n";
-	        cadena+="import spark.components.VGroup;"+"\n"+"import mx.controls.Alert;"+"\n";
+	        cadena+="import mx.controls.Alert;"+"\n";
 		    cadena+="public class "+value.substr(0,1).toLocaleUpperCase()+value.substr(1,value.length)+" "+"\n"+"{"+"\n";
 		    cadena+="   public var Objeto:Object={};"+"\n"+"   public var params:Group;"+"\n";
 		    cadena+=Global_Variables;
