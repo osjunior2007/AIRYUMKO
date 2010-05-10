@@ -269,15 +269,15 @@ package Clases
 		public function CREATE_DINAMIC_BOX():String
 		{
 			 var cadena:String="";
-			 cadena+="var newVBox:VGroup= new VGroup();"+"\n"
-		     cadena+="var newHBox :HGroup = new HGroup();"+"\n"
-		     cadena+='newVBox.setStyle( "borderColor", "#000000");'+"\n"
-		     cadena+='newVBox.setStyle( "borderStyle", "solid" ); '  +"\n"
-		     cadena+='newVBox.setStyle("paddingBottom", 5);'+"\n"
-		     cadena+='newVBox.setStyle("paddingRight", 5);'+"\n"
-		     cadena+='newVBox.setStyle("paddingLeft", 5);'+"\n"
-		     cadena+='newVBox.setStyle("paddingTop", 5);'+"\n"
-		     cadena+='newVBox.percentWidth =95'+"\n"
+			 cadena+="     var newVBox:VGroup= new VGroup();"+"\n"
+		     cadena+="     var newHBox :HGroup = new HGroup();"+"\n"
+		     cadena+='     newVBox.setStyle( "borderColor", "#000000");'+"\n"
+		     cadena+='     newVBox.setStyle( "borderStyle", "solid" ); '  +"\n"
+		     cadena+='     newVBox.setStyle("paddingBottom", 5);'+"\n"
+		     cadena+='     newVBox.setStyle("paddingRight", 5);'+"\n"
+		     cadena+='     newVBox.setStyle("paddingLeft", 5);'+"\n"
+		     cadena+='     newVBox.setStyle("paddingTop", 5);'+"\n"
+		     cadena+='     newVBox.percentWidth =95';
 		 
 		 return cadena;	
 		}
@@ -288,32 +288,35 @@ package Clases
 		{
 			var cadena:String="";
 		    if (tipo=="0"){	
-			 cadena+="var LaB_"+name+" : Label = new Label();"+"\n";
-			 cadena+="var LaB_"+name+" : TextInput = new TextInput();"+"\n";
-			 cadena+="TxT_"+name+".percentWidth=100;"+"\n";
-             cadena+="newHBox.addChild(LaB_"+name+");"+"\n";
-             cadena+="newHBox.addChild(TxT_"+name+");"+"\n";
-             cadena+="newVBox.addChild(newHBox);"+"\n";
-             cadena+="Root_VBox.addChild(newVBox);"+"\n";
+			 cadena+="          var LaB_"+name+" : Label = new Label();"+"\n";
+			 cadena+="          var LaB_"+name+" : TextInput = new TextInput();"+"\n";
+			 cadena+="          TxT_"+name+".percentWidth=100;"+"\n";
+             cadena+="          newHBox.addChild(LaB_"+name+");"+"\n";
+             cadena+="          newHBox.addChild(TxT_"+name+");"+"\n";
+             cadena+="          newVBox.addChild(newHBox);"+"\n";
+             cadena+="          Root_VBox.addChild(newVBox);"+"\n";
+             cadena+="          ///////////////////////////////////////////////"+"\n";
 		   }
 	  	     
 	  	     if (tipo=="1"){	
-			 cadena+="var LaB_"+name+" : Label = new Label();"+"\n";
-			 cadena+="var TxA_"+name+" : TextArea = new TextArea();"+"\n";
-			 cadena+="TxA_"+name+".percentWidth=100;"+"\n";
-             cadena+="newHBox.addChild(LaB_"+name+");"+"\n";
-             cadena+="newHBox.addChild(TxA_"+name+");"+"\n";
-             cadena+="newVBox.addChild(newHBox);"+"\n";
-             cadena+="Root_VBox.addChild(newVBox);"+"\n";
+			 cadena+="          var LaB_"+name+" : Label = new Label();"+"\n";
+			 cadena+="          var TxA_"+name+" : TextArea = new TextArea();"+"\n";
+			 cadena+="          TxA_"+name+".percentWidth=100;"+"\n";
+             cadena+="          newHBox.addChild(LaB_"+name+");"+"\n";
+             cadena+="          newHBox.addChild(TxA_"+name+");"+"\n";
+             cadena+="          newVBox.addChild(newHBox);"+"\n";
+             cadena+="          Root_VBox.addChild(newVBox);"+"\n";
+             cadena+="          ///////////////////////////////////////////////"+"\n";
 		   }
 		   
 		    if (tipo=="9"){	
-			 cadena+="var LaB_"+name+" : Label = new Label();"+"\n";
-			 cadena+="var BtN_"+name+" : Button = new Button();"+"\n";
-			 cadena+="newHBox.addChild(LaB_"+name+");"+"\n";
-             cadena+="newHBox.addChild(BtN_"+name+");"+"\n";
-             cadena+="newVBox.addChild(newHBox);"+"\n";
-             cadena+="Root_VBox.addChild(newVBox);"+"\n";
+			 cadena+="          var LaB_"+name+" : Label = new Label();"+"\n";
+			 cadena+="          var BtN_"+name+" : Button = new Button();"+"\n";
+			 cadena+="          newHBox.addChild(LaB_"+name+");"+"\n";
+             cadena+="          newHBox.addChild(BtN_"+name+");"+"\n";
+             cadena+="          newVBox.addChild(newHBox);"+"\n";
+             cadena+="          Root_VBox.addChild(newVBox);"+"\n";
+             cadena+="          ///////////////////////////////////////////////"+"\n";
 		   }
 	  	     
 	  	    return cadena;
