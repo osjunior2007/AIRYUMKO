@@ -44,9 +44,10 @@ package Clases
 	  	   
 			      cadena="package Helpers"+"\n";
 				  cadena+="{"+"\n";
-				  cadena+="import spark.components.Group;"+"\n";
-                  cadena+="import spark.components.HGroup;"+"\n";
-                  cadena+="import spark.components.VGroup;"+"\n";
+				  cadena+="import mx.controls.TextInput;"+"\n";
+                  cadena+="import mx.controls.Label;"+"\n";
+                  cadena+="import mx.containers.HBox;"+"\n";
+                  cadena+="import mx.containers.VBox;"+"\n";
 				  cadena+="public class "+value.substr(0,1).toLocaleUpperCase()+value.substr(1,value.length)+"Helper"+"\n"+"{"+"\n";
 				  cadena+=" private static var instancia: "+value.substr(0,1).toLocaleUpperCase()+value.substr(1,value.length)+"Helper"+"\n";
 				  cadena+=Helper_Instance(value)+"\n";
@@ -60,12 +61,12 @@ package Clases
 		
 		public function Model_Clear_Form(value:String):String
 		{
-		 return "     public function Clear_Form():void {"+"\n"+value+"\n"+"   }"+"\n";
+		 return "     public function Clear_Form(params:Group):void {"+"\n"+value+"\n"+"   }"+"\n";
 		}
 		
 		public function Create_Dinamic_Form(form:String):String
 		{
-	      return "     public  function Create_Attributes(Root_VBox:VGroup):void  {"+"\n"+BuildMxmlComponets.getInstance().CREATE_DINAMIC_BOX()+"\n\n"+form+"\n";
+	      return "     public  function Create_Attributes(Root_VBox:VBox):void  {"+"\n"+BuildMxmlComponets.getInstance().CREATE_DINAMIC_BOX()+"\n\n"+form+"\n"+"     }"+"\n";
 		}
 		
 		public static function getInstance():Helpers

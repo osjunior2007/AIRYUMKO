@@ -14,21 +14,21 @@ package Clases
 		{
 		 var cadena:String=""
 		 cadena+="public function Create(params:Group):void"+"\n"+" {"+"\n";
-		 return cadena+"\n"+"   var "+value.toLocaleLowerCase()+":"+value.substr(0,1).toLocaleUpperCase()+ value.substr(1,value.length).toString()+"=new "+value.substr(0,1).toLocaleUpperCase()+ value.substr(1,value.length).toString()+"(params);"+"\n"+value.toLocaleLowerCase()+".Save();"+"\n"+"\n"+"}";
+		 return cadena+"\n"+"   var "+value.toLocaleLowerCase()+":"+value.substr(0,1).toLocaleUpperCase()+ value.substr(1,value.length).toString()+"Model=new "+value.substr(0,1).toLocaleUpperCase()+ value.substr(1,value.length).toString()+"Model(params);"+"\n"+value.toLocaleLowerCase()+".Save();"+"\n"+"\n"+"}";
 		}
 
 		public function MVC_Controller_Update(value:String):String
 		{
 			var cadena:String=""
 		    cadena+="public function Update(params:Group):void"+"\n"+" {"+"\n";
-			return cadena+"\n"+"   var "+value.toLocaleLowerCase()+":"+value.substr(0,1).toLocaleUpperCase()+value.substr(1,value.length)+"=new "+value.substr(0,1).toLocaleUpperCase()+value.substr(1,value.length)+"(params);"+"\n"+value.toLocaleLowerCase()+".Update();"+"\n"+"\n"+"}";;
+			return cadena+"\n"+"   var "+value.toLocaleLowerCase()+":"+value.substr(0,1).toLocaleUpperCase()+value.substr(1,value.length)+"Model=new "+value.substr(0,1).toLocaleUpperCase()+value.substr(1,value.length)+"Model(params);"+"\n"+value.toLocaleLowerCase()+".Update();"+"\n"+"\n"+"}";;
 		}
 
 		public function MVC_Controller_Destroy(value:String):String
 		{
 			var cadena:String=""
 		    cadena+="public function Destroy(params:Group):void"+"\n"+" {"+"\n";
-			return cadena+"\n"+"   var "+value.toLocaleLowerCase()+":"+value.substr(0,1).toLocaleUpperCase()+value.substr(1,value.length)+"=new "+value.substr(0,1).toLocaleUpperCase()+value.substr(1,value.length)+"(params);"+"\n"+value.toLocaleLowerCase()+".Destroy("+value.toLocaleLowerCase()+".id);"+"\n"+"\n"+"}";;
+			return cadena+"\n"+"   var "+value.toLocaleLowerCase()+":"+value.substr(0,1).toLocaleUpperCase()+value.substr(1,value.length)+"Model=new "+value.substr(0,1).toLocaleUpperCase()+value.substr(1,value.length)+"Model(params);"+"\n"+value.toLocaleLowerCase()+".Destroy("+value.toLocaleLowerCase()+".id);"+"\n"+"\n"+"}";;
 		}
 
 		public function MVC_Controller_List(value:String):String
@@ -46,9 +46,8 @@ package Clases
 		  var cadena:String="";
 		  cadena="package Controllers"+"\n";
 		  cadena+="{"+"\n";
-		  cadena+="import Models."+value.substr(0,1).toLocaleUpperCase()+value.substr(1,value.length)+";"+"\n";
 		  cadena+="import spark.components.Group;"+"\n";
-		  cadena+="import Models."+value.substr(0,1).toLocaleUpperCase()+value.substr(1,value.length)+".Model;"+"\n";
+		  cadena+="import Models."+value.substr(0,1).toLocaleUpperCase()+value.substr(1,value.length)+"Model;"+"\n";
 		  cadena+="public class "+value.substr(0,1).toLocaleUpperCase()+value.substr(1,value.length)+"Controller"+"\n"+"{"+"\n";
 		  cadena+=" private static var instancia: "+value.substr(0,1).toLocaleUpperCase()+value.substr(1,value.length)+"Controller"+"\n";
 		  cadena+=MVC_Controller_Init(value)+"\n";
@@ -104,6 +103,7 @@ package Clases
   				
   		    }
   		    cadena+="package Models "+"\n"+"{"+"\n";
+  		    cadena+="import spark.components.Group;"+"\n";
 	        cadena+="import mx.controls.Alert;"+"\n";
 		    cadena+="public class "+value.substr(0,1).toLocaleUpperCase()+value.substr(1,value.length)+"Model"+"\n"+"{"+"\n";
 		    cadena+="     public var Objeto:Object={};"+"\n"+"     public var params:Group;"+"\n";
@@ -112,7 +112,7 @@ package Clases
 		    cadena+=Model_Save(Create_Object);
 		    cadena+=Model_Update(Create_Object);
 		    cadena+=Model_Destroy();
-		    cadena+="  }"+"\n"+"   }"+"\n"+"    }";
+		    cadena+="  }"+"\n"+"    }";
 		    return cadena;
 		}
 
@@ -136,7 +136,7 @@ package Clases
 
 		public function Model_Init(name:String,value:String):String
 		{
-		 return "       public function "+name.substr(0,1).toLocaleUpperCase()+name.substr(1,name.length)+" (params:Group) {"+"\n"+value+"\n"+"   }"+"\n";
+		 return "       public function "+name.substr(0,1).toLocaleUpperCase()+name.substr(1,name.length)+"Model(params:Group) {"+"\n"+value+"\n"+"   }"+"\n";
 		}
 
 
