@@ -89,7 +89,7 @@ package Clases
 			var cadena:String="";
 		   cadena="<fx:Declarations>"+"\n";	
 		   cadena+='<mx:RemoteObject showBusyCursor="true" endpoint="{App.getInstance().AMFurl}" id="amf" source="'+name+'Controller" destination="amfphp">'+"\n";
-		   cadena+='<mx:method name="index" result="'+name+'Controller.getInstance().GET_LIST(event,this);" fault="App.getInstance().REQUEST_FAULT(event);"/>'+"\n";
+		   cadena+='<mx:method name="index"  fault="App.getInstance().REQUEST_FAULT(event);"/>'+"\n";
 		   cadena+='<mx:method name="create" result="App.getInstance().SUCCESS_REQUEST(event);" fault="App.getInstance().REQUEST_FAULT(event);"/>'+"\n";
 		   cadena+='<mx:method name="update" result="App.getInstance().SUCCESS_REQUEST(event);"  fault="App.getInstance().REQUEST_FAULT(event);"/>'+"\n";
 		   cadena+=' <mx:method name="destroy" result="App.getInstance().SUCCESS_REQUEST(event);" fault="App.getInstance().REQUEST_FAULT(event);"/>'+"\n";
@@ -175,6 +175,7 @@ package Clases
 			cadena+="  import mx.events.ValidationResultEvent;"+"\n";
 			cadena+="  import Clases.App;"+"\n";
 			cadena+="  import Controllers."+name+"Controller;"+"\n";
+		    cadena+="  import Helpers."+name+"Helper;"+"\n";
 			cadena+= Zipfile.getInstance().helper_class_name;
 		    return cadena+"]]>"+"\n"+"</fx:Script>"+"\n";
 		}

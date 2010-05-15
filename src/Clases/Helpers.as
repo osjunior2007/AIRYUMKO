@@ -8,6 +8,22 @@ package Clases
 		{
 		}
 		
+		
+		public function CREATE_HELPER_BLANK(value:String):String
+		{
+		  var cadena:String="";
+		  cadena="package Helpers"+"\n";
+		  cadena+="{"+"\n";
+		  cadena+="import spark.components.Group;"+"\n";
+		  cadena+="import Helpers."+value.substr(0,1).toLocaleUpperCase()+value.substr(1,value.length)+"Helper;"+"\n";
+		  cadena+="public class "+value.substr(0,1).toLocaleUpperCase()+value.substr(1,value.length)+"Helper"+"\n"+"{"+"\n";
+		  cadena+=" private static var instancia: "+value.substr(0,1).toLocaleUpperCase()+value.substr(1,value.length)+"Helper"+"\n";
+		  cadena+=Helper_Instance(value)+"\n";
+	      cadena+="  }"+"\n";
+		  cadena+="}"+"\n";
+		  return cadena;
+		}
+		
 	   
 	   public function CREATE_HELPER(value:String):String
 		{
