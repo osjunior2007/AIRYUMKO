@@ -160,7 +160,7 @@ package Clases
 					add_file(this.proyecto_name+"/src/Models/"+name.substr(0,name.length-1)+"Model.as",CreateMVC.getInstance().CREATE_MODEL(name.substr(0,name.length-1),Database.getInstance().personData[i].id_modulo));
 					BuildMxmlComponets.getInstance().CREATE_SQL_MIGRATION(Database.getInstance().personData[i].id_modulo,Database.getInstance().personData[i].nombre,Zipfile.getInstance().list_components)
 					BuildMxmlComponets.getInstance().CREATE_FORM(Database.getInstance().personData[i].id_modulo,Database.getInstance().personData[i].nombre)
-					if(Verificar_Modulo_Relacion(list_components,Database.getInstance().personData[i].id_modulo).toString()){
+					if(Verificar_Modulo_Relacion(list_components,Database.getInstance().personData[i].id_modulo)==false){
 					 BuildMxmlComponets.getInstance().CREATE_MXML_COMPONENTS(Database.getInstance().personData[i].id_modulo,Database.getInstance().personData[i].id_nombre,name_modelo.substr(0,name.length-1));
 				    }
 				}

@@ -262,7 +262,7 @@ package Clases
 		          	  }	
 		          	 if (tipo_relacion=="2"){
 		          	   modulo+="<mx:FormItem label='"+etiqueta+"'>"+"\n"
-		          	   modulo+=Crear_Button("Aceptar","BtN_"+nombre,"action","","","true")+'\n';	
+		          	   modulo+=Crear_Button("Aceptar","BtN_"+nombre,"{View_01.selectedIndex="+Zipfile.getInstance().count_mxml_form+"}","","","true")+'\n';	
               	       modulo+="</mx:FormItem>"+"\n";
               	   	  }	
 		          	  if (tipo_relacion=="3"){
@@ -274,7 +274,7 @@ package Clases
 		          	  Zipfile.getInstance().relaciones_mxml_form+='<s:NavigatorContent label="'+nombre+'" width="100%" height="100%" >'+"\n";
 				      Zipfile.getInstance().relaciones_mxml_form+='<'+nombre.toLowerCase()+' id="'+nombre+'"  width="98%" height="98%"  y="0" x="0" />'+" \n";
 				      Zipfile.getInstance().relaciones_mxml_form+='</s:NavigatorContent>'+" \n";
-		          
+		              Zipfile.getInstance().count_mxml_form++;
 		           }
               	 
               	   if(id_componente=="6"){

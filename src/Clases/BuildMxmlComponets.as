@@ -71,7 +71,12 @@ package Clases
 					Zipfile.getInstance().cadena+=Zipfile.getInstance().canvascomponente;
 					Zipfile.getInstance().cadena+="<mx:FormItem >"+"\n"+"<s:HGroup>"+"\n"+IDEComponentes.getInstance().Crear_Button("Create","submit","{"+nombre.substr(0,1).toLocaleUpperCase()+nombre.substr(1,nombre.length-2)+"Controller.getInstance().Create(this);}",IDEComponentes.getInstance().posx.toString(),IDEComponentes.getInstance().posy.toString(),"false")+"\n";
 					Zipfile.getInstance().cadena+=IDEComponentes.getInstance().Crear_Button("Update","updates","{"+nombre.substr(0,1).toLocaleUpperCase()+nombre.substr(1,nombre.length-2)+"Controller.getInstance().Update(this);}",(IDEComponentes.getInstance().posx+96).toString(),IDEComponentes.getInstance().posy.toString(),"false")+"\n";
+				   if(Zipfile.getInstance().Verificar_Modulo_Relacion(Zipfile.getInstance().list_components,id)==false){
 					Zipfile.getInstance().cadena+=IDEComponentes.getInstance().Crear_Button("Back","back","{App.getInstance().BACK_TO_LIST()}",(IDEComponentes.getInstance().posx+96).toString(),(IDEComponentes.getInstance().posy).toString(),"true")+"\n";
+				    }else
+				    {
+				    Zipfile.getInstance().cadena+=IDEComponentes.getInstance().Crear_Button("Back","back","{View_01.selectedIndex=0}",(IDEComponentes.getInstance().posx+96).toString(),(IDEComponentes.getInstance().posy).toString(),"true")+"\n";
+				    }
 					Zipfile.getInstance().cadena+="</s:HGroup>"+"\n"+"</mx:FormItem>"+"\n"+"</mx:Form>"+"\n"+'</s:NavigatorContent>'+"\n"+Zipfile.getInstance().relaciones_mxml_form+'\n'+'</mx:ViewStack>'+"\n"+'</s:Group>';
 					Zipfile.getInstance().add_file(Zipfile.getInstance().proyecto_name+"/src/Views/"+nombre.substr(0,nombre.length-1)+".mxml",Zipfile.getInstance().cadena);
 				}
