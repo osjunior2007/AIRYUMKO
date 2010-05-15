@@ -104,7 +104,7 @@ package Clases
 				if(list_components[i].id_modulo==id){
 					sw=1;
 					Zipfile.getInstance().datagridHead+=IDEComponentes.getInstance().Crear_Column_DataGrid(list_components[i].etiqueta,list_components[i].identificador,list_components[i].tamano);
-					Zipfile.getInstance().canvascomponente+=IDEComponentes.getInstance().Crear_Mxml(list_components[i].componente_id,list_components[i].identificador,list_components[i].etiqueta,list_components[i].tamano,list_components[i].tipo,list_components[i].requerido);
+					Zipfile.getInstance().canvascomponente+=IDEComponentes.getInstance().Crear_Mxml(list_components[i].componente_id,list_components[i].identificador,list_components[i].etiqueta,list_components[i].tamano,list_components[i].tipo,list_components[i].requerido,list_components[i].tipo_relacion);
 					if(Zipfile.getInstance().proyecto_zip=="amfphp.zip"){
 						if(list_components[i].identificador!="id"&&list_components[i].identificador!="ID"){
 							Zipfile.getInstance().database_sql+=IDEComponentes.getInstance().Create_database_sql(list_components[i].identificador,list_components[i].componente_id,list_components[i].tamano);
@@ -266,65 +266,7 @@ package Clases
 			return cadena;
 		}
 		
-		public function CREATE_DINAMIC_BOX():String
-		{
-			 var cadena:String="";
-			 cadena+="          var newVBox:VBox= new VBox();"+"\n";
-		     cadena+="          var FormHBox :HBox = new HBox();"+"\n";
-		     cadena+="          var FormVBox :VBox = new VBox();"+"\n";
-		     cadena+='          newVBox.setStyle( "borderColor", "#000000");'+"\n"
-		     cadena+='          newVBox.setStyle( "borderStyle", "solid" ); '  +"\n"
-		     cadena+='          newVBox.setStyle("paddingBottom", 5);'+"\n"
-		     cadena+='          newVBox.setStyle("paddingRight", 5);'+"\n"
-		     cadena+='          newVBox.setStyle("paddingLeft", 5);'+"\n"
-		     cadena+='          newVBox.setStyle("paddingTop", 5);'+"\n"
-		     cadena+='          newVBox.percentWidth =100;';
-		 
-		 return cadena;	
-		}
 		
-		
-		
-		public function DINAMIC_COMPONENTS(name:String,tipo:String):String
-		{
-			var cadena:String="";
-		    if (tipo=="0"){	
-			 cadena+="          var LaB_"+name+" : Label = new Label();"+"\n";
-			 cadena+="          var TxT_"+name+" : TextInput = new TextInput();"+"\n";
-			 cadena+="          TxT_"+name+".percentWidth=100;"+"\n";
-             cadena+="          FormHBox.addChild(LaB_"+name+");"+"\n";
-             cadena+="          FormHBox.addChild(TxT_"+name+");"+"\n";
-             cadena+="          FormVBox.addChild(FormHBox);"+"\n";
-             cadena+="          newVBox.addChild(FormVBox);"+"\n";
-             cadena+="          Root_VBox.addChild(newVBox);"+"\n";
-             cadena+="          ///////////////////////////////////////////////"+"\n";
-		   }
-	  	     
-	  	     if (tipo=="1"){	
-			 cadena+="          var LaB_"+name+" : Label = new Label();"+"\n";
-			 cadena+="          var TxA_"+name+" : TextArea = new TextArea();"+"\n";
-			 cadena+="          TxA_"+name+".percentWidth=100;"+"\n";
-             cadena+="          FormHBox.addChild(LaB_"+name+");"+"\n";
-             cadena+="          FormHBox.addChild(TxA_"+name+");"+"\n";
-             cadena+="          FormVBox.addChild(FormHBox);"+"\n";
-             cadena+="          newVBox.addChild(FormVBox);"+"\n";
-             cadena+="          Root_VBox.addChild(newVBox);"+"\n";
-             cadena+="          ///////////////////////////////////////////////"+"\n";
-		   }
-		   
-		    if (tipo=="9"){	
-			 cadena+="          var LaB_"+name+" : Label = new Label();"+"\n";
-			 cadena+="          var BtN_"+name+" : Button = new Button();"+"\n";
-			 cadena+="          FormHBox.addChild(LaB_"+name+");"+"\n";
-             cadena+="          FormHBox.addChild(BtN_"+name+");"+"\n";
-             cadena+="          FormVBox.addChild(FormHBox);"+"\n";
-             cadena+="          newVBox.addChild(FormVBox);"+"\n";
-             cadena+="          Root_VBox.addChild(newVBox);"+"\n";
-             cadena+="          ///////////////////////////////////////////////"+"\n";
-		   }
-	  	     
-	  	    return cadena;
-		}
 		
 	}
 }

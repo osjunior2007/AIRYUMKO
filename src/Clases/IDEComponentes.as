@@ -73,9 +73,9 @@ package Clases
 		 return '<mx:Label text="'+texto+'" x="'+posx+'" y="'+posy+'" />'; 	
 		}
 		
-		public function Crear_Button(texto,id,action,posx,posy,enable):String
+		public function Crear_Button(texto:String,id:String,action:String,posx:String,posy:String,enabled:String):String
 		{
-			return '<mx:Button click="'+action+'" id="'+id+'" label="'+texto+'" enabled="'+enable+'" width="86" x="'+posx+'" y="'+posy+'" />';
+			return '<mx:Button click="'+action+'" id="'+id+'" label="'+texto+'" enabled="'+enabled+'" width="86" x="'+posx+'" y="'+posy+'" />';
 		}
 		
 
@@ -226,7 +226,7 @@ package Clases
                 return datostree;
             }
             
-       public function Crear_Mxml(id_componente:String,nombre:String,etiqueta:String,tamano:String,tipodato:int,requiredtype:String):String
+       public function Crear_Mxml(id_componente:String,nombre:String,etiqueta:String,tamano:String,tipodato:int,requiredtype:String,tipo_relacion:String):String
               {
                 var modulo:String="";
                if(id_componente=="0"){
@@ -255,9 +255,23 @@ package Clases
               	 }
               	 
               	  if(id_componente=="5"){
-              	   modulo+="<mx:FormItem label='"+etiqueta+"'>"+"\n"
-              	   modulo+='<s:VGroup x="24" y="43" width="100%" height="100%">'+"\n"+"</s:VGroup>"+"\n";
-              	   modulo+="</mx:FormItem>"+"\n";	
+		          	  if (tipo_relacion=="1"){
+		          	   modulo+="<mx:FormItem label='"+etiqueta+"'>"+"\n"
+		          	   modulo+=IDEComponentes.getInstance().Crear_campo_de_texto(nombre,tamano,tipodato,0,requiredtype)+'\n';	
+              	       //modulo+=""Boton
+              	       modulo+="</mx:FormItem>"+"\n";
+		          	  }	
+		          	  if (tipo_relacion=="2"){
+		          	   modulo+="<mx:FormItem label='"+etiqueta+"'>"+"\n"
+		          	   //modulo+=""Boton
+              	       modulo+="</mx:FormItem>"+"\n";
+		          	  }	
+		          	  if (tipo_relacion=="3"){
+		          	   modulo+="<mx:FormItem label='"+etiqueta+"'>"+"\n"
+		          	   //modulo+=""Boton
+              	       modulo+="</mx:FormItem>"+"\n";
+		          	  }	
+		          	  
 			       }
               	 
               	   if(id_componente=="6"){

@@ -95,12 +95,6 @@ package Clases
 	             Clear_Input+="   params['Att_"+Zipfile.getInstance().list_components[i].etiqueta+"'].text='';"+"\n";
   				 Init_Input+="     this."+Zipfile.getInstance().list_components[i].etiqueta+"=params['Att_"+Zipfile.getInstance().list_components[i].etiqueta+"'].text"+"\n";
   				}
-  				
-  			  if (Zipfile.getInstance().Verificar_Modulo_Relacion(Zipfile.getInstance().list_relaciones,id)==true)
-		       {
-		       	  Dinamic_Component+=BuildMxmlComponets.getInstance().DINAMIC_COMPONENTS(Zipfile.getInstance().list_components[i].etiqueta,Zipfile.getInstance().list_components[i].componente_id)
-		       }
-  				
   		    }
   		    cadena+="package Models "+"\n"+"{"+"\n";
   		    cadena+="import spark.components.Group;"+"\n";
