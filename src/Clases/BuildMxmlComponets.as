@@ -182,6 +182,7 @@ package Clases
 			Zipfile.getInstance().sw=0;
 			Zipfile.getInstance().relaciones_mxml_form="";
 			Zipfile.getInstance().count_mxml_form=2;
+			Zipfile.getInstance().helper_class_name="";
 		}
 		
 		

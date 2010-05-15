@@ -39,6 +39,7 @@ package Clases
 		public var nameclases:String="";
 		public var relaciones_mxml_form:String="";
 		public var count_mxml_form:int=2;
+		public var helper_class_name:String="";
 		[Bindable] public var list_components:Array = new Array();
 		[Bindable] public var list_relaciones:Array = new Array();
 		[Bindable] public var list_modulos:Array = new Array();
