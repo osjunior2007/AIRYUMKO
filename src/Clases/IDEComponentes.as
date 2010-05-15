@@ -253,26 +253,29 @@ package Clases
 				  modulo+=IDEComponentes.getInstance().Crear_campo_de_texto(nombre,tamano,tipodato,1,requiredtype)+'\n';	
               	  modulo+="</mx:FormItem>"+"\n"
               	 }
-              	 
-              	  if(id_componente=="5"){
+              	 if(id_componente=="5"){
 		          	  if (tipo_relacion=="1"){
 		          	   modulo+="<mx:FormItem label='"+etiqueta+"'>"+"\n"
 		          	   modulo+=IDEComponentes.getInstance().Crear_campo_de_texto(nombre,tamano,tipodato,0,requiredtype)+'\n';	
-              	       //modulo+=""Boton
+              	       modulo+=Crear_Button(nombre,"BtN_"+nombre,"action","","","true")+'\n';	
               	       modulo+="</mx:FormItem>"+"\n";
 		          	  }	
-		          	  if (tipo_relacion=="2"){
+		          	 if (tipo_relacion=="2"){
 		          	   modulo+="<mx:FormItem label='"+etiqueta+"'>"+"\n"
-		          	   //modulo+=""Boton
+		          	   modulo+=Crear_Button("Aceptar","BtN_"+nombre,"action","","","true")+'\n';	
               	       modulo+="</mx:FormItem>"+"\n";
-		          	  }	
+              	   	  }	
 		          	  if (tipo_relacion=="3"){
 		          	   modulo+="<mx:FormItem label='"+etiqueta+"'>"+"\n"
 		          	   //modulo+=""Boton
               	       modulo+="</mx:FormItem>"+"\n";
 		          	  }	
 		          	  
-			       }
+		          	  Zipfile.getInstance().relaciones_mxml_form+='<s:NavigatorContent label="'+nombre+'" width="100%" height="100%" >'+"\n";
+				      Zipfile.getInstance().relaciones_mxml_form+='<'+nombre.toLowerCase()+' id="'+nombre+'"  width="98%" height="98%"  y="0" x="0" />'+" \n";
+				      Zipfile.getInstance().relaciones_mxml_form+='</s:NavigatorContent>'+" \n";
+		          
+		           }
               	 
               	   if(id_componente=="6"){
               	    modulo+="<mx:FormItem label='"+etiqueta+"'>"+"\n";

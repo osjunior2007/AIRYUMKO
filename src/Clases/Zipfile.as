@@ -37,6 +37,8 @@ package Clases
 		public var database_sql:String="";
 		public var Head_database_sql:String="";
 		public var nameclases:String="";
+		public var relaciones_mxml_form:String="";
+		public var count_mxml_form:int=2;
 		[Bindable] public var list_components:Array = new Array();
 		[Bindable] public var list_relaciones:Array = new Array();
 		[Bindable] public var list_modulos:Array = new Array();
@@ -158,7 +160,9 @@ package Clases
 					add_file(this.proyecto_name+"/src/Models/"+name.substr(0,name.length-1)+"Model.as",CreateMVC.getInstance().CREATE_MODEL(name.substr(0,name.length-1),Database.getInstance().personData[i].id_modulo));
 					BuildMxmlComponets.getInstance().CREATE_SQL_MIGRATION(Database.getInstance().personData[i].id_modulo,Database.getInstance().personData[i].nombre,Zipfile.getInstance().list_components)
 					BuildMxmlComponets.getInstance().CREATE_FORM(Database.getInstance().personData[i].id_modulo,Database.getInstance().personData[i].nombre)
-					BuildMxmlComponets.getInstance().CREATE_MXML_COMPONENTS(Database.getInstance().personData[i].id_modulo,Database.getInstance().personData[i].id_nombre,name_modelo.substr(0,name.length-1));
+					if(Verificar_Modulo_Relacion(list_components,Database.getInstance().personData[i].id_modulo).toString()){
+					 BuildMxmlComponets.getInstance().CREATE_MXML_COMPONENTS(Database.getInstance().personData[i].id_modulo,Database.getInstance().personData[i].id_nombre,name_modelo.substr(0,name.length-1));
+				    }
 				}
 				
 				if(proyecto_zip=="amfphp.zip"){
@@ -222,7 +226,7 @@ package Clases
 		public function get_components():void
 		{
 			Database.getInstance().dbStatement.addEventListener(SQLEvent.RESULT, Result_components);
-			Database.getInstance().getDatos("select componente_id,id_modulo,etiqueta,identificador,tamano,replace(replace(tipo,'Numerico','0'),'Alfanumerico','1') as tipo,requerido from componentes");
+			Database.getInstance().getDatos("select componente_id,id_modulo,etiqueta,identificador,tamano,replace(replace(tipo,'Numerico','0'),'Alfanumerico','1') as tipo,requerido,tipo_relacion from componentes");
 		}
 		
 		public function Result_components(e:Event):void
