@@ -49,7 +49,7 @@ package Clases
 		{
 	   	   var cadena:String=""
 		   cadena+="    public function BACK_TO_LIST(params:Group):void"+"\n"+"     {"+"\n";
-		   return cadena+"\n"+CreateMVC.getInstance().Clear_Input+"\n"+"    }"+"\n\n";
+		   return cadena+"\n"+"    params['View_01'].selectedIndex=0;"+"\n"+CreateMVC.getInstance().Clear_Input+"\n"+"    }"+"\n\n";
 	   		
 		}
 		
