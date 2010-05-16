@@ -89,10 +89,10 @@ package Clases
 			var cadena:String="";
 		   cadena="<fx:Declarations>"+"\n";	
 		   cadena+='<mx:RemoteObject showBusyCursor="true" endpoint="{App.getInstance().AMFurl}" id="amf" source="'+name+'Controller" destination="amfphp">'+"\n";
-		   cadena+='<mx:method name="index"  fault="App.getInstance().REQUEST_FAULT(event);"/>'+"\n";
-		   cadena+='<mx:method name="create" result="App.getInstance().SUCCESS_REQUEST(event);" fault="App.getInstance().REQUEST_FAULT(event);"/>'+"\n";
-		   cadena+='<mx:method name="update" result="App.getInstance().SUCCESS_REQUEST(event);"  fault="App.getInstance().REQUEST_FAULT(event);"/>'+"\n";
-		   cadena+=' <mx:method name="destroy" result="App.getInstance().SUCCESS_REQUEST(event);" fault="App.getInstance().REQUEST_FAULT(event);"/>'+"\n";
+		   cadena+='<mx:method name="index" result="{'+name+'Helper.getInstance().GET_LIST(this);}"  fault="{App.getInstance().REQUEST_FAULT(event);}"/>'+"\n";
+		   cadena+='<mx:method name="create" result="{App.getInstance().SUCCESS_REQUEST(event);}" fault="{App.getInstance().REQUEST_FAULT(event);}"/>'+"\n";
+		   cadena+='<mx:method name="update" result="{App.getInstance().SUCCESS_REQUEST(event);}"  fault="{App.getInstance().REQUEST_FAULT(event);}"/>'+"\n";
+		   cadena+=' <mx:method name="destroy" result="{App.getInstance().SUCCESS_REQUEST(event);}" fault="{App.getInstance().REQUEST_FAULT(event);}"/>'+"\n";
 		   cadena+='</mx:RemoteObject>'+"\n";
 		   cadena+="</fx:Declarations>";	
 		   return cadena;

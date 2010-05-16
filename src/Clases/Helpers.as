@@ -15,11 +15,19 @@ package Clases
 		  cadena="package Helpers"+"\n";
 		  cadena+="{"+"\n";
 		  cadena+="import spark.components.Group;"+"\n";
+		  cadena+="import spark.components.NavigatorContent;"+"\n";
 		  cadena+="import Helpers."+value.substr(0,1).toLocaleUpperCase()+value.substr(1,value.length)+"Helper;"+"\n";
 		  cadena+="public class "+value.substr(0,1).toLocaleUpperCase()+value.substr(1,value.length)+"Helper"+"\n"+"{"+"\n";
-		  cadena+=" private static var instancia: "+value.substr(0,1).toLocaleUpperCase()+value.substr(1,value.length)+"Helper"+"\n";
+		  cadena+="     private static var instancia: "+value.substr(0,1).toLocaleUpperCase()+value.substr(1,value.length)+"Helper"+"\n";
+		  cadena+="	 public var objeto:Object={};"+"\n";
+		  cadena+="     public var group:Group;"+"\n";
+		  cadena+="	 public var typeOperation:String=''"+"\n";
+		  cadena+="     public var Root_Component:Group;"+"\n"+"\n";
 		  cadena+=Helper_Instance(value)+"\n";
 		  cadena+=Helper_Back_To_List()+"\n";
+		  cadena+=HELPER_REMOTE_ACCESS()+"\n";
+		  cadena+=HELPER_SET_CANVAS()+"\n";
+		  cadena+=HELPER_GET_LIST()+"\n";
 	      cadena+="  }"+"\n";
 		  cadena+="}"+"\n";
 		  return cadena;
@@ -31,15 +39,22 @@ package Clases
 		  var cadena:String="";
 		  cadena="package Helpers"+"\n";
 		  cadena+="{"+"\n";
+		  cadena+="iimport spark.components.NavigatorContent;"+"\n";
 		  cadena+="import spark.components.Group;"+"\n";
 		  cadena+="import Helpers."+value.substr(0,1).toLocaleUpperCase()+value.substr(1,value.length)+"Helper;"+"\n";
 		  cadena+="public class "+value.substr(0,1).toLocaleUpperCase()+value.substr(1,value.length)+"Helper"+"\n"+"{"+"\n";
-		  cadena+=" private static var instancia: "+value.substr(0,1).toLocaleUpperCase()+value.substr(1,value.length)+"Helper"+"\n";
-		  cadena+="  public var Root_Component:Group;"+"\n"+"\n";
-		  cadena+=Helper_Set_Root_Component(value)+"\n";
+		  cadena+="     private static var instancia: "+value.substr(0,1).toLocaleUpperCase()+value.substr(1,value.length)+"Helper"+"\n";
+		  cadena+="	 public var objeto:Object={};"+"\n";
+		  cadena+="     public var group:Group;"+"\n";
+		  cadena+="	 public var typeOperation:String=''"+"\n";
+		  cadena+="     public var Root_Component:Group;"+"\n"+"\n";
+          cadena+=Helper_Set_Root_Component(value)+"\n";
 		  cadena+=Helper_Back_Root_Component()+"\n";
 		  cadena+=Helper_Instance(value)+"\n";
 		  cadena+=Helper_Back_To_List()+"\n";
+		  cadena+=HELPER_REMOTE_ACCESS()+"\n";
+		  cadena+=HELPER_SET_CANVAS()+"\n";
+		  cadena+=HELPER_GET_LIST()+"\n";
 	      cadena+="  }"+"\n";
 		  cadena+="}"+"\n";
 		  return cadena;
@@ -80,8 +95,46 @@ package Clases
 		    return cadena;
 
 		}	
-       			
 		
+		
+		
+		
+		
+		public function HELPER_REMOTE_ACCESS():String
+		{
+			var cadena:String=""
+		    cadena+="    public function REMOTE_ACCESS(tipo:String,objeto:Object):void"+"\n"+"     {"+"\n";
+			cadena+="       this.typeOperation=tipo;";
+			cadena+='       if(tipo=="index"){'+"\n";
+			cadena+="	         this.group['amf'].index.send();"+"\n";
+			cadena+="         }"+"\n";
+			cadena+="      }"+"\n";
+			return  cadena;
+		 }
+		 
+		 
+		  public function HELPER_SET_CANVAS():String
+		  {
+		  	  var cadena:String=""
+		      cadena+="    public function SET_CANVAS(group:Group):void"+"\n";
+		      cadena+="     { "+"\n";
+		      cadena+="        this.group=group;"+"\n";
+		      cadena+="     } "+"\n";
+		      return cadena; 
+		  }
+		  
+		  
+		  public function HELPER_GET_LIST():String
+		  {
+		  	var cadena:String=""
+		  	cadena+="    public function GET_LIST(Header:NavigatorContent):void"+"\n";
+		  	cadena+="     { "+"\n";
+		    cadena+="       this.group=(Header.getChildAt(Header.selectedIndex) as Object).getChildAt(0);"+"\n";
+		    cadena+="       REMOTE_ACCESS('index',{});"+"\n";
+		    cadena+="     } "+"\n";
+		    return cadena;
+		  }
+			 
 		public static function getInstance():Helpers
 		{
 			if( instancia==null ) 

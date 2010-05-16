@@ -68,7 +68,7 @@ package Clases
 					}
 					Zipfile.getInstance().datagridHead+='</mx:columns>'+"\n"+'</mx:DataGrid>';
 					Zipfile.getInstance().canvasdatagrid+=Zipfile.getInstance().datagridHead+"\n"+IDEComponentes.getInstance().Crear_Button("Crear","crear","{View_01.selectedIndex=1}",Zipfile.getInstance().DataGridposx.toString(),"{datos.height+50}","true")+"\n"+IDEComponentes.getInstance().Crear_Button("Update","UpdateView","{App.getInstance().CHANGE_VIEW('update')}",(Zipfile.getInstance().DataGridposx+96).toString(),"{datos.height+50}","true")+"\n"+IDEComponentes.getInstance().Crear_Button("Delete","deletes","{App.getInstance().VALIDATE_DELETE_ID(event)}",(Zipfile.getInstance().DataGridposx+196).toString(),"{datos.height+50}","true")+"\n"+'<mx:Label x="'+Zipfile.getInstance().DataGridposx+'" y="25" text="Modulo - '+nombre+' "/>'+"\n"+'</s:NavigatorContent>'+"\n";
-					Zipfile.getInstance().cadena='<?xml version="1.0" encoding="utf-8"?>'+" \n"+'<s:Group xmlns="Views.*" xmlns:fx="http://ns.adobe.com/mxml/2009"  xmlns:s="library://ns.adobe.com/flex/spark" xmlns:mx="library://ns.adobe.com/flex/mx"  width="400" height="300">'+"\n";
+					Zipfile.getInstance().cadena='<?xml version="1.0" encoding="utf-8"?>'+" \n"+'<s:Group xmlns="Views.*"'+' creationComplete="'+nombre.substr(0,1).toLocaleUpperCase()+nombre.substr(1,nombre.length-2)+'Helper.getInstance().SET_CANVAS(this)"'+' xmlns:fx="http://ns.adobe.com/mxml/2009"  xmlns:s="library://ns.adobe.com/flex/spark" xmlns:mx="library://ns.adobe.com/flex/mx"  width="400" height="300">'+"\n";
 					Zipfile.getInstance().cadena+=Zipfile.getInstance().HeadService;
 					Zipfile.getInstance().cadena+=Zipfile.getInstance().canvasdatagrid;
 					Zipfile.getInstance().cadena+=Zipfile.getInstance().canvascomponente;
