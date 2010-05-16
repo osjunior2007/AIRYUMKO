@@ -19,6 +19,7 @@ package Clases
 		  cadena+="public class "+value.substr(0,1).toLocaleUpperCase()+value.substr(1,value.length)+"Helper"+"\n"+"{"+"\n";
 		  cadena+=" private static var instancia: "+value.substr(0,1).toLocaleUpperCase()+value.substr(1,value.length)+"Helper"+"\n";
 		  cadena+=Helper_Instance(value)+"\n";
+		  cadena+=Helper_Back_To_List()+"\n";
 	      cadena+="  }"+"\n";
 		  cadena+="}"+"\n";
 		  return cadena;
@@ -38,9 +39,18 @@ package Clases
 		  cadena+=Helper_Set_Root_Component(value)+"\n";
 		  cadena+=Helper_Back_Root_Component()+"\n";
 		  cadena+=Helper_Instance(value)+"\n";
+		  cadena+=Helper_Back_To_List()+"\n";
 	      cadena+="  }"+"\n";
 		  cadena+="}"+"\n";
 		  return cadena;
+		}
+		
+		public function Helper_Back_To_List():String
+		{
+	   	   var cadena:String=""
+		   cadena+="    public function BACK_TO_LIST(params:Group):void"+"\n"+"     {"+"\n";
+		   return cadena+"\n"+CreateMVC.getInstance().Clear_Input+"\n"+"    }"+"\n\n";
+	   		
 		}
 		
 		
@@ -55,7 +65,7 @@ package Clases
 		{
 			var cadena:String=""
 		    cadena+="    public function Back_Root_Component():void"+"\n"+"     {"+"\n";
-			return cadena+"\n"+"       this.Root_Component['View_01'].selectedIndex=0;"+"\n"+"     }"+"\n";
+			return cadena+"\n"+"       this.Root_Component['View_01'].selectedIndex=1;"+"\n"+"     }"+"\n";
 		}
 			
 		public function Helper_Instance(value:String):String

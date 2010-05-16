@@ -63,21 +63,19 @@ package Clases
 				{
                 	Zipfile.getInstance().HeadService=IDEComponentes.getInstance().Head_RemoteObject(nombre.substr(0,1).toLocaleUpperCase()+nombre.substr(1,nombre.length-2))+"\n";
 					Zipfile.getInstance().HeadService+=Zipfile.getInstance().validate+IDEComponentes.getInstance().Create_Script(nombre.substr(0,1).toLocaleUpperCase()+nombre.substr(1,nombre.length-2))+'<mx:ViewStack x="0" y="0" id="View_01" width="100%" height="100%">'+"\n";
+					if(Zipfile.getInstance().Verificar_Modulo_Relacion(Zipfile.getInstance().list_components,id)==true){
+				 	Zipfile.getInstance().datagridHead='<s:Button click="{'+nombre.substr(0,1).toLocaleUpperCase()+nombre.substr(1,nombre.length-2)+'.getInstance().Back_Root_Component()}" x="20" y="0" label="Back"/>'+"\n"+Zipfile.getInstance().datagridHead;
+					}
 					Zipfile.getInstance().datagridHead+='</mx:columns>'+"\n"+'</mx:DataGrid>';
-					Zipfile.getInstance().canvasdatagrid+=Zipfile.getInstance().datagridHead+"\n"+IDEComponentes.getInstance().Crear_Button("Crear","crear","{App.getInstance().CHANGE_VIEW('create')}",Zipfile.getInstance().DataGridposx.toString(),"{datos.height+50}","true")+"\n"+IDEComponentes.getInstance().Crear_Button("Update","UpdateView","{App.getInstance().CHANGE_VIEW('update')}",(Zipfile.getInstance().DataGridposx+96).toString(),"{datos.height+50}","true")+"\n"+IDEComponentes.getInstance().Crear_Button("Delete","deletes","{App.getInstance().VALIDATE_DELETE_ID(event)}",(Zipfile.getInstance().DataGridposx+196).toString(),"{datos.height+50}","true")+"\n"+'<mx:Label x="'+Zipfile.getInstance().DataGridposx+'" y="25" text="Modulo - '+nombre+' "/>'+"\n"+'</s:NavigatorContent>'+"\n";
+					Zipfile.getInstance().canvasdatagrid+=Zipfile.getInstance().datagridHead+"\n"+IDEComponentes.getInstance().Crear_Button("Crear","crear","{View_01.selectedIndex=1}",Zipfile.getInstance().DataGridposx.toString(),"{datos.height+50}","true")+"\n"+IDEComponentes.getInstance().Crear_Button("Update","UpdateView","{App.getInstance().CHANGE_VIEW('update')}",(Zipfile.getInstance().DataGridposx+96).toString(),"{datos.height+50}","true")+"\n"+IDEComponentes.getInstance().Crear_Button("Delete","deletes","{App.getInstance().VALIDATE_DELETE_ID(event)}",(Zipfile.getInstance().DataGridposx+196).toString(),"{datos.height+50}","true")+"\n"+'<mx:Label x="'+Zipfile.getInstance().DataGridposx+'" y="25" text="Modulo - '+nombre+' "/>'+"\n"+'</s:NavigatorContent>'+"\n";
 					Zipfile.getInstance().cadena='<?xml version="1.0" encoding="utf-8"?>'+" \n"+'<s:Group xmlns="Views.*" xmlns:fx="http://ns.adobe.com/mxml/2009"  xmlns:s="library://ns.adobe.com/flex/spark" xmlns:mx="library://ns.adobe.com/flex/mx"  width="400" height="300">'+"\n";
 					Zipfile.getInstance().cadena+=Zipfile.getInstance().HeadService;
 					Zipfile.getInstance().cadena+=Zipfile.getInstance().canvasdatagrid;
 					Zipfile.getInstance().cadena+=Zipfile.getInstance().canvascomponente;
 					Zipfile.getInstance().cadena+="<mx:FormItem >"+"\n"+"<s:HGroup>"+"\n"+IDEComponentes.getInstance().Crear_Button("Create","submit","{"+nombre.substr(0,1).toLocaleUpperCase()+nombre.substr(1,nombre.length-2)+"Controller.getInstance().Create(this);}",IDEComponentes.getInstance().posx.toString(),IDEComponentes.getInstance().posy.toString(),"false")+"\n";
 					Zipfile.getInstance().cadena+=IDEComponentes.getInstance().Crear_Button("Update","updates","{"+nombre.substr(0,1).toLocaleUpperCase()+nombre.substr(1,nombre.length-2)+"Controller.getInstance().Update(this);}",(IDEComponentes.getInstance().posx+96).toString(),IDEComponentes.getInstance().posy.toString(),"false")+"\n";
-				   if(Zipfile.getInstance().Verificar_Modulo_Relacion(Zipfile.getInstance().list_components,id)==false){
-					Zipfile.getInstance().cadena+=IDEComponentes.getInstance().Crear_Button("Back","back","{App.getInstance().BACK_TO_LIST()}",(IDEComponentes.getInstance().posx+96).toString(),(IDEComponentes.getInstance().posy).toString(),"true")+"\n";
-				    }else
-				    {
-				    Zipfile.getInstance().cadena+=IDEComponentes.getInstance().Crear_Button("Back","back","{View_01.selectedIndex=0}",(IDEComponentes.getInstance().posx+96).toString(),(IDEComponentes.getInstance().posy).toString(),"true")+"\n";
-				    }
-					Zipfile.getInstance().cadena+="</s:HGroup>"+"\n"+"</mx:FormItem>"+"\n"+"</mx:Form>"+"\n"+'</s:NavigatorContent>'+"\n"+Zipfile.getInstance().relaciones_mxml_form+'\n'+'</mx:ViewStack>'+"\n"+'</s:Group>';
+				    Zipfile.getInstance().cadena+=IDEComponentes.getInstance().Crear_Button("Back","back","{"+nombre.substr(0,1).toLocaleUpperCase()+nombre.substr(1,nombre.length-2)+"Helper.getInstance().BACK_TO_LIST(this)}",(IDEComponentes.getInstance().posx+96).toString(),(IDEComponentes.getInstance().posy).toString(),"true")+"\n";
+				 	Zipfile.getInstance().cadena+="</s:HGroup>"+"\n"+"</mx:FormItem>"+"\n"+"</mx:Form>"+"\n"+'</s:NavigatorContent>'+"\n"+Zipfile.getInstance().relaciones_mxml_form+'\n'+'</mx:ViewStack>'+"\n"+'</s:Group>';
 					Zipfile.getInstance().add_file(Zipfile.getInstance().proyecto_name+"/src/Views/"+nombre.substr(0,nombre.length-1)+".mxml",Zipfile.getInstance().cadena);
 				}
 				IDEComponentes.getInstance().posx=10;

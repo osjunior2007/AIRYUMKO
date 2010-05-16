@@ -4,8 +4,8 @@ package Clases
 	{
 		import mx.controls.Alert;
 	    private static var instancia: CreateMVC;
-
-		public function CreateMVC()
+	    public var Clear_Input:String="";
+     	public function CreateMVC()
 		{
 		}
 
@@ -83,7 +83,7 @@ package Clases
 		  var cadena:String="";
 		  var Global_Variables:String='     public var id:String=""'+"\n";	
 		  var Create_Object:String="";
-		  var Clear_Input:String="";
+		  Clear_Input="";
 		  var Init_Input:String="";
 		  var name_model:String="";
 		  var Dinamic_Component:String="";
@@ -92,7 +92,7 @@ package Clases
   				if(Zipfile.getInstance().list_components[i].id_modulo==id){
   				 Global_Variables+="     public var "+Zipfile.getInstance().list_components[i].etiqueta+':String="";'+"\n";
   				 Create_Object+="     this.Objeto."+Zipfile.getInstance().list_components[i].etiqueta+"=this."+Zipfile.getInstance().list_components[i].etiqueta+""+"\n";
-	             Clear_Input+="   params['Att_"+Zipfile.getInstance().list_components[i].etiqueta+"'].text='';"+"\n";
+	             Clear_Input+="       params['Att_"+Zipfile.getInstance().list_components[i].etiqueta+"'].text='';"+"\n";
   				 Init_Input+="     this."+Zipfile.getInstance().list_components[i].etiqueta+"=params['Att_"+Zipfile.getInstance().list_components[i].etiqueta+"'].text"+"\n";
   				}
   		    }
