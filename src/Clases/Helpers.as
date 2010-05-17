@@ -15,7 +15,6 @@ package Clases
 		  cadena="package Helpers"+"\n";
 		  cadena+="{"+"\n";
 		  cadena+="import spark.components.Group;"+"\n";
-		  cadena+="import spark.components.NavigatorContent;"+"\n";
 		  cadena+="import mx.utils.ArrayUtil;"+"\n";
           cadena+="import mx.messaging.ChannelSet;"+"\n";
           cadena+="import mx.messaging.channels.AMFChannel;"+"\n";
@@ -28,6 +27,7 @@ package Clases
 		  cadena+="	 public var objeto:Object={};"+"\n";
 		  cadena+="     public var group:Group;"+"\n";
 		  cadena+="	 public var typeOperation:String=''"+"\n";
+		  cadena+="     public var serilizacion:Array;"+"\n";
 		  cadena+="     public var Root_Component:Group;"+"\n"+"\n";
 		  cadena+=Helper_Instance(value)+"\n";
 		  cadena+=Helper_Back_To_List()+"\n";
@@ -45,7 +45,6 @@ package Clases
 		  var cadena:String="";
 		  cadena="package Helpers"+"\n";
 		  cadena+="{"+"\n";
-		  cadena+="iimport spark.components.NavigatorContent;"+"\n";
 		  cadena+="import spark.components.Group;"+"\n";
 		  cadena+="import mx.utils.ArrayUtil;"+"\n";
           cadena+="import mx.messaging.ChannelSet;"+"\n";
@@ -59,8 +58,9 @@ package Clases
 		  cadena+="	 public var objeto:Object={};"+"\n";
 		  cadena+="     public var group:Group;"+"\n";
 		  cadena+="	 public var typeOperation:String=''"+"\n";
-		  cadena+="     public var Root_Component:Group;"+"\n"+"\n";
-          cadena+=Helper_Set_Root_Component(value)+"\n";
+		  cadena+="     public var serilizacion:Array;"+"\n";
+          cadena+="     public var Root_Component:Group;"+"\n"+"\n";
+		  cadena+=Helper_Set_Root_Component(value)+"\n";
 		  cadena+=Helper_Back_Root_Component()+"\n";
 		  cadena+=Helper_Instance(value)+"\n";
 		  cadena+=Helper_Back_To_List()+"\n";
