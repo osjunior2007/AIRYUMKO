@@ -16,6 +16,12 @@ package Clases
 		  cadena+="{"+"\n";
 		  cadena+="import spark.components.Group;"+"\n";
 		  cadena+="import spark.components.NavigatorContent;"+"\n";
+		  cadena+="import mx.utils.ArrayUtil;"+"\n";
+          cadena+="import mx.messaging.ChannelSet;"+"\n";
+          cadena+="import mx.messaging.channels.AMFChannel;"+"\n";
+          cadena+="import mx.rpc.events.FaultEvent;"+"\n";
+          cadena+="import mx.rpc.events.ResultEvent;"+"\n";
+          cadena+="import mx.rpc.remoting.RemoteObject;"+"\n";
 		  cadena+="import Helpers."+value.substr(0,1).toLocaleUpperCase()+value.substr(1,value.length)+"Helper;"+"\n";
 		  cadena+="public class "+value.substr(0,1).toLocaleUpperCase()+value.substr(1,value.length)+"Helper"+"\n"+"{"+"\n";
 		  cadena+="     private static var instancia: "+value.substr(0,1).toLocaleUpperCase()+value.substr(1,value.length)+"Helper"+"\n";
@@ -41,6 +47,12 @@ package Clases
 		  cadena+="{"+"\n";
 		  cadena+="iimport spark.components.NavigatorContent;"+"\n";
 		  cadena+="import spark.components.Group;"+"\n";
+		  cadena+="import mx.utils.ArrayUtil;"+"\n";
+          cadena+="import mx.messaging.ChannelSet;"+"\n";
+          cadena+="import mx.messaging.channels.AMFChannel;"+"\n";
+          cadena+="import mx.rpc.events.FaultEvent;"+"\n";
+          cadena+="import mx.rpc.events.ResultEvent;"+"\n";
+          cadena+="import mx.rpc.remoting.RemoteObject;"+"\n";
 		  cadena+="import Helpers."+value.substr(0,1).toLocaleUpperCase()+value.substr(1,value.length)+"Helper;"+"\n";
 		  cadena+="public class "+value.substr(0,1).toLocaleUpperCase()+value.substr(1,value.length)+"Helper"+"\n"+"{"+"\n";
 		  cadena+="     private static var instancia: "+value.substr(0,1).toLocaleUpperCase()+value.substr(1,value.length)+"Helper"+"\n";
@@ -64,7 +76,7 @@ package Clases
 		{
 	   	   var cadena:String=""
 		   cadena+="    public function BACK_TO_LIST(params:Group):void"+"\n"+"     {"+"\n";
-		   return cadena+"\n"+"    params['View_01'].selectedIndex=0;"+"\n"+CreateMVC.getInstance().Clear_Input+"\n"+"    }"+"\n\n";
+		   return cadena+"\n"+"       params['View_01'].selectedIndex=0;"+"\n"+CreateMVC.getInstance().Clear_Input+"\n"+"    }"+"\n\n";
 	   		
 		}
 		
@@ -104,7 +116,7 @@ package Clases
 		{
 			var cadena:String=""
 		    cadena+="    public function REMOTE_ACCESS(tipo:String,objeto:Object):void"+"\n"+"     {"+"\n";
-			cadena+="       this.typeOperation=tipo;";
+			cadena+="       this.typeOperation=tipo;"+"\n";
 			cadena+='       if(tipo=="index"){'+"\n";
 			cadena+="	         this.group['amf'].index.send();"+"\n";
 			cadena+="         }"+"\n";
@@ -119,6 +131,7 @@ package Clases
 		      cadena+="    public function SET_CANVAS(group:Group):void"+"\n";
 		      cadena+="     { "+"\n";
 		      cadena+="        this.group=group;"+"\n";
+		      cadena+="        REMOTE_ACCESS('index',{});"+"\n";
 		      cadena+="     } "+"\n";
 		      return cadena; 
 		  }
@@ -127,10 +140,13 @@ package Clases
 		  public function HELPER_GET_LIST():String
 		  {
 		  	var cadena:String=""
-		  	cadena+="    public function GET_LIST(Header:NavigatorContent):void"+"\n";
-		  	cadena+="     { "+"\n";
-		    cadena+="       this.group=(Header.getChildAt(Header.selectedIndex) as Object).getChildAt(0);"+"\n";
-		    cadena+="       REMOTE_ACCESS('index',{});"+"\n";
+		  	cadena+="    public function List(e:ResultEvent):void"+"\n";
+	        cadena+="     {"+"\n";
+		  	cadena+="       serilizacion=new Array();"+"\n";
+		    cadena+="       for (var i:String in ArrayUtil.toArray(e.result)){"+"\n";
+			cadena+="         serilizacion.push(ArrayUtil.toArray(e.result)[i][0]);"+"\n";
+		    cadena+="        }"+"\n";
+		    cadena+="       this.group['datos'].dataProvider=serilizacion;"+"\n";
 		    cadena+="     } "+"\n";
 		    return cadena;
 		  }
