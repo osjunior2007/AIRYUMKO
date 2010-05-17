@@ -34,6 +34,7 @@ package Clases
 		  cadena+=HELPER_REMOTE_ACCESS()+"\n";
 		  cadena+=HELPER_SET_CANVAS()+"\n";
 		  cadena+=HELPER_GET_LIST()+"\n";
+		  cadena+=HELPER_REQUEST_FAULT()+"\n";
 	      cadena+="  }"+"\n";
 		  cadena+="}"+"\n";
 		  return cadena;
@@ -67,6 +68,7 @@ package Clases
 		  cadena+=HELPER_REMOTE_ACCESS()+"\n";
 		  cadena+=HELPER_SET_CANVAS()+"\n";
 		  cadena+=HELPER_GET_LIST()+"\n";
+		  cadena+=HELPER_REQUEST_FAULT()+"\n";
 	      cadena+="  }"+"\n";
 		  cadena+="}"+"\n";
 		  return cadena;
@@ -150,6 +152,20 @@ package Clases
 		    cadena+="     } "+"\n";
 		    return cadena;
 		  }
+		  
+		  public function  HELPER_REQUEST_FAULT():String
+		  {
+		   var cadena:String="";
+		   cadena+="    public function REQUEST_FAULT(e:FaultEvent):void"+"\n";
+		   cadena+="     {"+"\n";
+		   cadena+="     Alert.show(String (e.fault.faultDetail),'Error');"+"\n";
+		   cadena+="     } "+"\n";
+		   return cadena;
+		  }
+		  
+	
+		  
+		  
 			 
 		public static function getInstance():Helpers
 		{
