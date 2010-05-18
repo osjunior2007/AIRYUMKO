@@ -13,23 +13,37 @@ package Clases
 		public function MVC_Controller_Create(value:String):String
 		{
 		 var cadena:String=""
-		 cadena+="public function Create(params:Group):void"+"\n"+" {"+"\n";
-		 return cadena+"\n"+"   var "+value.toLocaleLowerCase()+":"+value.substr(0,1).toLocaleUpperCase()+ value.substr(1,value.length).toString()+"Model=new "+value.substr(0,1).toLocaleUpperCase()+ value.substr(1,value.length).toString()+"Model(params);"+"\n"+value.toLocaleLowerCase()+".Save();"+"\n"+"\n"+"}";
+		 cadena+="    public function Create(params:Group):void"+"\n";
+		 cadena+="     {"+"\n";
+		 cadena+="         var "+value.toLocaleLowerCase()+":"+value.substr(0,1).toLocaleUpperCase()+ value.substr(1,value.length).toString()+"Model=new "+value.substr(0,1).toLocaleUpperCase()+ value.substr(1,value.length).toString()+"Model(params);"+"\n";
+		 cadena+="         "+value.toLocaleLowerCase()+".Save();"+"\n";
+		 cadena+="     }";
+		 return cadena;
 		}
-
+		
 		public function MVC_Controller_Update(value:String):String
 		{
-			var cadena:String=""
-		    cadena+="public function Update(params:Group):void"+"\n"+" {"+"\n";
-			return cadena+"\n"+"   var "+value.toLocaleLowerCase()+":"+value.substr(0,1).toLocaleUpperCase()+value.substr(1,value.length)+"Model=new "+value.substr(0,1).toLocaleUpperCase()+value.substr(1,value.length)+"Model(params);"+"\n"+value.toLocaleLowerCase()+".Update();"+"\n"+"\n"+"}";;
+		 var cadena:String=""
+		 cadena+="    public function Update(params:Group):void"+"\n";
+		 cadena+="     {"+"\n";
+		 cadena+="         var "+value.toLocaleLowerCase()+":"+value.substr(0,1).toLocaleUpperCase()+ value.substr(1,value.length).toString()+"Model=new "+value.substr(0,1).toLocaleUpperCase()+ value.substr(1,value.length).toString()+"Model(params);"+"\n";
+		 cadena+="         "+value.toLocaleLowerCase()+".Update();"+"\n";
+		 cadena+="     }";
+		 return cadena;
 		}
-
+		
+		
 		public function MVC_Controller_Destroy(value:String):String
 		{
-			var cadena:String=""
-		    cadena+="public function Destroy(params:Group):void"+"\n"+" {"+"\n";
-			return cadena+"\n"+"   var "+value.toLocaleLowerCase()+":"+value.substr(0,1).toLocaleUpperCase()+value.substr(1,value.length)+"Model=new "+value.substr(0,1).toLocaleUpperCase()+value.substr(1,value.length)+"Model(params);"+"\n"+value.toLocaleLowerCase()+".Destroy("+value.toLocaleLowerCase()+".id);"+"\n"+"\n"+"}";;
+		 var cadena:String=""
+		 cadena+="    public function Destroy(params:Group):void"+"\n";
+		 cadena+="     {"+"\n";
+		 cadena+="         var "+value.toLocaleLowerCase()+":"+value.substr(0,1).toLocaleUpperCase()+ value.substr(1,value.length).toString()+"Model=new "+value.substr(0,1).toLocaleUpperCase()+ value.substr(1,value.length).toString()+"Model(params);"+"\n";
+		 cadena+="         "+value.toLocaleLowerCase()+".Destroy("+value.toLocaleLowerCase()+".id);"+"\n";
+		 cadena+="     }";
+		 return cadena;
 		}
+
 
 		public function MVC_Controller_List(value:String):String
 		{
@@ -38,7 +52,11 @@ package Clases
 
 		public function MVC_Controller_Init(value:String):String
 		{
-		  return "public function "+value.substr(0,1).toLocaleUpperCase()+value.substr(1,value.length)+"Controller()"+"\n"+"{"+"\n"+"}"+"\n";
+		  var cadena:String=""	
+		  cadena+="    public function "+value.substr(0,1).toLocaleUpperCase()+value.substr(1,value.length)+"Controller()"+"\n";
+		  cadena+="     {"+"\n"
+		  cadena+="     }";
+		  return cadena;
 		}
 
 		public function CREATE_CONTROLLER(value:String):String
@@ -66,12 +84,12 @@ package Clases
 		public function MVC_Controller_Instance(value:String):String
 		{
 			var cadena:String="";
-			cadena+="public static function getInstance():"+value.substr(0,1).toLocaleUpperCase()+value.substr(1,value.length)+"Controller"+"\n";
-		    cadena+="{"+"\n";
-			cadena+="    if( instancia==null )"+"\n";
-			cadena+="     instancia = new "+value.substr(0,1).toLocaleUpperCase()+value.substr(1,value.length)+"Controller();"+"\n"
-			cadena+="      return instancia;"+"\n";
-		    cadena+="}"+"\n";
+			cadena+="    public static function getInstance():"+value.substr(0,1).toLocaleUpperCase()+value.substr(1,value.length)+"Controller"+"\n";
+		    cadena+="     {"+"\n";
+			cadena+="        if( instancia==null )"+"\n";
+			cadena+="         instancia = new "+value.substr(0,1).toLocaleUpperCase()+value.substr(1,value.length)+"Controller();"+"\n"
+			cadena+="         return instancia;"+"\n";
+		    cadena+="     }"+"\n";
 		    return cadena;
 
 		}
