@@ -106,7 +106,9 @@ package Clases
 			for(var i:int=1;i<=list_components.length-1;i++){
 				if(list_components[i].id_modulo==id){
 					sw=1;
-				    Zipfile.getInstance().datagridHead+=IDEComponentes.getInstance().Crear_Column_DataGrid(list_components[i].etiqueta,list_components[i].identificador,list_components[i].tamano);
+					if(list_components[i].componente_id!="5"){
+				      Zipfile.getInstance().datagridHead+=IDEComponentes.getInstance().Crear_Column_DataGrid(list_components[i].etiqueta,list_components[i].identificador,list_components[i].tamano);
+				     }
 					Zipfile.getInstance().canvascomponente+=IDEComponentes.getInstance().Crear_Mxml(list_components[i].componente_id,list_components[i].identificador,list_components[i].etiqueta,list_components[i].tamano,list_components[i].tipo,list_components[i].requerido,list_components[i].tipo_relacion);
 					if(Zipfile.getInstance().proyecto_zip=="amfphp.zip"){
 						if(list_components[i].identificador!="id"&&list_components[i].identificador!="ID"){

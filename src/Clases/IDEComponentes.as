@@ -264,7 +264,6 @@ package Clases
 		          	  }	
 		          	 if (tipo_relacion=="2"){
 		          	   modulo+="<mx:FormItem label='"+etiqueta+"'>"+"\n"
-		          	   Alert.show(nombre.substr(0,1).toLocaleUpperCase()+nombre.substr(1,nombre.length-2));
 		          	   modulo+=Crear_Button("Aceptar","BtN_"+nombre,"{View_01.selectedIndex="+Zipfile.getInstance().count_mxml_form+";"+nombre.substr(0,1).toLocaleUpperCase()+nombre.substr(1,nombre.length-2)+".getInstance().REMOTE_ACCESS('index',{});}","0","0","true")+'\n';	
               	       modulo+="</mx:FormItem>"+"\n";
               	   	  }	
