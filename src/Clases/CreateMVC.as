@@ -107,12 +107,22 @@ package Clases
 		  var Dinamic_Component:String="";
 		
 			for(var i:int=1;i<=Zipfile.getInstance().list_components.length-1;i++){
-  				if(Zipfile.getInstance().list_components[i].id_modulo==id){
+  			  if(Zipfile.getInstance().list_components[i].id_modulo==id){
+  				if(i==1){
+  				 Init_Input="this."+Zipfile.getInstance().list_components[i].etiqueta+"=params['Att_"+Zipfile.getInstance().list_components[i].etiqueta+"'].text"+"\n";
+  				 Global_Variables="     public var "+Zipfile.getInstance().list_components[i].etiqueta+':String="";'+"\n";
+  				 Create_Object="this.Objeto."+Zipfile.getInstance().list_components[i].etiqueta+"=this."+Zipfile.getInstance().list_components[i].etiqueta+""+"\n";
+	             Clear_Input="params['Att_"+Zipfile.getInstance().list_components[i].etiqueta+"'].text='';"+"\n";
+  			
+  				}else
+  				{
+  				 Init_Input+="      this."+Zipfile.getInstance().list_components[i].etiqueta+"=params['Att_"+Zipfile.getInstance().list_components[i].etiqueta+"'].text"+"\n";
   				 Global_Variables+="     public var "+Zipfile.getInstance().list_components[i].etiqueta+':String="";'+"\n";
   				 Create_Object+="     this.Objeto."+Zipfile.getInstance().list_components[i].etiqueta+"=this."+Zipfile.getInstance().list_components[i].etiqueta+""+"\n";
-	             Clear_Input+="       params['Att_"+Zipfile.getInstance().list_components[i].etiqueta+"'].text='';"+"\n";
-  				 Init_Input+="     this."+Zipfile.getInstance().list_components[i].etiqueta+"=params['Att_"+Zipfile.getInstance().list_components[i].etiqueta+"'].text"+"\n";
+	             Clear_Input+="      params['Att_"+Zipfile.getInstance().list_components[i].etiqueta+"'].text='';"+"\n";
+  			
   				}
+  			  }
   		    }
   		    cadena+="package Models "+"\n"+"{"+"\n";
   		    cadena+="import spark.components.Group;"+"\n";
@@ -124,31 +134,54 @@ package Clases
 		    cadena+=Model_Save(Create_Object);
 		    cadena+=Model_Update(Create_Object);
 		    cadena+=Model_Destroy();
-		    cadena+="  }"+"\n"+"    }";
+		    cadena+="  }"+"\n"
+		    cadena+="}";
 		    return cadena;
 		}
 
 
 		public function Model_Save(value:String):String
 		{
-		 return "       public function Save():void {"+"\n"+value+"          this.params['amf'].create.send(this.Objeto);"+"\n"+"       }"+"\n";
+		 var cadena:String="";
+		 cadena+="    public function Save():void"+"\n";
+		 cadena+="    {"+"\n";
+		 cadena+="     "+value;
+		 cadena+="     this.params['amf'].create.send(this.Objeto);"+"\n";
+		 cadena+="    }"+"\n";
+		 return cadena; 
 		}
-
+		
 		public function Model_Update(value:String):String
 		{
-		 return "       public function Update():void {"+"\n"+value+"        this.params['amf'].update.send(this.Objeto);"+"\n"+"       }"+"\n";
+		 var cadena:String="";
+		 cadena+="    public function Update():void"+"\n";
+		 cadena+="    {"+"\n";
+		 cadena+="     "+value;
+		 cadena+="     this.params['amf'].update.send(this.Objeto);"+"\n";
+		 cadena+="    }"+"\n";
+		 return cadena; 
 		}
-
+		
 		public function Model_Destroy():String
 		{
-		 return "       public function Destroy(id:String):void {"+"\n"+"         this.Objeto={}"+"\n"+"        this.Objeto.id=id;"+"\n"+"        this.params['amf'].destroy.send(this.Objeto);"+"\n"+"      }"+"\n";
+		 var cadena:String="";
+		 cadena+="    public Destroy(id:String):void"+"\n";
+		 cadena+="    {"+"\n";
+		 cadena+="     this.Objeto={}"+"\n"
+		 cadena+="     this.Objeto.id=id;"+"\n";
+		 cadena+="     this.params['amf'].destroy.send(this.Objeto);"+"\n";
+		 cadena+="    }"+"\n";
+		 return cadena; 
 		}
-
-
 
 		public function Model_Init(name:String,value:String):String
 		{
-		 return "       public function "+name.substr(0,1).toLocaleUpperCase()+name.substr(1,name.length)+"Model(params:Group) {"+"\n"+value+"\n"+"   }"+"\n";
+		 var cadena:String="";
+		 cadena+="    public function "+name.substr(0,1).toLocaleUpperCase()+name.substr(1,name.length)+"Model(params:Group)"+"\n";
+		 cadena+="    {"+"\n";
+		 cadena+="      "+value;
+		 cadena+="    }"+"\n";
+		 return cadena
 		}
 
 
