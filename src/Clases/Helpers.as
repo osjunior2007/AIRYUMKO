@@ -21,6 +21,7 @@ package Clases
           cadena+="import mx.rpc.events.FaultEvent;"+"\n";
           cadena+="import mx.rpc.events.ResultEvent;"+"\n";
           cadena+="import mx.rpc.remoting.RemoteObject;"+"\n";
+          cadena+="import mx.controls.Alert;"+"\n";
 		  cadena+="import Helpers."+value.substr(0,1).toLocaleUpperCase()+value.substr(1,value.length)+"Helper;"+"\n";
 		  cadena+="public class "+value.substr(0,1).toLocaleUpperCase()+value.substr(1,value.length)+"Helper"+"\n"+"{"+"\n";
 		  cadena+="     private static var instancia: "+value.substr(0,1).toLocaleUpperCase()+value.substr(1,value.length)+"Helper"+"\n";
@@ -53,6 +54,7 @@ package Clases
           cadena+="import mx.rpc.events.FaultEvent;"+"\n";
           cadena+="import mx.rpc.events.ResultEvent;"+"\n";
           cadena+="import mx.rpc.remoting.RemoteObject;"+"\n";
+          cadena+="import mx.controls.Alert;"+"\n";
 		  cadena+="import Helpers."+value.substr(0,1).toLocaleUpperCase()+value.substr(1,value.length)+"Helper;"+"\n";
 		  cadena+="public class "+value.substr(0,1).toLocaleUpperCase()+value.substr(1,value.length)+"Helper"+"\n"+"{"+"\n";
 		  cadena+="     private static var instancia: "+value.substr(0,1).toLocaleUpperCase()+value.substr(1,value.length)+"Helper"+"\n";
@@ -158,7 +160,7 @@ package Clases
 		   var cadena:String="";
 		   cadena+="    public function REQUEST_FAULT(e:FaultEvent):void"+"\n";
 		   cadena+="     {"+"\n";
-		   cadena+="     Alert.show(String (e.fault.faultDetail),'Error');"+"\n";
+		   cadena+="       Alert.show(String (e.fault.faultDetail),'Error');"+"\n";
 		   cadena+="     } "+"\n";
 		   return cadena;
 		  }
