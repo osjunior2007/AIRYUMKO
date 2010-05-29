@@ -81,7 +81,7 @@ package Clases
 
 		public function Crear_Column_DataGrid(etiqueta:String,dato:String,longitud:int):String
 		{
-			return '<mx:DataGridColumn width="'+(longitud*10)+'" headerText="'+etiqueta+'" dataField="'+dato.toLowerCase()+'"/>'+"\n";
+			return '<mx:DataGridColumn width="110" headerText="'+etiqueta+'" dataField="'+dato.toLowerCase()+'"/>'+"\n";
 		}
 		
 	    public function Head_RemoteObject(name:String):String
@@ -264,7 +264,7 @@ package Clases
 		          	  }	
 		          	 if (tipo_relacion=="2"){
 		          	    modulo+="<mx:FormItem label='"+etiqueta+"'>"+"\n"
-		          	    modulo+='<mx:DataGrid horizontalScrollPolicy="auto"  width="98%" height="85%" >'+"\n"+"<mx:columns>"+"\n";
+		          	    modulo+='<mx:DataGrid horizontalScrollPolicy="auto" id="datos_'+etiqueta+'"  width="{View_01.width-100}" height="150" >'+"\n"+"<mx:columns>"+"\n";
               	        modulo+='<mx:DataGridColumn   dataField="@isTrue" width="25" headerText=" " editable="false">'+"\n";
                         modulo+='<mx:itemRenderer>'+"\n";
                         modulo+='<fx:Component>'+"\n";
