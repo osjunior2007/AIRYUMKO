@@ -228,7 +228,7 @@ package Clases
 		public function get_components():void
 		{
 			Database.getInstance().dbStatement.addEventListener(SQLEvent.RESULT, Result_components);
-			Database.getInstance().getDatos("select componente_id,id_modulo,etiqueta,identificador,tamano,replace(replace(tipo,'Numerico','0'),'Alfanumerico','1') as tipo,requerido,tipo_relacion from componentes");
+			Database.getInstance().getDatos("select componente_id,id_modulo,etiqueta,identificador,tamano,replace(replace(tipo,'Numerico','0'),'Alfanumerico','1') as tipo,requerido,tipo_relacion,modulo_relacionado from componentes");
 		}
 		
 		public function Result_components(e:Event):void

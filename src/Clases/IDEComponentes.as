@@ -228,7 +228,7 @@ package Clases
                 return datostree;
             }
             
-       public function Crear_Mxml(id_componente:String,nombre:String,etiqueta:String,tamano:String,tipodato:int,requiredtype:String,tipo_relacion:String):String
+       public function Crear_Mxml(id_componente:String,nombre:String,etiqueta:String,tamano:String,tipodato:int,requiredtype:String,tipo_relacion:String,modulo_relacionado:String):String
               {
                 var modulo:String="";
                if(id_componente=="0"){
@@ -264,7 +264,10 @@ package Clases
 		          	  }	
 		          	 if (tipo_relacion=="2"){
 		          	   modulo+="<mx:FormItem label='"+etiqueta+"'>"+"\n"
-		          	   modulo+=Crear_Button("Aceptar","BtN_"+nombre,"{View_01.selectedIndex="+Zipfile.getInstance().count_mxml_form+";"+nombre.substr(0,1).toLocaleUpperCase()+nombre.substr(1,nombre.length-2)+"Helper.getInstance().REMOTE_ACCESS('index',{});}","0","0","true")+'\n';	
+		          	   //modulo+=Crear_Button("Aceptar","BtN_"+nombre,"{View_01.selectedIndex="+Zipfile.getInstance().count_mxml_form+";"+nombre.substr(0,1).toLocaleUpperCase()+nombre.substr(1,nombre.length-2)+"Helper.getInstance().REMOTE_ACCESS('index',{});}","0","0","true")+'\n';	
+              	        modulo+=Zipfile.getInstance().datagridHead;
+              	        modulo+=Crear_Datagrid_Relationes(modulo_relacionado);
+              	        modulo+="</mx:DataGrid>";
               	       modulo+="</mx:FormItem>"+"\n";
               	   	  }	
 		          	  if (tipo_relacion=="3"){
@@ -380,6 +383,18 @@ package Clases
                 cadena+="<buildCSSFiles/>"+"\n";
                 cadena+="</actionScriptProperties>"+"\n";
                 return cadena;
+              }
+              
+              
+              public function Crear_Datagrid_Relationes(modulo_relacionado:String):String
+              {
+              	var cadena:String="";
+              	for(var i:int=1;i<=Zipfile.getInstance().list_components.length-1;i++){
+				   if(Zipfile.getInstance().list_components[i].id_modulo==modulo_relacionado){
+				   	  cadena+=IDEComponentes.getInstance().Crear_Column_DataGrid(Zipfile.getInstance().list_components[i].etiqueta,Zipfile.getInstance().list_components[i].identificador,Zipfile.getInstance().list_components[i].tamano);
+				   }
+              	}
+              	return cadena;
               }
            
       }
