@@ -263,12 +263,20 @@ package Clases
               	       modulo+="</mx:FormItem>"+"\n";
 		          	  }	
 		          	 if (tipo_relacion=="2"){
-		          	   modulo+="<mx:FormItem label='"+etiqueta+"'>"+"\n"
-		          	   //modulo+=Crear_Button("Aceptar","BtN_"+nombre,"{View_01.selectedIndex="+Zipfile.getInstance().count_mxml_form+";"+nombre.substr(0,1).toLocaleUpperCase()+nombre.substr(1,nombre.length-2)+"Helper.getInstance().REMOTE_ACCESS('index',{});}","0","0","true")+'\n';	
-              	        modulo+=Zipfile.getInstance().datagridHead;
-              	        modulo+=Crear_Datagrid_Relationes(modulo_relacionado);
-              	        modulo+="</mx:DataGrid>";
-              	       modulo+="</mx:FormItem>"+"\n";
+		          	    modulo+="<mx:FormItem label='"+etiqueta+"'>"+"\n"
+		          	    modulo+='<mx:DataGrid horizontalScrollPolicy="auto"  width="98%" height="85%" >'+"\n"+"<mx:columns>"+"\n";
+              	        modulo+='<mx:DataGridColumn   dataField="@isTrue" width="25" headerText=" " editable="false">'+"\n";
+                        modulo+='<mx:itemRenderer>'+"\n";
+                        modulo+='<fx:Component>'+"\n";
+                        modulo+='<mx:CheckBox selected="'+"{(data.@isTrue == 'true')?true:false}"+'"'+' click="{data.@isTrue ='+" (data.@isTrue != 'true') ? 'true' : 'false';} "+'" >'+"\n";
+                        modulo+='</mx:CheckBox>'+"\n";
+                        modulo+='</fx:Component>'+"\n";
+                        modulo+='</mx:itemRenderer>'+"\n";
+                        modulo+=' </mx:DataGridColumn>'+"\n";
+                        modulo+=Crear_Datagrid_Relationes(modulo_relacionado);
+              	        modulo+="</mx:columns>"+"\n";
+              	        modulo+="</mx:DataGrid>"+"\n";
+              	        modulo+="</mx:FormItem>"+"\n";
               	   	  }	
 		          	  if (tipo_relacion=="3"){
 		          	   modulo+="<mx:FormItem label='"+etiqueta+"'>"+"\n"

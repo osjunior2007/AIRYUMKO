@@ -1,5 +1,7 @@
 package Clases
 {
+	import mx.messaging.AbstractConsumer;
+	
 	public class Helpers
 	{
 		
@@ -112,10 +114,6 @@ package Clases
 
 		}	
 		
-		
-		
-		
-		
 		public function HELPER_REMOTE_ACCESS():String
 		{
 			var cadena:String=""
@@ -166,7 +164,12 @@ package Clases
 		  }
 		  
 	
-		  
+		  public function HELPER_REMOTEOBJECT_RELACION():String
+		  {
+		   var cadena:String="";
+		   cadena+="remoting = new  RemoteObject();"+"\n";	
+		   return "";	
+		  }
 		  
 			 
 		public static function getInstance():Helpers

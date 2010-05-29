@@ -110,7 +110,7 @@ package Clases
   			  if(Zipfile.getInstance().list_components[i].id_modulo==id){
   				if(i==1){
   				 Init_Input="this."+Zipfile.getInstance().list_components[i].etiqueta+"=params['Att_"+Zipfile.getInstance().list_components[i].etiqueta+"'].text"+"\n";
-  				 Global_Variables="     public var "+Zipfile.getInstance().list_components[i].etiqueta+':String="";'+"\n";
+  				 Global_Variables+="     public var "+Zipfile.getInstance().list_components[i].etiqueta+':String="";'+"\n";
   				 Create_Object="this.Objeto."+Zipfile.getInstance().list_components[i].etiqueta+"=this."+Zipfile.getInstance().list_components[i].etiqueta+""+"\n";
 	             Clear_Input="params['Att_"+Zipfile.getInstance().list_components[i].etiqueta+"'].text='';"+"\n";
   			
@@ -165,7 +165,7 @@ package Clases
 		public function Model_Destroy():String
 		{
 		 var cadena:String="";
-		 cadena+="    public Destroy(id:String):void"+"\n";
+		 cadena+="    public function Destroy(id:String):void"+"\n";
 		 cadena+="    {"+"\n";
 		 cadena+="     this.Objeto={}"+"\n"
 		 cadena+="     this.Objeto.id=id;"+"\n";
