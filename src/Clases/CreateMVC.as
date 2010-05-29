@@ -112,7 +112,7 @@ package Clases
   				 Init_Input="this."+Zipfile.getInstance().list_components[i].etiqueta+"=params['Att_"+Zipfile.getInstance().list_components[i].etiqueta+"'].text"+"\n";
   				 Global_Variables+="     public var "+Zipfile.getInstance().list_components[i].etiqueta+':String="";'+"\n";
   				 Create_Object="this.Objeto."+Zipfile.getInstance().list_components[i].etiqueta+"=this."+Zipfile.getInstance().list_components[i].etiqueta+""+"\n";
-	             Clear_Input="params['Att_"+Zipfile.getInstance().list_components[i].etiqueta+"'].text='';"+"\n";
+	             Clear_Input="       params['Att_"+Zipfile.getInstance().list_components[i].etiqueta+"'].text='';"+"\n";
   			
   				}else
   				{

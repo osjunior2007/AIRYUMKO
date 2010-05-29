@@ -87,15 +87,13 @@ package Clases
 	    public function Head_RemoteObject(name:String):String
 		{
 		   var cadena:String="";
-		   cadena="<fx:Declarations>"+"\n";	
 		   cadena+='<mx:RemoteObject showBusyCursor="true" endpoint="{App.getInstance().AMFurl}" id="amf" source="'+name+'Controller" destination="amfphp">'+"\n";
-		   cadena+='<mx:method name="index" result="{'+name.substr(0,1).toLocaleUpperCase()+name.substr(1,name.length-2)+'Helper.getInstance().List(event);}"  fault="{App.getInstance().REQUEST_FAULT(event);}"/>'+"\n";
+		   cadena+='<mx:method name="index" result="{'+name.substr(0,1).toLocaleUpperCase()+name.substr(1,name.length-2)+'Helper.getInstance().List(event,datos);}"  fault="{App.getInstance().REQUEST_FAULT(event);}"/>'+"\n";
 		   cadena+='<mx:method name="create" result="{App.getInstance().SUCCESS_REQUEST(event);}" fault="{'+name.substr(0,1).toLocaleUpperCase()+name.substr(1,name.length-2)+'Helper.getInstance().REQUEST_FAULT(event);}"/>'+"\n";
 		   cadena+='<mx:method name="update" result="{App.getInstance().SUCCESS_REQUEST(event);}"  fault="{'+name.substr(0,1).toLocaleUpperCase()+name.substr(1,name.length-2)+'Helper.getInstance().REQUEST_FAULT(event);}"/>'+"\n";
 		   cadena+=' <mx:method name="destroy" result="{App.getInstance().SUCCESS_REQUEST(event);}" fault="{'+name.substr(0,1).toLocaleUpperCase()+name.substr(1,name.length-2)+'Helper.getInstance().REQUEST_FAULT(event);}"/>'+"\n";
 		   cadena+='</mx:RemoteObject>'+"\n";
-		   cadena+="</fx:Declarations>";	
-		   return cadena;
+           return cadena;
 		}
 		
 
@@ -263,12 +261,12 @@ package Clases
               	       modulo+="</mx:FormItem>"+"\n";
 		          	  }	
 		          	 if (tipo_relacion=="2"){
-		          	    modulo+="<mx:FormItem label='"+etiqueta+"'>"+"\n"
-		          	    modulo+='<mx:DataGrid horizontalScrollPolicy="auto" id="datos_'+etiqueta+'"  width="{View_01.width-100}" height="150" >'+"\n"+"<mx:columns>"+"\n";
-              	        modulo+='<mx:DataGridColumn   dataField="@isTrue" width="25" headerText=" " editable="false">'+"\n";
+		          	    modulo+='<mx:FormItem creationComplete="{relationship_'+etiqueta+'.index.send()}"'+" label='"+etiqueta+"'>"+"\n";
+		          	    modulo+='<mx:DataGrid horizontalScrollPolicy="auto" id="relacion_'+etiqueta+'"  width="{View_01.width-100}" height="150" >'+"\n"+"<mx:columns>"+"\n";
+              	        modulo+='<mx:DataGridColumn   dataField="option" width="25" headerText=" " editable="false">'+"\n";
                         modulo+='<mx:itemRenderer>'+"\n";
                         modulo+='<fx:Component>'+"\n";
-                        modulo+='<mx:CheckBox selected="'+"{(data.@isTrue == 'true')?true:false}"+'"'+' click="{data.@isTrue ='+" (data.@isTrue != 'true') ? 'true' : 'false';} "+'" >'+"\n";
+                        modulo+='<mx:CheckBox selected="'+"{(data.option == 'true')?true:false}"+'"'+' click="{data.option ='+" (data.option != 'true') ? 'true' : 'false';} "+'" >'+"\n";
                         modulo+='</mx:CheckBox>'+"\n";
                         modulo+='</fx:Component>'+"\n";
                         modulo+='</mx:itemRenderer>'+"\n";
@@ -402,6 +400,16 @@ package Clases
 				   	  cadena+=IDEComponentes.getInstance().Crear_Column_DataGrid(Zipfile.getInstance().list_components[i].etiqueta,Zipfile.getInstance().list_components[i].identificador,Zipfile.getInstance().list_components[i].tamano);
 				   }
               	}
+              	return cadena;
+              }
+              
+              
+               public function Remote_Object_Relation(name:String):String
+              {
+              	var cadena:String="";
+                cadena+='<mx:RemoteObject showBusyCursor="true" endpoint="{App.getInstance().AMFurl}" id="relationship_'+name+'" source="MateriasController" destination="amfphp">'+"\n";
+                cadena+='<mx:method name="index" result="{MateriaHelper.getInstance().List(event,relacion_'+name+');}"  fault="{App.getInstance().REQUEST_FAULT(event);}"/>'+"\n";
+                cadena+='</mx:RemoteObject>';
               	return cadena;
               }
            

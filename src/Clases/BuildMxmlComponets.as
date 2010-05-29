@@ -61,13 +61,17 @@ package Clases
 			   IDEComponentes.getInstance().posx=IDEComponentes.getInstance().posx+15;
 				if(IF_CONTAIN_COMPONENTS(id)==1)
 				{
-                	Zipfile.getInstance().HeadService=IDEComponentes.getInstance().Head_RemoteObject(nombre.substr(0,1).toLocaleUpperCase()+nombre.substr(1,nombre.length-1))+"\n";
+                	Zipfile.getInstance().HeadService="<fx:Declarations>"+"\n"+Zipfile.getInstance().HeadService+"\n";
+                	Zipfile.getInstance().HeadService+=IDEComponentes.getInstance().Head_RemoteObject(nombre.substr(0,1).toLocaleUpperCase()+nombre.substr(1,nombre.length-1))+"\n";
+                	Zipfile.getInstance().HeadService+="</fx:Declarations>";
+                	
 					Zipfile.getInstance().HeadService+=Zipfile.getInstance().validate+IDEComponentes.getInstance().Create_Script(nombre.substr(0,1).toLocaleUpperCase()+nombre.substr(1,nombre.length-2))+'<mx:ViewStack x="0" y="0" id="View_01" width="100%" height="100%">'+"\n";
+					
 					if(Zipfile.getInstance().Verificar_Modulo_Relacion(Zipfile.getInstance().list_components,id)==true){
 				 	Zipfile.getInstance().datagridHead='<s:Button click="{'+nombre.substr(0,1).toLocaleUpperCase()+nombre.substr(1,nombre.length-2)+'Helper.getInstance().Back_Root_Component()}" x="20" y="0" label="Back"/>'+"\n"+Zipfile.getInstance().datagridHead;
 					}
 					Zipfile.getInstance().datagridHead+='</mx:columns>'+"\n"+'</mx:DataGrid>';
-					Zipfile.getInstance().canvasdatagrid+=Zipfile.getInstance().datagridHead+"\n"+IDEComponentes.getInstance().Crear_Button("Crear","crear","{View_01.selectedIndex=1}",Zipfile.getInstance().DataGridposx.toString(),"{datos.height+50}","true")+"\n"+IDEComponentes.getInstance().Crear_Button("Update","UpdateView","{App.getInstance().CHANGE_VIEW('update')}",(Zipfile.getInstance().DataGridposx+96).toString(),"{datos.height+50}","true")+"\n"+IDEComponentes.getInstance().Crear_Button("Delete","deletes","{App.getInstance().VALIDATE_DELETE_ID(event)}",(Zipfile.getInstance().DataGridposx+196).toString(),"{datos.height+50}","true")+"\n"+'<mx:Label x="'+Zipfile.getInstance().DataGridposx+'" y="25" text="Modulo - '+nombre+' "/>'+"\n"+'</s:NavigatorContent>'+"\n";
+					Zipfile.getInstance().canvasdatagrid+=Zipfile.getInstance().datagridHead+"\n"+IDEComponentes.getInstance().Crear_Button("Crear","crear","{View_01.selectedIndex=1;relationship_"+nombre+".index.send()}",Zipfile.getInstance().DataGridposx.toString(),"{datos.height+50}","true")+"\n"+IDEComponentes.getInstance().Crear_Button("Update","UpdateView","{App.getInstance().CHANGE_VIEW('update')}",(Zipfile.getInstance().DataGridposx+96).toString(),"{datos.height+50}","true")+"\n"+IDEComponentes.getInstance().Crear_Button("Delete","deletes","{App.getInstance().VALIDATE_DELETE_ID(event)}",(Zipfile.getInstance().DataGridposx+196).toString(),"{datos.height+50}","true")+"\n"+'<mx:Label x="'+Zipfile.getInstance().DataGridposx+'" y="25" text="Modulo - '+nombre+' "/>'+"\n"+'</s:NavigatorContent>'+"\n";
 					Zipfile.getInstance().cadena='<?xml version="1.0" encoding="utf-8"?>'+" \n"+'<s:Group xmlns="Views.*"'+' creationComplete="'+nombre.substr(0,1).toLocaleUpperCase()+nombre.substr(1,nombre.length-2)+'Helper.getInstance().SET_CANVAS(this)"'+' xmlns:fx="http://ns.adobe.com/mxml/2009"  xmlns:s="library://ns.adobe.com/flex/spark" xmlns:mx="library://ns.adobe.com/flex/mx"  width="400" height="300">'+"\n";
 					Zipfile.getInstance().cadena+=Zipfile.getInstance().HeadService;
 					Zipfile.getInstance().cadena+=Zipfile.getInstance().canvasdatagrid;
@@ -108,6 +112,9 @@ package Clases
 					sw=1;
 					if(list_components[i].componente_id!="5"){
 				      Zipfile.getInstance().datagridHead+=IDEComponentes.getInstance().Crear_Column_DataGrid(list_components[i].etiqueta,list_components[i].identificador,list_components[i].tamano);
+				     }
+				     if(list_components[i].tipo_relacion!="0"){
+				      Zipfile.getInstance().HeadService+=IDEComponentes.getInstance().Remote_Object_Relation(Zipfile.getInstance().get_modulo_name(list_components[i].modulo_relacionado));
 				     }
 				  	Zipfile.getInstance().canvascomponente+=IDEComponentes.getInstance().Crear_Mxml(list_components[i].componente_id,list_components[i].identificador,list_components[i].etiqueta,list_components[i].tamano,list_components[i].tipo,list_components[i].requerido,list_components[i].tipo_relacion,list_components[i].modulo_relacionado);
 					if(Zipfile.getInstance().proyecto_zip=="amfphp.zip"){

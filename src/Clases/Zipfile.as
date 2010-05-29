@@ -55,7 +55,6 @@ package Clases
 		}
 		
 		
-		
 		public static function getInstance():Zipfile
 		{
 			if( instancia==null )
@@ -238,6 +237,21 @@ package Clases
 			Database.getInstance().exampleDB.close();
 			Database.getInstance().initAndOpenDatabase();
 			build_MainMXML();
+		}
+		
+		public function get_modulo_name(id_modulo:String):String
+		{
+		 var i:int=1;
+		 var sw:int=0;
+		 var cadena:String="";
+		  while(i<=list_modulos.length-1&&sw==0){
+		 		if (list_modulos[i].id_modulo==id_modulo){
+		 			sw=1;
+		 			cadena=list_modulos[i].nombre
+		 		}
+		 	 i++;	
+		    }
+		 return cadena;	
 		}
 		
 		

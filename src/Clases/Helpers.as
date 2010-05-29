@@ -16,6 +16,7 @@ package Clases
 		  var cadena:String="";
 		  cadena="package Helpers"+"\n";
 		  cadena+="{"+"\n";
+		  cadena+="import Clases.App;"+"\n";
 		  cadena+="import spark.components.Group;"+"\n";
 		  cadena+="import mx.utils.ArrayUtil;"+"\n";
           cadena+="import mx.messaging.ChannelSet;"+"\n";
@@ -23,6 +24,7 @@ package Clases
           cadena+="import mx.rpc.events.FaultEvent;"+"\n";
           cadena+="import mx.rpc.events.ResultEvent;"+"\n";
           cadena+="import mx.rpc.remoting.RemoteObject;"+"\n";
+          cadena+="import mx.controls.DataGrid;"+"\n";
           cadena+="import mx.controls.Alert;"+"\n";
 		  cadena+="import Helpers."+value.substr(0,1).toLocaleUpperCase()+value.substr(1,value.length)+"Helper;"+"\n";
 		  cadena+="public class "+value.substr(0,1).toLocaleUpperCase()+value.substr(1,value.length)+"Helper"+"\n"+"{"+"\n";
@@ -56,6 +58,7 @@ package Clases
           cadena+="import mx.rpc.events.FaultEvent;"+"\n";
           cadena+="import mx.rpc.events.ResultEvent;"+"\n";
           cadena+="import mx.rpc.remoting.RemoteObject;"+"\n";
+          cadena+="import mx.controls.DataGrid;"+"\n";
           cadena+="import mx.controls.Alert;"+"\n";
 		  cadena+="import Helpers."+value.substr(0,1).toLocaleUpperCase()+value.substr(1,value.length)+"Helper;"+"\n";
 		  cadena+="public class "+value.substr(0,1).toLocaleUpperCase()+value.substr(1,value.length)+"Helper"+"\n"+"{"+"\n";
@@ -142,13 +145,13 @@ package Clases
 		  public function HELPER_GET_LIST():String
 		  {
 		  	var cadena:String=""
-		  	cadena+="    public function List(e:ResultEvent):void"+"\n";
+		  	cadena+="    public function List(e:ResultEvent,datos:DataGrid):void"+"\n";
 	        cadena+="     {"+"\n";
 		  	cadena+="       serilizacion=new Array();"+"\n";
 		    cadena+="       for (var i:String in ArrayUtil.toArray(e.result)){"+"\n";
 			cadena+="         serilizacion.push(ArrayUtil.toArray(e.result)[i][0]);"+"\n";
 		    cadena+="        }"+"\n";
-		    cadena+="       this.group['datos'].dataProvider=serilizacion;"+"\n";
+		    cadena+="        datos.dataProvider=serilizacion;"+"\n";
 		    cadena+="     } "+"\n";
 		    return cadena;
 		  }
