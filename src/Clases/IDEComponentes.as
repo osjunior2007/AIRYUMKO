@@ -261,12 +261,12 @@ package Clases
               	       modulo+="</mx:FormItem>"+"\n";
 		          	  }	
 		          	 if (tipo_relacion=="2"){
-		          	    modulo+='<mx:FormItem creationComplete="{relationship_'+etiqueta+'.index.send()}"'+" label='"+etiqueta+"'>"+"\n";
+		          	    modulo+="<mx:FormItem  label='"+etiqueta+"'>"+"\n";
 		          	    modulo+='<mx:DataGrid horizontalScrollPolicy="auto" id="relacion_'+etiqueta+'"  width="{View_01.width-100}" height="150" >'+"\n"+"<mx:columns>"+"\n";
-              	        modulo+='<mx:DataGridColumn   dataField="option" width="25" headerText=" " editable="false">'+"\n";
+              	        modulo+='<mx:DataGridColumn   dataField="options" width="25" headerText=" " editable="false">'+"\n";
                         modulo+='<mx:itemRenderer>'+"\n";
                         modulo+='<fx:Component>'+"\n";
-                        modulo+='<mx:CheckBox selected="'+"{(data.option == 'true')?true:false}"+'"'+' click="{data.option ='+" (data.option != 'true') ? 'true' : 'false';} "+'" >'+"\n";
+                        modulo+='<mx:CheckBox selected="'+"{(data.options == 'true')?true:false}"+'"'+' click="{data.options ='+" (data.options != 'true') ? 'true' : 'false';} "+'" >'+"\n";
                         modulo+='</mx:CheckBox>'+"\n";
                         modulo+='</fx:Component>'+"\n";
                         modulo+='</mx:itemRenderer>'+"\n";
@@ -410,6 +410,7 @@ package Clases
                 cadena+='<mx:RemoteObject showBusyCursor="true" endpoint="{App.getInstance().AMFurl}" id="relationship_'+name+'" source="MateriasController" destination="amfphp">'+"\n";
                 cadena+='<mx:method name="index" result="{MateriaHelper.getInstance().List(event,relacion_'+name+');}"  fault="{App.getInstance().REQUEST_FAULT(event);}"/>'+"\n";
                 cadena+='</mx:RemoteObject>';
+                Zipfile.getInstance().Relation_Remote_name+="     params['relationship_"+name+"'].index.send({});"+"\n";
               	return cadena;
               }
            

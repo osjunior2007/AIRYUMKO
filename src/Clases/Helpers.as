@@ -39,6 +39,7 @@ package Clases
 		  cadena+=HELPER_REMOTE_ACCESS()+"\n";
 		  cadena+=HELPER_SET_CANVAS()+"\n";
 		  cadena+=HELPER_GET_LIST()+"\n";
+		  cadena+=HELPER_CREATE_BUTTON()+"\n";
 		  cadena+=HELPER_REQUEST_FAULT()+"\n";
 	      cadena+="  }"+"\n";
 		  cadena+="}"+"\n";
@@ -167,11 +168,15 @@ package Clases
 		  }
 		  
 	
-		  public function HELPER_REMOTEOBJECT_RELACION():String
+		  public function HELPER_CREATE_BUTTON():String
 		  {
 		   var cadena:String="";
-		   cadena+="remoting = new  RemoteObject();"+"\n";	
-		   return "";	
+		   cadena+=" public function Create_Button(params:Group):void"+"\n";
+           cadena+=" { ";
+     	   cadena+="   params['View_01'].selectedIndex=1;"+"\n";
+     	   cadena+=Zipfile.getInstance().Relation_Remote_name;
+           cadena+="}"+"\n";
+		   return cadena;	
 		  }
 		  
 			 

@@ -27,12 +27,12 @@ package Clases
 		
 		 public function metodo_list_relation(nombre:String,attribute:String):String
 		{ 
-			cadena="function index($param) {"+'\n';
+			cadena=" function index($param) {"+'\n';
 			cadena+=' if ($param[type]=="all") {'+'\n';
-			cadena+=" return amf("+nombre.substr(0,nombre.length-1)+"::find(all));"+'\n'; 
-            cadena+="}else{"+'\n';
-            cadena+="   return amf(Materia::find(all,array('select' "+'=> "'+" 'false' as options,"+attribute+""+'")));'+'\n';
-            cadena+="}";
+			cadena+="   return amf("+nombre.substr(0,nombre.length-1)+"::find(all));"+'\n'; 
+            cadena+=" }else{"+'\n';
+            cadena+="   return amf("+nombre.substr(0,nombre.length-1)+"::find(all,array('select' "+'=> "'+" 'false' as options,"+attribute+""+'")));'+'\n';
+            cadena+=" }"+'\n';
             cadena+="}"+'\n';
             return cadena;
       	}
@@ -86,6 +86,21 @@ package Clases
 			Controlador_nombre+='include("lib/database.php");'+'\n';
 			Controlador_nombre+="class "+variableg+"Controller {"+'\n\n'; 
 			Controlador_nombre+=metodo_list(variableg)+'\n\n\n'; 
+			Controlador_nombre+=metodo_Crear(variableg)+'\n\n\n'; 
+			Controlador_nombre+=metodo_borrar(variableg)+'\n\n\n'; 
+			Controlador_nombre+=metodo_actualizar(variableg)+'\n\n\n'; 
+			Controlador_nombre+="}"+'\n';
+			cadena+="?>"+'\n';
+			return Controlador_nombre;
+		}
+		
+		  public function set_controllador_relation(Controlador_nombre:String,attribute:String):String
+		{
+			var variableg:String=Controlador_nombre;
+			Controlador_nombre="<?php"+'\n';
+			Controlador_nombre+='include("lib/database.php");'+'\n';
+			Controlador_nombre+="class "+variableg+"Controller {"+'\n\n'; 
+			Controlador_nombre+=metodo_list_relation(variableg,attribute)+'\n\n\n'; 
 			Controlador_nombre+=metodo_Crear(variableg)+'\n\n\n'; 
 			Controlador_nombre+=metodo_borrar(variableg)+'\n\n\n'; 
 			Controlador_nombre+=metodo_actualizar(variableg)+'\n\n\n'; 

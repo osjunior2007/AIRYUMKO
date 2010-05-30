@@ -49,6 +49,7 @@ package Clases
 		public var TipoFramework:int=0;
 		public var Position_Objets:String="";
 		public var MainApp:String="";
+		public var Relation_Remote_name:String=""
 		
 		public function Zipfile()
 		{
@@ -155,7 +156,7 @@ package Clases
 					name_modelo=name_modelo.substring(0,name_modelo.length-1);
 					name=name.substr(0,1).toLocaleUpperCase()+name.substr(1,name.length);
 				    BuildMxmlComponets.getInstance().init_value();
-					BuildMxmlComponets.getInstance().Create_ControllerAndModels(name,name_modelo,user_database,password_database,i);
+					BuildMxmlComponets.getInstance().Create_ControllerAndModels(name,name_modelo,user_database,password_database,Database.getInstance().personData[i].id_modulo,i);
 				    add_file(this.proyecto_name+"/src/Controllers/"+name.substr(0,name.length-1)+"Controller.as",CreateMVC.getInstance().CREATE_CONTROLLER(name.substr(0,name.length-1)));
 					add_file(this.proyecto_name+"/src/Models/"+name.substr(0,name.length-1)+"Model.as",CreateMVC.getInstance().CREATE_MODEL(name.substr(0,name.length-1),Database.getInstance().personData[i].id_modulo));
 					BuildMxmlComponets.getInstance().CREATE_SQL_MIGRATION(Database.getInstance().personData[i].id_modulo,Database.getInstance().personData[i].nombre,Zipfile.getInstance().list_components)
