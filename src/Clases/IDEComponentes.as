@@ -261,8 +261,8 @@ package Clases
               	       modulo+="</mx:FormItem>"+"\n";
 		          	  }	
 		          	 if (tipo_relacion=="2"){
-		          	    modulo+="<mx:FormItem  label='"+etiqueta+"'>"+"\n";
-		          	    modulo+='<mx:DataGrid horizontalScrollPolicy="auto" id="relacion_'+etiqueta+'"  width="{View_01.width-100}" height="150" >'+"\n"+"<mx:columns>"+"\n";
+   	                    modulo+="<mx:FormItem  label='"+etiqueta+"'>"+"\n";
+		          	    modulo+='<mx:DataGrid horizontalScrollPolicy="auto" id="relacion_'+Zipfile.getInstance().get_modulo_name(modulo_relacionado)+'"  width="{View_01.width-100}" height="150" >'+"\n"+"<mx:columns>"+"\n";
               	        modulo+='<mx:DataGridColumn   dataField="options" width="25" headerText=" " editable="false">'+"\n";
                         modulo+='<mx:itemRenderer>'+"\n";
                         modulo+='<fx:Component>'+"\n";
@@ -407,9 +407,9 @@ package Clases
                public function Remote_Object_Relation(name:String):String
               {
               	var cadena:String="";
-                cadena+='<mx:RemoteObject showBusyCursor="true" endpoint="{App.getInstance().AMFurl}" id="relationship_'+name+'" source="MateriasController" destination="amfphp">'+"\n";
-                cadena+='<mx:method name="index" result="{MateriaHelper.getInstance().List(event,relacion_'+name+');}"  fault="{App.getInstance().REQUEST_FAULT(event);}"/>'+"\n";
-                cadena+='</mx:RemoteObject>';
+              	cadena+='<mx:RemoteObject showBusyCursor="true" endpoint="{App.getInstance().AMFurl}" id="relationship_'+name+'" source="'+name.substr(0,1).toUpperCase()+name.substr(1,name.length-1)+'Controller" destination="amfphp">'+"\n";
+                cadena+='<mx:method name="index" result="{'+name.substr(0,1).toUpperCase()+name.substr(1,name.length-2)+'Helper.getInstance().List(event,relacion_'+name+');}"  fault="{App.getInstance().REQUEST_FAULT(event);}"/>'+"\n";
+                cadena+='</mx:RemoteObject>'+"\n";
                 Zipfile.getInstance().Relation_Remote_name+="     params['relationship_"+name+"'].index.send({});"+"\n";
               	return cadena;
               }
