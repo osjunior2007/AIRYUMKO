@@ -262,7 +262,7 @@ package Clases
 		          	  }	
 		          	 if (tipo_relacion=="2"){
    	                    modulo+="<mx:FormItem  label='"+etiqueta+"'>"+"\n";
-		          	    modulo+='<mx:DataGrid horizontalScrollPolicy="auto" id="relacion_'+Zipfile.getInstance().get_modulo_name(modulo_relacionado)+'"  width="{View_01.width-100}" height="150" >'+"\n"+"<mx:columns>"+"\n";
+		          	    modulo+='<mx:DataGrid horizontalScrollPolicy="auto" id="relacion_'+Zipfile.getInstance().get_modulo_name(modulo_relacionado)+'"  width="{View_01.width-110}" height="150" >'+"\n"+"<mx:columns>"+"\n";
               	        modulo+='<mx:DataGridColumn   dataField="options" width="25" headerText=" " editable="false">'+"\n";
                         modulo+='<mx:itemRenderer>'+"\n";
                         modulo+='<fx:Component>'+"\n";
