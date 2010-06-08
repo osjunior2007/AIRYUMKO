@@ -1,7 +1,7 @@
 package Clases
 {
-	import mx.messaging.AbstractConsumer;
-	
+	//import mx.messaging.AbstractConsumer;
+	import mx.controls.Alert;
 	public class Helpers
 	{
 		
@@ -47,7 +47,7 @@ package Clases
 		}
 		
 	   
-	   public function CREATE_HELPER(value:String):String
+	   public function CREATE_HELPER(value:String,id:String):String
 		{
 		  var cadena:String="";
 		  cadena="package Helpers"+"\n";
@@ -177,6 +177,31 @@ package Clases
      	   cadena+=Zipfile.getInstance().Relation_Remote_name;
            cadena+="}"+"\n";
 		   return cadena;	
+		  }
+		  
+		  public function HELPER_GET_ELEMENTS_RELATION(name:String,id:String):String
+		  {
+		  	var cadena:String="";
+		  	var etiquetas:String="";
+		  		for(var i:int=1;i<=Zipfile.getInstance().list_components.length-1;i++){
+				if(Zipfile.getInstance().list_components[i].id_modulo==id){
+					 if(Zipfile.getInstance().list_components[i].componente_id!="5"){
+			  	        if(Zipfile.getInstance().Verificar_Modulo_Relacion(Zipfile.getInstance().list_components,Zipfile.getInstance().list_components[i].id_modulo)==true){
+					      etiquetas+="cadena+='<"+Zipfile.getInstance().list_components[i].etiqueta+">'"+"+params['relacion_"+Zipfile.getInstance().get_modulo_name(Zipfile.getInstance().list_components[i].id_modulo)+"'].dataProvider.getItemAt(i)."+Zipfile.getInstance().list_components[i].etiqueta+"+'</"+Zipfile.getInstance().list_components[i].etiqueta+">'"+"\n";	
+		                  }
+		              }
+		           }
+		        }
+		       cadena+='<'+name+'>'+"\n";
+		       cadena+='<values>'+"\n";
+		       cadena+="  for(var i:int=0;i<=params['"+name+"'].dataProvider.length-1;i++){"+"\n";
+		       cadena+="   if(params['"+name+"'].dataProvider.getItemAt(i).options=='true'){"+"\n";
+		       cadena+="    }"+"\n";
+		       cadena+=etiquetas;
+		       cadena+="  }"+"\n";
+		       cadena+='</values>'+"\n";
+		       cadena+='</'+name+'>'+"\n";
+		   	  return cadena;
 		  }
 		  
 			 

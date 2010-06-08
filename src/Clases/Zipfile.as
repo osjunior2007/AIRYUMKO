@@ -50,7 +50,7 @@ package Clases
 		public var Position_Objets:String="";
 		public var MainApp:String="";
 		public var Relation_Remote_name:String=""
-		
+		public var XmlParamert:String="";
 		public function Zipfile()
 		{
 		}
@@ -155,16 +155,21 @@ package Clases
 					name_modelo=Database.getInstance().personData[i].nombre;
 					name_modelo=name_modelo.substring(0,name_modelo.length-1);
 					name=name.substr(0,1).toLocaleUpperCase()+name.substr(1,name.length);
-				    BuildMxmlComponets.getInstance().init_value();
+					BuildMxmlComponets.getInstance().init_value();
 					BuildMxmlComponets.getInstance().Create_ControllerAndModels(name,name_modelo,user_database,password_database,Database.getInstance().personData[i].id_modulo,i);
 				    add_file(this.proyecto_name+"/src/Controllers/"+name.substr(0,name.length-1)+"Controller.as",CreateMVC.getInstance().CREATE_CONTROLLER(name.substr(0,name.length-1)));
 					add_file(this.proyecto_name+"/src/Models/"+name.substr(0,name.length-1)+"Model.as",CreateMVC.getInstance().CREATE_MODEL(name.substr(0,name.length-1),Database.getInstance().personData[i].id_modulo));
+					if(Verificar_Modulo_Relacion(list_components,Database.getInstance().personData[i].id_modulo)==true){
+					Zipfile.getInstance().XmlParamert=Helpers.getInstance().HELPER_GET_ELEMENTS_RELATION(Database.getInstance().personData[i].nombre,Database.getInstance().personData[i].id_modulo);
+					Alert.show(Zipfile.getInstance().XmlParamert);
+					}
 					BuildMxmlComponets.getInstance().CREATE_SQL_MIGRATION(Database.getInstance().personData[i].id_modulo,Database.getInstance().personData[i].nombre,Zipfile.getInstance().list_components)
 					BuildMxmlComponets.getInstance().CREATE_FORM(Database.getInstance().personData[i].id_modulo,Database.getInstance().personData[i].nombre)
 					if(Verificar_Modulo_Relacion(list_components,Database.getInstance().personData[i].id_modulo)==false){
-					 Zipfile.getInstance().add_file(Zipfile.getInstance().proyecto_name+"/src/Helpers/"+name.substr(0,name.length-1)+"Helper.as",Helpers.getInstance().CREATE_HELPER_BLANK(name.substr(0,name.length-1)));
+					  Zipfile.getInstance().add_file(Zipfile.getInstance().proyecto_name+"/src/Helpers/"+name.substr(0,name.length-1)+"Helper.as",Helpers.getInstance().CREATE_HELPER_BLANK(name.substr(0,name.length-1)));
 				     BuildMxmlComponets.getInstance().CREATE_MXML_COMPONENTS(Database.getInstance().personData[i].id_modulo,Database.getInstance().personData[i].id_nombre,name_modelo.substr(0,name.length-1));
 				    }
+				    
 				}
 				
 				if(proyecto_zip=="amfphp.zip"){
@@ -242,11 +247,11 @@ package Clases
 		
 		public function get_modulo_name(id_modulo:String):String
 		{
-		 var i:int=1;
+		 var i:int=0;
 		 var sw:int=0;
 		 var cadena:String="";
 		  while(i<=list_modulos.length-1&&sw==0){
-		 		if (list_modulos[i].id_modulo==id_modulo){
+		  	  	if (list_modulos[i].id_modulo==id_modulo){
 		 			sw=1;
 		 			cadena=list_modulos[i].nombre
 		 		}

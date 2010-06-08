@@ -122,13 +122,14 @@ package Clases
 			for(var i:int=1;i<=list_components.length-1;i++){
 				if(list_components[i].id_modulo==id){
 					sw=1;
-					if(list_components[i].componente_id!="5"){
-				      Zipfile.getInstance().datagridHead+=IDEComponentes.getInstance().Crear_Column_DataGrid(list_components[i].etiqueta,list_components[i].identificador,list_components[i].tamano);
+					 if(list_components[i].componente_id!="5"){
+			  	      Zipfile.getInstance().datagridHead+=IDEComponentes.getInstance().Crear_Column_DataGrid(list_components[i].etiqueta,list_components[i].identificador,list_components[i].tamano);
 				     }
 				     if(list_components[i].tipo_relacion!="0"){
 				      Zipfile.getInstance().HeadService+=IDEComponentes.getInstance().Remote_Object_Relation(Zipfile.getInstance().get_modulo_name(list_components[i].modulo_relacionado));
 				     }
-				  	Zipfile.getInstance().canvascomponente+=IDEComponentes.getInstance().Crear_Mxml(list_components[i].componente_id,list_components[i].identificador,list_components[i].etiqueta,list_components[i].tamano,list_components[i].tipo,list_components[i].requerido,list_components[i].tipo_relacion,list_components[i].modulo_relacionado);
+				     
+				   	Zipfile.getInstance().canvascomponente+=IDEComponentes.getInstance().Crear_Mxml(list_components[i].componente_id,list_components[i].identificador,list_components[i].etiqueta,list_components[i].tamano,list_components[i].tipo,list_components[i].requerido,list_components[i].tipo_relacion,list_components[i].modulo_relacionado,id);
 					if(Zipfile.getInstance().proyecto_zip=="amfphp.zip"){
 						if(list_components[i].tipo_relacion=="0"&&list_components[i].identificador!="id"&&list_components[i].identificador!="ID"){
 							Zipfile.getInstance().database_sql+=IDEComponentes.getInstance().Create_database_sql(list_components[i].identificador,list_components[i].componente_id,list_components[i].tamano);
@@ -203,6 +204,7 @@ package Clases
 			Zipfile.getInstance().count_mxml_form=2;
 			Zipfile.getInstance().helper_class_name="";
 			Zipfile.getInstance().Relation_Remote_name="";
+			Zipfile.getInstance().XmlParamert="";
 		}
 		
 		
