@@ -229,6 +229,7 @@ package Clases
             
        public function Crear_Mxml(id_componente:String,nombre:String,etiqueta:String,tamano:String,tipodato:int,requiredtype:String,tipo_relacion:String,modulo_relacionado:String,id_modulo:String):String
               {
+              	 
                 var modulo:String="";
                if(id_componente=="0"){
               	  modulo+="<mx:FormItem label='"+etiqueta+"'>"+"\n";
@@ -255,7 +256,7 @@ package Clases
               	  modulo+="</mx:FormItem>"+"\n"
               	 }
               	 if(id_componente=="5"){
-              	 	  if (tipo_relacion=="1"){
+              	 	 if (tipo_relacion=="1"){
 		          	   modulo+="<mx:FormItem label='"+etiqueta+"'>"+"\n"
 		          	   modulo+=IDEComponentes.getInstance().Crear_campo_de_texto(nombre,tamano,tipodato,0,requiredtype)+'\n';	
               	       modulo+=Crear_Button(nombre,"BtN_"+nombre,"action","","","true")+'\n';	
@@ -285,7 +286,7 @@ package Clases
 		          	  Zipfile.getInstance().relaciones_mxml_form+='<s:NavigatorContent label="'+nombre+'" width="100%" height="100%" >'+"\n";
 				      Zipfile.getInstance().relaciones_mxml_form+='<'+nombre.toLowerCase().substr(0,nombre.length-1)+" creationComplete='"+nombre.substr(0,1).toString().toUpperCase()+nombre.substr(1,nombre.length-2)+"Helper.getInstance().Set_Root_Component(this)'" +' id="'+nombre+'"  width="98%" height="98%"  y="0" x="0" />'+" \n";
 				      Zipfile.getInstance().relaciones_mxml_form+='</s:NavigatorContent>'+" \n";
-				      Zipfile.getInstance().add_file(Zipfile.getInstance().proyecto_name+"/src/Helpers/"+nombre.substr(0,1).toString().toUpperCase()+nombre.substr(1,nombre.length-2)+"Helper.as",Helpers.getInstance().CREATE_HELPER(nombre.substr(0,1).toString().toUpperCase()+nombre.substr(1,nombre.length-2),id_modulo));
+				      Zipfile.getInstance().add_file(Zipfile.getInstance().proyecto_name+"/src/Helpers/"+nombre.substr(0,1).toString().toUpperCase()+nombre.substr(1,nombre.length-2)+"Helper.as",Helpers.getInstance().CREATE_HELPER(nombre.substr(0,1).toString().toUpperCase()+nombre.substr(1,nombre.length-2),modulo_relacionado));
 					  Zipfile.getInstance().helper_class_name+="  import Helpers."+nombre.substr(0,1).toString().toUpperCase()+nombre.substr(1,nombre.length-2)+"Helper;"+"\n";
 					  Zipfile.getInstance().count_mxml_form++;
 		            

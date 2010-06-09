@@ -49,6 +49,7 @@ package Clases
 	   
 	   public function CREATE_HELPER(value:String,id:String):String
 		{
+	      Zipfile.getInstance().XmlParamert=Helpers.getInstance().HELPER_GET_ELEMENTS_RELATION(value,id);
 		  var cadena:String="";
 		  cadena="package Helpers"+"\n";
 		  cadena+="{"+"\n";
@@ -76,6 +77,7 @@ package Clases
 		  cadena+=HELPER_REMOTE_ACCESS()+"\n";
 		  cadena+=HELPER_SET_CANVAS()+"\n";
 		  cadena+=HELPER_GET_LIST()+"\n";
+		  cadena+= Zipfile.getInstance().XmlParamert+"\n";
 		  cadena+=HELPER_REQUEST_FAULT()+"\n";
 	      cadena+="  }"+"\n";
 		  cadena+="}"+"\n";
@@ -183,24 +185,28 @@ package Clases
 		  {
 		  	var cadena:String="";
 		  	var etiquetas:String="";
-		  		for(var i:int=1;i<=Zipfile.getInstance().list_components.length-1;i++){
+		   for(var i:int=1;i<=Zipfile.getInstance().list_components.length-1;i++){
 				if(Zipfile.getInstance().list_components[i].id_modulo==id){
 					 if(Zipfile.getInstance().list_components[i].componente_id!="5"){
-			  	        if(Zipfile.getInstance().Verificar_Modulo_Relacion(Zipfile.getInstance().list_components,Zipfile.getInstance().list_components[i].id_modulo)==true){
+					   if(Zipfile.getInstance().Verificar_Modulo_Relacion(Zipfile.getInstance().list_components,Zipfile.getInstance().list_components[i].id_modulo)==true){
 					      etiquetas+="cadena+='<"+Zipfile.getInstance().list_components[i].etiqueta+">'"+"+params['relacion_"+Zipfile.getInstance().get_modulo_name(Zipfile.getInstance().list_components[i].id_modulo)+"'].dataProvider.getItemAt(i)."+Zipfile.getInstance().list_components[i].etiqueta+"+'</"+Zipfile.getInstance().list_components[i].etiqueta+">'"+"\n";	
 		                  }
 		              }
 		           }
 		        }
-		       cadena+='<'+name+'>'+"\n";
-		       cadena+='<values>'+"\n";
-		       cadena+="  for(var i:int=0;i<=params['"+name+"'].dataProvider.length-1;i++){"+"\n";
-		       cadena+="   if(params['"+name+"'].dataProvider.getItemAt(i).options=='true'){"+"\n";
-		       cadena+="    }"+"\n";
-		       cadena+=etiquetas;
-		       cadena+="  }"+"\n";
-		       cadena+='</values>'+"\n";
-		       cadena+='</'+name+'>'+"\n";
+		       cadena="    public function Get_Elements_Relation(params:Group):String {"+"\n";
+		       cadena+='        var cadena:String="";'+"\n"; 
+		       cadena+='        cadena+='+'"'+'<'+name+'>'+'";'+"\n";
+		       cadena+='        cadena+='+'"'+'<values>'+'";'+"\n";
+		       cadena+="        for(var i:int=0;i<=params['"+name+"'].dataProvider.length-1;i++){"+"\n";
+		       cadena+="        if(params['"+name+"'].dataProvider.getItemAt(i).options=='true'){"+"\n";
+		       cadena+="        }"+"\n";
+		       cadena+=             etiquetas;
+		       cadena+="        }"+"\n";
+		       cadena+='        cadena+='+'"'+'</values>'+'";'+"\n";
+		       cadena+='        cadena+='+'"'+'</'+name+'>'+'"'+"\n";
+		       cadena+="       return cadena;"+"\n";
+		       cadena+="   } ";
 		   	  return cadena;
 		  }
 		  

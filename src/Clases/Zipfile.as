@@ -159,10 +159,6 @@ package Clases
 					BuildMxmlComponets.getInstance().Create_ControllerAndModels(name,name_modelo,user_database,password_database,Database.getInstance().personData[i].id_modulo,i);
 				    add_file(this.proyecto_name+"/src/Controllers/"+name.substr(0,name.length-1)+"Controller.as",CreateMVC.getInstance().CREATE_CONTROLLER(name.substr(0,name.length-1)));
 					add_file(this.proyecto_name+"/src/Models/"+name.substr(0,name.length-1)+"Model.as",CreateMVC.getInstance().CREATE_MODEL(name.substr(0,name.length-1),Database.getInstance().personData[i].id_modulo));
-					if(Verificar_Modulo_Relacion(list_components,Database.getInstance().personData[i].id_modulo)==true){
-					Zipfile.getInstance().XmlParamert=Helpers.getInstance().HELPER_GET_ELEMENTS_RELATION(Database.getInstance().personData[i].nombre,Database.getInstance().personData[i].id_modulo);
-					Alert.show(Zipfile.getInstance().XmlParamert);
-					}
 					BuildMxmlComponets.getInstance().CREATE_SQL_MIGRATION(Database.getInstance().personData[i].id_modulo,Database.getInstance().personData[i].nombre,Zipfile.getInstance().list_components)
 					BuildMxmlComponets.getInstance().CREATE_FORM(Database.getInstance().personData[i].id_modulo,Database.getInstance().personData[i].nombre)
 					if(Verificar_Modulo_Relacion(list_components,Database.getInstance().personData[i].id_modulo)==false){
