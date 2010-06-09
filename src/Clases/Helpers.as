@@ -189,7 +189,7 @@ package Clases
 				if(Zipfile.getInstance().list_components[i].id_modulo==id){
 					 if(Zipfile.getInstance().list_components[i].componente_id!="5"){
 					   if(Zipfile.getInstance().Verificar_Modulo_Relacion(Zipfile.getInstance().list_components,Zipfile.getInstance().list_components[i].id_modulo)==true){
-					      etiquetas+="cadena+='<"+Zipfile.getInstance().list_components[i].etiqueta+">'"+"+params['relacion_"+Zipfile.getInstance().get_modulo_name(Zipfile.getInstance().list_components[i].id_modulo)+"'].dataProvider.getItemAt(i)."+Zipfile.getInstance().list_components[i].etiqueta+"+'</"+Zipfile.getInstance().list_components[i].etiqueta+">'"+"\n";	
+					      etiquetas+="         cadena+='<"+Zipfile.getInstance().list_components[i].etiqueta+">'"+"+params['relacion_"+Zipfile.getInstance().get_modulo_name(Zipfile.getInstance().list_components[i].id_modulo)+"'].dataProvider.getItemAt(i)."+Zipfile.getInstance().list_components[i].etiqueta+"+'</"+Zipfile.getInstance().list_components[i].etiqueta+">'"+"\n";	
 		                  }
 		              }
 		           }
@@ -197,8 +197,8 @@ package Clases
 		       cadena="    public function Get_Elements_Relation(params:Group):String {"+"\n";
 		       cadena+='        var cadena:String="";'+"\n"; 
 		       cadena+='        cadena+='+'"'+'<'+name+'>'+'";'+"\n";
-               cadena+="        for(var i:int=0;i<=params['relacion_"+name+"'].dataProvider.length-1;i++){"+"\n";
-		       cadena+="        if(params['relacion_"+name+"'].dataProvider.getItemAt(i).options=='true'){"+"\n";
+               cadena+="        for(var i:int=0;i<=params['relacion_"+name.substr(0,1).toUpperCase()+name.substr(1,name.length)+"s'].dataProvider.length-1;i++){"+"\n";
+		       cadena+="        if(params['relacion_"+name.substr(0,1).toUpperCase()+name.substr(1,name.length)+"s'].dataProvider.getItemAt(i).options=='true'){"+"\n";
 		       cadena+='         cadena+='+'"'+'<values>'+'";'+"\n";
 		       cadena+=             etiquetas;
 		       cadena+='         cadena+='+'"'+'</values>'+'";'+"\n";
@@ -207,7 +207,7 @@ package Clases
                cadena+='        cadena+='+'"'+'</'+name+'>'+'"'+"\n";
 		       cadena+="       return cadena;"+"\n";
 		       cadena+="   } ";
-		   	  return cadena;
+		      return cadena;
 		  }
 		  
 			 

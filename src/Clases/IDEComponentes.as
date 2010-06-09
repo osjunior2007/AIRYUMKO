@@ -276,6 +276,7 @@ package Clases
                         modulo+=Crear_Datagrid_Relationes(modulo_relacionado);
               	        modulo+="</mx:columns>"+"\n";
               	        modulo+="</mx:DataGrid>"+"\n";
+              	        modulo+='<mx:Button click="{'+etiqueta.substr(0,1).toUpperCase()+etiqueta.substr(1,etiqueta.length-2)+'Helper.getInstance().Get_Elements_Relation(this)}"/>'+"\n";
               	        modulo+="</mx:FormItem>"+"\n";
               	   	  }	
 		          	  if (tipo_relacion=="3"){
