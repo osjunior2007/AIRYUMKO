@@ -191,6 +191,7 @@ package Clases
 			Zipfile.getInstance().canvasdatagrid='<s:NavigatorContent id="OutputsObjects" x="0" y="0"  width="98%" height="98%" >'+"\n";
 			Zipfile.getInstance().DataGridposx=20;
 			Zipfile.getInstance().datagridHead='<mx:DataGrid horizontalScrollPolicy="auto" id="datos" x="'+ Zipfile.getInstance().DataGridposx+'" y="46" width="98%" height="85%" >'+"\n"+"<mx:columns>"+"\n";
+			Zipfile.getInstance().datagridHead+='<mx:DataGridColumn visible="false" width="110" headerText="id" dataField="id"/>'+"\n";
 			Zipfile.getInstance().canvascomponente='<s:NavigatorContent id="InputsObjects" creationComplete="App.getInstance().SET_CANVAS_COMPLETE();" x="0" y="0"  width="98%" height="98%" >'+"\n"+"<mx:Form x='0' y='0' width='100%' height='100%'>"+"\n";
 			Zipfile.getInstance().HeadService="";
 			Zipfile.getInstance().setupdate="";

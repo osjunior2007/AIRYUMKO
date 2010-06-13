@@ -49,7 +49,7 @@ package Clases
 	   
 	   public function CREATE_HELPER(value:String,id:String):String
 		{
-	      Zipfile.getInstance().XmlParamert=Helpers.getInstance().HELPER_GET_ELEMENTS_RELATION(value,id);
+	      Zipfile.getInstance().XmlParamert=Helpers.getInstance().HELPER_GET_ELEMENTS_RELATION_MANY_TO_MANY(value,id);
 		  var cadena:String="";
 		  cadena="package Helpers"+"\n";
 		  cadena+="{"+"\n";
@@ -181,7 +181,27 @@ package Clases
 		   return cadena;	
 		  }
 		  
-		  public function HELPER_GET_ELEMENTS_RELATION(name:String,id:String):String
+		   public function HELPER_GET_ELEMENTS_RELATION_MANY_TO_MANY(name:String,id:String):String
+		  {
+		  	  var cadena:String="";
+		  	  var etiquetas:String="";
+		       cadena="    public function Get_Elements_Relation(params:Group):String {"+"\n";
+		       cadena+='        var cadena:String="";'+"\n"; 
+		       cadena+='        cadena+='+'"'+'<'+name+'>'+'";'+"\n";
+               cadena+="        for(var i:int=0;i<=params['relacion_"+name.substr(0,1).toLowerCase()+name.substr(1,name.length)+"s'].dataProvider.length-1;i++){"+"\n";
+		       cadena+="        if(params['relacion_"+name.substr(0,1).toLowerCase()+name.substr(1,name.length)+"s'].dataProvider.getItemAt(i).options=='true'){"+"\n";
+		       cadena+='         cadena+='+'"'+'<values>'+'";'+"\n";
+		       cadena+='         cadena+="<id>"'+"+params['relacion_"+name.substr(0,1).toLowerCase()+name.substr(1,name.length)+"s'].dataProvider.getItemAt(i).id+"+'"</id>"'+"\n";
+		       cadena+='         cadena+='+'"'+'</values>'+'";'+"\n";
+		       cadena+="         }"+"\n";
+		       cadena+="        }"+"\n";
+               cadena+='        cadena+='+'"'+'</'+name+'>'+'"'+"\n";
+		       cadena+="       return cadena;"+"\n";
+		       cadena+="   } ";
+		      return cadena;
+		  }
+		  
+		 /* public function HELPER_GET_ELEMENTS_RELATION(name:String,id:String):String
 		  {
 		  	var cadena:String="";
 		  	var etiquetas:String="";
@@ -208,7 +228,7 @@ package Clases
 		       cadena+="       return cadena;"+"\n";
 		       cadena+="   } ";
 		      return cadena;
-		  }
+		  }*/
 		  
 			 
 		public static function getInstance():Helpers

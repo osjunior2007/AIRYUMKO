@@ -31,7 +31,7 @@ package Clases
 			cadena+=' if ($param[type]=="all") {'+'\n';
 			cadena+="   return amf("+nombre.substr(0,nombre.length-1)+"::find(all));"+'\n'; 
             cadena+=" }else{"+'\n';
-            cadena+="   return amf("+nombre.substr(0,nombre.length-1)+"::find(all,array('select' "+'=> "'+" 'false' as options,"+attribute+""+'")));'+'\n';
+            cadena+="   return amf("+nombre.substr(0,nombre.length-1)+"::find(all,array('select' "+'=> "'+" 'false' as options,id"+attribute+""+'")));'+'\n';
             cadena+=" }"+'\n';
             cadena+="}"+'\n';
             return cadena;
