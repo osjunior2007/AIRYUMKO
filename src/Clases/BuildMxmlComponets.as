@@ -133,6 +133,17 @@ package Clases
 						if(list_components[i].tipo_relacion=="0"&&list_components[i].identificador!="id"&&list_components[i].identificador!="ID"){
 							Zipfile.getInstance().database_sql+=IDEComponentes.getInstance().Create_database_sql(list_components[i].identificador,list_components[i].componente_id,list_components[i].tamano);
 						}
+						//Relation Many to Many
+						if(list_components[i].tipo_relacion=="2"&&list_components[i].identificador!="id"&&list_components[i].identificador!="ID"){
+						  Zipfile.getInstance().database_sql=IDEComponentes.getInstance().Create_database_sql("id_"+list_components[i].identificador,"8","5");
+						  Zipfile.getInstance().database_sql+=IDEComponentes.getInstance().Create_database_sql("id_"+nombre.toLowerCase(),"8","5");
+						  list_components[i].identificador=list_components[i].identificador.substr(0,1).toLowerCase()+list_components[i].identificador.substr(1,list_components[i].identificador.length-1);
+						  Zipfile.getInstance().database_sql="CREATE TABLE"+"`"+nombre.toLowerCase()+"_"+list_components[i].identificador+"` ("+"\n"+"`id` bigint(11) NOT NULL AUTO_INCREMENT,"+"\n"+Zipfile.getInstance().database_sql;
+				          Zipfile.getInstance().database_sql+="PRIMARY KEY (`id`)"+" \n"+")"+"ENGINE=MyISAM AUTO_INCREMENT=40001 DEFAULT CHARSET=latin1;"+"\n"+"\n";
+				          Zipfile.getInstance().Head_database_sql+=Zipfile.getInstance().database_sql;
+				          Zipfile.getInstance().database_sql="";
+						}
+						
 					}
 					
 					if(Zipfile.getInstance().proyecto_zip=="Rails.zip"){
