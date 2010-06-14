@@ -1,7 +1,8 @@
 package Clases
 {
-	import mx.controls.Alert;
 	import flash.events.*;
+	
+	import mx.controls.Alert;
 	public class BuildMxmlComponets
 	{
 		private static var instancia:BuildMxmlComponets;
@@ -119,6 +120,7 @@ package Clases
 		public function CREATE_SQL_MIGRATION(id:String,nombre:String,list_components:Array):void
 		{
 			var sw:int=0;
+			var sql_relations:String="";
 			for(var i:int=1;i<=list_components.length-1;i++){
 				if(list_components[i].id_modulo==id){
 					sw=1;
@@ -135,17 +137,16 @@ package Clases
 						}
 						//Relation Many to Many
 						if(list_components[i].tipo_relacion=="2"&&list_components[i].identificador!="id"&&list_components[i].identificador!="ID"){
-						  Zipfile.getInstance().database_sql=IDEComponentes.getInstance().Create_database_sql("id_"+list_components[i].identificador,"8","5");
-						  Zipfile.getInstance().database_sql+=IDEComponentes.getInstance().Create_database_sql("id_"+nombre.toLowerCase(),"8","5");
+						  sql_relations=IDEComponentes.getInstance().Create_database_sql("id_"+list_components[i].identificador,"8","5");
+						  sql_relations+=IDEComponentes.getInstance().Create_database_sql("id_"+nombre.toLowerCase(),"8","5");
 						  list_components[i].identificador=list_components[i].identificador.substr(0,1).toLowerCase()+list_components[i].identificador.substr(1,list_components[i].identificador.length-1);
-						  Zipfile.getInstance().database_sql="CREATE TABLE"+"`"+nombre.toLowerCase()+"_"+list_components[i].identificador+"` ("+"\n"+"`id` bigint(11) NOT NULL AUTO_INCREMENT,"+"\n"+Zipfile.getInstance().database_sql;
-				          Zipfile.getInstance().database_sql+="PRIMARY KEY (`id`)"+" \n"+")"+"ENGINE=MyISAM AUTO_INCREMENT=40001 DEFAULT CHARSET=latin1;"+"\n"+"\n";
-				          Zipfile.getInstance().Head_database_sql+=Zipfile.getInstance().database_sql;
-				          Zipfile.getInstance().database_sql="";
+						  sql_relations="CREATE TABLE"+"`"+nombre.toLowerCase()+"_"+list_components[i].identificador+"` ("+"\n"+"`id` bigint(11) NOT NULL AUTO_INCREMENT,"+"\n"+sql_relations;
+				          sql_relations+="PRIMARY KEY (`id`)"+" \n"+")"+"ENGINE=MyISAM AUTO_INCREMENT=40001 DEFAULT CHARSET=latin1;"+"\n"+"\n";
+				          Zipfile.getInstance().Head_database_sql+=sql_relations;
 						}
 						
 					}
-					
+				
 					if(Zipfile.getInstance().proyecto_zip=="Rails.zip"){
 						if(list_components[i].identificador!="id"&&list_components[i].identificador!="ID"){
 							Zipfile.getInstance().migrationBody+=IDEComponentes.getInstance().Create_migration(list_components[i].identificador,list_components[i].componente_id,list_components[i].tamano);
