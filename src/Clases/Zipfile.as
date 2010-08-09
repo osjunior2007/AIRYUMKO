@@ -16,8 +16,8 @@ package Clases
 		public var index:uint = 0;
 		public var done:Boolean = false;
 		public var proyecto_zip:String="amfphp.zip";
-		public var proyecto_name:String="Escuela";
-		public var database_name:String="Escuela";
+		public var proyecto_name:String="MyEscuela";
+		public var database_name:String="MyEscuela";
 		public var user_database:String="root";
 		public var password_database:String="";
 		public var canvascomponente:String="";
@@ -37,6 +37,9 @@ package Clases
 		public var database_sql:String="";
 		public var Head_database_sql:String="";
 		public var nameclases:String="";
+		public var relaciones_mxml_form:String="";
+		public var count_mxml_form:int=2;
+		public var helper_class_name:String="";
 		[Bindable] public var list_components:Array = new Array();
 		[Bindable] public var list_relaciones:Array = new Array();
 		[Bindable] public var list_modulos:Array = new Array();
@@ -46,11 +49,11 @@ package Clases
 		public var TipoFramework:int=0;
 		public var Position_Objets:String="";
 		public var MainApp:String="";
-		
+		public var Relation_Remote_name:String=""
+		public var XmlParamert:String="";
 		public function Zipfile()
 		{
 		}
-		
 		
 		
 		public static function getInstance():Zipfile
@@ -128,7 +131,7 @@ package Clases
 				}else{
 					if(file.filename!="src/Clases/"&&file.filename!="src/"&&file.filename!=".settings/"&&file.filename!=".settings/org.eclipse.core.resources.prefs"&&file.filename!="bin-debug/history/history.css"
 						&&file.filename!="bin-debug/"&&file.filename!="bin-debug/history/"&&file.filename!="bin-debug/history/historyFrame.html"&&file.filename!="bin-debug/history/history.js"
-						&&file.filename!="bin-debug/ejemplo.html"&&file.filename!="bin-debug/ejemplo.swf"&&file.filename!="bin-debug/AC_OETags.js"&&file.filename!="bin-debug/playerProductInstall.swf"
+						&&file.filename!="bin-debug/ejemplo.html"&&file.filename!="bin-debug/ejemplo.swf"&&file.filename!="bin-debug/swfobject.js"&&file.filename!="bin-debug/AC_OETags.js"&&file.filename!="bin-debug/playerProductInstall.swf"
 						&&file.filename!="html-template/history/"&&file.filename!="html-template/"&&file.filename!="html-template/index.template.html"&&file.filename!="html-template/AC_OETags.js"&&file.filename!="html-template/playerProductInstall.swf"&&file.filename!="html-template/history/history.css"
 						&&file.filename!="html-template/history/history.js"&&file.filename!="html-template/history/historyFrame.html"){
 						add_file(file.filename,file.content.toString());
@@ -152,12 +155,17 @@ package Clases
 					name_modelo=Database.getInstance().personData[i].nombre;
 					name_modelo=name_modelo.substring(0,name_modelo.length-1);
 					name=name.substr(0,1).toLocaleUpperCase()+name.substr(1,name.length);
-					BuildMxmlComponets.getInstance().Create_ControllerAndModels(name,name_modelo,user_database,password_database,i);
-					add_file(this.proyecto_name+"/src/Controllers/"+name.substr(0,name.length-1)+"Controller.as",CreateMVC.getInstance().CREATE_CONTROLLER(name.substr(0,name.length-1)));
-					add_file(this.proyecto_name+"/src/Models/"+name.substr(0,name.length-1)+".as",CreateMVC.getInstance().CREATE_MODEL(name.substr(0,name.length-1),Database.getInstance().personData[i].id_modulo));
+					BuildMxmlComponets.getInstance().init_value();
+					BuildMxmlComponets.getInstance().Create_ControllerAndModels(name,name_modelo,user_database,password_database,Database.getInstance().personData[i].id_modulo,i);
+				    add_file(this.proyecto_name+"/src/Controllers/"+name.substr(0,name.length-1)+"Controller.as",CreateMVC.getInstance().CREATE_CONTROLLER(name.substr(0,name.length-1),Database.getInstance().personData[i].id_modulo));
+					add_file(this.proyecto_name+"/src/Models/"+name.substr(0,name.length-1)+"Model.as",CreateMVC.getInstance().CREATE_MODEL(name.substr(0,name.length-1),Database.getInstance().personData[i].id_modulo));
 					BuildMxmlComponets.getInstance().CREATE_SQL_MIGRATION(Database.getInstance().personData[i].id_modulo,Database.getInstance().personData[i].nombre,Zipfile.getInstance().list_components)
 					BuildMxmlComponets.getInstance().CREATE_FORM(Database.getInstance().personData[i].id_modulo,Database.getInstance().personData[i].nombre)
-					BuildMxmlComponets.getInstance().CREATE_MXML_COMPONENTS(Database.getInstance().personData[i].id_modulo,Database.getInstance().personData[i].id_nombre,name.substr(0,name.length-1));
+					if(Verificar_Modulo_Relacion(list_components,Database.getInstance().personData[i].id_modulo)==false){
+					  Zipfile.getInstance().add_file(Zipfile.getInstance().proyecto_name+"/src/Helpers/"+name.substr(0,name.length-1)+"Helper.as",Helpers.getInstance().CREATE_HELPER_BLANK(name.substr(0,name.length-1)));
+				     BuildMxmlComponets.getInstance().CREATE_MXML_COMPONENTS(Database.getInstance().personData[i].id_modulo,Database.getInstance().personData[i].id_nombre,name_modelo.substr(0,name.length-1));
+				    }
+				    
 				}
 				
 				if(proyecto_zip=="amfphp.zip"){
@@ -221,7 +229,7 @@ package Clases
 		public function get_components():void
 		{
 			Database.getInstance().dbStatement.addEventListener(SQLEvent.RESULT, Result_components);
-			Database.getInstance().getDatos("select componente_id,id_modulo,etiqueta,identificador,tamano,replace(replace(tipo,'Numerico','0'),'Alfanumerico','1') as tipo,requerido from componentes");
+			Database.getInstance().getDatos("select componente_id,id_modulo,etiqueta,identificador,tamano,replace(replace(tipo,'Numerico','0'),'Alfanumerico','1') as tipo,requerido,tipo_relacion,modulo_relacionado from componentes");
 		}
 		
 		public function Result_components(e:Event):void
@@ -231,6 +239,21 @@ package Clases
 			Database.getInstance().exampleDB.close();
 			Database.getInstance().initAndOpenDatabase();
 			build_MainMXML();
+		}
+		
+		public function get_modulo_name(id_modulo:String):String
+		{
+		 var i:int=0;
+		 var sw:int=0;
+		 var cadena:String="";
+		  while(i<=list_modulos.length-1&&sw==0){
+		  	  	if (list_modulos[i].id_modulo==id_modulo){
+		 			sw=1;
+		 			cadena=list_modulos[i].nombre
+		 		}
+		 	 i++;	
+		    }
+		 return cadena;	
 		}
 		
 		

@@ -32,6 +32,7 @@
 <boton_nuevo_modulo>new</boton_nuevo_modulo>
 <boton_upload>Upload</boton_upload>
 <relacionship>Relaciones</relacionship>
+<relacionship_tipo_0>Ninguno</relacionship_tipo_0>
 <relacionship_tipo_1>Uno a uno</relacionship_tipo_1>
 <relacionship_tipo_2>Muchos a uno</relacionship_tipo_2>
 <relacionship_tipo_3>Muchos a muchos</relacionship_tipo_3>
@@ -42,5 +43,6 @@
 <mensaje_modulo_vacio>Selecciones un modelo</mensaje_modulo_vacio>
 <boton_ingresar_relacion>Ingresar</boton_ingresar_relacion>
 <boton_delete_modulo>Delete</boton_delete_modulo>
+<associacion>Associacion</associacion>
 </modulo_builder>
 </idioma>

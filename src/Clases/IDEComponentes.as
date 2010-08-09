@@ -73,29 +73,28 @@ package Clases
 		 return '<mx:Label text="'+texto+'" x="'+posx+'" y="'+posy+'" />'; 	
 		}
 		
-		public function Crear_Button(texto,id,action,posx,posy,enable):String
+		public function Crear_Button(texto:String,id:String,action:String,posx:String,posy:String,enabled:String):String
 		{
-			return '<mx:Button click="'+action+'" id="'+id+'" label="'+texto+'" enabled="'+enable+'" width="86" x="'+posx+'" y="'+posy+'" />';
+			return '<mx:Button click="'+action+'" id="'+id+'" label="'+texto+'" enabled="'+enabled+'" width="86" x="'+posx+'" y="'+posy+'" />';
 		}
 		
 
 		public function Crear_Column_DataGrid(etiqueta:String,dato:String,longitud:int):String
 		{
-			return '<mx:DataGridColumn width="'+(longitud*10)+'" headerText="'+etiqueta+'" dataField="'+dato.toLowerCase()+'"/>'+"\n";
+			return '<mx:DataGridColumn width="110" headerText="'+etiqueta+'" dataField="'+dato.toLowerCase()+'"/>'+"\n";
 		}
 		
+			
 	    public function Head_RemoteObject(name:String):String
 		{
-			var cadena:String="";
-		   cadena="<fx:Declarations>"+"\n";	
+		   var cadena:String="";
 		   cadena+='<mx:RemoteObject showBusyCursor="true" endpoint="{App.getInstance().AMFurl}" id="amf" source="'+name+'Controller" destination="amfphp">'+"\n";
-		   cadena+='<mx:method name="index" result="'+name+'.getInstance().GET_LIST(event,this);" fault="App.getInstance().REQUEST_FAULT(event);"/>'+"\n";
-		   cadena+='<mx:method name="create" result="App.getInstance().SUCCESS_REQUEST(event);" fault="App.getInstance().REQUEST_FAULT(event);"/>'+"\n";
-		   cadena+='<mx:method name="update" result="App.getInstance().SUCCESS_REQUEST(event);"  fault="App.getInstance().REQUEST_FAULT(event);"/>'+"\n";
-		   cadena+=' <mx:method name="destroy" result="App.getInstance().SUCCESS_REQUEST(event);" fault="App.getInstance().REQUEST_FAULT(event);"/>'+"\n";
+		   cadena+='<mx:method name="index" result="{'+name.substr(0,1).toLocaleUpperCase()+name.substr(1,name.length-2)+'Helper.getInstance().List(event,datos);}"  fault="{App.getInstance().REQUEST_FAULT(event);}"/>'+"\n";
+		   cadena+='<mx:method name="create" result="{App.getInstance().SUCCESS_REQUEST(event);}" fault="{'+name.substr(0,1).toLocaleUpperCase()+name.substr(1,name.length-2)+'Helper.getInstance().REQUEST_FAULT(event);}"/>'+"\n";
+		   cadena+='<mx:method name="update" result="{App.getInstance().SUCCESS_REQUEST(event);}"  fault="{'+name.substr(0,1).toLocaleUpperCase()+name.substr(1,name.length-2)+'Helper.getInstance().REQUEST_FAULT(event);}"/>'+"\n";
+		   cadena+=' <mx:method name="destroy" result="{App.getInstance().SUCCESS_REQUEST(event);}" fault="{'+name.substr(0,1).toLocaleUpperCase()+name.substr(1,name.length-2)+'Helper.getInstance().REQUEST_FAULT(event);}"/>'+"\n";
 		   cadena+='</mx:RemoteObject>'+"\n";
-		   cadena+="</fx:Declarations>";	
-		   return cadena;
+           return cadena;
 		}
 		
 
@@ -169,15 +168,22 @@ package Clases
 		public function Create_Script(name:String):String
 		{
 			var cadena:String="";
-			cadena+='<mx:Script>'+"\n";
+			cadena+='<fx:Script>'+"\n";
 			cadena+='<![CDATA['+"\n";
 			cadena+="  import mx.controls.Alert;"+"\n";
 			cadena+="  import mx.events.ValidationResultEvent;"+"\n";
 			cadena+="  import Clases.App;"+"\n";
+<<<<<<< HEAD
 			cadena+="  import Controllers."+name+";"+"\n";
 			cadena+="  public var sw:Boolean=false;"+"\n";
             cadena+="  public var canvas_complete:Boolean=false;"+" \n";
 		    return cadena+"]]>"+"\n"+"</mx:Script>"+"\n";
+=======
+			cadena+="  import Controllers."+name+"Controller;"+"\n";
+		    cadena+="  import Helpers."+name+"Helper;"+"\n";
+			cadena+= Zipfile.getInstance().helper_class_name;
+		    return cadena+"]]>"+"\n"+"</fx:Script>"+"\n";
+>>>>>>> 4a7862c6bf7aaa143ae0dba5fdb284abadacf6df
 		}
 		
 		public function database_yml (database:String,usuario:String,contrasena:String):String
@@ -228,54 +234,83 @@ package Clases
                 return datostree;
             }
             
-       public function Crear_Mxml(id_componente:String,nombre:String,etiqueta:String,tamano:String,tipodato:int,requiredtype:String):String
+       public function Crear_Mxml(id_componente:String,nombre:String,etiqueta:String,tamano:String,tipodato:int,requiredtype:String,tipo_relacion:String,modulo_relacionado:String,id_modulo:String):String
               {
+              	 
                 var modulo:String="";
                if(id_componente=="0"){
-              	  modulo+=IDEComponentes.getInstance().Crear_label(etiqueta)+'\n';		
-				  IDEComponentes.getInstance().posy=IDEComponentes.getInstance().posy+20;
+              	  modulo+="<mx:FormItem label='"+etiqueta+"'>"+"\n";
 				  modulo+=IDEComponentes.getInstance().Crear_campo_de_texto(nombre,tamano,tipodato,0,requiredtype)+'\n';	
-              	  IDEComponentes.getInstance().posy=IDEComponentes.getInstance().posy+30;	
+              	  modulo+="</mx:FormItem>"+"\n";
               	 }
               	 
               	 if(id_componente=="1"){
-              	  modulo+=IDEComponentes.getInstance().Crear_label(etiqueta)+'\n';
-				  IDEComponentes.getInstance().posy=IDEComponentes.getInstance().posy+20;
+              	  modulo+="<mx:FormItem label='"+etiqueta+"'>"+"\n";
 				  modulo+=IDEComponentes.getInstance().Crear_Text_Area(nombre,tamano)+'\n';	
-              	  IDEComponentes.getInstance().posy=IDEComponentes.getInstance().posy+130;	
+              	  modulo+="</mx:FormItem>"+"\n"
               	 }	
               	 
               	  if(id_componente=="3"){
-              	   modulo+=IDEComponentes.getInstance().Crear_label(etiqueta)+'\n';	
-				   IDEComponentes.getInstance().posy=IDEComponentes.getInstance().posy+20;
-              	   modulo+=IDEComponentes.getInstance().Crear_campo_de_texto(nombre,tamano,tipodato,0,requiredtype)+'\n';	
-				   IDEComponentes.getInstance().posy=IDEComponentes.getInstance().posy+20;
+              	   modulo+="<mx:FormItem label='"+etiqueta+"'>"+"\n";
+				   modulo+=IDEComponentes.getInstance().Crear_campo_de_texto(nombre,tamano,tipodato,0,requiredtype)+'\n';	
 				   modulo+=IDEComponentes.getInstance().Crear_Fecha("agregar",nombre)+'\n';	
-              	   IDEComponentes.getInstance().posy=IDEComponentes.getInstance().posy+30;	
+	               modulo+="</mx:FormItem>"+"\n"
               	  }	
               	 
               	if(id_componente=="4"){
-              	  modulo+=IDEComponentes.getInstance().Crear_label(etiqueta)+'\n';	
-				  IDEComponentes.getInstance().posy=IDEComponentes.getInstance().posy+20;
-              	  modulo+=IDEComponentes.getInstance().Crear_campo_de_texto(nombre,tamano,tipodato,1,requiredtype)+'\n';	
-              	  IDEComponentes.getInstance().posy=IDEComponentes.getInstance().posy+30;	
+              	  modulo+="<mx:FormItem label='"+etiqueta+"'>"+"\n";
+				  modulo+=IDEComponentes.getInstance().Crear_campo_de_texto(nombre,tamano,tipodato,1,requiredtype)+'\n';	
+              	  modulo+="</mx:FormItem>"+"\n"
               	 }
+              	 if(id_componente=="5"){
+              	 	 if (tipo_relacion=="1"){
+		          	   modulo+="<mx:FormItem label='"+etiqueta+"'>"+"\n"
+		          	   modulo+=IDEComponentes.getInstance().Crear_campo_de_texto(nombre,tamano,tipodato,0,requiredtype)+'\n';	
+              	       modulo+=Crear_Button(nombre,"BtN_"+nombre,"action","","","true")+'\n';	
+              	       modulo+="</mx:FormItem>"+"\n";
+		          	  }	
+		          	 if (tipo_relacion=="2"){
+   	                    modulo+="<mx:FormItem  label='"+etiqueta+"'>"+"\n";
+		          	    modulo+='<mx:DataGrid horizontalScrollPolicy="auto" id="relacion_'+Zipfile.getInstance().get_modulo_name(modulo_relacionado)+'"  width="{View_01.width-110}" height="150" >'+"\n"+"<mx:columns>"+"\n";
+              	        modulo+='<mx:DataGridColumn   dataField="options" width="25" headerText=" " editable="false">'+"\n";
+                        modulo+='<mx:itemRenderer>'+"\n";
+                        modulo+='<fx:Component>'+"\n";
+                        modulo+='<mx:CheckBox selected="'+"{(data.options == 'true')?true:false}"+'"'+' click="{data.options ='+" (data.options != 'true') ? 'true' : 'false';} "+'" >'+"\n";
+                        modulo+='</mx:CheckBox>'+"\n";
+                        modulo+='</fx:Component>'+"\n";
+                        modulo+='</mx:itemRenderer>'+"\n";
+                        modulo+=' </mx:DataGridColumn>'+"\n";
+                        modulo+=Crear_Datagrid_Relationes(modulo_relacionado);
+              	        modulo+="</mx:columns>"+"\n";
+              	        modulo+="</mx:DataGrid>"+"\n";
+              	        modulo+='<mx:Button click="{'+etiqueta.substr(0,1).toUpperCase()+etiqueta.substr(1,etiqueta.length-2)+'Helper.getInstance().Get_Elements_Relation(this)}"/>'+"\n";
+              	        modulo+="</mx:FormItem>"+"\n";
+              	   	  }	
+		          	  if (tipo_relacion=="3"){
+		          	   modulo+="<mx:FormItem label='"+etiqueta+"'>"+"\n"
+		          	   //modulo+=""Boton
+              	       modulo+="</mx:FormItem>"+"\n";
+		          	  }	
+		          	  Zipfile.getInstance().relaciones_mxml_form+='<s:NavigatorContent label="'+nombre+'" width="100%" height="100%" >'+"\n";
+				      Zipfile.getInstance().relaciones_mxml_form+='<'+nombre.toLowerCase().substr(0,nombre.length-1)+" creationComplete='"+nombre.substr(0,1).toString().toUpperCase()+nombre.substr(1,nombre.length-2)+"Helper.getInstance().Set_Root_Component(this)'" +' id="'+nombre+'"  width="98%" height="98%"  y="0" x="0" />'+" \n";
+				      Zipfile.getInstance().relaciones_mxml_form+='</s:NavigatorContent>'+" \n";
+				      Zipfile.getInstance().add_file(Zipfile.getInstance().proyecto_name+"/src/Helpers/"+nombre.substr(0,1).toString().toUpperCase()+nombre.substr(1,nombre.length-2)+"Helper.as",Helpers.getInstance().CREATE_HELPER(nombre.substr(0,1).toString().toUpperCase()+nombre.substr(1,nombre.length-2),modulo_relacionado));
+					  Zipfile.getInstance().helper_class_name+="  import Helpers."+nombre.substr(0,1).toString().toUpperCase()+nombre.substr(1,nombre.length-2)+"Helper;"+"\n";
+					  Zipfile.getInstance().count_mxml_form++;
+		            
+		           }
               	 
-              	 if(id_componente=="6"){
-              	  modulo+=IDEComponentes.getInstance().Crear_label(etiqueta)+'\n';	
-				  IDEComponentes.getInstance().posy=IDEComponentes.getInstance().posy+20;
-              	  modulo+=IDEComponentes.getInstance().Crear_CheckBox(nombre)+'\n';	
-				  IDEComponentes.getInstance().posy=IDEComponentes.getInstance().posy+30;	
-              	 }
-                 // modulo+='</mx:Canvas>';
+              	   if(id_componente=="6"){
+              	    modulo+="<mx:FormItem label='"+etiqueta+"'>"+"\n";
+				    modulo+=IDEComponentes.getInstance().Crear_CheckBox(nombre)+'\n';	
+				    modulo+="</mx:FormItem>"+"\n"
+				   }
+              	 
+              	 
                  return modulo;	
               }
               
-			
-              
-              
-         
-              
+		     
               public function buscar_componente(identificador:String,temp:ArrayCollection):int{
               	  var i:int=0;
               	  var sw:int=0;
@@ -364,6 +399,32 @@ package Clases
                 cadena+="</actionScriptProperties>"+"\n";
                 return cadena;
               }
+              
+              
+              public function Crear_Datagrid_Relationes(modulo_relacionado:String):String
+              {
+              	var cadena:String="";
+              	for(var i:int=1;i<=Zipfile.getInstance().list_components.length-1;i++){
+				   if(Zipfile.getInstance().list_components[i].id_modulo==modulo_relacionado){
+				   	  cadena+=IDEComponentes.getInstance().Crear_Column_DataGrid(Zipfile.getInstance().list_components[i].etiqueta,Zipfile.getInstance().list_components[i].identificador,Zipfile.getInstance().list_components[i].tamano);
+				   }
+              	}
+              	return cadena;
+              }
+              
+              
+               public function Remote_Object_Relation(name:String):String
+              {
+              	var cadena:String="";
+              	cadena+='<mx:RemoteObject showBusyCursor="true" endpoint="{App.getInstance().AMFurl}" id="relationship_'+name+'" source="'+name.substr(0,1).toUpperCase()+name.substr(1,name.length-1)+'Controller" destination="amfphp">'+"\n";
+                cadena+='<mx:method name="index" result="{'+name.substr(0,1).toUpperCase()+name.substr(1,name.length-2)+'Helper.getInstance().List(event,relacion_'+name+');}"  fault="{App.getInstance().REQUEST_FAULT(event);}"/>'+"\n";
+                cadena+='</mx:RemoteObject>'+"\n";
+                Zipfile.getInstance().Relation_Remote_name+="     params['relationship_"+name+"'].index.send({});"+"\n";
+              	return cadena;
+              }
+              
+          
+              
            
       }
 }
