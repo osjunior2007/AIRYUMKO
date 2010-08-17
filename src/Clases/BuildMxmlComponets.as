@@ -1,41 +1,41 @@
 package Clases
 {
 	import flash.events.*;
-	
+
 	import mx.controls.Alert;
 	public class BuildMxmlComponets
 	{
 		private static var instancia:BuildMxmlComponets;
-		
+
 		public function BuildMxmlComponets()
 		{
 		}
-		
+
 		public static function getInstance():BuildMxmlComponets
 		{
 			if( instancia==null )
 				instancia = new BuildMxmlComponets();
 			return instancia;
 		}
-		
-		
+
+
 		public function Create_ControllerAndModels(name:String,name_modelo:String,user_database:String,password_database:String,id_modulo:String,sw:int):void
 		{
 			//PhpActiveRecoreds
 			if( Zipfile.getInstance().proyecto_zip=="amfphp.zip"){
-				
+
 				if(Zipfile.getInstance().Verificar_Modulo_Relacion(Zipfile.getInstance().list_components,id_modulo)==false){
 				 Zipfile.getInstance().add_file("amfphp/services/"+name+"Controller.php",ActiveRecords.getInstance().set_controllador(name));
 				}else{
 			     Zipfile.getInstance().add_file("amfphp/services/"+name+"Controller.php",ActiveRecords.getInstance().set_controllador_relation(name, Get_All_Modoule_Elements(Zipfile.getInstance().list_components,id_modulo)));
 				}
-				
+
 				Zipfile.getInstance().add_file("amfphp/services/models/"+name_modelo+".php",ActiveRecords.getInstance().set_modelo(name_modelo));
 				if(sw==0){
 					Zipfile.getInstance().add_file("amfphp/services/lib/database.php",ActiveRecords.getInstance().Data_Base( Zipfile.getInstance().database_name.toLowerCase(),user_database,password_database));
 				}
 			}
-			
+
 			//Only ROR
 			if( Zipfile.getInstance().proyecto_zip=="Rails.zip"){
 				//build controller
@@ -47,8 +47,8 @@ package Clases
 				}
 			}
 		}
-		
-		
+
+
 		public function CREATE_MXML_COMPONENTS(id_modulo:String,name_componente:String,name:String):void
 		{
 			if(Zipfile.getInstance().Verificar_Modulo_Relacion(Zipfile.getInstance().list_relaciones,id_modulo)==false){
@@ -59,8 +59,8 @@ package Clases
 			}
 			Zipfile.getInstance().nameclases+="         import Clases."+name+""+" \n";
 		}
-		
-		
+
+
 		public function CREATE_FORM(id:String,nombre:String):void
 		{
 			if(Zipfile.getInstance().list_components!=null){
@@ -70,21 +70,21 @@ package Clases
                 	Zipfile.getInstance().HeadService="<fx:Declarations>"+"\n"+Zipfile.getInstance().HeadService+"\n";
                 	Zipfile.getInstance().HeadService+=IDEComponentes.getInstance().Head_RemoteObject(nombre.substr(0,1).toLocaleUpperCase()+nombre.substr(1,nombre.length-1))+"\n";
                 	Zipfile.getInstance().HeadService+="</fx:Declarations>";
-                	
+
 					Zipfile.getInstance().HeadService+=Zipfile.getInstance().validate+IDEComponentes.getInstance().Create_Script(nombre.substr(0,1).toLocaleUpperCase()+nombre.substr(1,nombre.length-2))+'<mx:ViewStack x="0" y="0" id="View_01" width="100%" height="100%">'+"\n";
-					
+
 					if(Zipfile.getInstance().Verificar_Modulo_Relacion(Zipfile.getInstance().list_components,id)==true){
 				 	Zipfile.getInstance().datagridHead='<s:Button click="{'+nombre.substr(0,1).toLocaleUpperCase()+nombre.substr(1,nombre.length-2)+'Helper.getInstance().Back_Root_Component()}" x="20" y="0" label="Back"/>'+"\n"+Zipfile.getInstance().datagridHead;
 					}
 					Zipfile.getInstance().datagridHead+='</mx:columns>'+"\n"+'</mx:DataGrid>';
-					
+
 					if(Zipfile.getInstance().Verificar_Modulo_Relacion(Zipfile.getInstance().list_components,id)==true){
 					 Zipfile.getInstance().canvasdatagrid+=Zipfile.getInstance().datagridHead+"\n"+IDEComponentes.getInstance().Crear_Button("Crear","crear","{View_01.selectedIndex=1;}",Zipfile.getInstance().DataGridposx.toString(),"{datos.height+50}","true")+"\n"+IDEComponentes.getInstance().Crear_Button("Update","UpdateView","{App.getInstance().CHANGE_VIEW('update')}",(Zipfile.getInstance().DataGridposx+96).toString(),"{datos.height+50}","true")+"\n"+IDEComponentes.getInstance().Crear_Button("Delete","deletes","{App.getInstance().VALIDATE_DELETE_ID(event)}",(Zipfile.getInstance().DataGridposx+196).toString(),"{datos.height+50}","true")+"\n"+'<mx:Label x="'+Zipfile.getInstance().DataGridposx+'" y="25" text="Modulo - '+nombre+' "/>'+"\n"+'</s:NavigatorContent>'+"\n";
 					}else{
 					 Zipfile.getInstance().canvasdatagrid+=Zipfile.getInstance().datagridHead+"\n"+IDEComponentes.getInstance().Crear_Button("Crear","crear","{"+nombre.substr(0,1).toLocaleUpperCase()+nombre.substr(1,nombre.length-2)+"Helper.getInstance().Create_Button(this)}",Zipfile.getInstance().DataGridposx.toString(),"{datos.height+50}","true")+"\n"+IDEComponentes.getInstance().Crear_Button("Update","UpdateView","{App.getInstance().CHANGE_VIEW('update')}",(Zipfile.getInstance().DataGridposx+96).toString(),"{datos.height+50}","true")+"\n"+IDEComponentes.getInstance().Crear_Button("Delete","deletes","{App.getInstance().VALIDATE_DELETE_ID(event)}",(Zipfile.getInstance().DataGridposx+196).toString(),"{datos.height+50}","true")+"\n"+'<mx:Label x="'+Zipfile.getInstance().DataGridposx+'" y="25" text="Modulo - '+nombre+' "/>'+"\n"+'</s:NavigatorContent>'+"\n";
 					}
-					
-					
+
+
 					Zipfile.getInstance().cadena='<?xml version="1.0" encoding="utf-8"?>'+" \n"+'<s:Group xmlns="Views.*"'+' creationComplete="'+nombre.substr(0,1).toLocaleUpperCase()+nombre.substr(1,nombre.length-2)+'Helper.getInstance().SET_CANVAS(this)"'+' xmlns:fx="http://ns.adobe.com/mxml/2009"  xmlns:s="library://ns.adobe.com/flex/spark" xmlns:mx="library://ns.adobe.com/flex/mx"  width="400" height="300">'+"\n";
 					Zipfile.getInstance().cadena+=Zipfile.getInstance().HeadService;
 					Zipfile.getInstance().cadena+=Zipfile.getInstance().canvasdatagrid;
@@ -98,9 +98,9 @@ package Clases
 				IDEComponentes.getInstance().posx=10;
 				IDEComponentes.getInstance().posy=20;
 			}//If not is null
-			
+
 		}
-		
+
 		public function IF_CONTAIN_COMPONENTS(id:String):int
 		{
 			var sw:int=0;
@@ -111,12 +111,12 @@ package Clases
 				}
 				i++;
 			}
-			
+
 			return sw;
 		}
-		
-		
-		
+
+
+
 		public function CREATE_SQL_MIGRATION(id:String,nombre:String,list_components:Array):void
 		{
 			var sw:int=0;
@@ -140,29 +140,29 @@ package Clases
 						  sql_relations=IDEComponentes.getInstance().Create_database_sql("id_"+list_components[i].identificador,"8","5");
 						  sql_relations+=IDEComponentes.getInstance().Create_database_sql("id_"+nombre.toLowerCase(),"8","5");
 						  list_components[i].identificador=list_components[i].identificador.substr(0,1).toLowerCase()+list_components[i].identificador.substr(1,list_components[i].identificador.length-1);
-						  sql_relations="CREATE TABLE"+"`"+nombre.toLowerCase()+"_"+list_components[i].identificador+"` ("+"\n"+"`id` bigint(11) NOT NULL AUTO_INCREMENT,"+"\n"+sql_relations;
+						   sql_relations="CREATE TABLE"+"`"+nombre.substring(0,nombre.length-1).toLowerCase()+"_"+list_components[i].identificador+"` ("+"\n"+"`id` bigint(11) NOT NULL AUTO_INCREMENT,"+"\n"+sql_relations;
 				          sql_relations+="PRIMARY KEY (`id`)"+" \n"+")"+"ENGINE=MyISAM AUTO_INCREMENT=40001 DEFAULT CHARSET=latin1;"+"\n"+"\n";
 				          Zipfile.getInstance().Head_database_sql+=sql_relations;
 						}
-						
+
 					}
-				
+
 					if(Zipfile.getInstance().proyecto_zip=="Rails.zip"){
 						if(list_components[i].identificador!="id"&&list_components[i].identificador!="ID"){
 							Zipfile.getInstance().migrationBody+=IDEComponentes.getInstance().Create_migration(list_components[i].identificador,list_components[i].componente_id,list_components[i].tamano);
 						}
 					}
-					
+
 				}
 			}
-			
+
 			if(Zipfile.getInstance().proyecto_zip=="amfphp.zip"){
 				Zipfile.getInstance().database_sql="CREATE TABLE"+"`"+nombre.toLowerCase()+"` ("+"\n"+"`id` bigint(11) NOT NULL AUTO_INCREMENT,"+"\n"+Zipfile.getInstance().database_sql;
 				Zipfile.getInstance().database_sql+="PRIMARY KEY (`id`)"+" \n"+")"+"ENGINE=MyISAM AUTO_INCREMENT=40001 DEFAULT CHARSET=latin1;"+"\n"+"\n";
 				Zipfile.getInstance().Head_database_sql+=Zipfile.getInstance().database_sql;
 				Zipfile.getInstance().database_sql="";
 			}
-			
+
 			//Only ROR
 			if(Zipfile.getInstance().proyecto_zip=="Rails.zip"){
 				Zipfile.getInstance().migrationHead="class CreateTable"+nombre.substr(0,1).toLocaleUpperCase()+nombre.substr(1,nombre.length)+" < ActiveRecord::Migration \n"+"def self.up \n  create_table "+'"'+nombre+'", '+":force => true do |t| \n";
@@ -171,14 +171,14 @@ package Clases
 				Zipfile.getInstance().add_file("db/migrate/"+Zipfile.getInstance().Date_Today+"_create_table_"+nombre+".rb",Zipfile.getInstance().migrationHead);
 				Zipfile.getInstance().migrationcant++;
 			}
-			
-			
+
+
 		}
-		
-		
+
+
 		public function Main_Mxml():void
 		{
-			
+
 			Zipfile.getInstance().MainApp='<?xml version="1.0" encoding="utf-8"?>'+" \n"+'<s:Application  xmlns="Views.*" xmlns:fx="http://ns.adobe.com/mxml/2009" xmlns:s="library://ns.adobe.com/flex/spark" xmlns:mx="library://ns.adobe.com/flex/mx">'+" \n"+'<mx:TabNavigator change="App.getInstance().GET_LIST(Header)" id="Header" x="10" y="22" width="98%" height="95%">'+" \n"+ Zipfile.getInstance().MainApp;
 			Zipfile.getInstance().MainApp+="</mx:TabNavigator>"+" \n";
 			Zipfile.getInstance().MainApp+="<fx:Script>"+" \n";
@@ -188,18 +188,18 @@ package Clases
 			Zipfile.getInstance().MainApp+=" </fx:Script>"+"\n"+'</s:Application>';
 			Zipfile.getInstance().add_file(Zipfile.getInstance().proyecto_name+"/src/"+Zipfile.getInstance().proyecto_name+".mxml",Zipfile.getInstance().MainApp);
 			Database.getInstance().dbStatement.removeEventListener(SQLEvent.RESULT, Zipfile.getInstance().Result_build_MainMXML);
-			
+
 			Zipfile.getInstance().add_file(Zipfile.getInstance().proyecto_name+"/.actionScriptProperties",IDEComponentes.getInstance().Create_Flex_ActionScript_Properties(Zipfile.getInstance().proyecto_name));
 			Zipfile.getInstance().add_file(Zipfile.getInstance().proyecto_name+"/.flexProperties",IDEComponentes.getInstance().Create_Flex_Properties());
 			Zipfile.getInstance().add_file(Zipfile.getInstance().proyecto_name+"/.project",IDEComponentes.getInstance().Create_Proyect_Flex(Zipfile.getInstance().proyecto_name));
 			Zipfile.getInstance().add_file(Zipfile.getInstance().proyecto_name+"/libs/","");
 			Zipfile.getInstance().open();
 		}
-		
-		
+
+
 		public function init_value():void
 		{
-			
+
 			Zipfile.getInstance().canvasdatagrid='<s:NavigatorContent id="OutputsObjects" x="0" y="0"  width="98%" height="98%" >'+"\n";
 			Zipfile.getInstance().DataGridposx=20;
 			Zipfile.getInstance().datagridHead='<mx:DataGrid horizontalScrollPolicy="auto" id="datos" x="'+ Zipfile.getInstance().DataGridposx+'" y="46" width="98%" height="85%" >'+"\n"+"<mx:columns>"+"\n";
@@ -218,9 +218,9 @@ package Clases
 			Zipfile.getInstance().Relation_Remote_name="";
 			Zipfile.getInstance().XmlParamert="";
 		}
-		
-		
-		
+
+
+
 		public function Build_Html_Template(name:String):String
 		{
 			var cadena:String="";
@@ -307,19 +307,19 @@ package Clases
 			cadena+='</html>'+"\n";
 			return cadena;
 		}
-		
+
 		public function Get_All_Modoule_Elements(list_components:Array,id_modulo:String):String
 		{
-		  var cadena:String="";	
+		  var cadena:String="";
 		  for(var i:int=1;i<=list_components.length-1;i++){
 				if(list_components[i].id_modulo==id_modulo){
-				cadena+=list_components[i].identificador+","; 	
+				cadena+=list_components[i].identificador+",";
 				}
 		  }
 		  return cadena.substr(0,cadena.length-1);
 		}
-		
-		
-		
+
+
+
 	}
 }
