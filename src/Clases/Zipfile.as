@@ -16,8 +16,8 @@ package Clases
 		public var index:uint = 0;
 		public var done:Boolean = false;
 		public var proyecto_zip:String="amfphp.zip";
-		public var proyecto_name:String="MyEscuela";
-		public var database_name:String="MyEscuela";
+		public var proyecto_name:String="Example";
+		public var database_name:String="Example";
 		public var user_database:String="root";
 		public var password_database:String="";
 		public var canvascomponente:String="";
