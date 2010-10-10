@@ -173,17 +173,10 @@ package Clases
 			cadena+="  import mx.controls.Alert;"+"\n";
 			cadena+="  import mx.events.ValidationResultEvent;"+"\n";
 			cadena+="  import Clases.App;"+"\n";
-<<<<<<< HEAD
-			cadena+="  import Controllers."+name+";"+"\n";
-			cadena+="  public var sw:Boolean=false;"+"\n";
-            cadena+="  public var canvas_complete:Boolean=false;"+" \n";
-		    return cadena+"]]>"+"\n"+"</mx:Script>"+"\n";
-=======
-			cadena+="  import Controllers."+name+"Controller;"+"\n";
+            cadena+="  import Controllers."+name+"Controller;"+"\n";
 		    cadena+="  import Helpers."+name+"Helper;"+"\n";
 			cadena+= Zipfile.getInstance().helper_class_name;
 		    return cadena+"]]>"+"\n"+"</fx:Script>"+"\n";
->>>>>>> 4a7862c6bf7aaa143ae0dba5fdb284abadacf6df
 		}
 		
 		public function database_yml (database:String,usuario:String,contrasena:String):String

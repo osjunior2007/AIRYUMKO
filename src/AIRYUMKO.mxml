@@ -315,26 +315,21 @@
 			///////////////////////////////////////////////////////////////////////////
 			public function Crear_elemento(datagrid:DataGrid):void
 			{
-				//this.id_modulo=IDEComponentes.getInstance().last_modulo_insert;
+				 Database.getInstance().getDatos("select id_modulo from modulos where nombre='"+Modulo_name.text+"'");
+	             Database.getInstance().personData;
+	             this.id_modulo=Database.getInstance().personData[0].id_modulo;
 				if(identificador_text.text!=""&&Max_caracter_text.text!=""&&componente_etiqueta.text!=""){
 					cont_id++;
 					Database.getInstance().dbStatement.addEventListener(SQLEvent.RESULT,Create_relaciones);
 					agregar.enabled=false;
 					 id=componentes_text.selectedItem.data;
-				  if (this.id_modulo!=null){
-				  	    if (id == "5" || id == "6" || id == "7"){
-			         	    Database.getInstance().SetDatos("insert into componentes values (null,"+this.id_modulo+",'"+componente_etiqueta.text+"','"+identificador_text.text+"','"+Max_caracter_text.text+"','"+componentes_text.selectedItem.label+"','"+componentes_text.selectedItem.data+"','"+requerido_componente.selected+"','"+tipo_componente.selectedLabel+"','"+combox_associaciones.selectedItem.id_modulo+"','"+combox_relaciones.selectedItem.data+"')");
-				         }else{
-				           Database.getInstance().SetDatos("insert into componentes values (null,"+this.id_modulo+",'"+componente_etiqueta.text+"','"+identificador_text.text+"','"+Max_caracter_text.text+"','"+componentes_text.selectedItem.label+"','"+componentes_text.selectedItem.data+"','"+requerido_componente.selected+"','"+tipo_componente.selectedLabel+"','0','0')");
-				         }
-				    }else{
-					     if (id == "5" || id == "6" || id == "7"){
-			         	    Database.getInstance().SetDatos("insert into componentes values (null,"+this.id_modulo+",'"+componente_etiqueta.text+"','"+identificador_text.text+"','"+Max_caracter_text.text+"','"+componentes_text.selectedItem.label+"','"+componentes_text.selectedItem.data+"','"+requerido_componente.selected+"','"+tipo_componente.selectedLabel+"','"+combox_associaciones.selectedItem.id_modulo+"','"+combox_relaciones.selectedItem.data+"')");
-				         }else{
-				          Database.getInstance().SetDatos("insert into componentes values (null,"+this.id_modulo+",'"+componente_etiqueta.text+"','"+identificador_text.text+"','"+Max_caracter_text.text+"','"+componentes_text.selectedItem.label+"','"+componentes_text.selectedItem.data+"','"+requerido_componente.selected+"','"+tipo_componente.selectedLabel+"','0')");
-				         }
-					}
-					componente_etiqueta.text=Max_caracter_text.text=identificador_text.text="";
+					   if (id == "5" || id == "6" || id == "7"){
+			            Database.getInstance().SetDatos("insert into componentes values (null,"+this.id_modulo+",'"+componente_etiqueta.text+"','"+identificador_text.text+"','"+Max_caracter_text.text+"','"+componentes_text.selectedItem.label+"','"+componentes_text.selectedItem.data+"','"+requerido_componente.selected+"','"+tipo_componente.selectedLabel+"','"+combox_associaciones.selectedItem.id_modulo+"','"+combox_relaciones.selectedItem.data+"')");
+				       }else{
+				         Database.getInstance().SetDatos("insert into componentes values (null,"+this.id_modulo+",'"+componente_etiqueta.text+"','"+identificador_text.text+"','"+Max_caracter_text.text+"','"+componentes_text.selectedItem.label+"','"+componentes_text.selectedItem.data+"','"+requerido_componente.selected+"','"+tipo_componente.selectedLabel+"','0','0')");
+				      }
+			     	componente_etiqueta.text=Max_caracter_text.text=identificador_text.text="";
+				    buscar_modelo_To_Tree();
 				}else{
 					Alert.show(mensaje_validacion_vacio);
 				}
