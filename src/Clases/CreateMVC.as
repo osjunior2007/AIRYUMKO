@@ -219,11 +219,11 @@ package Clases
 	      cadena+="import mx.events.CloseEvent;"+"\n";
 		  
 		  
-		  cadena+="public class "+value.substr(0,1).toLocaleUpperCase()+value.substr(1,value.length)+"Controller extends ServiceRecords "+"\n"+"{"+"\n";
-		  cadena+="public var "+value.substr(0,1).toLocaleLowerCase()+value.substr(1,value.length)+":"+value.substr(0,1).toLocaleUpperCase()+value.substr(1,value.length)+"Model=new "+value.substr(0,1).toLocaleUpperCase()+value.substr(1,value.length)+"Model();"+"\n";
-		  cadena+='public var type:String=""'+"\n";
-	      cadena+="public var load_form:Boolean=false"+"\n";
-	      cadena+="protected var _view:"+value.substr(0,1).toLocaleUpperCase()+value.substr(1,value.length)+"Index"+"\n"+"\n";
+		  cadena+="     public class "+value.substr(0,1).toLocaleUpperCase()+value.substr(1,value.length)+"Controller extends ServiceRecords "+"\n"+"{"+"\n";
+		  cadena+="     public var "+value.substr(0,1).toLocaleLowerCase()+value.substr(1,value.length)+":"+value.substr(0,1).toLocaleUpperCase()+value.substr(1,value.length)+"Model=new "+value.substr(0,1).toLocaleUpperCase()+value.substr(1,value.length)+"Model();"+"\n";
+		  cadena+='     public var type:String=""'+"\n";
+	      cadena+="     public var load_form:Boolean=false"+"\n";
+	      cadena+="     protected var _view:"+value.substr(0,1).toLocaleUpperCase()+value.substr(1,value.length)+"Index"+"\n"+"\n";
 		  
 		  //init_model_var
 		  cadena+=MVC_Controller_Init(value)+"\n";
