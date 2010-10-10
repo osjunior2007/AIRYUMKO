@@ -195,7 +195,7 @@ package Clases
   			        if(i==1){
   			        init_model_var="        "+value.substr(0,1).toLocaleLowerCase()+value.substr(1,value.length)+"."+Zipfile.getInstance().list_components[i].etiqueta+'="";'+"\n";
   			  	    datagrid_model_var="      "+value.substr(0,1).toLocaleLowerCase()+value.substr(1,value.length)+"."+Zipfile.getInstance().list_components[i].etiqueta+'=_view.datos.selectedItem.'+Zipfile.getInstance().list_components[i].etiqueta+';'+"\n";
-  			  	    form_model_var="       "+value.substr(0,1).toLocaleLowerCase()+value.substr(1,value.length)+"."+Zipfile.getInstance().list_components[i].etiqueta+'=_view.Att_'+Zipfile.getInstance().list_components[i].etiqueta+'.text";'+"\n";
+  			  	    form_model_var="       "+value.substr(0,1).toLocaleLowerCase()+value.substr(1,value.length)+"."+Zipfile.getInstance().list_components[i].etiqueta+'=_view.Att_'+Zipfile.getInstance().list_components[i].etiqueta+'.text;'+"\n";
   			  	    View_model_var="        _view.Att_"+Zipfile.getInstance().list_components[i].etiqueta+'.text='+value.substr(0,1).toLocaleLowerCase()+value.substr(1,value.length)+"."+Zipfile.getInstance().list_components[i].etiqueta+";"+"\n";
   			  	    Clear_model_var="       _view.Att_"+Zipfile.getInstance().list_components[i].etiqueta+".text='';"+"\n";
   			  	   }else{
