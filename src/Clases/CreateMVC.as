@@ -192,6 +192,7 @@ package Clases
   			  if(Zipfile.getInstance().list_components[i].id_modulo==id){
   			  	   name=Zipfile.getInstance().get_modulo_name(Zipfile.getInstance().list_components[i].modulo_relacionado);
   			  	   name=name.substr(0,1).toUpperCase()+name.substr(1,name.length-2);
+  			    if(Zipfile.getInstance().list_components[i].componente_id!="5"){  
   			        if(i==1){
   			        init_model_var="        "+value.substr(0,1).toLocaleLowerCase()+value.substr(1,value.length)+"."+Zipfile.getInstance().list_components[i].etiqueta+'="";'+"\n";
   			  	    datagrid_model_var="      "+value.substr(0,1).toLocaleLowerCase()+value.substr(1,value.length)+"."+Zipfile.getInstance().list_components[i].etiqueta+'=_view.datos.selectedItem.'+Zipfile.getInstance().list_components[i].etiqueta+';'+"\n";
@@ -205,6 +206,7 @@ package Clases
   			  	    View_model_var+="       _view.Att_"+Zipfile.getInstance().list_components[i].etiqueta+'.text='+value.substr(0,1).toLocaleLowerCase()+value.substr(1,value.length)+"."+Zipfile.getInstance().list_components[i].etiqueta+";"+"\n";
   			  	    Clear_model_var+="      _view.Att_"+Zipfile.getInstance().list_components[i].etiqueta+".text='';"+"\n";
   			  	  }
+  			  	 }
   			  }
   			} 
   		  cadena="package Controllers"+"\n";
@@ -255,20 +257,22 @@ package Clases
 	
  		for(var i:int=1;i<=Zipfile.getInstance().list_components.length-1;i++){
   			  if(Zipfile.getInstance().list_components[i].id_modulo==id){
-  				if(i==1){
-  				    if(Zipfile.getInstance().list_components[i].componente_id=="5"){
-  			          Global_Variables+="     public var "+Zipfile.getInstance().get_modulo_name(Zipfile.getInstance().list_components[i].modulo_relacionado)+':String="";'+"\n";
-	  			    }else{
-	  				 Global_Variables+="     public var "+Zipfile.getInstance().list_components[i].etiqueta+':String="";'+"\n";
-	  				  }
-  				}else
-  				{
-	  			 if(Zipfile.getInstance().list_components[i].componente_id=="5"){
-	  			       Global_Variables+="     public var "+Zipfile.getInstance().get_modulo_name(Zipfile.getInstance().list_components[i].modulo_relacionado)+':String="";'+"\n";
-	  				  }else{
-	  			     Global_Variables+="     public var "+Zipfile.getInstance().list_components[i].etiqueta+':String="";'+"\n";
-	  			  }
-  			 	}
+  			 if(Zipfile.getInstance().list_components[i].componente_id!="5"){  	
+	  				if(i==1){
+	  				    if(Zipfile.getInstance().list_components[i].componente_id=="5"){
+	  			          Global_Variables+="     public var "+Zipfile.getInstance().get_modulo_name(Zipfile.getInstance().list_components[i].modulo_relacionado)+':String="";'+"\n";
+		  			    }else{
+		  				 Global_Variables+="     public var "+Zipfile.getInstance().list_components[i].etiqueta+':String="";'+"\n";
+		  				  }
+	  				}else
+	  				{
+		  			 if(Zipfile.getInstance().list_components[i].componente_id=="5"){
+		  			       Global_Variables+="     public var "+Zipfile.getInstance().get_modulo_name(Zipfile.getInstance().list_components[i].modulo_relacionado)+':String="";'+"\n";
+		  				  }else{
+		  			     Global_Variables+="     public var "+Zipfile.getInstance().list_components[i].etiqueta+':String="";'+"\n";
+		  			  }
+	  			 	}
+  			   }
   			  }
   		    }
   	        cadena+="package Models "+"\n"+"{"+"\n";
