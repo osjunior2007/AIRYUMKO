@@ -15,7 +15,7 @@ package Clases
 		 var cadena:String=""
 		 cadena+="    public function Create(event:Event):void"+"\n";
 		 cadena+="     {"+"\n";
-		 cadena+="         "+model_var;
+		 cadena+=model_var;
 		 cadena+='       this.Save('+value.toLocaleLowerCase()+',{title:"'+value.substr(0,1).toLocaleUpperCase()+ value.substr(1,value.length).toString()+' Insert",body:"Operacion Exitosa"});'+"\n";
 		 cadena+='       List({type:"all"},_view.datos);'+"\n";
 		 cadena+='       Clear_Input();'+"\n";
@@ -28,7 +28,7 @@ package Clases
 		   var cadena:String=""
 		   cadena+="    public function Update(event:Event):void"+"\n";
 		   cadena+="     {"+"\n";
-		   cadena+="         "+model_var;
+		   cadena+=model_var;
 		   cadena+='       this.UpdateAttribute('+value.toLocaleLowerCase()+',{title:"'+value.substr(0,1).toLocaleUpperCase()+ value.substr(1,value.length).toString()+' Update",body:"Operacion Exitosa"});'+"\n";
 		   cadena+='       List({type:"all"},_view.datos);'+"\n";
 		   cadena+='       Clear_Input();'+"\n";
@@ -41,7 +41,7 @@ package Clases
 			var cadena:String=""
 		   cadena+="  public function Edit():void"+"\n";
 	       cadena+="   {   "+"\n";  
-	       cadena+="       "+model_var;
+	       cadena+=model_var;
            cadena+='     if(this.type=="Show"){'+"\n";
 	       cadena+='       _view.submitBtn.enabled=false;'+"\n";
 		   cadena+='      _view.updateBtn.enabled=true;'+"\n";	
@@ -58,8 +58,8 @@ package Clases
 		     var cadena:String=""	
 		     cadena+="  protected function BackBtnClick( event:Event ):void"+"\n";
 		     cadena+="  { "+"\n";
-			 cadena+='   List({type:"all"},_view.datos);'+"\n";
-			 cadena+="  _view."+value.substr(0,1).toLocaleLowerCase()+ value.substr(1,value.length).toString()+"View.selectedIndex=0	"+"\n";	
+			 cadena+='     List({type:"all"},_view.datos);'+"\n";
+			 cadena+="     _view."+value.substr(0,1).toLocaleLowerCase()+ value.substr(1,value.length).toString()+"View.selectedIndex=0	"+"\n";	
 	         cadena+="  }"+"\n";
 		    return cadena;
 		}
@@ -68,9 +68,9 @@ package Clases
 		{
 		    var cadena:String=""	
 			 cadena+=" public function Clear_Input():void"+"\n";
-		     cadena+=" {"+"\n";
-		     cadena+="         "+model_var;
-		     cadena+=" }"+"\n";
+		     cadena+="    {"+"\n";
+		     cadena+=model_var;
+		     cadena+="     }"+"\n";
 		     return cadena;
 		}
 		
@@ -92,14 +92,14 @@ package Clases
 		{
 		  var cadena:String=""	
 		  cadena+=" protected function cleanup( event:Event ):void"+"\n";
-		  cadena+="{"+"\n";
-		  cadena+="  _view.NewBtn.removeEventListener( MouseEvent.CLICK, New );"+"\n";
-		  cadena+=" _view.ShowBtn.removeEventListener( MouseEvent.CLICK, Show );"+"\n";
-		  cadena+=" _view.updateBtn.removeEventListener( MouseEvent.CLICK,Update);"+"\n";
-		  cadena+=" _view.DeleteBtn.removeEventListener( MouseEvent.CLICK,Delete);"+"\n";
-		  cadena+=" _view.backlBtn.removeEventListener( MouseEvent.CLICK, BackBtnClick );"+"\n";
-		  cadena+=" _view.removeEventListener( Event.REMOVED_FROM_STAGE, cleanup );"+"\n";
-		  cadena+="}"+"\n";
+		  cadena+="   {"+"\n";
+		  cadena+="      _view.NewBtn.removeEventListener( MouseEvent.CLICK, New );"+"\n";
+		  cadena+="      _view.ShowBtn.removeEventListener( MouseEvent.CLICK, Show );"+"\n";
+		  cadena+="      _view.updateBtn.removeEventListener( MouseEvent.CLICK,Update);"+"\n";
+		  cadena+="      _view.DeleteBtn.removeEventListener( MouseEvent.CLICK,Delete);"+"\n";
+		  cadena+="      _view.backlBtn.removeEventListener( MouseEvent.CLICK, BackBtnClick );"+"\n";
+		  cadena+="      _view.removeEventListener( Event.REMOVED_FROM_STAGE, cleanup );"+"\n";
+		  cadena+="   }"+"\n";
 		  return cadena;
 		}
 		
@@ -121,14 +121,14 @@ package Clases
 		public function MVC_Controller_New(value:String,model_var:String):String
 		{
 			  var cadena:String=""
-			 cadena+=" public function New(event:Event):void"+"\n";
-		     cadena+=" {" +"\n";
-		 	 cadena+='   this.type="New";' +"\n";
-		 	 cadena+="  _view."+value.substr(0,1).toLocaleUpperCase()+ value.substr(1,value.length).toString()+"View.selectedIndex=1;"+"\n";
-		 	 cadena+="  "+model_var;
- 	         cadena+="  if(load_form==true) Edit();"+"\n";
-		     cadena+=" }"+"\n";
-	         return cadena;
+			 cadena+="     public function New(event:Event):void"+"\n";
+		     cadena+="     {" +"\n";
+		 	 cadena+='       this.type="New";' +"\n";
+		 	 cadena+=model_var;
+ 	         cadena+="       _view."+value.substr(0,1).toLocaleUpperCase()+ value.substr(1,value.length).toString()+"View.selectedIndex=1;"+"\n";
+		 	 cadena+="        if(load_form==true) Edit();"+"\n";
+		     cadena+="      }"+"\n";
+		     return cadena;
 		}
 		
 		
@@ -139,7 +139,7 @@ package Clases
 		   cadena+="     {" +"\n";
 		   cadena+='      this.type="Show";'+"\n"; 
 		   cadena+="      if (_view.datos.selectedIndex>=0){ "+"\n";
-		   cadena+="  "+model_var; 
+		   cadena+=model_var; 
            cadena+="      if (load_form==true) Edit();"+"\n"; 
 		   cadena+="       _view."+value.substr(0,1).toLocaleUpperCase()+ value.substr(1,value.length).toString()+"View.selectedIndex=1;"+"\n"; 
 		   cadena+="      }else"+"\n"; 
@@ -147,7 +147,7 @@ package Clases
 		   cadena+='         Alert.show("Seleccione un elemento.");'+"\n"; 
 		   cadena+="	  }" +"\n"; 
 		   cadena+="     }"+"\n"; 
-		  return cadena;
+		   return cadena;
          }
 
 		public function MVC_Controller_List(value:String):String
@@ -173,7 +173,7 @@ package Clases
 		  cadena+="         _view.ShowBtn.addEventListener(MouseEvent.CLICK,Show);"+"\n";
 		  cadena+="         _view.DeleteBtn.addEventListener(MouseEvent.CLICK,Delete);"+"\n";
 	      cadena+="         _view.EstudianteView.addEventListener(IndexChangedEvent.CHANGE,handleActiveViewChanged);"+"\n";
-	      cadena+"        }"+"\n";
+	      cadena+="        }"+"\n";
 		  return cadena;
 		}
 
@@ -193,17 +193,17 @@ package Clases
   			  	   name=Zipfile.getInstance().get_modulo_name(Zipfile.getInstance().list_components[i].modulo_relacionado);
   			  	   name=name.substr(0,1).toUpperCase()+name.substr(1,name.length-2);
   			        if(i==1){
-  			        init_model_var="      "+value.substr(0,1).toLocaleLowerCase()+value.substr(1,value.length)+"."+Zipfile.getInstance().list_components[i].etiqueta+'="";'+"\n";
+  			        init_model_var="        "+value.substr(0,1).toLocaleLowerCase()+value.substr(1,value.length)+"."+Zipfile.getInstance().list_components[i].etiqueta+'="";'+"\n";
   			  	    datagrid_model_var="      "+value.substr(0,1).toLocaleLowerCase()+value.substr(1,value.length)+"."+Zipfile.getInstance().list_components[i].etiqueta+'=_view.datos.selectedItem.'+Zipfile.getInstance().list_components[i].etiqueta+';'+"\n";
-  			  	    form_model_var="      "+value.substr(0,1).toLocaleLowerCase()+value.substr(1,value.length)+"."+Zipfile.getInstance().list_components[i].etiqueta+'=_view.Att_'+Zipfile.getInstance().list_components[i].etiqueta+'.text";'+"\n";
-  			  	    View_model_var="      _view.Att_"+Zipfile.getInstance().list_components[i].etiqueta+'.text='+value.substr(0,1).toLocaleLowerCase()+value.substr(1,value.length)+"."+Zipfile.getInstance().list_components[i].etiqueta+";"+"\n";
-  			  	    Clear_model_var="     _view.Att_"+Zipfile.getInstance().list_components[i].etiqueta+".text='';"+"\n";
+  			  	    form_model_var="       "+value.substr(0,1).toLocaleLowerCase()+value.substr(1,value.length)+"."+Zipfile.getInstance().list_components[i].etiqueta+'=_view.Att_'+Zipfile.getInstance().list_components[i].etiqueta+'.text";'+"\n";
+  			  	    View_model_var="        _view.Att_"+Zipfile.getInstance().list_components[i].etiqueta+'.text='+value.substr(0,1).toLocaleLowerCase()+value.substr(1,value.length)+"."+Zipfile.getInstance().list_components[i].etiqueta+";"+"\n";
+  			  	    Clear_model_var="       _view.Att_"+Zipfile.getInstance().list_components[i].etiqueta+".text='';"+"\n";
   			  	   }else{
-  			  	    init_model_var+="      "+value.substr(0,1).toLocaleLowerCase()+value.substr(1,value.length)+"."+Zipfile.getInstance().list_components[i].etiqueta+'="";'+"\n";
+  			  	    init_model_var+="       "+value.substr(0,1).toLocaleLowerCase()+value.substr(1,value.length)+"."+Zipfile.getInstance().list_components[i].etiqueta+'="";'+"\n";
   			  	    datagrid_model_var+="      "+value.substr(0,1).toLocaleLowerCase()+value.substr(1,value.length)+"."+Zipfile.getInstance().list_components[i].etiqueta+'=_view.datos.selectedItem.'+Zipfile.getInstance().list_components[i].etiqueta+';'+"\n";
-  			  	    form_model_var+="      "+value.substr(0,1).toLocaleLowerCase()+value.substr(1,value.length)+"."+Zipfile.getInstance().list_components[i].etiqueta+'=_view.Att_'+Zipfile.getInstance().list_components[i].etiqueta+'.text;'+"\n";
-  			  	    View_model_var+="      _view.Att_"+Zipfile.getInstance().list_components[i].etiqueta+'.text='+value.substr(0,1).toLocaleLowerCase()+value.substr(1,value.length)+"."+Zipfile.getInstance().list_components[i].etiqueta+";"+"\n";
-  			  	    Clear_model_var+="     _view.Att_"+Zipfile.getInstance().list_components[i].etiqueta+".text='';"+"\n";
+  			  	    form_model_var+="       "+value.substr(0,1).toLocaleLowerCase()+value.substr(1,value.length)+"."+Zipfile.getInstance().list_components[i].etiqueta+'=_view.Att_'+Zipfile.getInstance().list_components[i].etiqueta+'.text;'+"\n";
+  			  	    View_model_var+="       _view.Att_"+Zipfile.getInstance().list_components[i].etiqueta+'.text='+value.substr(0,1).toLocaleLowerCase()+value.substr(1,value.length)+"."+Zipfile.getInstance().list_components[i].etiqueta+";"+"\n";
+  			  	    Clear_model_var+="      _view.Att_"+Zipfile.getInstance().list_components[i].etiqueta+".text='';"+"\n";
   			  	  }
   			  }
   			} 
@@ -249,7 +249,6 @@ package Clases
 
 		public function CREATE_MODEL(value:String,id:String):String
 		{
-		  //value.substr(0,1).toLocaleUpperCase()+value.substr(1,value.length)
 		  var cadena:String="";
 		  var Global_Variables:String='     public var id:String=""'+"\n";	
 		  var name_model:String=value.substr(0,1).toLocaleUpperCase()+value.substr(1,value.length);
