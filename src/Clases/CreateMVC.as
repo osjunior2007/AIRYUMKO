@@ -287,7 +287,7 @@ package Clases
 		 var cadena:String="";
 		 cadena+="    public function get_source():String"+"\n";
 		 cadena+="    {"+"\n";
-		 cadena+="      return "+model+"sController"+"\n";
+		 cadena+='      return "'+model+'sController"'+"\n";
 		 cadena+="    }"+"\n";
 		 return cadena; 
 		}
