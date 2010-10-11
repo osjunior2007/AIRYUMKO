@@ -88,16 +88,16 @@ package Clases
 	      return cadena;
 		}
 		
-		public function MVC_Controller_cleanup():String
+		public function MVC_Controller_cleanup(value:String):String
 		{
 		  var cadena:String=""	
 		  cadena+=" protected function cleanup( event:Event ):void"+"\n";
 		  cadena+="   {"+"\n";
 		  cadena+="      _view.NewBtn.removeEventListener( MouseEvent.CLICK, New );"+"\n";
 		  cadena+="      _view.ShowBtn.removeEventListener( MouseEvent.CLICK, Show );"+"\n";
-		  cadena+="      _view.updateBtn.removeEventListener( MouseEvent.CLICK,Update);"+"\n";
+		  cadena+="      _view."+value.substr(0,1).toLocaleUpperCase()+value.substr(1,value.length)+"Form.updateBtn.removeEventListener( MouseEvent.CLICK,Update);"+"\n";
 		  cadena+="      _view.DeleteBtn.removeEventListener( MouseEvent.CLICK,Delete);"+"\n";
-		  cadena+="      _view.backlBtn.removeEventListener( MouseEvent.CLICK, BackBtnClick );"+"\n";
+		  cadena+="      _view."+value.substr(0,1).toLocaleUpperCase()+value.substr(1,value.length)+"Form.backlBtn.removeEventListener( MouseEvent.CLICK, BackBtnClick );"+"\n";
 		  cadena+="      _view.removeEventListener( Event.REMOVED_FROM_STAGE, cleanup );"+"\n";
 		  cadena+="   }"+"\n";
 		  return cadena;
@@ -209,16 +209,16 @@ package Clases
   			        if(i==1){
   			        init_model_var="        "+value.substr(0,1).toLocaleLowerCase()+value.substr(1,value.length)+"."+Zipfile.getInstance().list_components[i].etiqueta+'="";'+"\n";
   			  	    datagrid_model_var="      "+value.substr(0,1).toLocaleLowerCase()+value.substr(1,value.length)+"."+Zipfile.getInstance().list_components[i].etiqueta+'=_view.datos.selectedItem.'+Zipfile.getInstance().list_components[i].etiqueta+';'+"\n";
-  			  	    form_model_var="       "+value.substr(0,1).toLocaleLowerCase()+value.substr(1,value.length)+"."+Zipfile.getInstance().list_components[i].etiqueta+'=_view.Att_'+Zipfile.getInstance().list_components[i].etiqueta+'.text;'+"\n";
-  			  	    View_model_var="        _view.Att_"+Zipfile.getInstance().list_components[i].etiqueta+'.text='+value.substr(0,1).toLocaleLowerCase()+value.substr(1,value.length)+"."+Zipfile.getInstance().list_components[i].etiqueta+";"+"\n";
-  			  	    Clear_model_var="       _view.Att_"+Zipfile.getInstance().list_components[i].etiqueta+".text='';"+"\n";
+  			  	    form_model_var="       "+value.substr(0,1).toLocaleLowerCase()+value.substr(1,value.length)+"."+Zipfile.getInstance().list_components[i].etiqueta+'=_view.'+value.substr(0,1).toLocaleUpperCase()+value.substr(1,value.length)+'Form.Att_'+Zipfile.getInstance().list_components[i].etiqueta+'.text;'+"\n";
+  			  	    View_model_var="        _view."+value.substr(0,1).toLocaleUpperCase()+value.substr(1,value.length)+"Form.Att_"+Zipfile.getInstance().list_components[i].etiqueta+'.text='+value.substr(0,1).toLocaleLowerCase()+value.substr(1,value.length)+"."+Zipfile.getInstance().list_components[i].etiqueta+";"+"\n";
+  			  	    Clear_model_var="       _view."+value.substr(0,1).toLocaleUpperCase()+value.substr(1,value.length)+"Form.Att_"+Zipfile.getInstance().list_components[i].etiqueta+".text='';"+"\n";
   			  	   }else{
   			  	    init_model_var+="       "+value.substr(0,1).toLocaleLowerCase()+value.substr(1,value.length)+"."+Zipfile.getInstance().list_components[i].etiqueta+'="";'+"\n";
   			  	    datagrid_model_var+="      "+value.substr(0,1).toLocaleLowerCase()+value.substr(1,value.length)+"."+Zipfile.getInstance().list_components[i].etiqueta+'=_view.datos.selectedItem.'+Zipfile.getInstance().list_components[i].etiqueta+';'+"\n";
-  			  	    form_model_var+="       "+value.substr(0,1).toLocaleLowerCase()+value.substr(1,value.length)+"."+Zipfile.getInstance().list_components[i].etiqueta+'=_view.Att_'+Zipfile.getInstance().list_components[i].etiqueta+'.text;'+"\n";
-  			  	    View_model_var+="       _view.Att_"+Zipfile.getInstance().list_components[i].etiqueta+'.text='+value.substr(0,1).toLocaleLowerCase()+value.substr(1,value.length)+"."+Zipfile.getInstance().list_components[i].etiqueta+";"+"\n";
-  			  	    Clear_model_var+="      _view.Att_"+Zipfile.getInstance().list_components[i].etiqueta+".text='';"+"\n";
-  			  	  }
+  			  	    form_model_var+="       "+value.substr(0,1).toLocaleLowerCase()+value.substr(1,value.length)+"."+Zipfile.getInstance().list_components[i].etiqueta+'=_view.'+value.substr(0,1).toLocaleUpperCase()+value.substr(1,value.length)+'Form.Att_'+Zipfile.getInstance().list_components[i].etiqueta+'.text;'+"\n";
+  			  	    View_model_var+="       _view."+value.substr(0,1).toLocaleUpperCase()+value.substr(1,value.length)+"Form.Att_"+Zipfile.getInstance().list_components[i].etiqueta+'.text='+value.substr(0,1).toLocaleLowerCase()+value.substr(1,value.length)+"."+Zipfile.getInstance().list_components[i].etiqueta+";"+"\n";
+  			  	    Clear_model_var+="      _view."+value.substr(0,1).toLocaleUpperCase()+value.substr(1,value.length)+"Form.Att_"+Zipfile.getInstance().list_components[i].etiqueta+".text='';"+"\n";
+  			  	   }
   			  	 }
   			  }
   			} 
@@ -253,7 +253,7 @@ package Clases
 		  cadena+=MVC_Controller_BackBtnClick(value)+"\n";
 		  cadena+=MVC_Controller_Clear(Clear_model_var)+"\n";
 		  cadena+=MVC_Controller_confirmHandler(value)+"\n";
-		  cadena+=MVC_Controller_cleanup()+"\n";
+		  cadena+=MVC_Controller_cleanup(value)+"\n";
 		  cadena+="}"+"\n";
 		  cadena+="}"+"\n";
 		  return cadena;
