@@ -75,19 +75,16 @@ package Clases
 	               cadena+='width="100%" height="100%">'+"\n";  
                    cadena+='<mx:ViewStack    x="0" y="0" id="'+nombre.substr(0,1).toLocaleUpperCase()+nombre.substr(1,nombre.length-2)+'View" width="100%" height="100%">'+"\n";
                    cadena+='<s:NavigatorContent   x="0" y="0"  width="98%" height="98%" >'+"\n";
-                   cadena+=CREATE_DATAGRID+"\n";
-                   cadena+='<mx:Button   id="createBtn" label="Crear" enabled="true" width="86" x="20" y="{datos.height+50}" />' 
+                   cadena+=CREATE_DATAGRID(id,list_components);
+                   cadena+='<mx:Button   id="createBtn" label="Crear" enabled="true" width="86" x="20" y="{datos.height+50}" />'+"\n";
                    cadena+='</s:NavigatorContent>'+"\n";
-                   cadena+='<s:NavigatorContent   x="0" y="0"  width="98%" height="98%" >';
-                   cadena+='<'+nombre.substr(0,1).toLocaleUpperCase()+nombre.substr(1,nombre.length-2)+':'+nombre.substr(0,1).toLocaleUpperCase()+nombre.substr(1,nombre.length-2)+'Form id="EstudianteForm"/>';
-                   cadena+='</s:NavigatorContent>';
-                   cadena+='</mx:ViewStack>';
-                   cadena+='</s:Group>';
-                   
-                   // Create Form mxml
-                  
-                   Alert.show(CREATE_DATAGRID(id,list_components));
-                   //Zipfile.getInstance().HeadService+=Zipfile.getInstance().validate+IDEComponentes.getInstance().Create_Script(nombre.substr(0,1).toLocaleUpperCase()+nombre.substr(1,nombre.length-2))+'<mx:ViewStack x="0" y="0" id="'+nombre.substr(0,1).toLocaleUpperCase()+nombre.substr(1,nombre.length-1)+'View" width="100%" height="100%">'+"\n";
+                   cadena+='<s:NavigatorContent   x="0" y="0"  width="98%" height="98%" >'+"\n";
+                   cadena+='<'+nombre.substr(0,1).toLocaleUpperCase()+nombre.substr(1,nombre.length-2)+':'+nombre.substr(0,1).toLocaleUpperCase()+nombre.substr(1,nombre.length-2)+'Form id="EstudianteForm"/>'+"\n";
+                   cadena+='</s:NavigatorContent>'+"\n";
+                   cadena+='</mx:ViewStack>'+"\n";
+                   cadena+='</s:Group>'+"\n";
+                   Zipfile.getInstance().add_file(Zipfile.getInstance().proyecto_name+"/src/Views/"+nombre.substr(0,1).toLocaleUpperCase()+nombre.substr(1,nombre.length-2)+"/"+nombre.substr(0,nombre.length-1)+"Index.mxml",cadena);
+                  //Zipfile.getInstance().HeadService+=Zipfile.getInstance().validate+IDEComponentes.getInstance().Create_Script(nombre.substr(0,1).toLocaleUpperCase()+nombre.substr(1,nombre.length-2))+'<mx:ViewStack x="0" y="0" id="'+nombre.substr(0,1).toLocaleUpperCase()+nombre.substr(1,nombre.length-1)+'View" width="100%" height="100%">'+"\n";
 	               
 	               /*if(Zipfile.getInstance().Verificar_Modulo_Relacion(Zipfile.getInstance().list_components,id)==true){
 				 	Zipfile.getInstance().datagridHead='<s:Button click="{'+nombre.substr(0,1).toLocaleUpperCase()+nombre.substr(1,nombre.length-2)+'Helper.getInstance().Back_Root_Component()}" x="20" y="0" label="Back"/>'+"\n"+Zipfile.getInstance().datagridHead;
