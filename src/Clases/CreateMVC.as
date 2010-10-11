@@ -172,9 +172,22 @@ package Clases
 		  cadena+="         _view.NewBtn.addEventListener(MouseEvent.CLICK,New);"+"\n";
 		  cadena+="         _view.ShowBtn.addEventListener(MouseEvent.CLICK,Show);"+"\n";
 		  cadena+="         _view.DeleteBtn.addEventListener(MouseEvent.CLICK,Delete);"+"\n";
-	      cadena+="         _view.EstudianteView.addEventListener(IndexChangedEvent.CHANGE,handleActiveViewChanged);"+"\n";
+	      cadena+="         _view."+value.substr(0,1).toLocaleUpperCase()+value.substr(1,value.length)+"View.addEventListener(IndexChangedEvent.CHANGE,handleActiveViewChanged);"+"\n";
 	      cadena+="        }"+"\n";
 		  return cadena;
+		}
+		
+		public function MVC_Controller_handleActiveViewChanged(value:String):String
+		{
+		   var cadena:String="";	
+		   cadena+="     protected function handleActiveViewChanged( event:Event ):void"+"\n";
+		   cadena+="{"+"\n";
+		   cadena+="	  load_form=true;"+"\n";
+		   cadena+="	   Edit();"+"\n";
+		   cadena+="	  _view."+value.substr(0,1).toLocaleUpperCase()+value.substr(1,value.length)+"Form.submitBtn.addEventListener(MouseEvent.CLICK, Create );"+"\n";
+		   cadena+="	  _view."+value.substr(0,1).toLocaleUpperCase()+value.substr(1,value.length)+"Form.updateBtn.addEventListener(MouseEvent.CLICK, Update );"+"\n";
+		   cadena+="      _view."+value.substr(0,1).toLocaleUpperCase()+value.substr(1,value.length)+"Form.backlBtn.addEventListener(MouseEvent.CLICK, BackBtnClick );"+"\n";
+	  	   return cadena;
 		}
 
 		public function CREATE_CONTROLLER(value:String,id:String):String
@@ -229,6 +242,7 @@ package Clases
 		  
 		  //init_model_var
 		  cadena+=MVC_Controller_Init(value)+"\n";
+		  cadena+=MVC_Controller_handleActiveViewChanged(value)+"\n";
 		  cadena+=MVC_Controller_List(value)+"\n";
 		  cadena+=MVC_Controller_New(value,init_model_var)+"\n";
 		  cadena+= MVC_Controller_Show(value,datagrid_model_var)+"\n";
