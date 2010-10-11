@@ -1,7 +1,7 @@
 package Clases
 {
 	import flash.events.*;
-
+	
 	import mx.controls.Alert;
 	public class BuildMxmlComponets
 	{
@@ -60,19 +60,36 @@ package Clases
 		}
 
 
-		public function CREATE_FORM(id:String,nombre:String):void
-		{
+		public function CREATE_VIEW(id:String,nombre:String,list_components:Array):void
+		{   var cadena:String="";
 			if(Zipfile.getInstance().list_components!=null){
 			   IDEComponentes.getInstance().posx=IDEComponentes.getInstance().posx+15;
 				if(IF_CONTAIN_COMPONENTS(id)==1)
 				{
-                	Zipfile.getInstance().HeadService="<fx:Declarations>"+"\n"+Zipfile.getInstance().HeadService+"\n";
-                	Zipfile.getInstance().HeadService+=IDEComponentes.getInstance().Head_RemoteObject(nombre.substr(0,1).toLocaleUpperCase()+nombre.substr(1,nombre.length-1))+"\n";
-                	Zipfile.getInstance().HeadService+="</fx:Declarations>";
-
-					Zipfile.getInstance().HeadService+=Zipfile.getInstance().validate+IDEComponentes.getInstance().Create_Script(nombre.substr(0,1).toLocaleUpperCase()+nombre.substr(1,nombre.length-2))+'<mx:ViewStack x="0" y="0" id="View_01" width="100%" height="100%">'+"\n";
-
-					if(Zipfile.getInstance().Verificar_Modulo_Relacion(Zipfile.getInstance().list_components,id)==true){
+                   
+                   // Create Index mxml
+                   cadena+='<s:Group xmlns:estudiante="views.'+nombre.substr(0,1).toLocaleUpperCase()+nombre.substr(1,nombre.length-2)+'"'+'\n';   
+	               cadena+='xmlns:fx="http://ns.adobe.com/mxml/2009"'+"\n"; 
+	               cadena+='xmlns:s="library://ns.adobe.com/flex/spark'+"\n";  
+	               cadena+='xmlns:mx="library://ns.adobe.com/flex/mx"'+"\n";  
+	               cadena+='width="100%" height="100%">'+"\n";  
+                   cadena+='<mx:ViewStack    x="0" y="0" id="'+nombre.substr(0,1).toLocaleUpperCase()+nombre.substr(1,nombre.length-2)+'View" width="100%" height="100%">'+"\n";
+                   cadena+='<s:NavigatorContent   x="0" y="0"  width="98%" height="98%" >'+"\n";
+                   cadena+=CREATE_DATAGRID+"\n";
+                   cadena+='<mx:Button   id="createBtn" label="Crear" enabled="true" width="86" x="20" y="{datos.height+50}" />' 
+                   cadena+='</s:NavigatorContent>'+"\n";
+                   cadena+='<s:NavigatorContent   x="0" y="0"  width="98%" height="98%" >';
+                   cadena+='<'+nombre.substr(0,1).toLocaleUpperCase()+nombre.substr(1,nombre.length-2)+':'+nombre.substr(0,1).toLocaleUpperCase()+nombre.substr(1,nombre.length-2)+'Form id="EstudianteForm"/>';
+                   cadena+='</s:NavigatorContent>';
+                   cadena+='</mx:ViewStack>';
+                   cadena+='</s:Group>';
+                   
+                   // Create Form mxml
+                  
+                   Alert.show(CREATE_DATAGRID(id,list_components));
+                   //Zipfile.getInstance().HeadService+=Zipfile.getInstance().validate+IDEComponentes.getInstance().Create_Script(nombre.substr(0,1).toLocaleUpperCase()+nombre.substr(1,nombre.length-2))+'<mx:ViewStack x="0" y="0" id="'+nombre.substr(0,1).toLocaleUpperCase()+nombre.substr(1,nombre.length-1)+'View" width="100%" height="100%">'+"\n";
+	               
+	               /*if(Zipfile.getInstance().Verificar_Modulo_Relacion(Zipfile.getInstance().list_components,id)==true){
 				 	Zipfile.getInstance().datagridHead='<s:Button click="{'+nombre.substr(0,1).toLocaleUpperCase()+nombre.substr(1,nombre.length-2)+'Helper.getInstance().Back_Root_Component()}" x="20" y="0" label="Back"/>'+"\n"+Zipfile.getInstance().datagridHead;
 					}
 					Zipfile.getInstance().datagridHead+='</mx:columns>'+"\n"+'</mx:DataGrid>';
@@ -84,7 +101,7 @@ package Clases
 					}
 
 
-					Zipfile.getInstance().cadena='<?xml version="1.0" encoding="utf-8"?>'+" \n"+'<s:Group xmlns="Views.*"'+' creationComplete="'+nombre.substr(0,1).toLocaleUpperCase()+nombre.substr(1,nombre.length-2)+'Helper.getInstance().SET_CANVAS(this)"'+' xmlns:fx="http://ns.adobe.com/mxml/2009"  xmlns:s="library://ns.adobe.com/flex/spark" xmlns:mx="library://ns.adobe.com/flex/mx"  width="400" height="300">'+"\n";
+					Zipfile.getInstance().cadena='<?xml version="1.0" encoding="utf-8"?>'+" \n"+'<s:Group xmlns="Views.*"'+' xmlns:fx="http://ns.adobe.com/mxml/2009"  xmlns:s="library://ns.adobe.com/flex/spark" xmlns:mx="library://ns.adobe.com/flex/mx"  width="100%" height="100%">'+"\n";
 					Zipfile.getInstance().cadena+=Zipfile.getInstance().HeadService;
 					Zipfile.getInstance().cadena+=Zipfile.getInstance().canvasdatagrid;
 					Zipfile.getInstance().cadena+=Zipfile.getInstance().canvascomponente;
@@ -93,6 +110,9 @@ package Clases
 				    Zipfile.getInstance().cadena+=IDEComponentes.getInstance().Crear_Button("Back","back","{"+nombre.substr(0,1).toLocaleUpperCase()+nombre.substr(1,nombre.length-2)+"Helper.getInstance().REMOTE_ACCESS('index',{});"+nombre.substr(0,1).toLocaleUpperCase()+nombre.substr(1,nombre.length-2)+"Helper.getInstance().BACK_TO_LIST(this)}",(IDEComponentes.getInstance().posx+96).toString(),(IDEComponentes.getInstance().posy).toString(),"true")+"\n";
 				 	Zipfile.getInstance().cadena+="</s:HGroup>"+"\n"+"</mx:FormItem>"+"\n"+"</mx:Form>"+"\n"+'</s:NavigatorContent>'+"\n"+Zipfile.getInstance().relaciones_mxml_form+'\n'+'</mx:ViewStack>'+"\n"+'</s:Group>';
 					Zipfile.getInstance().add_file(Zipfile.getInstance().proyecto_name+"/src/Views/"+nombre.substr(0,nombre.length-1)+".mxml",Zipfile.getInstance().cadena);
+				    */
+				
+				
 				}
 				IDEComponentes.getInstance().posx=10;
 				IDEComponentes.getInstance().posy=20;
@@ -113,6 +133,30 @@ package Clases
 
 			return sw;
 		}
+		
+		
+		public function CREATE_DATAGRID(id:String,list_components:Array):String
+		{
+		  	var sw:int=0;
+		  	var cadena:String="";
+		  	
+		   cadena+='<mx:DataGrid   horizontalScrollPolicy="auto" id="datos" x="20" y="46" width="95%" height="85%" >'+"\n"
+           cadena+='<mx:columns>'+"\n"
+		  	
+			for(var i:int=1;i<=list_components.length-1;i++){
+				if(list_components[i].id_modulo==id){
+				   if(list_components[i].componente_id!="5"){
+			  	    cadena+=IDEComponentes.getInstance().Crear_Column_DataGrid(list_components[i].etiqueta,list_components[i].identificador,list_components[i].tamano);
+				    }	
+			       //Zipfile.getInstance().canvascomponente+=IDEComponentes.getInstance().Crear_Mxml(list_components[i].componente_id,list_components[i].identificador,list_components[i].etiqueta,list_components[i].tamano,list_components[i].tipo,list_components[i].requerido,list_components[i].tipo_relacion,list_components[i].modulo_relacionado,id);
+					
+				}	
+			}
+		    cadena+='</mx:columns>'+"\n"
+            cadena+=' </mx:DataGrid>'+"\n"
+			return cadena;	
+		}
+		
 
 
 
@@ -123,13 +167,8 @@ package Clases
 			for(var i:int=1;i<=list_components.length-1;i++){
 				if(list_components[i].id_modulo==id){
 					sw=1;
-					 if(list_components[i].componente_id!="5"){
-			  	      Zipfile.getInstance().datagridHead+=IDEComponentes.getInstance().Crear_Column_DataGrid(list_components[i].etiqueta,list_components[i].identificador,list_components[i].tamano);
-				     }
-				     if(list_components[i].tipo_relacion!="0"){
-				      Zipfile.getInstance().HeadService+=IDEComponentes.getInstance().Remote_Object_Relation(Zipfile.getInstance().get_modulo_name(list_components[i].modulo_relacionado));
-				     }
-				     Zipfile.getInstance().canvascomponente+=IDEComponentes.getInstance().Crear_Mxml(list_components[i].componente_id,list_components[i].identificador,list_components[i].etiqueta,list_components[i].tamano,list_components[i].tipo,list_components[i].requerido,list_components[i].tipo_relacion,list_components[i].modulo_relacionado,id);
+					 
+				    
 					if(Zipfile.getInstance().proyecto_zip=="amfphp.zip"){
 						if(list_components[i].tipo_relacion=="0"&&list_components[i].identificador!="id"&&list_components[i].identificador!="ID"){
 							Zipfile.getInstance().database_sql+=IDEComponentes.getInstance().Create_database_sql(list_components[i].identificador,list_components[i].componente_id,list_components[i].tamano);
@@ -199,7 +238,6 @@ package Clases
 			Zipfile.getInstance().datagridHead='<mx:DataGrid horizontalScrollPolicy="auto" id="datos" x="'+ Zipfile.getInstance().DataGridposx+'" y="46" width="98%" height="85%" >'+"\n"+"<mx:columns>"+"\n";
 			Zipfile.getInstance().datagridHead+='<mx:DataGridColumn visible="false" width="110" headerText="id" dataField="id"/>'+"\n";
 			Zipfile.getInstance().canvascomponente='<s:NavigatorContent id="InputsObjects" creationComplete="App.getInstance().SET_CANVAS_COMPLETE();" x="0" y="0"  width="98%" height="98%" >'+"\n"+"<mx:Form x='0' y='0' width='100%' height='100%'>"+"\n";
-			Zipfile.getInstance().HeadService="";
 			Zipfile.getInstance().setupdate="";
 			Zipfile.getInstance().migrationBody="";
 			Zipfile.getInstance().validate="";

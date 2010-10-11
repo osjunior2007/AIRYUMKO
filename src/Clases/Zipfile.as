@@ -26,7 +26,6 @@ package Clases
 		public var canvasdatagrid:String='<mx:Canvas x="0" y="0"  width="98%" height="98%" showEffect="WipeDown" hideEffect="WipeUp">'+"\n";
 		public var DataGridposx:int=20;
 		public var datagridHead:String='<mx:DataGrid horizontalScrollPolicy="auto" id="datos" x="'+DataGridposx+'" y="46" width="98%" height="85%" >'+"\n"+"<mx:columns>"+"\n";
-		public var HeadService:String="";
 		public var setupdate:String="";
 		public var migrationBody:String="";
 		public var validate:String="";
@@ -158,12 +157,11 @@ package Clases
 				    add_file(this.proyecto_name+"/src/Controllers/"+name.substr(0,name.length-1)+"Controller.as",CreateMVC.getInstance().CREATE_CONTROLLER(name.substr(0,name.length-1),Database.getInstance().personData[i].id_modulo));
 					add_file(this.proyecto_name+"/src/Models/"+name.substr(0,name.length-1)+"Model.as",CreateMVC.getInstance().CREATE_MODEL(name.substr(0,name.length-1),Database.getInstance().personData[i].id_modulo));
 					BuildMxmlComponets.getInstance().CREATE_SQL_MIGRATION(Database.getInstance().personData[i].id_modulo,Database.getInstance().personData[i].nombre,Zipfile.getInstance().list_components)
-					BuildMxmlComponets.getInstance().CREATE_FORM(Database.getInstance().personData[i].id_modulo,Database.getInstance().personData[i].nombre)
+					BuildMxmlComponets.getInstance().CREATE_VIEW(Database.getInstance().personData[i].id_modulo,Database.getInstance().personData[i].nombre,Zipfile.getInstance().list_components)
 					if(Verificar_Modulo_Relacion(list_components,Database.getInstance().personData[i].id_modulo)==false){
 					//  Zipfile.getInstance().add_file(Zipfile.getInstance().proyecto_name+"/src/Helpers/"+name.substr(0,name.length-1)+"Helper.as",Helpers.getInstance().CREATE_HELPER_BLANK(name.substr(0,name.length-1)));
 				     BuildMxmlComponets.getInstance().CREATE_MAIN_VIEW_TAB(Database.getInstance().personData[i].id_modulo,Database.getInstance().personData[i].id_nombre,name_modelo.substr(0,name.length-1));
 				    }
-				    
 				}
 				if(proyecto_zip=="amfphp.zip"){
 					Head_database_sql="CREATE DATABASE /*!32312 IF NOT EXISTS*/`"+database_name.toLowerCase()+"` /*!40100 DEFAULT CHARACTER SET latin1 */;"+"\n"+"USE `"+database_name.toLowerCase()+"`;"+"\n"+Head_database_sql;
