@@ -42,7 +42,6 @@ package Clases
 		[Bindable] public var list_components:Array = new Array();
 		[Bindable] public var list_relaciones:Array = new Array();
 		[Bindable] public var list_modulos:Array = new Array();
-		public var Modulos_relacionados:String="";
 		public var Date_Today:String="";
 		public var migrationcant:int=0;
 		public var TipoFramework:int=0;
@@ -194,21 +193,7 @@ package Clases
 			return sw;
 		}
 		
-		public function Obtener_Clases_Relacionadas(modulos:Array,relaciones:Array,Elemento:String):String
-		{
-			var cadena:String="";
-			for(var i:int=0;i<=relaciones.length-1;i++){
-				if(relaciones[i].modulo_principal==Elemento){
-					for(var j:int=0;j<=modulos.length-1;j++){
-						if (relaciones[i].modulo_relacionado==modulos[j].id_modulo){
-							cadena+="  import Clases."+modulos[j].nombre.substr(0,1).toLocaleUpperCase()+modulos[j].nombre.substr(1,modulos[j].nombre.length)+";"+"\n";
-						}
-					}
-				}
-				
-			}
-			return cadena;
-		}
+	
 		
 		public function Resutl_get_relaciones(e:Event):void
 		{

@@ -52,13 +52,11 @@ package Clases
 		public function CREATE_MAIN_VIEW_TAB(id_modulo:String,name_componente:String,name:String):void
 		{
 			if(Zipfile.getInstance().Verificar_Modulo_Relacion(Zipfile.getInstance().list_relaciones,id_modulo)==false){
-				//Zipfile.getInstance().Modulos_relacionados=Zipfile.getInstance().Obtener_Clases_Relacionadas(Zipfile.getInstance().list_modulos,Zipfile.getInstance().list_relaciones,id_modulo)
-				Zipfile.getInstance().view_path+="xmlns:"+name.toLowerCase()+'="Views.'+name.substr(0,1).toLocaleUpperCase()+ name.substr(1,name.length).toString()+'.*"'+"\n";
+				Zipfile.getInstance().view_path+="xmlns:"+name.toLowerCase()+'="Views.'+name.substr(0,1).toLocaleUpperCase()+ name.substr(1,name.length).toString()+'.*"'+"\n"+" \n";
 				Zipfile.getInstance().MainApp+='<s:NavigatorContent label="'+name+'" width="100%" height="100%" >'+"\n";
-				Zipfile.getInstance().MainApp+='<'+name.toLowerCase()+':'+name.substr(0,1).toLocaleUpperCase()+ name.substr(1,name.length).toString()+'Index id="'+name+'"  width="100%" height="100%"   />'+" \n";
-				Zipfile.getInstance().MainApp+='</s:NavigatorContent>'+" \n";
+				Zipfile.getInstance().MainApp+='<'+name.toLowerCase()+':'+name.substr(0,1).toLocaleUpperCase()+ name.substr(1,name.length).toString()+'Index  width="100%" height="100%"   />'+" \n";
+				Zipfile.getInstance().MainApp+='</s:NavigatorContent>'+" \n"+" \n";
 			}
-			//Zipfile.getInstance().nameclases+="         import Clases."+name+""+" \n";
 		}
 
 
