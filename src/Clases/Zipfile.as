@@ -36,7 +36,6 @@ package Clases
 		public var migrationHead:String="";
 		public var database_sql:String="";
 		public var Head_database_sql:String="";
-		public var nameclases:String="";
 		public var relaciones_mxml_form:String="";
 		public var count_mxml_form:int=2;
 		public var helper_class_name:String="";
@@ -51,6 +50,7 @@ package Clases
 		public var MainApp:String="";
 		public var Relation_Remote_name:String=""
 		public var XmlParamert:String="";
+		public var view_path:String="";
 		public function Zipfile()
 		{
 		}
@@ -147,7 +147,6 @@ package Clases
 			var name_modelo:String="";
 			var name:String="";
 			MainApp="";
-			nameclases="";
 			if(Database.getInstance().personData!=null){
 				list_modulos=Database.getInstance().personData;
 				for(var i:int=0;i<=Database.getInstance().personData.length-1;i++){
@@ -163,17 +162,16 @@ package Clases
 					BuildMxmlComponets.getInstance().CREATE_FORM(Database.getInstance().personData[i].id_modulo,Database.getInstance().personData[i].nombre)
 					if(Verificar_Modulo_Relacion(list_components,Database.getInstance().personData[i].id_modulo)==false){
 					//  Zipfile.getInstance().add_file(Zipfile.getInstance().proyecto_name+"/src/Helpers/"+name.substr(0,name.length-1)+"Helper.as",Helpers.getInstance().CREATE_HELPER_BLANK(name.substr(0,name.length-1)));
-				     BuildMxmlComponets.getInstance().CREATE_MXML_COMPONENTS(Database.getInstance().personData[i].id_modulo,Database.getInstance().personData[i].id_nombre,name_modelo.substr(0,name.length-1));
+				     BuildMxmlComponets.getInstance().CREATE_MAIN_VIEW_TAB(Database.getInstance().personData[i].id_modulo,Database.getInstance().personData[i].id_nombre,name_modelo.substr(0,name.length-1));
 				    }
 				    
 				}
-				
 				if(proyecto_zip=="amfphp.zip"){
 					Head_database_sql="CREATE DATABASE /*!32312 IF NOT EXISTS*/`"+database_name.toLowerCase()+"` /*!40100 DEFAULT CHARACTER SET latin1 */;"+"\n"+"USE `"+database_name.toLowerCase()+"`;"+"\n"+Head_database_sql;
 					add_file("amfphp/database.sql",Head_database_sql);
 				}
 				
-				BuildMxmlComponets.getInstance().Main_Mxml();
+				BuildMxmlComponets.getInstance().CREATE_MAIN_VIEW_APPLICATION();
 			}
 		}
 		

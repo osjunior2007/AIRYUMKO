@@ -49,15 +49,16 @@ package Clases
 		}
 
 
-		public function CREATE_MXML_COMPONENTS(id_modulo:String,name_componente:String,name:String):void
+		public function CREATE_MAIN_VIEW_TAB(id_modulo:String,name_componente:String,name:String):void
 		{
 			if(Zipfile.getInstance().Verificar_Modulo_Relacion(Zipfile.getInstance().list_relaciones,id_modulo)==false){
-				Zipfile.getInstance().Modulos_relacionados=Zipfile.getInstance().Obtener_Clases_Relacionadas(Zipfile.getInstance().list_modulos,Zipfile.getInstance().list_relaciones,id_modulo)
+				//Zipfile.getInstance().Modulos_relacionados=Zipfile.getInstance().Obtener_Clases_Relacionadas(Zipfile.getInstance().list_modulos,Zipfile.getInstance().list_relaciones,id_modulo)
+				Zipfile.getInstance().view_path+="xmlns:"+name.toLowerCase()+'="Views.'+name.substr(0,1).toLocaleUpperCase()+ name.substr(1,name.length).toString()+'.*"'+"\n";
 				Zipfile.getInstance().MainApp+='<s:NavigatorContent label="'+name+'" width="100%" height="100%" >'+"\n";
-				Zipfile.getInstance().MainApp+='<'+name.toLowerCase()+' id="'+name+'"  width="98%" height="98%"  y="0" x="0" />'+" \n";
+				Zipfile.getInstance().MainApp+='<'+name.toLowerCase()+':'+name.substr(0,1).toLocaleUpperCase()+ name.substr(1,name.length).toString()+'Index id="'+name+'"  width="100%" height="100%"   />'+" \n";
 				Zipfile.getInstance().MainApp+='</s:NavigatorContent>'+" \n";
 			}
-			Zipfile.getInstance().nameclases+="         import Clases."+name+""+" \n";
+			//Zipfile.getInstance().nameclases+="         import Clases."+name+""+" \n";
 		}
 
 
@@ -176,17 +177,12 @@ package Clases
 		}
 
 
-		public function Main_Mxml():void
+		public function CREATE_MAIN_VIEW_APPLICATION():void
 		{
 
-			Zipfile.getInstance().MainApp='<?xml version="1.0" encoding="utf-8"?>'+" \n"+'<s:Application  xmlns="Views.*" xmlns:fx="http://ns.adobe.com/mxml/2009" xmlns:s="library://ns.adobe.com/flex/spark" xmlns:mx="library://ns.adobe.com/flex/mx">'+" \n"+'<mx:TabNavigator change="App.getInstance().GET_LIST(Header)" id="Header" x="10" y="22" width="98%" height="95%">'+" \n"+ Zipfile.getInstance().MainApp;
+			Zipfile.getInstance().MainApp='<?xml version="1.0" encoding="utf-8"?>'+" \n"+'<s:Application  xmlns="Views.*"'+'\n'+Zipfile.getInstance().view_path+' xmlns:fx="http://ns.adobe.com/mxml/2009" '+'\n'+' xmlns:s="library://ns.adobe.com/flex/spark" '+'\n'+' xmlns:mx="library://ns.adobe.com/flex/mx">'+" \n"+'<mx:TabNavigator   x="10" y="22" width="98%" height="95%">'+" \n"+ Zipfile.getInstance().MainApp;
 			Zipfile.getInstance().MainApp+="</mx:TabNavigator>"+" \n";
-			Zipfile.getInstance().MainApp+="<fx:Script>"+" \n";
-			Zipfile.getInstance().MainApp+="          <![CDATA["+" \n";
-			Zipfile.getInstance().MainApp+="         import Clases.App;"+" \n";
-			Zipfile.getInstance().MainApp+="       ]]>"+" \n";
-			Zipfile.getInstance().MainApp+=" </fx:Script>"+"\n"+'</s:Application>';
-			Zipfile.getInstance().add_file(Zipfile.getInstance().proyecto_name+"/src/"+Zipfile.getInstance().proyecto_name+".mxml",Zipfile.getInstance().MainApp);
+	        Zipfile.getInstance().add_file(Zipfile.getInstance().proyecto_name+"/src/"+Zipfile.getInstance().proyecto_name+".mxml",Zipfile.getInstance().MainApp);
 			Database.getInstance().dbStatement.removeEventListener(SQLEvent.RESULT, Zipfile.getInstance().Result_build_MainMXML);
 
 			Zipfile.getInstance().add_file(Zipfile.getInstance().proyecto_name+"/.actionScriptProperties",IDEComponentes.getInstance().Create_Flex_ActionScript_Properties(Zipfile.getInstance().proyecto_name));
