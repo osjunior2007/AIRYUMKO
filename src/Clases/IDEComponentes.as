@@ -287,7 +287,7 @@ package Clases
 		          	  Zipfile.getInstance().relaciones_mxml_form+='<s:NavigatorContent label="'+nombre+'" width="100%" height="100%" >'+"\n";
 				      Zipfile.getInstance().relaciones_mxml_form+='<'+nombre.toLowerCase().substr(0,nombre.length-1)+" creationComplete='"+nombre.substr(0,1).toString().toUpperCase()+nombre.substr(1,nombre.length-2)+"Helper.getInstance().Set_Root_Component(this)'" +' id="'+nombre+'"  width="98%" height="98%"  y="0" x="0" />'+" \n";
 				      Zipfile.getInstance().relaciones_mxml_form+='</s:NavigatorContent>'+" \n";
-				      Zipfile.getInstance().add_file(Zipfile.getInstance().proyecto_name+"/src/Helpers/"+nombre.substr(0,1).toString().toUpperCase()+nombre.substr(1,nombre.length-2)+"Helper.as",Helpers.getInstance().CREATE_HELPER(nombre.substr(0,1).toString().toUpperCase()+nombre.substr(1,nombre.length-2),modulo_relacionado));
+				      //Zipfile.getInstance().add_file(Zipfile.getInstance().proyecto_name+"/src/Helpers/"+nombre.substr(0,1).toString().toUpperCase()+nombre.substr(1,nombre.length-2)+"Helper.as",Helpers.getInstance().CREATE_HELPER(nombre.substr(0,1).toString().toUpperCase()+nombre.substr(1,nombre.length-2),modulo_relacionado));
 					  Zipfile.getInstance().helper_class_name+="  import Helpers."+nombre.substr(0,1).toString().toUpperCase()+nombre.substr(1,nombre.length-2)+"Helper;"+"\n";
 					  Zipfile.getInstance().count_mxml_form++;
 		            
