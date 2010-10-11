@@ -83,7 +83,24 @@ package Clases
                    cadena+='</s:NavigatorContent>'+"\n";
                    cadena+='</mx:ViewStack>'+"\n";
                    cadena+='</s:Group>'+"\n";
+                 
                    Zipfile.getInstance().add_file(Zipfile.getInstance().proyecto_name+"/src/Views/"+nombre.substr(0,1).toLocaleUpperCase()+nombre.substr(1,nombre.length-2)+"/"+nombre.substr(0,nombre.length-1)+"Index.mxml",cadena);
+                 
+                   //Create Form Mxml
+                  cadena="";
+                  cadena+='<s:Group  xmlns:fx="http://ns.adobe.com/mxml/2009"  xmlns:s="library://ns.adobe.com/flex/spark" xmlns:mx="library://ns.adobe.com/flex/mx"  width="100%" height="100%">'
+                  cadena+="<mx:Form x='0' y='0' width='100%' height='100%'>"+"\n";
+             	  //Fomr item
+             	  cadena+="<s:HGroup>"+"\n";
+			      cadena+='<mx:Button  id="submitBtn" label="Create" enabled="true" width="86" x="25" y="20" />'+"\n";
+			      cadena+='<mx:Button  id="updateBtn" label="Update" enabled="true" width="86" x="121" y="20" />'+"\n";
+			      cadena+='</s:HGroup>'+"\n";
+		          cadena+='</mx:FormItem>'+"\n";
+	              cadena+='</mx:Form>'+"\n";
+                  cadena+='</s:Group>'+"\n";
+                  Zipfile.getInstance().add_file(Zipfile.getInstance().proyecto_name+"/src/Views/"+nombre.substr(0,1).toLocaleUpperCase()+nombre.substr(1,nombre.length-2)+"/"+nombre.substr(0,nombre.length-1)+"Form.mxml",cadena);
+                 
+                 
                   //Zipfile.getInstance().HeadService+=Zipfile.getInstance().validate+IDEComponentes.getInstance().Create_Script(nombre.substr(0,1).toLocaleUpperCase()+nombre.substr(1,nombre.length-2))+'<mx:ViewStack x="0" y="0" id="'+nombre.substr(0,1).toLocaleUpperCase()+nombre.substr(1,nombre.length-1)+'View" width="100%" height="100%">'+"\n";
 	               
 	               /*if(Zipfile.getInstance().Verificar_Modulo_Relacion(Zipfile.getInstance().list_components,id)==true){
@@ -111,8 +128,6 @@ package Clases
 				
 				
 				}
-				IDEComponentes.getInstance().posx=10;
-				IDEComponentes.getInstance().posy=20;
 			}//If not is null
 
 		}
