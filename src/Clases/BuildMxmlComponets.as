@@ -1,6 +1,7 @@
 package Clases
 {
 	import flash.events.*;
+	import mx.controls.Alert;
 	public class BuildMxmlComponets
 	{
 		private static var instancia:BuildMxmlComponets;
@@ -92,6 +93,10 @@ package Clases
              	  cadena+="<s:HGroup>"+"\n";
 			      cadena+='  <mx:Button  id="submitBtn" label="Create" enabled="true" width="86" x="25" y="20" />'+"\n";
 			      cadena+='  <mx:Button  id="updateBtn" label="Update" enabled="true" width="86" x="121" y="20" />'+"\n";
+			      if (IF_MODULO_RELATION(id)==0){
+			      cadena+='<mx:Button id="backlBtn" label="Atras" />'+"\n";
+			      }
+			     
 			      cadena+='</s:HGroup>'+"\n";
 		          cadena+='</mx:FormItem>'+"\n";
 	              cadena+='</mx:Form>'+"\n";
@@ -101,6 +106,23 @@ package Clases
 			}//If not is null
 
 		}
+		
+		
+       public function IF_MODULO_RELATION(id:String):int
+		{
+			var sw:int=0;
+			var i:int=0;
+			while(i<=Zipfile.getInstance().list_relaciones.length-1&&sw==0){
+				if(Zipfile.getInstance().list_relaciones[i].modulo_relacionado==id){
+					sw=1;
+				}
+				i++;
+			}
+
+			return sw;
+		}
+		
+		
 
 		public function IF_CONTAIN_COMPONENTS(id:String):int
 		{
@@ -127,6 +149,10 @@ package Clases
 				if(list_components[i].id_modulo==id){
 				   if(list_components[i].componente_id!="5"){
 				   	cadena+=IDEComponentes.getInstance().CREATE_COMPONENTS(list_components[i].componente_id,list_components[i].identificador,list_components[i].etiqueta,list_components[i].tamano,list_components[i].tipo,list_components[i].requerido,list_components[i].tipo_relacion,list_components[i].modulo_relacionado,id)+"\n";
+		           }else{
+		            cadena+='<mx:FormItem label="'+nombre.substr(0,1).toLocaleUpperCase()+nombre.substr(1,nombre.length-2)+'" width="100%">'+"\n";
+		 	        cadena+='<'+nombre.substr(0,1).toLocaleLowerCase()+nombre.substr(1,nombre.length-2)+':'+nombre.substr(0,1).toLocaleUpperCase()+nombre.substr(1,nombre.length-2)+'Index  width="100%" height="100%" />'+"\n";
+			        cadena+='</mx:FormItem>'+"\n";
 		           }  
 		        }
 		     }
