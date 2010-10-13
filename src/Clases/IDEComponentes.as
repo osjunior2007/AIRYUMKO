@@ -30,9 +30,9 @@ package Clases
 		public function Crear_campo_de_texto(idenficador:String,longitud:String,restricion:int,pass:int,requiredtype:String):String
 		{ var cadena:String="";
 		 if(pass==0){
-		  cadena='<mx:TextInput width="350" x="'+(posx)+'" y="'+posy+'"';
+		  cadena='  <mx:TextInput width="350" x="'+(posx)+'" y="'+posy+'"';
 		 }else{
-		   cadena='<mx:TextInput displayAsPassword="true" width="350" x="'+(posx)+'" y="'+posy+'"';	
+		  cadena='  <mx:TextInput displayAsPassword="true" width="350" x="'+(posx)+'" y="'+posy+'"';	
 		 }
 		 cadena+=" ";
 	      	cadena+='id="Att_'+idenficador.toLowerCase()+'" '+'maxChars="'+longitud+'"';
@@ -49,33 +49,33 @@ package Clases
 		
 		public function Crear_Fecha(idenficador_Boton:String,Entrada:String):String
 		{ var cadena:String="";
-		  cadena='<mx:DateValidator source="{'+Entrada+'}" property="text" allowedFormatChars="/" trigger="{'+idenficador_Boton+'}" triggerEvent="click"/>';
+		  cadena='  <mx:DateValidator source="{'+Entrada+'}" property="text" allowedFormatChars="/" trigger="{'+idenficador_Boton+'}" triggerEvent="click"/>';
 	       return cadena; 	
 		}
 		
 		
 	   public function Crear_Text_Area(idenficador:String,longitud:String):String
 		{ var cadena:String="";
-		 cadena='<mx:TextArea id="Att_'+idenficador.toLowerCase()+'" height="120" width="350" x="'+(posx)+'" y="'+posy+'" '+ 'maxChars="'+longitud+'"';
+		 cadena='  <mx:TextArea id="Att_'+idenficador.toLowerCase()+'" height="120" width="350" x="'+(posx)+'" y="'+posy+'" '+ 'maxChars="'+longitud+'"';
 		 cadena+=' />'	 
 	      return cadena; 	
 		}
 		
 		public function Crear_CheckBox(idenficador:String):String
 		{ var cadena:String="";
-		 cadena='<mx:CheckBox id="Att_'+idenficador.toLowerCase()+'" x="'+(posx)+'" y="'+posy+'"';
+		 cadena='  <mx:CheckBox id="Att_'+idenficador.toLowerCase()+'" x="'+(posx)+'" y="'+posy+'"';
 		 cadena+=' />'	 
 	      return cadena; 	
 		}
 		
 		public function Crear_label(texto:String):String
 		{ 
-		 return '<mx:Label text="'+texto+'" x="'+posx+'" y="'+posy+'" />'; 	
+		 return '  <mx:Label text="'+texto+'" x="'+posx+'" y="'+posy+'" />'; 	
 		}
 		
 		public function Crear_Button(texto:String,id:String,action:String,posx:String,posy:String,enabled:String):String
 		{
-			return '<mx:Button click="'+action+'" id="'+id+'" label="'+texto+'" enabled="'+enabled+'" width="86" x="'+posx+'" y="'+posy+'" />';
+			return '  <mx:Button click="'+action+'" id="'+id+'" label="'+texto+'" enabled="'+enabled+'" width="86" x="'+posx+'" y="'+posy+'" />';
 		}
 		
 
@@ -227,7 +227,7 @@ package Clases
                 return datostree;
             }
             
-       public function Crear_Mxml(id_componente:String,nombre:String,etiqueta:String,tamano:String,tipodato:int,requiredtype:String,tipo_relacion:String,modulo_relacionado:String,id_modulo:String):String
+       public function CREATE_COMPONENTS(id_componente:String,nombre:String,etiqueta:String,tamano:String,tipodato:int,requiredtype:String,tipo_relacion:String,modulo_relacionado:String,id_modulo:String):String
               {
               	 
                 var modulo:String="";
