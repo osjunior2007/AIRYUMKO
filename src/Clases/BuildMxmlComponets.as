@@ -87,9 +87,13 @@ package Clases
                  
                    //Create Form Mxml
                   cadena="";
-                  cadena+='<s:Group  xmlns:fx="http://ns.adobe.com/mxml/2009"  xmlns:s="library://ns.adobe.com/flex/spark" xmlns:mx="library://ns.adobe.com/flex/mx"  width="100%" height="100%">'
-                  cadena+="<mx:Form x='0' y='0' width='100%' height='100%'>"+"\n";
-             	  cadena+=CREATE_FORM(id,nombre,list_components);
+                  cadena+='<s:Group  '+CREATE_VIEW_PATH(id,nombre,list_components)+"\n";
+                  cadena+='xmlns:fx="http://ns.adobe.com/mxml/2009" ' + "\n";
+                  cadena+=' xmlns:s="library://ns.adobe.com/flex/spark"'+"\n";
+                  cadena+=' xmlns:mx="library://ns.adobe.com/flex/mx"  width="100%" height="100%">'+"\n";
+                  cadena+='<mx:Form  visible="true" width="100%">'+"\n";
+		          cadena+=CREATE_FORM(id,nombre,list_components);
+             	  cadena+="<mx:FormItem >"+"\n";             	  
              	  cadena+="<s:HGroup>"+"\n";
 			      cadena+='  <mx:Button  id="submitBtn" label="Create" enabled="true" width="86" x="25" y="20" />'+"\n";
 			      cadena+='  <mx:Button  id="updateBtn" label="Update" enabled="true" width="86" x="121" y="20" />'+"\n";
@@ -143,22 +147,37 @@ package Clases
 		{
 		   var sw:int=0;
 		   var cadena:String="";
-		   cadena='<mx:Form id="'+nombre.substr(0,1).toLocaleUpperCase()+nombre.substr(1,nombre.length-2)+'Form" visible="true" width="100%">'+"\n";
 		   
 		   for(var i:int=1;i<=list_components.length-1;i++){
 				if(list_components[i].id_modulo==id){
 				   if(list_components[i].componente_id!="5"){
 				   	cadena+=IDEComponentes.getInstance().CREATE_COMPONENTS(list_components[i].componente_id,list_components[i].identificador,list_components[i].etiqueta,list_components[i].tamano,list_components[i].tipo,list_components[i].requerido,list_components[i].tipo_relacion,list_components[i].modulo_relacionado,id)+"\n";
 		           }else{
-		            cadena+='<mx:FormItem label="'+nombre.substr(0,1).toLocaleUpperCase()+nombre.substr(1,nombre.length-2)+'" width="100%">'+"\n";
-		 	        cadena+='<'+nombre.substr(0,1).toLocaleLowerCase()+nombre.substr(1,nombre.length-2)+':'+nombre.substr(0,1).toLocaleUpperCase()+nombre.substr(1,nombre.length-2)+'Index  width="100%" height="100%" />'+"\n";
+		            cadena+='<mx:FormItem label="'+list_components[i].etiqueta+'" width="100%">'+"\n";
+		 	        cadena+='<'+list_components[i].etiqueta.substr(0,1).toLocaleLowerCase()+list_components[i].etiqueta.substr(1,list_components[i].etiqueta.length-2)+':'+list_components[i].etiqueta.substr(0,1).toLocaleUpperCase()+list_components[i].etiqueta.substr(1,list_components[i].etiqueta.length-2)+'Index  width="100%" height="100%" />'+"\n";
 			        cadena+='</mx:FormItem>'+"\n";
 		           }  
 		        }
 		     }
-		    cadena+="</mx:Form>"+"\n";
-			return cadena;
+		    return cadena;
 		}
+		
+		
+		public function CREATE_VIEW_PATH(id:String,nombre:String,list_components:Array):String
+		{
+		   var sw:int=0;
+		   var cadena:String="";
+		   
+		   for(var i:int=1;i<=list_components.length-1;i++){
+				if(list_components[i].id_modulo==id){
+				   if(list_components[i].componente_id=="5"){
+				    cadena+='xmlns:'+list_components[i].etiqueta.substr(0,1).toLocaleLowerCase()+list_components[i].etiqueta.substr(1,list_components[i].etiqueta.length-2)+'="Views.'+list_components[i].etiqueta.substr(0,1).toLocaleUpperCase()+list_components[i].etiqueta.substr(1,list_components[i].etiqueta.length-2)+'.*"'+"\n"	
+		           }  
+		        }
+		     }
+		    return cadena;
+		}
+		
 		
 		
 		public function CREATE_DATAGRID(id:String,list_components:Array):String
