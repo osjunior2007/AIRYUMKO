@@ -376,7 +376,7 @@ package Clases
               	var cadena:String="";
               	cadena+='<?xml version="1.0" encoding="UTF-8"?>'+"\n";
                 cadena+='<actionScriptProperties mainApplicationPath="'+nombre+'.mxml" version="3">'+"\n";
-                cadena+='<compiler additionalCompilerArguments="-locale en_US" copyDependentFiles="true" enableModuleDebug="true" generateAccessible="false"  htmlExpressInstall="true" htmlGenerate="true" htmlHistoryManagement="true" htmlPlayerVersion="9.0.28" htmlPlayerVersionCheck="true" outputFolderPath="bin-debug" sourceFolderPath="src" strict="true" useApolloConfig="false" verifyDigests="true" warn="true">'+"\n";
+                cadena+='<compiler additionalCompilerArguments="-locale en_US" copyDependentFiles="true" enableModuleDebug="true" flexSDK="Flex 4.5" generateAccessible="false"  htmlExpressInstall="true" htmlGenerate="true" htmlHistoryManagement="true" htmlPlayerVersion="10.1.0" htmlPlayerVersionCheck="true" outputFolderPath="bin-debug" sourceFolderPath="src" strict="true" useApolloConfig="false" verifyDigests="true" warn="true">'+"\n";
                 cadena+="<compilerSourcePath/>"+"\n";
                 cadena+='<libraryPath defaultLinkType="1">'+"\n";
                 cadena+='<libraryPathEntry kind="4" path=""/>'+"\n";

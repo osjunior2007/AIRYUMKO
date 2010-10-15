@@ -67,9 +67,9 @@ package Clases
 				{
                    
                    // Create Index mxml
-                   cadena+='<s:Group xmlns:estudiante="views.'+nombre.substr(0,1).toLocaleUpperCase()+nombre.substr(1,nombre.length-2)+'"'+'\n';   
+                   cadena+='<s:Group xmlns:'+nombre.substr(0,1).toLocaleLowerCase()+nombre.substr(1,nombre.length-2)+'="Views.'+nombre.substr(0,1).toLocaleUpperCase()+nombre.substr(1,nombre.length-2)+'.*"'+'\n';   
 	               cadena+='xmlns:fx="http://ns.adobe.com/mxml/2009"'+"\n"; 
-	               cadena+='xmlns:s="library://ns.adobe.com/flex/spark'+"\n";  
+	               cadena+='xmlns:s="library://ns.adobe.com/flex/spark"'+"\n";  
 	               cadena+='xmlns:mx="library://ns.adobe.com/flex/mx"'+"\n";  
 	               cadena+='width="100%" height="100%">'+"\n";  
                    cadena+='<mx:ViewStack    x="0" y="0" id="'+nombre.substr(0,1).toLocaleUpperCase()+nombre.substr(1,nombre.length-2)+'View" width="100%" height="100%">'+"\n";
@@ -78,12 +78,12 @@ package Clases
                    cadena+='<mx:Button   id="createBtn" label="Crear" enabled="true" width="86" x="20" y="{datos.height+50}" />'+"\n";
                    cadena+='</s:NavigatorContent>'+"\n";
                    cadena+='<s:NavigatorContent   x="0" y="0"  width="98%" height="98%" >'+"\n";
-                   cadena+='<'+nombre.substr(0,1).toLocaleUpperCase()+nombre.substr(1,nombre.length-2)+':'+nombre.substr(0,1).toLocaleUpperCase()+nombre.substr(1,nombre.length-2)+'Form id="EstudianteForm"/>'+"\n";
+                   cadena+='<'+nombre.substr(0,1).toLocaleLowerCase()+nombre.substr(1,nombre.length-2)+':'+nombre.substr(0,1).toLocaleUpperCase()+nombre.substr(1,nombre.length-2)+'Form id="'+nombre.substr(0,1).toLocaleUpperCase()+nombre.substr(1,nombre.length-2)+'Form"/>'+"\n";
                    cadena+='</s:NavigatorContent>'+"\n";
                    cadena+='</mx:ViewStack>'+"\n";
                    cadena+='</s:Group>'+"\n";
                  
-                   Zipfile.getInstance().add_file(Zipfile.getInstance().proyecto_name+"/src/Views/"+nombre.substr(0,1).toLocaleUpperCase()+nombre.substr(1,nombre.length-2)+"/"+nombre.substr(0,nombre.length-1)+"Index.mxml",cadena);
+                   Zipfile.getInstance().add_file(Zipfile.getInstance().proyecto_name+"/src/Views/"+nombre.substr(0,1).toLocaleUpperCase()+nombre.substr(1,nombre.length-2)+"/"+nombre.substr(0,1).toLocaleUpperCase()+nombre.substr(1,nombre.length-2)+"Index.mxml",cadena);
                  
                    //Create Form Mxml
                   cadena="";
@@ -101,7 +101,7 @@ package Clases
 		          cadena+='</mx:FormItem>'+"\n";
 	              cadena+='</mx:Form>'+"\n";
                   cadena+='</s:Group>'+"\n";
-                  Zipfile.getInstance().add_file(Zipfile.getInstance().proyecto_name+"/src/Views/"+nombre.substr(0,1).toLocaleUpperCase()+nombre.substr(1,nombre.length-2)+"/"+nombre.substr(0,nombre.length-1)+"Form.mxml",cadena);
+                  Zipfile.getInstance().add_file(Zipfile.getInstance().proyecto_name+"/src/Views/"+nombre.substr(0,1).toLocaleUpperCase()+nombre.substr(1,nombre.length-2)+"/"+nombre.substr(0,1).toLocaleUpperCase()+nombre.substr(1,nombre.length-2)+"Form.mxml",cadena);
             	}
 			}//If not is null
 
@@ -243,7 +243,7 @@ package Clases
 		{
 
 			Zipfile.getInstance().MainApp='<?xml version="1.0" encoding="utf-8"?>'+" \n"+'<s:Application  xmlns="Views.*"'+'\n'+Zipfile.getInstance().view_path+' xmlns:fx="http://ns.adobe.com/mxml/2009" '+'\n'+' xmlns:s="library://ns.adobe.com/flex/spark" '+'\n'+' xmlns:mx="library://ns.adobe.com/flex/mx">'+" \n"+'<mx:TabNavigator   x="10" y="22" width="98%" height="95%">'+" \n"+ Zipfile.getInstance().MainApp;
-			Zipfile.getInstance().MainApp+="</mx:TabNavigator>"+" \n";
+			Zipfile.getInstance().MainApp+="</mx:TabNavigator>"+" \n"+"</s:Application>";
 	        Zipfile.getInstance().add_file(Zipfile.getInstance().proyecto_name+"/src/"+Zipfile.getInstance().proyecto_name+".mxml",Zipfile.getInstance().MainApp);
 			Database.getInstance().dbStatement.removeEventListener(SQLEvent.RESULT, Zipfile.getInstance().Result_build_MainMXML);
 
