@@ -20,10 +20,9 @@ package Clases
 		public var database_name:String="Example";
 		public var user_database:String="root";
 		public var password_database:String="";
-		public var canvascomponente:String="";
 		////////////////////////////////////////////////////////////////////////
 		public var cadena:String='<?xml version="1.0" encoding="utf-8"?>'+" \n"+'<mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml" width="600" height="300" creationComplete="DataModels.getInstance().set_canvas(this,CanvasDataInpust);ListRequest.send();">'+"\n";
-		public var canvasdatagrid:String='<mx:Canvas x="0" y="0"  width="98%" height="98%" showEffect="WipeDown" hideEffect="WipeUp">'+"\n";
+	    public var canvasdatagrid:String='<mx:Canvas x="0" y="0"  width="98%" height="98%" showEffect="WipeDown" hideEffect="WipeUp">'+"\n";
 		public var DataGridposx:int=20;
 		public var datagridHead:String='<mx:DataGrid horizontalScrollPolicy="auto" id="datos" x="'+DataGridposx+'" y="46" width="98%" height="85%" >'+"\n"+"<mx:columns>"+"\n";
 		public var setupdate:String="";
@@ -49,6 +48,7 @@ package Clases
 		public var Relation_Remote_name:String=""
 		public var XmlParamert:String="";
 		public var view_path:String="";
+		public var mediators_name="";
 		public function Zipfile()
 		{
 		}
@@ -145,6 +145,7 @@ package Clases
 			var name_modelo:String="";
 			var name:String="";
 			MainApp="";
+			mediators_name="";
 			if(Database.getInstance().personData!=null){
 				list_modulos=Database.getInstance().personData;
 				for(var i:int=0;i<=Database.getInstance().personData.length-1;i++){
@@ -156,6 +157,7 @@ package Clases
 					BuildMxmlComponets.getInstance().Create_ControllerAndModels(name,name_modelo,user_database,password_database,Database.getInstance().personData[i].id_modulo,i);
 				    add_file(this.proyecto_name+"/src/Controllers/"+name.substr(0,name.length-1)+"Controller.as",CreateMVC.getInstance().CREATE_CONTROLLER(name.substr(0,name.length-1),Database.getInstance().personData[i].id_modulo));
 					add_file(this.proyecto_name+"/src/Models/"+name.substr(0,name.length-1)+"Model.as",CreateMVC.getInstance().CREATE_MODEL(name.substr(0,name.length-1),Database.getInstance().personData[i].id_modulo));
+					mediators_name+='<mediators:'+name.substr(0,name.length-1)+'Controller id="'+name.substr(0,name.length-1).toLocaleLowerCase()+'" />';
 					BuildMxmlComponets.getInstance().CREATE_SQL_MIGRATION(Database.getInstance().personData[i].id_modulo,Database.getInstance().personData[i].nombre,Zipfile.getInstance().list_components)
 					BuildMxmlComponets.getInstance().CREATE_VIEW(Database.getInstance().personData[i].id_modulo,Database.getInstance().personData[i].nombre,Zipfile.getInstance().list_components)
 					if(Verificar_Modulo_Relacion(list_components,Database.getInstance().personData[i].id_modulo)==false){
@@ -167,7 +169,7 @@ package Clases
 					Head_database_sql="CREATE DATABASE /*!32312 IF NOT EXISTS*/`"+database_name.toLowerCase()+"` /*!40100 DEFAULT CHARACTER SET latin1 */;"+"\n"+"USE `"+database_name.toLowerCase()+"`;"+"\n"+Head_database_sql;
 					add_file("amfphp/database.sql",Head_database_sql);
 				}
-				
+				BuildMxmlComponets.getInstance().CREATE_BEANS_MEDIATORS(mediators_name);
 				BuildMxmlComponets.getInstance().CREATE_MAIN_VIEW_APPLICATION();
 			}
 		}

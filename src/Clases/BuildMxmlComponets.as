@@ -1,7 +1,6 @@
 package Clases
 {
 	import flash.events.*;
-	import mx.controls.Alert;
 	public class BuildMxmlComponets
 	{
 		private static var instancia:BuildMxmlComponets;
@@ -256,6 +255,21 @@ package Clases
 
 
 		}
+		
+		public function CREATE_BEANS_MEDIATORS(mediators_name:String):void
+		{
+		 	var cadena:String="";
+		   cadena+='<?xml version="1.0" encoding="utf-8"?>'+"\n";
+           cadena+='<swiz:BeanLoader xmlns:mx="http://www.adobe.com/2006/mxml"'+"\n";
+	       cadena+='xmlns:swiz="http://swiz.swizframework.org"'+"\n";
+	       cadena+='xmlns:mediators="Controllers.*">'+"\n";
+	       cadena+=mediators_name;
+	       cadena+="</swiz:BeanLoader>"+"\n";
+	       Zipfile.getInstance().add_file(Zipfile.getInstance().proyecto_name+"/src/Beans.mxml",cadena);
+				
+		 	
+		}
+		
 
 
 		public function CREATE_MAIN_VIEW_APPLICATION():void
@@ -281,7 +295,6 @@ package Clases
 			Zipfile.getInstance().DataGridposx=20;
 			Zipfile.getInstance().datagridHead='<mx:DataGrid horizontalScrollPolicy="auto" id="datos" x="'+ Zipfile.getInstance().DataGridposx+'" y="46" width="98%" height="85%" >'+"\n"+"<mx:columns>"+"\n";
 			Zipfile.getInstance().datagridHead+='<mx:DataGridColumn visible="false" width="110" headerText="id" dataField="id"/>'+"\n";
-			Zipfile.getInstance().canvascomponente='<s:NavigatorContent id="InputsObjects" creationComplete="App.getInstance().SET_CANVAS_COMPLETE();" x="0" y="0"  width="98%" height="98%" >'+"\n"+"<mx:Form x='0' y='0' width='100%' height='100%'>"+"\n";
 			Zipfile.getInstance().setupdate="";
 			Zipfile.getInstance().migrationBody="";
 			Zipfile.getInstance().validate="";
