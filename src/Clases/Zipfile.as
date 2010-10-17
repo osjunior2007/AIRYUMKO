@@ -161,8 +161,7 @@ package Clases
 					BuildMxmlComponets.getInstance().CREATE_SQL_MIGRATION(Database.getInstance().personData[i].id_modulo,Database.getInstance().personData[i].nombre,Zipfile.getInstance().list_components)
 					BuildMxmlComponets.getInstance().CREATE_VIEW(Database.getInstance().personData[i].id_modulo,Database.getInstance().personData[i].nombre,Zipfile.getInstance().list_components)
 					if(Verificar_Modulo_Relacion(list_components,Database.getInstance().personData[i].id_modulo)==false){
-					//  Zipfile.getInstance().add_file(Zipfile.getInstance().proyecto_name+"/src/Helpers/"+name.substr(0,name.length-1)+"Helper.as",Helpers.getInstance().CREATE_HELPER_BLANK(name.substr(0,name.length-1)));
-				     BuildMxmlComponets.getInstance().CREATE_MAIN_VIEW_TAB(Database.getInstance().personData[i].id_modulo,Database.getInstance().personData[i].id_nombre,name_modelo.substr(0,name.length-1));
+					   BuildMxmlComponets.getInstance().CREATE_MAIN_VIEW_TAB(Database.getInstance().personData[i].id_modulo,Database.getInstance().personData[i].id_nombre,name_modelo.substr(0,name.length-1));
 				    }
 				}
 				if(proyecto_zip=="amfphp.zip"){
