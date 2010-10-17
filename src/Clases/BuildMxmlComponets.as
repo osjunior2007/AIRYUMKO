@@ -282,11 +282,11 @@ package Clases
 			//create the main view
 		    Zipfile.getInstance().MainApp='<?xml version="1.0" encoding="utf-8"?>'+"\n"; 
 		    Zipfile.getInstance().MainApp+='<mx:Application xmlns:mx="http://www.adobe.com/2006/mxml"'+"\n"; 
-		    Zipfile.getInstance().MainApp+='xmlns:swiz="http://swiz.swizframework.org" xmlns:views="views.*"'+"\n";
+		    Zipfile.getInstance().MainApp+='xmlns:swiz="http://swiz.swizframework.org" xmlns:views="Views.*"'+"\n";
 			Zipfile.getInstance().MainApp+='<swiz:SwizConfig'+"\n";
 			Zipfile.getInstance().MainApp+='strict="true"'+"\n";
 			Zipfile.getInstance().MainApp+='mediateBubbledEvents="true"'+"\n";
-			Zipfile.getInstance().MainApp+='viewPackages="views"'+"\n";
+			Zipfile.getInstance().MainApp+='viewPackages="Views"'+"\n";
 			Zipfile.getInstance().MainApp+='injectionEvent="preinitialize"'+"\n";
 			Zipfile.getInstance().MainApp+='beanLoaders="{ [ Beans ] }" />'+"\n";
 			Zipfile.getInstance().MainApp+='<views:MainView id="mainView" />'+"\n";

@@ -109,11 +109,12 @@ package Clases
 		   var cadena:String=""
 		   cadena+="    public function Delete(event:Event):void"+"\n";
 		   cadena+="     {"+"\n";
+		   cadena+="      if (_view.datos.selectedIndex>=0){ 	"+"\n";
 		   cadena+="       "+value.toLocaleLowerCase()+".id=_view.datos.selectedItem.id"+"\n";
 		   cadena+='        Alert.show( "Estas seguro?","Confirmación de Borrado", Alert.YES| Alert.NO,null,confirmHandler,null,Alert.YES);'+"\n";
 		   cadena+="        }else{"+"\n";
 		   cadena+='       	Alert.show("Seleccione un elemento.");'+"\n";
-		   cadena+="        }"+"\n";
+		   cadena+="       }"+"\n";
 		   cadena+="     }";
 	  	   return cadena;
 		}
@@ -187,6 +188,7 @@ package Clases
 		   cadena+="	  _view."+value.substr(0,1).toLocaleUpperCase()+value.substr(1,value.length)+"Form.submitBtn.addEventListener(MouseEvent.CLICK, Create );"+"\n";
 		   cadena+="	  _view."+value.substr(0,1).toLocaleUpperCase()+value.substr(1,value.length)+"Form.updateBtn.addEventListener(MouseEvent.CLICK, Update );"+"\n";
 		   cadena+="      _view."+value.substr(0,1).toLocaleUpperCase()+value.substr(1,value.length)+"Form.backlBtn.addEventListener(MouseEvent.CLICK, BackBtnClick );"+"\n";
+	  	   cadena+="}"+"\n";
 	  	   return cadena;
 		}
 
@@ -254,7 +256,6 @@ package Clases
 		  cadena+=MVC_Controller_Clear(Clear_model_var)+"\n";
 		  cadena+=MVC_Controller_confirmHandler(value)+"\n";
 		  cadena+=MVC_Controller_cleanup(value)+"\n";
-		  cadena+="}"+"\n";
 		  cadena+="}"+"\n";
 		  return cadena;
 		}
