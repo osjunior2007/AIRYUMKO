@@ -155,7 +155,7 @@ package Clases
 					name=name.substr(0,1).toLocaleUpperCase()+name.substr(1,name.length);
 					BuildMxmlComponets.getInstance().init_value();
 					BuildMxmlComponets.getInstance().Create_ControllerAndModels(name,name_modelo,user_database,password_database,Database.getInstance().personData[i].id_modulo,i);
-				    add_file(this.proyecto_name+"/src/Controllers/"+name.substr(0,name.length-1)+"Controller.as",CreateMVC.getInstance().CREATE_CONTROLLER(name.substr(0,name.length-1),Database.getInstance().personData[i].id_modulo));
+				    add_file(this.proyecto_name+"/src/Controllers/"+name.substr(0,name.length-1)+"Controller.as",CreateMVC.getInstance().CREATE_CONTROLLER(name.substr(0,name.length-1),Database.getInstance().personData[i].id_modulo, BuildMxmlComponets.getInstance().IF_MODULO_RELATION(Database.getInstance().personData[i].id_modulo)));
 					add_file(this.proyecto_name+"/src/Models/"+name.substr(0,name.length-1)+"Model.as",CreateMVC.getInstance().CREATE_MODEL(name.substr(0,name.length-1),Database.getInstance().personData[i].id_modulo));
 					mediators_name+='<mediators:'+name.substr(0,name.length-1)+'Controller id="'+name.substr(0,name.length-1).toLocaleLowerCase()+'" />';
 					BuildMxmlComponets.getInstance().CREATE_SQL_MIGRATION(Database.getInstance().personData[i].id_modulo,Database.getInstance().personData[i].nombre,Zipfile.getInstance().list_components)

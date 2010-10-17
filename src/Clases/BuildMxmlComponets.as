@@ -56,6 +56,46 @@ package Clases
 				Zipfile.getInstance().MainApp+='</s:NavigatorContent>'+" \n"+" \n";
 			}
 		}
+		
+		public function CREATE_INDEX_MXML(id:String,nombre:String,list_components:Array):String
+		{
+		   var cadena:String="";
+		  if(IF_MODULO_RELATION(id)==0){
+		   cadena+='<s:Group xmlns:'+nombre.substr(0,1).toLocaleLowerCase()+nombre.substr(1,nombre.length-2)+'="Views.'+nombre.substr(0,1).toLocaleUpperCase()+nombre.substr(1,nombre.length-2)+'.*"'+'\n';   
+           cadena+='xmlns:fx="http://ns.adobe.com/mxml/2009"'+"\n"; 
+           cadena+='xmlns:s="library://ns.adobe.com/flex/spark"'+"\n";  
+           cadena+='xmlns:mx="library://ns.adobe.com/flex/mx"'+"\n";  
+           cadena+='width="100%" height="100%">'+"\n";  
+           cadena+='<mx:ViewStack    x="0" y="0" id="'+nombre.substr(0,1).toLocaleUpperCase()+nombre.substr(1,nombre.length-2)+'View" width="100%" height="100%">'+"\n";
+           cadena+='<s:NavigatorContent   x="0" y="0"  width="98%" height="98%" >'+"\n";
+           cadena+=CREATE_DATAGRID(id,list_components);
+           cadena+='<mx:Button   id="NewBtn" label="Crear" enabled="true" width="86" x="20" y="{datos.height+50}" />'+"\n";
+           cadena+='</s:NavigatorContent>'+"\n";
+           cadena+='<s:NavigatorContent   x="0" y="0"  width="98%" height="98%" >'+"\n";
+           cadena+='<'+nombre.substr(0,1).toLocaleLowerCase()+nombre.substr(1,nombre.length-2)+':'+nombre.substr(0,1).toLocaleUpperCase()+nombre.substr(1,nombre.length-2)+'Form id="'+nombre.substr(0,1).toLocaleUpperCase()+nombre.substr(1,nombre.length-2)+'Form"/>'+"\n";
+           cadena+='</s:NavigatorContent>'+"\n";
+           cadena+='</mx:ViewStack>'+"\n";
+           cadena+='</s:Group>'+"\n";
+          }else{
+           cadena+='<?xml version="1.0" encoding="utf-8"?>'+"\n";  
+           cadena+='<s:Group xmlns:fx="http://ns.adobe.com/mxml/2009"'+"\n";  
+		   cadena+=' xmlns:s="library://ns.adobe.com/flex/spark"'+"\n"; 
+		   cadena+=' xmlns:mx="library://ns.adobe.com/flex/mx"'+"\n";   
+		   cadena+=' xmlns:'+nombre.substr(0,1).toLocaleLowerCase()+nombre.substr(1,nombre.length-2)+'="views.'+nombre.substr(0,1).toLocaleLowerCase()+nombre.substr(1,nombre.length-2)+'.*">'+"\n"; 
+	       cadena+='<fx:Declarations>'+"\n"; 
+		   cadena+='<s:TitleWindow id="windows_'+nombre.substr(0,1).toLocaleLowerCase()+nombre.substr(1,nombre.length-2)+':'+nombre.substr(0,1).toLocaleLowerCase()+nombre.substr(1,nombre.length-2)+'" title="'+nombre.substr(0,1).toLocaleLowerCase()+nombre.substr(1,nombre.length-2)+'" width="100%" height="100%" >'+"\n"; 
+           cadena+=' <'+nombre.substr(0,1).toLocaleLowerCase()+nombre.substr(1,nombre.length-2)+':'+nombre.substr(0,1).toLocaleLowerCase()+nombre.substr(1,nombre.length-2)+'Form/>'+"\n"; 
+           cadena+='</s:TitleWindow>	'+"\n"; 	
+	       cadena+='</fx:Declarations>'+"\n"; 
+           cadena+=CREATE_DATAGRID(id,list_components);
+	       cadena+='<mx:Button id="btn_add"  top="{datos.height+5}" left="0" label="Add" />'+"\n"; 
+	       cadena+='<mx:Button id="btn_update" top="{datos.height+5}" left="80" label="Update" />'+"\n"; 
+           cadena+='</s:Group>'+"\n"; 
+          }
+		   return cadena;
+	  }
+		
+		
 
 
 		public function CREATE_VIEW(id:String,nombre:String,list_components:Array):void
@@ -64,27 +104,9 @@ package Clases
 			   IDEComponentes.getInstance().posx=IDEComponentes.getInstance().posx+15;
 				if(IF_CONTAIN_COMPONENTS(id)==1)
 				{
-                   
-                   // Create Index mxml
-                   cadena+='<s:Group xmlns:'+nombre.substr(0,1).toLocaleLowerCase()+nombre.substr(1,nombre.length-2)+'="Views.'+nombre.substr(0,1).toLocaleUpperCase()+nombre.substr(1,nombre.length-2)+'.*"'+'\n';   
-	               cadena+='xmlns:fx="http://ns.adobe.com/mxml/2009"'+"\n"; 
-	               cadena+='xmlns:s="library://ns.adobe.com/flex/spark"'+"\n";  
-	               cadena+='xmlns:mx="library://ns.adobe.com/flex/mx"'+"\n";  
-	               cadena+='width="100%" height="100%">'+"\n";  
-                   cadena+='<mx:ViewStack    x="0" y="0" id="'+nombre.substr(0,1).toLocaleUpperCase()+nombre.substr(1,nombre.length-2)+'View" width="100%" height="100%">'+"\n";
-                   cadena+='<s:NavigatorContent   x="0" y="0"  width="98%" height="98%" >'+"\n";
-                   cadena+=CREATE_DATAGRID(id,list_components);
-                   cadena+='<mx:Button   id="createBtn" label="Crear" enabled="true" width="86" x="20" y="{datos.height+50}" />'+"\n";
-                   cadena+='</s:NavigatorContent>'+"\n";
-                   cadena+='<s:NavigatorContent   x="0" y="0"  width="98%" height="98%" >'+"\n";
-                   cadena+='<'+nombre.substr(0,1).toLocaleLowerCase()+nombre.substr(1,nombre.length-2)+':'+nombre.substr(0,1).toLocaleUpperCase()+nombre.substr(1,nombre.length-2)+'Form id="'+nombre.substr(0,1).toLocaleUpperCase()+nombre.substr(1,nombre.length-2)+'Form"/>'+"\n";
-                   cadena+='</s:NavigatorContent>'+"\n";
-                   cadena+='</mx:ViewStack>'+"\n";
-                   cadena+='</s:Group>'+"\n";
-                 
-                   Zipfile.getInstance().add_file(Zipfile.getInstance().proyecto_name+"/src/Views/"+nombre.substr(0,1).toLocaleUpperCase()+nombre.substr(1,nombre.length-2)+"/"+nombre.substr(0,1).toLocaleUpperCase()+nombre.substr(1,nombre.length-2)+"Index.mxml",cadena);
-                 
-                   //Create Form Mxml
+                //Create Index Mxml
+                 Zipfile.getInstance().add_file(Zipfile.getInstance().proyecto_name+"/src/Views/"+nombre.substr(0,1).toLocaleUpperCase()+nombre.substr(1,nombre.length-2)+"/"+nombre.substr(0,1).toLocaleUpperCase()+nombre.substr(1,nombre.length-2)+"Index.mxml",CREATE_INDEX_MXML(id,nombre,list_components));
+                 //Create Form Mxml
                   cadena="";
                   cadena+='<s:Group  '+CREATE_VIEW_PATH(id,nombre,list_components)+"\n";
                   cadena+='xmlns:fx="http://ns.adobe.com/mxml/2009" ' + "\n";
@@ -97,7 +119,7 @@ package Clases
 			      cadena+='  <mx:Button  id="submitBtn" label="Create" enabled="true" width="86" x="25" y="20" />'+"\n";
 			      cadena+='  <mx:Button  id="updateBtn" label="Update" enabled="true" width="86" x="121" y="20" />'+"\n";
 			      if (IF_MODULO_RELATION(id)==0){
-			      cadena+='<mx:Button id="backlBtn" label="Atras" />'+"\n";
+			      cadena+='  <mx:Button id="backlBtn" label="Atras" />'+"\n";
 			      }
 			     
 			      cadena+='</s:HGroup>'+"\n";

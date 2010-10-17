@@ -192,7 +192,7 @@ package Clases
 	  	   return cadena;
 		}
 
-		public function CREATE_CONTROLLER(value:String,id:String):String
+		public function CREATE_CONTROLLER(value:String,id:String,type:int):String
 		{
 		  var cadena:String="";
 		  var relations:String="";
@@ -230,7 +230,7 @@ package Clases
 		  cadena+="import Models."+value.substr(0,1).toLocaleUpperCase()+value.substr(1,value.length)+"Model;"+"\n";
 		  cadena+="import flash.events.Event;"+"\n";
 		  cadena+="import mx.controls.DataGrid;"+"\n";
-		  cadena+="import views."+value.substr(0,1).toLocaleUpperCase()+value.substr(1,value.length)+".*;"+"\n";
+		  cadena+="import Views."+value.substr(0,1).toLocaleUpperCase()+value.substr(1,value.length)+".*;"+"\n";
 		  cadena+="import flash.events.MouseEvent;"+"\n";
 	      cadena+="import mx.events.IndexChangedEvent;"+"\n";
 	      cadena+="import mx.events.CloseEvent;"+"\n";
@@ -256,6 +256,7 @@ package Clases
 		  cadena+=MVC_Controller_Clear(Clear_model_var)+"\n";
 		  cadena+=MVC_Controller_confirmHandler(value)+"\n";
 		  cadena+=MVC_Controller_cleanup(value)+"\n";
+		  cadena+=" }"+"\n";
 		  cadena+="}"+"\n";
 		  return cadena;
 		}
