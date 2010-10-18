@@ -43,8 +43,8 @@ package Clases
 	       cadena+="   {   "+"\n";  
 	       cadena+=model_var;
            cadena+='     if(this.type=="Show"){'+"\n";
-	       cadena+='       _view.'+value.substr(0,1).toLocaleLowerCase()+ value.substr(1,value.length).toString()+'Form.submitBtn.enabled=false;'+"\n";
-		   cadena+='      _view.'+value.substr(0,1).toLocaleLowerCase()+ value.substr(1,value.length).toString()+'Form.updateBtn.enabled=true;'+"\n";	
+	       cadena+='       _view.'+value.substr(0,1).toUpperCase()+ value.substr(1,value.length).toString()+'Form.submitBtn.enabled=false;'+"\n";
+		   cadena+='      _view.'+value.substr(0,1).toUpperCase()+ value.substr(1,value.length).toString()+'Form.updateBtn.enabled=true;'+"\n";	
 	       cadena+='     }else{'+"\n";
 	       cadena+='      _view.'+value.substr(0,1).toUpperCase()+ value.substr(1,value.length).toString()+'Form.submitBtn.enabled=true;'+"\n";
 		   cadena+='     _view.'+value.substr(0,1).toUpperCase()+ value.substr(1,value.length).toString()+'Form.updateBtn.enabled=false;'+"\n";		

@@ -300,7 +300,7 @@ package Clases
 		public function CREATE_MAIN_VIEW_APPLICATION():void
 		{
             //Create the  Bean application
-			Zipfile.getInstance().MainApp='<?xml version="1.0" encoding="utf-8"?>'+" \n"+'<s:Application  xmlns="Views.*"'+'\n'+Zipfile.getInstance().view_path+' xmlns:fx="http://ns.adobe.com/mxml/2009" '+'\n'+' xmlns:s="library://ns.adobe.com/flex/spark" '+'\n'+' xmlns:mx="library://ns.adobe.com/flex/mx">'+" \n"+'<mx:TabNavigator   x="10" y="22" width="98%" height="95%">'+" \n"+ Zipfile.getInstance().MainApp;
+			Zipfile.getInstance().MainApp='<?xml version="1.0" encoding="utf-8"?>'+" \n"+'<s:Application  xmlns="Views.*"'+'\n'+Zipfile.getInstance().view_path+' xmlns:fx="http://ns.adobe.com/mxml/2009" '+'\n'+' xmlns:s="library://ns.adobe.com/flex/spark" '+'\n'+' xmlns:mx="library://ns.adobe.com/flex/mx" width="100%" height="100%">'+" \n"+'<mx:TabNavigator   x="10" y="22" width="100%" height="100%">'+" \n"+ Zipfile.getInstance().MainApp;
 			Zipfile.getInstance().MainApp+="</mx:TabNavigator>"+" \n"+"</s:Application>";
 	        Zipfile.getInstance().add_file(Zipfile.getInstance().proyecto_name+"/src/Views/MainView.mxml",Zipfile.getInstance().MainApp);
 			
