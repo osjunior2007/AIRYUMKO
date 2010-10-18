@@ -209,7 +209,7 @@ package Clases
 		  	var sw:int=0;
 		  	var cadena:String="";
 		  	
-		   cadena+=' top="0"  horizontalScrollPolicy="auto" id="datos"  width="100%" height="150" >'+"\n"
+		   cadena+='<mx:DataGrid top="0"  horizontalScrollPolicy="auto" id="datos"  width="100%" height="150" >'+"\n"
            cadena+='<mx:columns>'+"\n"
 		   cadena+='<mx:DataGridColumn   dataField="options" width="25" headerText=" " editable="false">'+"\n"
 		   cadena+=' <mx:itemRenderer>'+"\n"
