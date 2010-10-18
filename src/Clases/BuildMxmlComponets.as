@@ -304,7 +304,7 @@ package Clases
 			//create the main view
 		    Zipfile.getInstance().MainApp='<?xml version="1.0" encoding="utf-8"?>'+"\n"; 
 		    Zipfile.getInstance().MainApp+='<mx:Application xmlns:mx="http://www.adobe.com/2006/mxml"'+"\n"; 
-		    Zipfile.getInstance().MainApp+='xmlns:swiz="http://swiz.swizframework.org" xmlns:views="Views.*"'+"\n";
+		    Zipfile.getInstance().MainApp+='xmlns:swiz="http://swiz.swizframework.org" xmlns:views="Views.*">'+"\n";
 			Zipfile.getInstance().MainApp+='<swiz:SwizConfig'+"\n";
 			Zipfile.getInstance().MainApp+='strict="true"'+"\n";
 			Zipfile.getInstance().MainApp+='mediateBubbledEvents="true"'+"\n";
