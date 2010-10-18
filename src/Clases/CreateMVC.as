@@ -190,6 +190,30 @@ package Clases
 		  return cadena;
 		}
 		
+		
+		public function MVC_Controller_Relation_Form(value:String):String
+		{
+			 var cadena:String="";
+		  cadena+="	 protected function "+value.substr(0,1).toUpperCase()+value.substr(1,value.length)+"_Form(event:Event):void"+"\n";
+          cadena+="  {"+"\n";
+          cadena+="       PopUpManager.addPopUp(_view.windows_"+value.substr(0,1).toLocaleLowerCase()+value.substr(1,value.length)+",_view, true);"+"\n";
+          cadena+="       PopUpManager.centerPopUp(_view.windows_"+value.substr(0,1).toLocaleLowerCase()+value.substr(1,value.length)+" as IFlexDisplayObject );"+"\n";
+          cadena+="    }"+"\n";
+          return cadena;
+		}
+		
+		public function MVC_Controller_Form_Close(value:String):String
+		{
+			 var cadena:String="";
+		  cadena+="	 protected function "+value.substr(0,1).toUpperCase()+value.substr(1,value.length)+"_Form_close(event:Event):void"+"\n";
+          cadena+="  {"+"\n";
+          cadena+="       PopUpManager.removePopUp(evt.currentTarget as IFlexDisplayObject);"+"\n";
+          cadena+="  }"+"\n";
+          return cadena;
+		}
+		
+		
+		
 		public function MVC_Controller_handleActiveViewChanged(value:String):String
 		{
 		   var cadena:String="";	
@@ -256,8 +280,9 @@ package Clases
 		  
 		  //init_model_var
 		  cadena+=MVC_Controller_Init(value,type)+"\n";
-		  cadena+=MVC_Controller_handleActiveViewChanged(value)+"\n";
 		  cadena+=MVC_Controller_List(value)+"\n";
+		  if(type==0){
+		  cadena+=MVC_Controller_handleActiveViewChanged(value)+"\n";
 		  cadena+=MVC_Controller_New(value,init_model_var)+"\n";
 		  cadena+= MVC_Controller_Show(value,datagrid_model_var)+"\n";
 		  cadena+=MVC_Controller_Create(value,form_model_var)+"\n";
@@ -268,6 +293,12 @@ package Clases
 		  cadena+=MVC_Controller_Clear(Clear_model_var)+"\n";
 		  cadena+=MVC_Controller_confirmHandler(value)+"\n";
 		  cadena+=MVC_Controller_cleanup(value)+"\n";
+		  }
+		  if(type==1){
+		  cadena+=MVC_Controller_Relation_Form(value)+"\n";
+		  cadena+=MVC_Controller_Form_Close(value)+"\n";
+		  }
+		  
 		  cadena+=" }"+"\n";
 		  cadena+="}"+"\n";
 		  return cadena;
