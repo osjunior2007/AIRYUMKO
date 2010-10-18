@@ -43,11 +43,11 @@ package Clases
 	       cadena+="   {   "+"\n";  
 	       cadena+=model_var;
            cadena+='     if(this.type=="Show"){'+"\n";
-	       cadena+='       _view.submitBtn.enabled=false;'+"\n";
-		   cadena+='      _view.updateBtn.enabled=true;'+"\n";	
+	       cadena+='       _view.'+value.substr(0,1).toLocaleLowerCase()+ value.substr(1,value.length).toString()+'Form.submitBtn.enabled=false;'+"\n";
+		   cadena+='      _view.'+value.substr(0,1).toLocaleLowerCase()+ value.substr(1,value.length).toString()+'Form.updateBtn.enabled=true;'+"\n";	
 	       cadena+='     }else{'+"\n";
-	       cadena+='      _view.submitBtn.enabled=true;'+"\n";
-		   cadena+='     _view.updateBtn.enabled=false;'+"\n";		
+	       cadena+='      _view.'+value.substr(0,1).toLocaleLowerCase()+ value.substr(1,value.length).toString()+'Form.submitBtn.enabled=true;'+"\n";
+		   cadena+='     _view.'+value.substr(0,1).toLocaleLowerCase()+ value.substr(1,value.length).toString()+'Form.updateBtn.enabled=false;'+"\n";		
 	       cadena+='     }'+"\n";
 		   cadena+=' }	'+"\n";
 		   return cadena;
@@ -59,7 +59,7 @@ package Clases
 		     cadena+="  protected function BackBtnClick( event:Event ):void"+"\n";
 		     cadena+="  { "+"\n";
 			 cadena+='     List({type:"all"},_view.datos);'+"\n";
-			 cadena+="     _view."+value.substr(0,1).toLocaleLowerCase()+ value.substr(1,value.length).toString()+"View.selectedIndex=0	"+"\n";	
+			 cadena+="     _view."+value.substr(0,1).toLocaleUpperCase()+ value.substr(1,value.length).toString()+"View.selectedIndex=0	"+"\n";	
 	         cadena+="  }"+"\n";
 		    return cadena;
 		}
@@ -204,7 +204,7 @@ package Clases
 		
 		public function MVC_Controller_Form_Close(value:String):String
 		{
-			 var cadena:String="";
+		  var cadena:String="";
 		  cadena+="	 protected function "+value.substr(0,1).toUpperCase()+value.substr(1,value.length)+"_Form_close(event:Event):void"+"\n";
           cadena+="  {"+"\n";
           cadena+="       PopUpManager.removePopUp(evt.currentTarget as IFlexDisplayObject);"+"\n";
@@ -270,6 +270,7 @@ package Clases
 		  cadena+="import flash.events.MouseEvent;"+"\n";
 	      cadena+="import mx.events.IndexChangedEvent;"+"\n";
 	      cadena+="import mx.events.CloseEvent;"+"\n";
+	      cadena+="import mx.controls.Alert;"+"\n";
 		  
 		  
 		  cadena+="     public class "+value.substr(0,1).toLocaleUpperCase()+value.substr(1,value.length)+"Controller extends ServiceRecords "+"\n"+"{"+"\n";
