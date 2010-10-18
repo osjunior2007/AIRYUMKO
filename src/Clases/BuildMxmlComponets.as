@@ -84,7 +84,7 @@ package Clases
            cadena+='<s:Group xmlns:fx="http://ns.adobe.com/mxml/2009"'+"\n";  
 		   cadena+=' xmlns:s="library://ns.adobe.com/flex/spark"'+"\n"; 
 		   cadena+=' xmlns:mx="library://ns.adobe.com/flex/mx"'+"\n";   
-		   cadena+=' xmlns:'+nombre.substr(0,1).toLocaleLowerCase()+nombre.substr(1,nombre.length-2)+'="views.'+nombre.substr(0,1).toLocaleLowerCase()+nombre.substr(1,nombre.length-2)+'.*">'+"\n"; 
+		   cadena+=' xmlns:'+nombre.substr(0,1).toLocaleUpperCase()+nombre.substr(1,nombre.length-2)+'="Views.'+nombre.substr(0,1).toUpperCase()+nombre.substr(1,nombre.length-2)+'.*">'+"\n"; 
 	       cadena+='<fx:Declarations>'+"\n"; 
 		   cadena+='<s:TitleWindow id="windows_'+nombre.substr(0,1).toLocaleLowerCase()+nombre.substr(1,nombre.length-2)+'" title="'+nombre.substr(0,1).toLocaleLowerCase()+nombre.substr(1,nombre.length-2)+'" width="100%" height="100%" >'+"\n"; 
            cadena+=' <'+nombre.substr(0,1).toLocaleLowerCase()+nombre.substr(1,nombre.length-2)+':'+nombre.substr(0,1).toLocaleLowerCase()+nombre.substr(1,nombre.length-2)+'Form/>'+"\n"; 
@@ -121,9 +121,7 @@ package Clases
              	  cadena+="<s:HGroup>"+"\n";
 			      cadena+='  <mx:Button  id="submitBtn" label="Create" enabled="true" width="86" x="25" y="20" />'+"\n";
 			      cadena+='  <mx:Button  id="updateBtn" label="Update" enabled="true" width="86" x="121" y="20" />'+"\n";
-			       Alert.show(IF_MODULO_RELATION(id).toString(),nombre);
-				  
-			      if (IF_MODULO_RELATION(id)==0){
+			       if (IF_MODULO_RELATION(id)==0){
 			      cadena+='  <mx:Button id="backlBtn" label="Atras" />'+"\n";
 			      }
 			     

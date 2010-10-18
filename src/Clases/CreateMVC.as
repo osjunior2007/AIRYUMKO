@@ -46,8 +46,8 @@ package Clases
 	       cadena+='       _view.'+value.substr(0,1).toLocaleLowerCase()+ value.substr(1,value.length).toString()+'Form.submitBtn.enabled=false;'+"\n";
 		   cadena+='      _view.'+value.substr(0,1).toLocaleLowerCase()+ value.substr(1,value.length).toString()+'Form.updateBtn.enabled=true;'+"\n";	
 	       cadena+='     }else{'+"\n";
-	       cadena+='      _view.'+value.substr(0,1).toLocaleLowerCase()+ value.substr(1,value.length).toString()+'Form.submitBtn.enabled=true;'+"\n";
-		   cadena+='     _view.'+value.substr(0,1).toLocaleLowerCase()+ value.substr(1,value.length).toString()+'Form.updateBtn.enabled=false;'+"\n";		
+	       cadena+='      _view.'+value.substr(0,1).toUpperCase()+ value.substr(1,value.length).toString()+'Form.submitBtn.enabled=true;'+"\n";
+		   cadena+='     _view.'+value.substr(0,1).toUpperCase()+ value.substr(1,value.length).toString()+'Form.updateBtn.enabled=false;'+"\n";		
 	       cadena+='     }'+"\n";
 		   cadena+=' }	'+"\n";
 		   return cadena;
@@ -151,13 +151,15 @@ package Clases
 		   return cadena;
          }
 
-		public function MVC_Controller_List(value:String):String
+		public function MVC_Controller_List(value:String,type:int):String
 		{
 	      var cadena:String="";
 		 cadena+="    public function List(param:Object,Grid:DataGrid):void"+"\n"
 	     cadena+="    { "+"\n";
 	     cadena+="      this.Index("+value.substr(0,1).toLocaleLowerCase()+ value.substr(1,value.length).toString()+",param,Grid);"+"\n";
+	     if(type==0){
 	     cadena+="       _view."+value.substr(0,1).toLocaleUpperCase()+ value.substr(1,value.length).toString()+"View.selectedIndex=0;"+"\n";
+	     }
 	     cadena+="    } "+"\n";
 		 return cadena;
 		}
@@ -205,7 +207,7 @@ package Clases
 		public function MVC_Controller_Form_Close(value:String):String
 		{
 		  var cadena:String="";
-		  cadena+="	 protected function "+value.substr(0,1).toUpperCase()+value.substr(1,value.length)+"_Form_close(event:Event):void"+"\n";
+		  cadena+="	 protected function "+value.substr(0,1).toUpperCase()+value.substr(1,value.length)+"_Form_close(evt:CloseEvent):void"+"\n";
           cadena+="  {"+"\n";
           cadena+="       PopUpManager.removePopUp(evt.currentTarget as IFlexDisplayObject);"+"\n";
           cadena+="  }"+"\n";
@@ -269,7 +271,11 @@ package Clases
 		  cadena+="import Views."+value.substr(0,1).toLocaleUpperCase()+value.substr(1,value.length)+".*;"+"\n";
 		  cadena+="import flash.events.MouseEvent;"+"\n";
 	      cadena+="import mx.events.IndexChangedEvent;"+"\n";
+	      if(type==1){ 
 	      cadena+="import mx.events.CloseEvent;"+"\n";
+          cadena+="import mx.core.IFlexDisplayObject;"+"\n";
+          cadena+="import mx.managers.PopUpManager;"+"\n";
+	      }
 	      cadena+="import mx.controls.Alert;"+"\n";
 		  
 		  
@@ -281,7 +287,7 @@ package Clases
 		  
 		  //init_model_var
 		  cadena+=MVC_Controller_Init(value,type)+"\n";
-		  cadena+=MVC_Controller_List(value)+"\n";
+		  cadena+=MVC_Controller_List(value,type)+"\n";
 		  if(type==0){
 		  cadena+=MVC_Controller_handleActiveViewChanged(value)+"\n";
 		  cadena+=MVC_Controller_New(value,init_model_var)+"\n";
