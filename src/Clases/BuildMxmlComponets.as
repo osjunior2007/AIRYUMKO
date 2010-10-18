@@ -90,7 +90,7 @@ package Clases
            cadena+=' <'+nombre.substr(0,1).toLocaleLowerCase()+nombre.substr(1,nombre.length-2)+':'+nombre.substr(0,1).toLocaleUpperCase()+nombre.substr(1,nombre.length-2)+'Form/>'+"\n"; 
            cadena+='</s:TitleWindow>	'+"\n"; 	
 	       cadena+='</fx:Declarations>'+"\n"; 
-           cadena+=CREATE_DATAGRID(id,list_components);
+           cadena+=CREATE_DATAGRID_WITH_OPTION(id,list_components);
 	       cadena+='<mx:Button id="btn_add"  top="{datos.height+5}" left="0" label="Add" />'+"\n"; 
 	       cadena+='<mx:Button id="btn_update" top="{datos.height+5}" left="80" label="Update" />'+"\n"; 
            cadena+='</s:Group>'+"\n"; 
@@ -202,6 +202,36 @@ package Clases
 		    return cadena;
 		}
 		
+		
+		
+		public function CREATE_DATAGRID_WITH_OPTION(id:String,list_components:Array):String
+		{
+		  	var sw:int=0;
+		  	var cadena:String="";
+		  	
+		   cadena+=' top="0"  horizontalScrollPolicy="auto" id="datos"  width="100%" height="150" >'+"\n"
+           cadena+='<mx:columns>'+"\n"
+		   cadena+='<mx:DataGridColumn   dataField="options" width="25" headerText=" " editable="false">'+"\n"
+		   cadena+=' <mx:itemRenderer>'+"\n"
+		   cadena+='  <fx:Component>'+"\n"
+		   cadena+='    <mx:CheckBox selected="{(data.options =='+" 'true')"+'?true:false}" click="{data.options = (data.options !='+" 'true') ? 'true' : 'false';}"+' " >'+"\n"
+		   cadena+='   </mx:CheckBox>'+"\n"
+		   cadena+='  </fx:Component>'+"\n"
+		   cadena+=' </mx:itemRenderer>'+"\n"
+		   cadena+='</mx:DataGridColumn>'+"\n"
+		
+			for(var i:int=1;i<=list_components.length-1;i++){
+				if(list_components[i].id_modulo==id){
+				   if(list_components[i].componente_id!="5"){
+			  	    cadena+=IDEComponentes.getInstance().Crear_Column_DataGrid(list_components[i].etiqueta,list_components[i].identificador,list_components[i].tamano);
+				    }	
+			 		
+				}	
+			}
+		    cadena+='</mx:columns>'+"\n"
+            cadena+=' </mx:DataGrid>'+"\n"
+			return cadena;	
+		}
 		
 		
 		public function CREATE_DATAGRID(id:String,list_components:Array):String
