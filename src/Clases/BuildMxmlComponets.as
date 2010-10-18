@@ -92,7 +92,7 @@ package Clases
 	       cadena+='<mx:Button id="btn_update" top="{datos.height+5}" left="80" label="Update" />'+"\n"; 
            cadena+='</s:Group>'+"\n"; 
           }
-		   return cadena;
+		  return cadena;
 	  }
 		
 		

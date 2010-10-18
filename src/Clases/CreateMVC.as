@@ -162,19 +162,31 @@ package Clases
 		 return cadena;
 		}
 
-		public function MVC_Controller_Init(value:String):String
+		public function MVC_Controller_Init(value:String,type:int):String
 		{
 		   var cadena:String="";
-		  cadena+='      [Autowire( view="true" )]'+"\n"
-	      cadena+="      public function set init_"+value.substr(0,1).toLocaleLowerCase()+value.substr(1,value.length)+"( value:"+value.substr(0,1).toLocaleUpperCase()+value.substr(1,value.length)+"Index):void"+"\n";
-		  cadena+="       {"+"\n";
-		  cadena+="         _view = value;"+"\n";
-		  cadena+='         List({type:"all"},_view.datos);'+"\n";	
-		  cadena+="         _view.NewBtn.addEventListener(MouseEvent.CLICK,New);"+"\n";
-		  cadena+="         _view.ShowBtn.addEventListener(MouseEvent.CLICK,Show);"+"\n";
-		  cadena+="         _view.DeleteBtn.addEventListener(MouseEvent.CLICK,Delete);"+"\n";
-	      cadena+="         _view."+value.substr(0,1).toLocaleUpperCase()+value.substr(1,value.length)+"View.addEventListener(IndexChangedEvent.CHANGE,handleActiveViewChanged);"+"\n";
-	      cadena+="        }"+"\n";
+		  if (type==0){
+			  cadena+='      [Autowire( view="true" )]'+"\n"
+		      cadena+="      public function set init_"+value.substr(0,1).toLocaleLowerCase()+value.substr(1,value.length)+"( value:"+value.substr(0,1).toLocaleUpperCase()+value.substr(1,value.length)+"Index):void"+"\n";
+			  cadena+="       {"+"\n";
+			  cadena+="         _view = value;"+"\n";
+			  cadena+='         List({type:"all"},_view.datos);'+"\n";	
+			  cadena+="         _view.NewBtn.addEventListener(MouseEvent.CLICK,New);"+"\n";
+			  cadena+="         _view.ShowBtn.addEventListener(MouseEvent.CLICK,Show);"+"\n";
+			  cadena+="         _view.DeleteBtn.addEventListener(MouseEvent.CLICK,Delete);"+"\n";
+		      cadena+="         _view."+value.substr(0,1).toLocaleUpperCase()+value.substr(1,value.length)+"View.addEventListener(IndexChangedEvent.CHANGE,handleActiveViewChanged);"+"\n";
+		      cadena+="        }"+"\n";
+	      }else{
+		      cadena+='      [Autowire( view="true" )]'+"\n"
+		      cadena+="      public function set init_"+value.substr(0,1).toLocaleLowerCase()+value.substr(1,value.length)+"( value:"+value.substr(0,1).toLocaleUpperCase()+value.substr(1,value.length)+"Index):void"+"\n";
+			  cadena+="       {"+"\n";
+			  cadena+="        _view = value;"+"\n";
+			  cadena+='         List({type:"all"},_view.datos);'+"\n";	
+			  cadena+="        _view.btn_add.addEventListener(MouseEvent.CLICK,"+value.substr(0,1).toUpperCase()+value.substr(1,value.length)+"_Form);"+"\n";
+			  cadena+="        _view.windows_"+value.substr(0,1).toLocaleLowerCase()+value.substr(1,value.length)+".addEventListener(CloseEvent.CLOSE,"+value.substr(0,1).toUpperCase()+value.substr(1,value.length)+"_Form_close);"+"\n";
+			  cadena+="       }"+"\n";
+	      }
+	    
 		  return cadena;
 		}
 		
@@ -243,7 +255,7 @@ package Clases
 	      cadena+="     protected var _view:"+value.substr(0,1).toLocaleUpperCase()+value.substr(1,value.length)+"Index"+"\n"+"\n";
 		  
 		  //init_model_var
-		  cadena+=MVC_Controller_Init(value)+"\n";
+		  cadena+=MVC_Controller_Init(value,type)+"\n";
 		  cadena+=MVC_Controller_handleActiveViewChanged(value)+"\n";
 		  cadena+=MVC_Controller_List(value)+"\n";
 		  cadena+=MVC_Controller_New(value,init_model_var)+"\n";
