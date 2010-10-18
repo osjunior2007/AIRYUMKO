@@ -271,9 +271,9 @@ package Clases
 		  cadena+="import Views."+value.substr(0,1).toLocaleUpperCase()+value.substr(1,value.length)+".*;"+"\n";
 		  cadena+="import flash.events.MouseEvent;"+"\n";
 	      cadena+="import mx.events.IndexChangedEvent;"+"\n";
-	      if(type==1){ 
 	      cadena+="import mx.events.CloseEvent;"+"\n";
-          cadena+="import mx.core.IFlexDisplayObject;"+"\n";
+          if(type==1){ 
+	      cadena+="import mx.core.IFlexDisplayObject;"+"\n";
           cadena+="import mx.managers.PopUpManager;"+"\n";
 	      }
 	      cadena+="import mx.controls.Alert;"+"\n";
