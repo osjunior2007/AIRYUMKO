@@ -115,7 +115,8 @@ package Clases
                   cadena+='xmlns:fx="http://ns.adobe.com/mxml/2009" ' + "\n";
                   cadena+=' xmlns:s="library://ns.adobe.com/flex/spark"'+"\n";
                   cadena+=' xmlns:mx="library://ns.adobe.com/flex/mx"  width="100%" height="100%">'+"\n";
-                  cadena+='<mx:Form  visible="true" width="100%">'+"\n";
+                  cadena+='<mx:Canvas  width="100%" height="100%">'+"\n";
+                  cadena+='<mx:Form  visible="true" width="95%" height="100%">'+"\n";
 		          cadena+=CREATE_FORM(id,nombre,list_components);
              	  cadena+="<mx:FormItem >"+"\n";             	  
              	  cadena+="<s:HGroup>"+"\n";
@@ -128,6 +129,7 @@ package Clases
 			      cadena+='</s:HGroup>'+"\n";
 		          cadena+='</mx:FormItem>'+"\n";
 	              cadena+='</mx:Form>'+"\n";
+	              cadena+='</mx:Canvas>'+"\n"; 
                   cadena+='</s:Group>'+"\n";
                   Zipfile.getInstance().add_file(Zipfile.getInstance().proyecto_name+"/src/Views/"+nombre.substr(0,1).toLocaleUpperCase()+nombre.substr(1,nombre.length-2)+"/"+nombre.substr(0,1).toLocaleUpperCase()+nombre.substr(1,nombre.length-2)+"Form.mxml",cadena);
             	}
