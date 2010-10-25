@@ -1,12 +1,11 @@
 package Clases
 {
-	import flash.data.SQLResult;
-    import flash.filesystem.File;
-	import flash.data.SQLStatement;
 	import flash.data.SQLConnection;
-	import flash.events.SQLEvent;
+	import flash.data.SQLResult;
+	import flash.data.SQLStatement;
 	import flash.events.SQLErrorEvent;
-    import mx.controls.Alert;
+	import flash.events.SQLEvent;
+	import flash.filesystem.File;
 
 
 	public class Database
@@ -16,7 +15,8 @@ package Clases
 	    public var dbStatement:SQLStatement;
        [Bindable]
         public var personData:Array;
-
+         [Bindable]
+        public var TreeData:Array;
 		public function Database()
 		{
 		}
@@ -97,6 +97,17 @@ package Clases
 			    dbStatement.addEventListener(SQLEvent.RESULT, onDBStatementSelectResult);
 				dbStatement.execute();
 			}
+			
+				public function getDataTree(query:String):void
+			{   
+				 dbStatement.text = query;
+				 dbStatement.removeEventListener(SQLEvent.RESULT, onDBStatementInsertResult);
+	         	 dbStatement.addEventListener(SQLEvent.RESULT, onDBStatementSelectResultTree);
+				 dbStatement.execute();
+			}
+			
+			
+			
 
 			 public function SetDatos(query:String):void
 		     {
@@ -105,16 +116,31 @@ package Clases
 			   dbStatement.addEventListener(SQLEvent.RESULT, onDBStatementInsertResult);
 			   dbStatement.execute();
 	        }
-
+              
+               
 
 			public function onDBStatementSelectResult(event:SQLEvent):void
 			{
 				var result:SQLResult = dbStatement.getResult();
-			    if (result != null)
+				  if (result != null)
 			    {
 			    	personData = result.data;
 			    }
+			   
 			}
+			
+			public function onDBStatementSelectResultTree(event:SQLEvent):void
+			{
+				var result_tree:SQLResult = dbStatement.getResult();
+				  if (result_tree != null)
+			    {
+			    	TreeData = result_tree.data;
+			    }
+			     
+			}
+			
+			
+			
 			public function onDBStatementInsertResult(event:SQLEvent):void
 			{
 			    if (exampleDB.totalChanges >= 1)

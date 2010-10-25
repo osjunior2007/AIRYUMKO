@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<mx:WindowedApplication title="YUMKOO"  initialize="Database.getInstance().initAndOpenDatabase()"  backgroundGradientAlphas="[1.0, 0.32]" backgroundGradientColors="[#A0B8C0, #878A8D]" minWidth="930" minHeight="700" xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" >
+<mx:WindowedApplication title="YUMKOO"  initialize="/*Database.getInstance().initAndOpenDatabase()*/"  backgroundGradientAlphas="[1.0, 0.32]" backgroundGradientColors="[#A0B8C0, #878A8D]" minWidth="930" minHeight="700" xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" >
 	<mx:HTTPService url="espanol.xml"   requestTimeout="0"   resultFormat="object" id="idiomas" result="Cargar_idioma(event,idiomas); "  useProxy="false"  method="POST" >
 	</mx:HTTPService>
 	<mx:Script>
@@ -19,8 +19,10 @@
 			import mx.managers.PopUpManager;
 			import Clases.Database;
             import mx.controls.Menu;
-
-
+            ///////////////////////////////////////////////////////
+            import flight.db.activeRecord.TableCreator;
+			import flash.utils.getQualifiedClassName;
+            import Clases.Models.*;  
          	////////////////////////////////////////////////////////////////////////
 			public var cont_id:int=0;
 			public var mensaje_eliminar:String;
@@ -34,6 +36,7 @@
 			public var tipo_relacion:String;
 			public var relacion_modulo_name:String;
 			public var id_modulo:String;
+			public var tree_index:int;
 			public var last_id:String;
 			public var datostree:String="";
 			public var objects:Object = {};
@@ -46,14 +49,37 @@
 			//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 			import mx.events.MenuEvent;
 
-			var stado:Boolean=false;
-			var cadena:String="";
+			public var stado:Boolean=false;
+			public var cadena:String="";
+			public var mod:Modulo=new Modulo();
+		    public var component:Componente=new Componente();
+		    public var relacion:Relacion=new Relacion();
+		    public var TreeObject:Object
+			
 			///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 		   public function init():void
 			{
+				
+				TableCreator.updateTable(component);
+				TableCreator.updateTable(mod);
+				TableCreator.updateTable(relacion);
+				if (mod.findBySQL("select id,name from Modulos")!=null){
+				myTree.dataProvider=IDEComponentes.getInstance().Crear_arbol(mod.findBySQL("select id,name from Modulos"));
+				myTree.selectedIndex=0;
+				TreeObject=(mod.findBySQL("select id,name from Modulos")[0])
+				dataset.dataProvider=component.findAll(" modulo_id='"+TreeObject.id+"'",[]);
+				Modulo_name.text=TreeObject.name;
+				enabled_componente(true);
+		 		dataset.dataProvider={};
+				dataset.dataProvider=component.findBySQL("select id,etiqueta,identificador,tamano,requerido,componente,tipo,modulo_relacionado,tipo_relacion from componentes where modulo_id='"+TreeObject.id+"'");
+			    this.id_modulo=TreeObject.id;
+			    idiomas.send();
+				
+			    combox_associaciones.dataProvider=mod.findBySQL("select id,name from modulos where id!="+this.id_modulo+"");
+				}else{
 				idiomas.send();
-				enabled_componente(false);
-				buscar_modelo_To_Tree();
+				enabled_componente(false);	
+				}
 				var screenBounds:Rectangle = Screen.mainScreen.bounds;
 				this.move((screenBounds.width-this.width)/2,(screenBounds.height-this.height)/2);
 				this.usePreloader=true;
@@ -131,10 +157,11 @@
 					Modulo_name.text=selectedNode.@label;
 					enabled_componente(true);
 			 		dataset.dataProvider={};
-					Crear_tabla_componente(selectedNode.@data)
-					this.id_modulo=selectedNode.@data;
-				    Database.getInstance().getDatos("select id_modulo,nombre from modulos where id_modulo!="+this.id_modulo+"");
-                    combox_associaciones.dataProvider=Database.getInstance().personData;
+			 		tree_index=myTree.selectedIndex;
+			 		dataset.dataProvider=component.findBySQL("select id,etiqueta,identificador,tamano,requerido,componente,tipo,modulo_relacionado,tipo_relacion from componentes where modulo_id='"+selectedNode.@data+"'");
+				    this.id_modulo=selectedNode.@data;
+				    combox_associaciones.dataProvider=mod.findBySQL("select id,name from modulos where id!="+this.id_modulo+"");
+			        
 				}
 
 			}
@@ -198,9 +225,10 @@
 			///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 			public function Eliminar_modulos(id_modulo:String):void
 			{
-				Database.getInstance().dbStatement.addEventListener(SQLEvent.RESULT, Eliminar_componentes);
-				Database.getInstance().getDatos("delete from modulos where id_modulo="+id_modulo+";");
-
+			    mod.deleteById(uint(id_modulo));
+			    component.deleteAll(" modulo_id='"+id_modulo+"'",[]);
+			    myTree.dataProvider=IDEComponentes.getInstance().Crear_arbol(mod.findBySQL("select id,name from Modulos"));
+		      
 			}
 			public function Eliminar_componentes(e:Event):void
 			{
@@ -216,13 +244,7 @@
 				Database.getInstance().getDatos("select id_modulo,nombre from modulos");
 			}
 
-			///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-			public function Crear_tabla_componente(id:String):void
-			{
-				Database.getInstance().dbStatement.removeEventListener(SQLEvent.RESULT, Create_Tree);
-				Database.getInstance().getDatos("select id_componente,etiqueta,identificador,tamano,requerido,componente,tipo,modulo_relacionado,tipo_relacion from componentes where id_modulo='"+id+"'");
-				dataset.dataProvider=Database.getInstance().personData;
-			}
+			
 
 
 			///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -265,7 +287,7 @@
 				  if(cadena.length==1&&cadena=="s"){
 				  	Alert.show("Este nombre no puede ser utilizado,seleccione otro!");
 				    }else{
-				    Modulo_name.text=cadena+"s";
+				    Modulo_name.text=cadena;
 				    ingresar_modelo();
 				    }
 
@@ -277,9 +299,12 @@
 
 			public function ingresar_modelo():void
 			{
-				Database.getInstance().SetDatos("insert into modulos select distinct null ,'"+cadena+"s' from modulos where not exists (select * from modulos where nombre='"+cadena+"') union select null ,'"+cadena+"s'");
-				buscar_modelo_To_Tree();
-				enabled_componente(true);
+				mod=new Modulo();
+				mod.name=cadena;
+				mod.save();
+				myTree.dataProvider=IDEComponentes.getInstance().Crear_arbol(mod.findBySQL("select id,name from Modulos"));
+				enabled_componente(true)
+			
 
 			}
 
@@ -288,25 +313,21 @@
 			public function Delete_relaciones_BD(e:Event):void
 			{
 			    Database.getInstance().dbStatement.removeEventListener(SQLEvent.RESULT,Delete_relaciones_BD);
-				Database.getInstance().dbStatement.addEventListener(SQLEvent.RESULT,Result_Delete_relaciones_BD);
+				//Database.getInstance().dbStatement.addEventListener(SQLEvent.RESULT,Result_Delete_relaciones_BD);
 				Database.getInstance().SetDatos("delete from relaciones where modulo_principal='"+this.id_modulo+"' and tipo_relacion='"+this.tipo_relacion+"' and modulo_relacionado='"+this.modulo_relacionado+"'");
 		    }
 
-			public function Result_Delete_relaciones_BD(e:Event):void
-			{
-			    Database.getInstance().dbStatement.removeEventListener(SQLEvent.RESULT,Result_Delete_relaciones_BD);
-			    Database.getInstance().getDatos("select id_componente,etiqueta,identificador,tamano,requerido,componente,tipo from componentes where id_modulo='"+this.id_modulo+"'");
-			    dataset.dataProvider=Database.getInstance().personData
-			}
-
+		
 			/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 			public function Delete_componente_BD():void
 			{
 				if(dataset.selectedIndex>=0){
-					Database.getInstance().dbStatement.addEventListener(SQLEvent.RESULT,Delete_relaciones_BD);
+					//Database.getInstance().dbStatement.addEventListener(SQLEvent.RESULT,Delete_relaciones_BD);
 					this.modulo_relacionado=dataset.selectedItem.modulo_relacionado;
 					this.tipo_relacion=dataset.selectedItem.tipo_relacion
-					Database.getInstance().SetDatos("delete from componentes where id_componente='"+dataset.selectedItem.id_componente+"'");
+					 component.deleteById(dataset.selectedItem.id);
+	        	     dataset.dataProvider=component.findBySQL("select id,etiqueta,identificador,tamano,requerido,componente,tipo,modulo_relacionado,tipo_relacion from componentes where modulo_id='"+this.id_modulo+"'");
+					
 	        	}else{
 					Alert.show("Seleccione un elemento !");
 				}
@@ -315,22 +336,43 @@
 			///////////////////////////////////////////////////////////////////////////
 			public function Crear_elemento(datagrid:DataGrid):void
 			{
-				 Database.getInstance().getDatos("select id_modulo from modulos where nombre='"+Modulo_name.text+"'");
-	             Database.getInstance().personData;
-	             this.id_modulo=Database.getInstance().personData[0].id_modulo;
-				if(identificador_text.text!=""&&Max_caracter_text.text!=""&&componente_etiqueta.text!=""){
+				 this.id_modulo=((mod.findBySQL("select id from Modulos where name='"+Modulo_name.text+"'"))[0].id).toString();
+				 if(identificador_text.text!=""&&Max_caracter_text.text!=""&&componente_etiqueta.text!=""){
 					cont_id++;
-					Database.getInstance().dbStatement.addEventListener(SQLEvent.RESULT,Create_relaciones);
-					agregar.enabled=false;
+					//agregar.enabled=false;
+					Create_relaciones()
 					 id=componentes_text.selectedItem.data;
 					   if (id == "5" || id == "6" || id == "7"){
-			            Database.getInstance().SetDatos("insert into componentes values (null,"+this.id_modulo+",'"+componente_etiqueta.text+"','"+identificador_text.text+"','"+Max_caracter_text.text+"','"+componentes_text.selectedItem.label+"','"+componentes_text.selectedItem.data+"','"+requerido_componente.selected+"','"+tipo_componente.selectedLabel+"','"+combox_associaciones.selectedItem.id_modulo+"','"+combox_relaciones.selectedItem.data+"')");
-				       }else{
-				         Database.getInstance().SetDatos("insert into componentes values (null,"+this.id_modulo+",'"+componente_etiqueta.text+"','"+identificador_text.text+"','"+Max_caracter_text.text+"','"+componentes_text.selectedItem.label+"','"+componentes_text.selectedItem.data+"','"+requerido_componente.selected+"','"+tipo_componente.selectedLabel+"','0','0')");
-				      }
-			     	componente_etiqueta.text=Max_caracter_text.text=identificador_text.text="";
-				    buscar_modelo_To_Tree();
-				}else{
+			              var component:Componente=new Componente();
+				           component.modulo_id=this.id_modulo;
+						   component.etiqueta=componente_etiqueta.text;
+						   component.identificador=identificador_text.text;
+						   component.tamano=Max_caracter_text.text;
+						   component.componente=componentes_text.selectedItem.label;
+						   component.componente_id=componentes_text.selectedItem.data;
+						   component.requerido=requerido_componente.selected.toString();
+						   component.tipo=tipo_componente.selectedLabel;
+						   component.modulo_relacionado=combox_associaciones.selectedItem.id_modulo;
+						   component.tipo_relacion=combox_relaciones.selectedItem.data;
+			           }else{
+				          var component:Componente=new Componente();
+				           component.modulo_id=this.id_modulo;
+						   component.etiqueta=componente_etiqueta.text;
+						   component.identificador=identificador_text.text;
+						   component.tamano=Max_caracter_text.text;
+						   component.componente=componentes_text.selectedItem.label;
+						   component.componente_id=componentes_text.selectedItem.data;
+						   component.requerido=requerido_componente.selected.toString();
+						   component.tipo=tipo_componente.selectedLabel;
+						   component.modulo_relacionado="0";
+						   component.tipo_relacion="0";
+				       }
+			     	   componente_etiqueta.text=Max_caracter_text.text=identificador_text.text="";
+				       component.save();
+				       myTree.dataProvider=IDEComponentes.getInstance().Crear_arbol(mod.findBySQL("select id,name from Modulos"));
+				       dataset.dataProvider=component.findBySQL("select id,etiqueta,identificador,tamano,requerido,componente,tipo,modulo_relacionado,tipo_relacion from componentes where modulo_id='"+this.id_modulo+"'");
+					
+			  	}else{
 					Alert.show(mensaje_validacion_vacio);
 				}
 
@@ -366,27 +408,19 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-			public function Create_relaciones(e:Event):void
+			public function Create_relaciones():void
 			{
-				Database.getInstance().dbStatement.removeEventListener(SQLEvent.RESULT,Create_relaciones);
-			    if(combox_relaciones.selectedItem.data!="0"){
-			      Database.getInstance().dbStatement.addEventListener(SQLEvent.RESULT,Resultado_Ingresar_relaciones);
-			      Database.getInstance().SetDatos("insert into relaciones values (null,'"+this.id_modulo+"','"+combox_relaciones.selectedItem.data+"','"+combox_associaciones.selectedItem.id_modulo+"')");
-                }else{
-                  if (this.id_modulo!=null){
-				     Database.getInstance().getDatos("select id_componente,etiqueta,identificador,tamano,requerido,componente,tipo,modulo_relacionado,tipo_relacion from componentes where id_modulo='"+this.id_modulo+"'");
-				     }else{
-				     Database.getInstance().getDatos("select id_componente,etiqueta,identificador,tamano,requerido,componente,tipo,modulo_relacionado,tipo_relacion from componentes where id_modulo='"+this.last_id+"'");
-				   }
-				   dataset.dataProvider={}
-				   dataset.dataProvider=Database.getInstance().personData;
-				   agregar.enabled=true;
-                 }
+				 if(combox_relaciones.selectedItem.data!="0"){
+			       relacion.modulo_principal=this.id_modulo;
+			       relacion.tipo_relacion=combox_relaciones.selectedItem.data;
+                   relacion.modulo_relacionado= combox_associaciones.selectedItem.id;
+                   relacion.save();
+                }
 			}
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-		public function Hbox_divider():void
+		public function Hbox_divider():void 
 		{
 		  if(!stado){
 		     currentState == 'normal' ? currentState = 'panel_builder' : currentState = 'normal'
@@ -421,8 +455,7 @@
 			if (componentes_text.selectedItem.data=="5"&&combox_relaciones.selectedItem.data!=0){
 				pertencia.visible=true;
 				combox_associaciones.visible=true;
-				 Database.getInstance().getDatos("select id_modulo,nombre from modulos where id_modulo!="+this.id_modulo+"");
-                 combox_associaciones.dataProvider=Database.getInstance().personData;
+			    combox_associaciones.dataProvider=mod.findBySQL("select id,name from modulos where name!='"+Modulo_name.text+"'");
 			}else
 			{
 			  pertencia.visible=false;
@@ -522,7 +555,7 @@
 				<mx:Label id="datos" x="10" y="335"/>
 				<mx:DataGrid horizontalScrollPolicy="auto" id="dataset" x="10" y="355" width="98%" height="204"  enabled="false">
 					<mx:columns>
-						<mx:DataGridColumn visible="false" id="data_id" dataField="id_componente" width="40"/>
+						<mx:DataGridColumn visible="false" id="data_id" dataField="id" width="40"/>
 						<mx:DataGridColumn id="data_etiqueta" dataField="etiqueta"/>
 						<mx:DataGridColumn width="130" id="data_Max_caracter" dataField="tamano"/>
 						<mx:DataGridColumn width="130" id="data_componente" dataField="componente"/>
@@ -537,7 +570,7 @@
 				<mx:Button click="Eliminar_modulos(this.id_modulo)" x="749" y="34" width="43" id="btn_delete"/>
 				<mx:ComboBox change="change_associacion()"  x="163" y="232" id="combox_relaciones"></mx:ComboBox>
 				<mx:Label visible="false" x="329" y="234" id="pertencia" width="25"/>
-				<mx:ComboBox id="combox_associaciones" labelField="nombre"  visible="false"   x="362" y="231.5" width="270"></mx:ComboBox>
+				<mx:ComboBox id="combox_associaciones" labelField="name"  visible="false"   x="362" y="231.5" width="270"></mx:ComboBox>
 			</mx:Canvas>
 		</mx:Panel>
 	</mx:HDividedBox>

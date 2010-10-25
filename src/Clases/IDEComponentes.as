@@ -333,9 +333,9 @@ package Clases
                  if(datos!=null){	
                	   for(var i:int=0;i<=datos.length-1;i++)
                 	  {
-              	      datostree+="<node label='"+datos[i].nombre+"'  data='"+datos[i].id_modulo+"' />"	
+              	      datostree+="<node label='"+datos[i].name+"'  data='"+datos[i].id+"' />"	
               	      }  
-              	      this.last_modulo_insert=datos[datos.length-1].id_modulo
+              	      this.last_modulo_insert=datos[datos.length-1].id
                      datostree+="</node>";
                     return datostree;
                   }else{
