@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<mx:WindowedApplication title="YUMKOO"  initialize="/*Database.getInstance().initAndOpenDatabase()*/"  backgroundGradientAlphas="[1.0, 0.32]" backgroundGradientColors="[#A0B8C0, #878A8D]" minWidth="930" minHeight="700" xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" >
+<mx:WindowedApplication title="YUMKOO"  backgroundGradientAlphas="[1.0, 0.32]" backgroundGradientColors="[#A0B8C0, #878A8D]" minWidth="930" minHeight="700" xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" >
 	<mx:HTTPService url="espanol.xml"   requestTimeout="0"   resultFormat="object" id="idiomas" result="Cargar_idioma(event,idiomas); "  useProxy="false"  method="POST" >
 	</mx:HTTPService>
 	<mx:Script>
@@ -59,9 +59,8 @@
 			///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 		   public function init():void
 			{
-				
-				TableCreator.updateTable(component);
 				TableCreator.updateTable(mod);
+			    TableCreator.updateTable(component);
 				TableCreator.updateTable(relacion);
 				if (mod.findBySQL("select id,name from Modulos")!=null){
 				myTree.dataProvider=IDEComponentes.getInstance().Crear_arbol(mod.findBySQL("select id,name from Modulos"));
@@ -74,7 +73,6 @@
 				dataset.dataProvider=component.findBySQL("select id,etiqueta,identificador,tamano,requerido,componente,tipo,modulo_relacionado,tipo_relacion from componentes where modulo_id='"+TreeObject.id+"'");
 			    this.id_modulo=TreeObject.id;
 			    idiomas.send();
-				
 			    combox_associaciones.dataProvider=mod.findBySQL("select id,name from modulos where id!="+this.id_modulo+"");
 				}else{
 				idiomas.send();
@@ -225,8 +223,11 @@
 			///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 			public function Eliminar_modulos(id_modulo:String):void
 			{
+			   
+			  
 			    mod.deleteById(uint(id_modulo));
 			    component.deleteAll(" modulo_id='"+id_modulo+"'",[]);
+			   	relacion.deleteAll("modulo_relacionado='"+uint(id_modulo)+"'",[])
 			    myTree.dataProvider=IDEComponentes.getInstance().Crear_arbol(mod.findBySQL("select id,name from Modulos"));
 		      
 			}
@@ -299,13 +300,11 @@
 
 			public function ingresar_modelo():void
 			{
-				mod=new Modulo();
-				mod.name=cadena;
-				mod.save();
-				myTree.dataProvider=IDEComponentes.getInstance().Crear_arbol(mod.findBySQL("select id,name from Modulos"));
+				var mymod:Modulo=new Modulo();
+				mymod.name=cadena;
+				mymod.save();
+				myTree.dataProvider=IDEComponentes.getInstance().Crear_arbol(mymod.findBySQL("select id,name from Modulos"));
 				enabled_componente(true)
-			
-
 			}
 
 			////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -325,8 +324,8 @@
 					//Database.getInstance().dbStatement.addEventListener(SQLEvent.RESULT,Delete_relaciones_BD);
 					this.modulo_relacionado=dataset.selectedItem.modulo_relacionado;
 					this.tipo_relacion=dataset.selectedItem.tipo_relacion
-					 component.deleteById(dataset.selectedItem.id);
-	        	     dataset.dataProvider=component.findBySQL("select id,etiqueta,identificador,tamano,requerido,componente,tipo,modulo_relacionado,tipo_relacion from componentes where modulo_id='"+this.id_modulo+"'");
+					component.deleteById(dataset.selectedItem.id);
+					 dataset.dataProvider=component.findBySQL("select id,etiqueta,identificador,tamano,requerido,componente,tipo,modulo_relacionado,tipo_relacion from componentes where modulo_id='"+this.id_modulo+"'");
 					
 	        	}else{
 					Alert.show("Seleccione un elemento !");
