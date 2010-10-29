@@ -131,6 +131,7 @@
 					modulo_name_vacio=servicio.lastResult.idioma.modulo_builder.modulo_name_vacio;
 					btn_crear_modulo.label=servicio.lastResult.idioma.modulo_builder.boton_crear_modulo;
 					boton_nuevo_modulo.label=servicio.lastResult.idioma.modulo_builder.boton_nuevo_modulo;
+					btn_delete.label=servicio.lastResult.idioma.modulo_builder.boton_delete_modulo;
 					boton_upload.label=servicio.lastResult.idioma.modulo_builder.boton_upload;
 					mensaje_modulo_vacio=servicio.lastResult.idioma.modulo_builder.mensaje_modulo_vacio;
 					relaciones.setItemAt({label:servicio.lastResult.idioma.modulo_builder.relacionship_tipo_0, data:0},0);
@@ -227,7 +228,9 @@
 			  
 			    mod.deleteById(uint(id_modulo));
 			    component.deleteAll(" modulo_id='"+id_modulo+"'",[]);
-			   	relacion.deleteAll("modulo_relacionado='"+uint(id_modulo)+"'",[])
+			   	relacion.deleteAll("modulo_relacionado='"+uint(id_modulo)+"'",[]);
+			   	Modulo_name.text="";
+			   	enabled_componente(false);
 			    myTree.dataProvider=IDEComponentes.getInstance().Crear_arbol(mod.findBySQL("select id,name from Modulos"));
 		      
 			}

@@ -30,6 +30,7 @@
 <modulo_name_vacio>El nombre del modulo no puede ser vacio !</modulo_name_vacio>
 <boton_crear_modulo>add</boton_crear_modulo>
 <boton_nuevo_modulo>new</boton_nuevo_modulo>
+<boton_delete_modulo>Delete</boton_delete_modulo>
 <boton_upload>Upload</boton_upload>
 <relacionship>Relaciones</relacionship>
 <relacionship_tipo_0>Ninguno</relacionship_tipo_0>
