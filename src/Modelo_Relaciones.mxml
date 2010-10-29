@@ -31,8 +31,8 @@
           }
       public function buscar_modelo_To_Tree():void
           {
-             Database.getInstance().dbStatement.addEventListener(SQLEvent.RESULT, Create_Tree);
-             Database.getInstance().getDatos("select id_modulo,nombre from modulos");
+             //Database.getInstance().dbStatement.addEventListener(SQLEvent.RESULT, Create_Tree);
+             //Database.getInstance().getDatos("select id_modulo,nombre from modulos");
 
           }
 
@@ -50,15 +50,15 @@
 
            public function buscar_todos_componentes(id:String):void
           {
-              Database.getInstance().dbStatement.addEventListener(SQLEvent.RESULT, relultado_buscar_todos_componentes);
-             Database.getInstance().getDatos("select id_modulo,nombre from modulos where id_modulo not in (select modulo_principal from relaciones where modulo_relacionado='"+id+"'  union  select modulo_relacionado from relaciones where modulo_principal='"+id+"' ) and id_modulo!='"+id+"'");
+             // Database.getInstance().dbStatement.addEventListener(SQLEvent.RESULT, relultado_buscar_todos_componentes);
+             //Database.getInstance().getDatos("select id_modulo,nombre from modulos where id_modulo not in (select modulo_principal from relaciones where modulo_relacionado='"+id+"'  union  select modulo_relacionado from relaciones where modulo_principal='"+id+"' ) and id_modulo!='"+id+"'");
 
 
           }
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////
            public function buscar_relaciones():void
           {
-          	   Database.getInstance().getDatos("select id,REPLACE(REPLACE(REPLACE(tipo_relacion,'0','Uno a uno'),'1','Uno a Muchos'),'2','Muchos a muchos') as tiporelacion,(select nombre from modulos where id_modulo=modulo_principal) as modulo_principal,(select nombre from modulos where id_modulo=modulo_relacionado) as modulo_relacionado from relaciones");
+          	   //Database.getInstance().getDatos("select id,REPLACE(REPLACE(REPLACE(tipo_relacion,'0','Uno a uno'),'1','Uno a Muchos'),'2','Muchos a muchos') as tiporelacion,(select nombre from modulos where id_modulo=modulo_principal) as modulo_principal,(select nombre from modulos where id_modulo=modulo_relacionado) as modulo_relacionado from relaciones");
                datos.dataProvider=Database.getInstance().personData;
                buscar_todos_componentes(this.id_modulo);
           }
@@ -70,7 +70,7 @@
           	tabla_relacionada=modulos_names.selectedItem.nombre;
           	id_relacionado=modulos_names.selectedItem.id_modulo;
           	   if (tabla_relacionada!=""){
-          	    Database.getInstance().SetDatos("insert into relaciones values (null,'"+this.id_modulo+"','"+this.tiporelaciones.selectedItem.data+"','"+this.modulos_names.selectedItem.id_modulo+"')");
+          	   // Database.getInstance().SetDatos("insert into relaciones values (null,'"+this.id_modulo+"','"+this.tiporelaciones.selectedItem.data+"','"+this.modulos_names.selectedItem.id_modulo+"')");
                	buscar_relaciones();
               }
                /*if(this.tiporelaciones.selectedItem.data!="2"){
@@ -89,14 +89,14 @@
        {
        	  Database.getInstance().dbStatement.removeEventListener(SQLEvent.RESULT, ingresar_tabla_principal);
        	  Database.getInstance().dbStatement.addEventListener(SQLEvent.RESULT, ingresar_tabla_relacionada);
-          Database.getInstance().SetDatos("insert into relaciones select null,id_modulo,'1','"+this.id_relacionado+"' from modulos where nombre='"+Modulo_name.text+"_"+this.tabla_relacionada+"'");
+         // Database.getInstance().SetDatos("insert into relaciones select null,id_modulo,'1','"+this.id_relacionado+"' from modulos where nombre='"+Modulo_name.text+"_"+this.tabla_relacionada+"'");
         }
 
 
         public function ingresar_tabla_relacionada(e:Event):void
        {
        	  Database.getInstance().dbStatement.removeEventListener(SQLEvent.RESULT, ingresar_tabla_relacionada);
-          Database.getInstance().SetDatos("insert into relaciones select null,id_modulo,'1','"+this.id_modulo+"' from modulos where nombre='"+Modulo_name.text+"_"+this.tabla_relacionada+"'");
+         // Database.getInstance().SetDatos("insert into relaciones select null,id_modulo,'1','"+this.id_modulo+"' from modulos where nombre='"+Modulo_name.text+"_"+this.tabla_relacionada+"'");
           buscar_relaciones();
           buscar_modelo_To_Tree();
        }
@@ -107,7 +107,7 @@
          public function Delete_relaciones():void
          {
          	 if(datos.selectedIndex>=0){
-         	  Database.getInstance().SetDatos("Delete from relaciones where id='"+datos.selectedItem.id+"'");
+         	//  Database.getInstance().SetDatos("Delete from relaciones where id='"+datos.selectedItem.id+"'");
               buscar_relaciones();
            }else{
            	Alert.show("Seleccione un elemento !");

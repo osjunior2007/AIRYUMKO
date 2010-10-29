@@ -51,29 +51,32 @@
 
 			public var stado:Boolean=false;
 			public var cadena:String="";
-			public var mod:Modulo=new Modulo();
+			/*public var mod:Modulo=new Modulo();
 		    public var component:Componente=new Componente();
-		    public var relacion:Relacion=new Relacion();
+		    public var relacion:Relacion=new Relacion();*/
 		    public var TreeObject:Object
 			
 			///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 		   public function init():void
 			{
-				TableCreator.updateTable(mod);
+				/*TableCreator.updateTable(mod);
 			    TableCreator.updateTable(component);
-				TableCreator.updateTable(relacion);
-				if (mod.findBySQL("select id,name from Modulos")!=null){
-				myTree.dataProvider=IDEComponentes.getInstance().Crear_arbol(mod.findBySQL("select id,name from Modulos"));
+				TableCreator.updateTable(relacion);*/
+				Database.getInstance().initAndOpenDatabase()
+				
+				
+				if (Database.getInstance().mod.findBySQL("select id,name from Modulos")!=null){
+				myTree.dataProvider=IDEComponentes.getInstance().Crear_arbol(Database.getInstance().mod.findBySQL("select id,name from Modulos"));
 				myTree.selectedIndex=0;
-				TreeObject=(mod.findBySQL("select id,name from Modulos")[0])
-				dataset.dataProvider=component.findAll(" modulo_id='"+TreeObject.id+"'",[]);
+				TreeObject=(Database.getInstance().mod.findBySQL("select id,name from Modulos")[0])
+				dataset.dataProvider=Database.getInstance().component.findAll(" modulo_id='"+TreeObject.id+"'",[]);
 				Modulo_name.text=TreeObject.name;
 				enabled_componente(true);
 		 		dataset.dataProvider={};
-				dataset.dataProvider=component.findBySQL("select id,etiqueta,identificador,tamano,requerido,componente,tipo,modulo_relacionado,tipo_relacion from componentes where modulo_id='"+TreeObject.id+"'");
+				dataset.dataProvider=Database.getInstance().component.findBySQL("select id,etiqueta,identificador,tamano,requerido,componente,tipo,modulo_relacionado,tipo_relacion from componentes where modulo_id='"+TreeObject.id+"'");
 			    this.id_modulo=TreeObject.id;
 			    idiomas.send();
-			    combox_associaciones.dataProvider=mod.findBySQL("select id,name from modulos where id!="+this.id_modulo+"");
+			    combox_associaciones.dataProvider=Database.getInstance().mod.findBySQL("select id,name from modulos where id!="+this.id_modulo+"");
 				}else{
 				idiomas.send();
 				enabled_componente(false);	
@@ -157,9 +160,9 @@
 					enabled_componente(true);
 			 		dataset.dataProvider={};
 			 		tree_index=myTree.selectedIndex;
-			 		dataset.dataProvider=component.findBySQL("select id,etiqueta,identificador,tamano,requerido,componente,tipo,modulo_relacionado,tipo_relacion from componentes where modulo_id='"+selectedNode.@data+"'");
+			 		dataset.dataProvider=Database.getInstance().component.findBySQL("select id,etiqueta,identificador,tamano,requerido,componente,tipo,modulo_relacionado,tipo_relacion from componentes where modulo_id='"+selectedNode.@data+"'");
 				    this.id_modulo=selectedNode.@data;
-				    combox_associaciones.dataProvider=mod.findBySQL("select id,name from modulos where id!="+this.id_modulo+"");
+				    combox_associaciones.dataProvider=Database.getInstance().mod.findBySQL("select id,name from modulos where id!="+this.id_modulo+"");
 			        
 				}
 
@@ -215,39 +218,18 @@
 
 
 
-			public function buscar_modelo_To_Tree():void
-			{
-				Database.getInstance().dbStatement.addEventListener(SQLEvent.RESULT, Create_Tree);
-				Database.getInstance().getDatos("select id_modulo,nombre from modulos");
-
-			}
 			///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 			public function Eliminar_modulos(id_modulo:String):void
 			{
 			   
-			  
-			    mod.deleteById(uint(id_modulo));
-			    component.deleteAll(" modulo_id='"+id_modulo+"'",[]);
-			   	relacion.deleteAll("modulo_relacionado='"+uint(id_modulo)+"'",[]);
+			    Database.getInstance().mod.deleteById(uint(id_modulo));
+			    Database.getInstance().component.deleteAll(" modulo_id='"+id_modulo+"'",[]);
+			   	Database.getInstance().relacion.deleteAll("modulo_relacionado='"+uint(id_modulo)+"'",[]);
 			   	Modulo_name.text="";
 			   	enabled_componente(false);
-			    myTree.dataProvider=IDEComponentes.getInstance().Crear_arbol(mod.findBySQL("select id,name from Modulos"));
+			    myTree.dataProvider=IDEComponentes.getInstance().Crear_arbol(Database.getInstance().mod.findBySQL("select id,name from Modulos"));
 		      
 			}
-			public function Eliminar_componentes(e:Event):void
-			{
-			    Database.getInstance().dbStatement.removeEventListener(SQLEvent.RESULT,Eliminar_componentes);
-			    Database.getInstance().dbStatement.addEventListener(SQLEvent.RESULT,result_delete_components);
-				Database.getInstance().getDatos("delete from componentes where id_modulo="+this.id_modulo+";");
-
-			}
-			public function result_delete_components(e:Event):void
-			{
-				Database.getInstance().dbStatement.removeEventListener(SQLEvent.RESULT,result_delete_components);
-				Database.getInstance().dbStatement.addEventListener(SQLEvent.RESULT,Create_Tree);
-				Database.getInstance().getDatos("select id_modulo,nombre from modulos");
-			}
-
 			
 
 
@@ -310,14 +292,7 @@
 				enabled_componente(true)
 			}
 
-			////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-			public function Delete_relaciones_BD(e:Event):void
-			{
-			    Database.getInstance().dbStatement.removeEventListener(SQLEvent.RESULT,Delete_relaciones_BD);
-				//Database.getInstance().dbStatement.addEventListener(SQLEvent.RESULT,Result_Delete_relaciones_BD);
-				Database.getInstance().SetDatos("delete from relaciones where modulo_principal='"+this.id_modulo+"' and tipo_relacion='"+this.tipo_relacion+"' and modulo_relacionado='"+this.modulo_relacionado+"'");
-		    }
+			
 
 		
 			/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -327,8 +302,8 @@
 					//Database.getInstance().dbStatement.addEventListener(SQLEvent.RESULT,Delete_relaciones_BD);
 					this.modulo_relacionado=dataset.selectedItem.modulo_relacionado;
 					this.tipo_relacion=dataset.selectedItem.tipo_relacion
-					component.deleteById(dataset.selectedItem.id);
-					 dataset.dataProvider=component.findBySQL("select id,etiqueta,identificador,tamano,requerido,componente,tipo,modulo_relacionado,tipo_relacion from componentes where modulo_id='"+this.id_modulo+"'");
+					 Database.getInstance().component.deleteById(dataset.selectedItem.id);
+					 dataset.dataProvider=Database.getInstance().component.findBySQL("select id,etiqueta,identificador,tamano,requerido,componente,tipo,modulo_relacionado,tipo_relacion from componentes where modulo_id='"+this.id_modulo+"'");
 					
 	        	}else{
 					Alert.show("Seleccione un elemento !");
@@ -338,7 +313,7 @@
 			///////////////////////////////////////////////////////////////////////////
 			public function Crear_elemento(datagrid:DataGrid):void
 			{
-				 this.id_modulo=((mod.findBySQL("select id from Modulos where name='"+Modulo_name.text+"'"))[0].id).toString();
+				 this.id_modulo=((Database.getInstance().mod.findBySQL("select id from Modulos where name='"+Modulo_name.text+"'"))[0].id).toString();
 				 if(identificador_text.text!=""&&Max_caracter_text.text!=""&&componente_etiqueta.text!=""){
 					cont_id++;
 					//agregar.enabled=false;
@@ -371,7 +346,7 @@
 				       }
 			     	   componente_etiqueta.text=Max_caracter_text.text=identificador_text.text="";
 				       component.save();
-				       myTree.dataProvider=IDEComponentes.getInstance().Crear_arbol(mod.findBySQL("select id,name from Modulos"));
+				       myTree.dataProvider=IDEComponentes.getInstance().Crear_arbol(Database.getInstance().mod.findBySQL("select id,name from Modulos"));
 				       dataset.dataProvider=component.findBySQL("select id,etiqueta,identificador,tamano,requerido,componente,tipo,modulo_relacionado,tipo_relacion from componentes where modulo_id='"+this.id_modulo+"'");
 					
 			  	}else{
@@ -379,33 +354,7 @@
 				}
 
 			}
-			//////////////////////////////////////////////////////////////////////////////
-			public function resultado_componentes(e:Event):void
-			{
-				Database.getInstance().dbStatement.removeEventListener(SQLEvent.RESULT,resultado_componentes);
-				if (this.id_modulo!=null){
-				Database.getInstance().getDatos("select id_componente,etiqueta,identificador,tamano,requerido,componente,tipo,modulo_relacionado,tipo_relacion from componentes where id_modulo='"+this.id_modulo+"'");
-				}else{
-				Database.getInstance().getDatos("select id_componente,etiqueta,identificador,tamano,requerido,componente,tipo,modulo_relacionado,tipo_relacion from componentes where id_modulo='"+this.last_id+"'");
-				}
-				dataset.dataProvider=Database.getInstance().personData;
-				agregar.enabled=true;
-
-			}
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-			public function Resultado_Ingresar_relaciones(e:Event):void
-			{
-				Database.getInstance().dbStatement.removeEventListener(SQLEvent.RESULT,Resultado_Ingresar_relaciones);
-			     if (this.id_modulo!=null){
-				     Database.getInstance().getDatos("select id_componente,etiqueta,identificador,tamano,requerido,componente,tipo,modulo_relacionado,tipo_relacion from componentes where id_modulo='"+this.id_modulo+"'");
-				     }else{
-				     Database.getInstance().getDatos("select id_componente,etiqueta,identificador,tamano,requerido,componente,tipo,modulo_relacionado,tipo_relacion from componentes where id_modulo='"+this.last_id+"'");
-				   }
-				   dataset.dataProvider={}
-				   dataset.dataProvider=Database.getInstance().personData;
-				   agregar.enabled=true;
-			}
+		
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -413,10 +362,10 @@
 			public function Create_relaciones():void
 			{
 				 if(combox_relaciones.selectedItem.data!="0"){
-			       relacion.modulo_principal=this.id_modulo;
-			       relacion.tipo_relacion=combox_relaciones.selectedItem.data;
-                   relacion.modulo_relacionado= combox_associaciones.selectedItem.id;
-                   relacion.save();
+			       Database.getInstance().relacion.modulo_principal=this.id_modulo;
+			       Database.getInstance().relacion.tipo_relacion=combox_relaciones.selectedItem.data;
+                   Database.getInstance().relacion.modulo_relacionado= combox_associaciones.selectedItem.id;
+                   Database.getInstance().relacion.save();
                 }
 			}
 
@@ -457,7 +406,7 @@
 			if (componentes_text.selectedItem.data=="5"&&combox_relaciones.selectedItem.data!=0){
 				pertencia.visible=true;
 				combox_associaciones.visible=true;
-			    combox_associaciones.dataProvider=mod.findBySQL("select id,name from modulos where name!='"+Modulo_name.text+"'");
+			    combox_associaciones.dataProvider=Database.getInstance().mod.findBySQL("select id,name from modulos where name!='"+Modulo_name.text+"'");
 			}else
 			{
 			  pertencia.visible=false;

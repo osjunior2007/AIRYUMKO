@@ -351,8 +351,7 @@ package Clases
 		    Zipfile.getInstance().add_file(Zipfile.getInstance().proyecto_name+"/src/"+Zipfile.getInstance().proyecto_name+".mxml",Zipfile.getInstance().MainApp);
 			//////////////////////////////////
 			
-			Database.getInstance().dbStatement.removeEventListener(SQLEvent.RESULT, Zipfile.getInstance().Result_build_MainMXML);
-
+		
 			Zipfile.getInstance().add_file(Zipfile.getInstance().proyecto_name+"/.actionScriptProperties",IDEComponentes.getInstance().Create_Flex_ActionScript_Properties(Zipfile.getInstance().proyecto_name));
 			Zipfile.getInstance().add_file(Zipfile.getInstance().proyecto_name+"/.flexProperties",IDEComponentes.getInstance().Create_Flex_Properties());
 			Zipfile.getInstance().add_file(Zipfile.getInstance().proyecto_name+"/.project",IDEComponentes.getInstance().Create_Proyect_Flex(Zipfile.getInstance().proyecto_name));

@@ -136,32 +136,36 @@ package Clases
 					}
 				}
 			}
-			get_relaciones();
+			 list_relaciones=Database.getInstance().relacion.findBySQL("select id,modulo_principal,tipo_relacion,modulo_relacionado from relacions");;
+			 list_components=Database.getInstance().component.findBySQL("select componente_id,modulo_id,etiqueta,identificador,tamano,replace(replace(tipo,'Numerico','0'),'Alfanumerico','1') as tipo,requerido,tipo_relacion,modulo_relacionado from componentes");
+             Result_build_MainMXML (Database.getInstance().mod.findBySQL("select name,id from modulos"));
+
+			
 		}
 		
 		//Esta funcion Construye el Main.xml y tambien el Amfphp server
-		public function Result_build_MainMXML (e:Event):void
+		public function Result_build_MainMXML (Modulos:Array):void
 		{
 			var name_modelo:String="";
 			var name:String="";
 			MainApp="";
 			mediators_name="";
-			if(Database.getInstance().personData!=null){
-				list_modulos=Database.getInstance().personData;
-				for(var i:int=0;i<=Database.getInstance().personData.length-1;i++){
-					name=Database.getInstance().personData[i].nombre;
-					name_modelo=Database.getInstance().personData[i].nombre;
+			if(Modulos!=null){
+				list_modulos=Modulos;
+				for(var i:int=0;i<=list_modulos.length-1;i++){
+					name=list_modulos[i].name;
+					name_modelo=list_modulos[i].name;
 					name_modelo=name_modelo.substring(0,name_modelo.length-1);
 					name=name.substr(0,1).toLocaleUpperCase()+name.substr(1,name.length);
 					BuildMxmlComponets.getInstance().init_value();
-					BuildMxmlComponets.getInstance().Create_ControllerAndModels(name,name_modelo,user_database,password_database,Database.getInstance().personData[i].id_modulo,i);
-				    add_file(this.proyecto_name+"/src/Controllers/"+name.substr(0,name.length-1)+"Controller.as",CreateMVC.getInstance().CREATE_CONTROLLER(name.substr(0,name.length-1),Database.getInstance().personData[i].id_modulo, BuildMxmlComponets.getInstance().IF_MODULO_RELATION(Database.getInstance().personData[i].id_modulo)));
-					add_file(this.proyecto_name+"/src/Models/"+name.substr(0,name.length-1)+"Model.as",CreateMVC.getInstance().CREATE_MODEL(name.substr(0,name.length-1),Database.getInstance().personData[i].id_modulo));
+					BuildMxmlComponets.getInstance().Create_ControllerAndModels(name,name_modelo,user_database,password_database,list_modulos[i].id,i);
+				    add_file(this.proyecto_name+"/src/Controllers/"+name.substr(0,name.length-1)+"Controller.as",CreateMVC.getInstance().CREATE_CONTROLLER(name.substr(0,name.length-1),list_modulos[i].id, BuildMxmlComponets.getInstance().IF_MODULO_RELATION(list_modulos[i].id)));
+					add_file(this.proyecto_name+"/src/Models/"+name.substr(0,name.length-1)+"Model.as",CreateMVC.getInstance().CREATE_MODEL(name.substr(0,name.length-1),list_modulos[i].id));
 					mediators_name+='<mediators:'+name.substr(0,name.length-1)+'Controller id="'+name.substr(0,name.length-1).toLocaleLowerCase()+'" />'+"\n";
-					BuildMxmlComponets.getInstance().CREATE_SQL_MIGRATION(Database.getInstance().personData[i].id_modulo,Database.getInstance().personData[i].nombre,Zipfile.getInstance().list_components)
-					BuildMxmlComponets.getInstance().CREATE_VIEW(Database.getInstance().personData[i].id_modulo,Database.getInstance().personData[i].nombre,Zipfile.getInstance().list_components)
-					if(Verificar_Modulo_Relacion(list_components,Database.getInstance().personData[i].id_modulo)==false){
-					   BuildMxmlComponets.getInstance().CREATE_MAIN_VIEW_TAB(Database.getInstance().personData[i].id_modulo,Database.getInstance().personData[i].id_nombre,name_modelo.substr(0,name.length-1));
+					BuildMxmlComponets.getInstance().CREATE_SQL_MIGRATION(list_modulos[i].id,list_modulos[i].name,Zipfile.getInstance().list_components)
+					BuildMxmlComponets.getInstance().CREATE_VIEW(list_modulos[i].id,list_modulos[i].name,Zipfile.getInstance().list_components)
+					if(Verificar_Modulo_Relacion(list_components,list_modulos[i].id)==false){
+					   BuildMxmlComponets.getInstance().CREATE_MAIN_VIEW_TAB(list_modulos[i].id,list_modulos[i].id,name_modelo.substr(0,name.length-1));
 				    }
 				}
 				if(proyecto_zip=="amfphp.zip"){
@@ -173,12 +177,7 @@ package Clases
 			}
 		}
 		
-		public function get_relaciones():void
-		{
-			Database.getInstance().dbStatement.addEventListener(SQLEvent.RESULT, Resutl_get_relaciones);
-			Database.getInstance().getDatos("select id,modulo_principal,tipo_relacion,modulo_relacionado from relaciones");
-		}
-		
+	
 		public function Verificar_Modulo_Relacion(Lista:Array,Elemento:String):Boolean
 		{
 			var sw:Boolean=false;
@@ -192,36 +191,7 @@ package Clases
 			return sw;
 		}
 		
-	
 		
-		public function Resutl_get_relaciones(e:Event):void
-		{
-			list_relaciones=Database.getInstance().personData;
-			Database.getInstance().dbStatement.removeEventListener(SQLEvent.RESULT,Resutl_get_relaciones);
-			get_components()
-		}
-		
-		public function build_MainMXML():void
-		{
-			//Quety que busca todo los modulos para luego ser construidos
-			Database.getInstance().dbStatement.addEventListener(SQLEvent.RESULT, Result_build_MainMXML);
-			Database.getInstance().getDatos("select nombre,id_modulo from modulos");
-		}
-		
-		public function get_components():void
-		{
-			Database.getInstance().dbStatement.addEventListener(SQLEvent.RESULT, Result_components);
-			Database.getInstance().getDatos("select componente_id,id_modulo,etiqueta,identificador,tamano,replace(replace(tipo,'Numerico','0'),'Alfanumerico','1') as tipo,requerido,tipo_relacion,modulo_relacionado from componentes");
-		}
-		
-		public function Result_components(e:Event):void
-		{
-			list_components=Database.getInstance().personData;
-			Database.getInstance().dbStatement.removeEventListener(SQLEvent.RESULT,Result_components);
-			Database.getInstance().exampleDB.close();
-			Database.getInstance().initAndOpenDatabase();
-			build_MainMXML();
-		}
 		
 		public function get_modulo_name(id_modulo:String):String
 		{
