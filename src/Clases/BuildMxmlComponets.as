@@ -107,7 +107,7 @@ package Clases
 			   IDEComponentes.getInstance().posx=IDEComponentes.getInstance().posx+15;
 				if(IF_CONTAIN_COMPONENTS(id)==1)
 				{
-                //Create Index Mxml
+				  //Create Index Mxml
                  Zipfile.getInstance().add_file(Zipfile.getInstance().proyecto_name+"/src/Views/"+nombre.substr(0,1).toLocaleUpperCase()+nombre.substr(1,nombre.length-2)+"/"+nombre.substr(0,1).toLocaleUpperCase()+nombre.substr(1,nombre.length-2)+"Index.mxml",CREATE_INDEX_MXML(id,nombre,list_components));
                  //Create Form Mxml
                   cadena="";
@@ -159,7 +159,7 @@ package Clases
 			var sw:int=0;
 			var i:int=0;
 			while(i<=Zipfile.getInstance().list_components.length-1&&sw==0){
-				if(Zipfile.getInstance().list_components[i].id_modulo==id){
+				if(Zipfile.getInstance().list_components[i].modulo_id==id){
 					sw=1;
 				}
 				i++;
@@ -175,7 +175,7 @@ package Clases
 		   var cadena:String="";
 		   
 		   for(var i:int=1;i<=list_components.length-1;i++){
-				if(list_components[i].id_modulo==id){
+				if(list_components[i].modulo_id==id){
 				   if(list_components[i].componente_id!="5"){
 				   	cadena+=IDEComponentes.getInstance().CREATE_COMPONENTS(list_components[i].componente_id,list_components[i].identificador,list_components[i].etiqueta,list_components[i].tamano,list_components[i].tipo,list_components[i].requerido,list_components[i].tipo_relacion,list_components[i].modulo_relacionado,id)+"\n";
 		           }else{
@@ -195,7 +195,7 @@ package Clases
 		   var cadena:String="";
 		   
 		   for(var i:int=1;i<=list_components.length-1;i++){
-				if(list_components[i].id_modulo==id){
+				if(list_components[i].modulo_id==id){
 				   if(list_components[i].componente_id=="5"){
 				    cadena+='xmlns:'+list_components[i].etiqueta.substr(0,1).toLocaleLowerCase()+list_components[i].etiqueta.substr(1,list_components[i].etiqueta.length-2)+'="Views.'+list_components[i].etiqueta.substr(0,1).toLocaleUpperCase()+list_components[i].etiqueta.substr(1,list_components[i].etiqueta.length-2)+'.*"'+"\n"	
 		           }  
@@ -223,7 +223,7 @@ package Clases
 		   cadena+='</mx:DataGridColumn>'+"\n"
 		
 			for(var i:int=1;i<=list_components.length-1;i++){
-				if(list_components[i].id_modulo==id){
+				if(list_components[i].modulo_id==id){
 				   if(list_components[i].componente_id!="5"){
 			  	    cadena+=IDEComponentes.getInstance().Crear_Column_DataGrid(list_components[i].etiqueta,list_components[i].identificador,list_components[i].tamano);
 				    }	
@@ -245,7 +245,7 @@ package Clases
            cadena+='<mx:columns>'+"\n"
 		  	
 			for(var i:int=1;i<=list_components.length-1;i++){
-				if(list_components[i].id_modulo==id){
+				if(list_components[i].modulo_id==id){
 				   if(list_components[i].componente_id!="5"){
 			  	    cadena+=IDEComponentes.getInstance().Crear_Column_DataGrid(list_components[i].etiqueta,list_components[i].identificador,list_components[i].tamano);
 				    }	
@@ -265,7 +265,7 @@ package Clases
 			var sw:int=0;
 			var sql_relations:String="";
 			for(var i:int=1;i<=list_components.length-1;i++){
-				if(list_components[i].id_modulo==id){
+				if(list_components[i].modulo_id==id){
 					sw=1;
 					 
 				    
