@@ -436,12 +436,18 @@
 
     public function proyecto_configuration():void
     {
-    	if (proyecto_name.text!=""){
+    if (proyecto_name.text!=""){	
+    	if (database_name.text!=""){
     	 Zipfile.getInstance().proyecto_name=proyecto_name.text;
+    	  Zipfile.getInstance().database_name=database_name.text;
+    	 database_name
 		 viewstack1.selectedIndex=1
     	}else{
-    	Alert.show("El nombre del proyecto es obligatorio");	
-    	}
+    	Alert.show("El nombre de la base de datos es obligatorio");	
+         }
+      }else{
+      	Alert.show("El nombre del proyecto es obligatorio");
+    	}	
     }
 	    
 	    
@@ -482,7 +488,7 @@
 	<mx:Label x="25" y="223" text="Usuario "/>
 	<mx:Label x="25" y="272" text="Contraseña"/>
 	<mx:TextInput id="proyecto_name" x="25" y="52" width="386"/>
-	<mx:TextInput x="25" y="140" width="386"/>
+	<mx:TextInput id="database_name" x="25" y="140" width="386"/>
 	<mx:TextInput x="25" y="192" width="386"/>
 	<mx:HRule x="25" y="110" width="93%" height="1"/>
 	<mx:TextInput x="25" y="241" width="386"/>
