@@ -16,7 +16,7 @@ package Clases
 		public var index:uint = 0;
 		public var done:Boolean = false;
 		public var proyecto_zip:String="amfphp.zip";
-		public var proyecto_name:String="Example";
+		public var proyecto_name:String="";
 		public var database_name:String="Example";
 		public var user_database:String="root";
 		public var password_database:String="";
@@ -90,7 +90,7 @@ package Clases
 		public function saveData(event:Event):void
 		{
 			var file:File = event.target as File;
-			file = file.resolvePath("Proyecto.zip");
+			file = file.resolvePath(this.proyecto_name+".zip");
 			var stream:FileStream = new FileStream();
 			stream.open(file, FileMode.WRITE);
 			zip.serialize(stream);

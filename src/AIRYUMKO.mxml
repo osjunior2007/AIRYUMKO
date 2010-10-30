@@ -64,7 +64,6 @@
 				TableCreator.updateTable(relacion);*/
 				Database.getInstance().initAndOpenDatabase()
 				
-				
 				if (Database.getInstance().mod.findBySQL("select id,name from Modulos")!=null){
 				myTree.dataProvider=IDEComponentes.getInstance().Crear_arbol(Database.getInstance().mod.findBySQL("select id,name from Modulos"));
 				myTree.selectedIndex=0;
@@ -432,8 +431,22 @@
 		  	}
 		  }
 	    }
-      	]]>
+	    
+///////////////////////////////////////////////////////////////////////////////////////
 
+    public function proyecto_configuration():void
+    {
+    	if (proyecto_name.text!=""){
+    	 Zipfile.getInstance().proyecto_name=proyecto_name.text;
+		 viewstack1.selectedIndex=1
+    	}else{
+    	Alert.show("El nombre del proyecto es obligatorio");	
+    	}
+    }
+	    
+	    
+	    
+      	]]>
 	</mx:Script>
 	<mx:Style source="css.css"/>
 
@@ -461,14 +474,14 @@
 <mx:ViewStack x="10" y="10" id="viewstack1" width="100%" height="100%" >
 <mx:Canvas label="View 1" width="100%" height="100%">
 <mx:Panel x="7" y="10" width="97%" height="96%" layout="absolute" title="Yoomko work with Php &gt;= 5.3">
-	<mx:Button click="{viewstack1.selectedIndex=1}" x="25" y="320" label="Button"/>
+	<mx:Button click="{proyecto_configuration();}" x="25" y="320" label="Button"/>
 	<mx:Label x="24" y="33" text="Proyecto"/>
 	<mx:Label x="25" y="93" text="Base de datos"/>
 	<mx:Label x="25" y="123" text="Nombre"/>
 	<mx:Label x="25" y="174" text="Host  (Preferiblementes es localhost)"/>
 	<mx:Label x="25" y="223" text="Usuario "/>
 	<mx:Label x="25" y="272" text="Contraseña"/>
-	<mx:TextInput x="25" y="52" width="386"/>
+	<mx:TextInput id="proyecto_name" x="25" y="52" width="386"/>
 	<mx:TextInput x="25" y="140" width="386"/>
 	<mx:TextInput x="25" y="192" width="386"/>
 	<mx:HRule x="25" y="110" width="93%" height="1"/>
