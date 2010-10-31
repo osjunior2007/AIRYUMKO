@@ -18,7 +18,7 @@ package Clases
 		}
 
 
-		public function Create_ControllerAndModels(name:String,name_modelo:String,user_database:String,password_database:String,id_modulo:String,sw:int):void
+		public function CREATE_BACKEND(name:String,user_database:String,password_database:String,id_modulo:String,sw:int):void
 		{
 			//PhpActiveRecoreds
 			if( Zipfile.getInstance().proyecto_zip=="amfphp.zip"){
@@ -29,7 +29,7 @@ package Clases
 			     Zipfile.getInstance().add_file("amfphp/services/"+name+"Controller.php",ActiveRecords.getInstance().set_controllador_relation(name, Get_All_Modoule_Elements(Zipfile.getInstance().list_components,id_modulo)));
 				}
 
-				Zipfile.getInstance().add_file("amfphp/services/models/"+name_modelo+".php",ActiveRecords.getInstance().set_modelo(name_modelo));
+				Zipfile.getInstance().add_file("amfphp/services/models/"+name.toLocaleLowerCase()+".php",ActiveRecords.getInstance().set_modelo(name));
 				if(sw==0){
 					Zipfile.getInstance().add_file("amfphp/services/lib/database.php",ActiveRecords.getInstance().Data_Base( Zipfile.getInstance().database_name.toLowerCase(),user_database,password_database));
 				}
@@ -39,7 +39,7 @@ package Clases
 			if( Zipfile.getInstance().proyecto_zip=="Rails.zip"){
 				//build controller
 				Zipfile.getInstance().add_file("app/controllers/"+name+"_controller.rb",MC_RubyonRails.getInstance().set_controllador(name));
-				Zipfile.getInstance().add_file("app/models/"+name_modelo+".rb",MC_RubyonRails.getInstance().set_modelo(name_modelo.substr(0,1).toLocaleUpperCase()+name_modelo.substr(1,name_modelo.length)));
+				Zipfile.getInstance().add_file("app/models/"+name.toLocaleLowerCase()+".rb",MC_RubyonRails.getInstance().set_modelo(name.toLocaleLowerCase()));
 				Zipfile.getInstance().add_file("app/helpers/"+name+"_helper.rb","module "+name.substr(0,1).toLocaleUpperCase()+name.substr(1,name.length)+"Helper \n end");
 				if(sw==0){
 					Zipfile.getInstance().add_file("config/database.yml",IDEComponentes.getInstance().database_yml ( Zipfile.getInstance().proyecto_name,user_database,password_database));
@@ -48,12 +48,12 @@ package Clases
 		}
 
 
-		public function CREATE_MAIN_VIEW_TAB(id_modulo:String,name_componente:String,name:String):void
+		public function CREATE_MAIN_VIEW_TAB(modulo_id:String,name_componente:String,name:String):void
 		{
-			if(Zipfile.getInstance().Verificar_Modulo_Relacion(Zipfile.getInstance().list_relaciones,id_modulo)==false){
-				Zipfile.getInstance().view_path+="xmlns:"+name.toLowerCase()+'="Views.'+name.substr(0,1).toLocaleUpperCase()+ name.substr(1,name.length).toString()+'.*"'+"\n";
+			if(Zipfile.getInstance().Verificar_Modulo_Relacion(Zipfile.getInstance().list_relaciones,modulo_id)==false){
+				Zipfile.getInstance().view_path+="xmlns:"+name.toLowerCase()+'="Views.'+name+'.*"'+"\n";
 				Zipfile.getInstance().MainApp+='<s:NavigatorContent label="'+name+'" width="100%" height="100%" >'+"\n";
-				Zipfile.getInstance().MainApp+='<'+name.toLowerCase()+':'+name.substr(0,1).toLocaleUpperCase()+ name.substr(1,name.length).toString()+'Index  width="100%" height="100%"   />'+" \n";
+				Zipfile.getInstance().MainApp+='<'+name.toLowerCase()+':'+name+'Index  width="100%" height="100%"   />'+" \n";
 				Zipfile.getInstance().MainApp+='</s:NavigatorContent>'+" \n"+" \n";
 			}
 		}
@@ -62,12 +62,12 @@ package Clases
 		{
 		   var cadena:String="";
 		  if(IF_MODULO_RELATION(id)==0){
-		   cadena+='<s:Group xmlns:'+nombre.substr(0,1).toLocaleLowerCase()+nombre.substr(1,nombre.length-2)+'="Views.'+nombre.substr(0,1).toLocaleUpperCase()+nombre.substr(1,nombre.length-2)+'.*"'+'\n';   
+		   cadena+='<s:Group xmlns:'+nombre.toLocaleLowerCase()+'="Views.'+nombre.substr(0,1).toLocaleUpperCase()+nombre.substr(1,nombre.length)+'.*"'+'\n';   
            cadena+='xmlns:fx="http://ns.adobe.com/mxml/2009"'+"\n"; 
            cadena+='xmlns:s="library://ns.adobe.com/flex/spark"'+"\n";  
            cadena+='xmlns:mx="library://ns.adobe.com/flex/mx"'+"\n";  
            cadena+='width="100%" height="100%">'+"\n";  
-           cadena+='<mx:ViewStack    x="0" y="0" id="'+nombre.substr(0,1).toLocaleUpperCase()+nombre.substr(1,nombre.length-2)+'View" width="100%" height="100%">'+"\n";
+           cadena+='<mx:ViewStack    x="0" y="0" id="'+nombre+'View" width="100%" height="100%">'+"\n";
            cadena+='<s:NavigatorContent   x="0" y="0"  width="98%" height="98%" >'+"\n";
            cadena+=CREATE_DATAGRID(id,list_components);
            cadena+='<mx:Button   id="NewBtn" label="Crear" enabled="true" width="86" x="20" y="{datos.height+50}" />'+"\n";
@@ -75,7 +75,7 @@ package Clases
 	       cadena+='<mx:Button   id="DeleteBtn" label="Delete" enabled="true" width="86" x="212" y="{datos.height+50}" />'+"\n";
            cadena+='</s:NavigatorContent>'+"\n";
            cadena+='<s:NavigatorContent   x="0" y="0"  width="98%" height="98%" >'+"\n";
-           cadena+='<'+nombre.substr(0,1).toLocaleLowerCase()+nombre.substr(1,nombre.length-2)+':'+nombre.substr(0,1).toLocaleUpperCase()+nombre.substr(1,nombre.length-2)+'Form id="'+nombre.substr(0,1).toLocaleUpperCase()+nombre.substr(1,nombre.length-2)+'Form"/>'+"\n";
+           cadena+='<'+nombre.toLocaleLowerCase()+':'+nombre.substr(0,1).toLocaleUpperCase()+nombre.substr(1,nombre.length)+'Form id="'+nombre+'Form"/>'+"\n";
            cadena+='</s:NavigatorContent>'+"\n";
            cadena+='</mx:ViewStack>'+"\n";
            cadena+='</s:Group>'+"\n";
@@ -84,10 +84,10 @@ package Clases
            cadena+='<s:Group xmlns:fx="http://ns.adobe.com/mxml/2009"'+"\n";  
 		   cadena+=' xmlns:s="library://ns.adobe.com/flex/spark"'+"\n"; 
 		   cadena+=' xmlns:mx="library://ns.adobe.com/flex/mx"'+"\n";   
-		   cadena+=' xmlns:'+nombre.substr(0,1).toLocaleLowerCase()+nombre.substr(1,nombre.length-2)+'="Views.'+nombre.substr(0,1).toUpperCase()+nombre.substr(1,nombre.length-2)+'.*">'+"\n"; 
+		   cadena+=' xmlns:'+nombre.toLocaleLowerCase()+'="Views.'+nombre.substr(0,1).toLocaleUpperCase()+nombre.substr(1,nombre.length)+'.*">'+"\n"; 
 	       cadena+='<fx:Declarations>'+"\n"; 
-		   cadena+='<s:TitleWindow id="windows_'+nombre.substr(0,1).toLocaleLowerCase()+nombre.substr(1,nombre.length-2)+'" title="'+nombre.substr(0,1).toLocaleLowerCase()+nombre.substr(1,nombre.length-2)+'" width="100%" height="100%" >'+"\n"; 
-           cadena+=' <'+nombre.substr(0,1).toLocaleLowerCase()+nombre.substr(1,nombre.length-2)+':'+nombre.substr(0,1).toLocaleUpperCase()+nombre.substr(1,nombre.length-2)+'Form/>'+"\n"; 
+		   cadena+='<s:TitleWindow id="windows_'+nombre.toLocaleLowerCase()+'" title="'+nombre.toLocaleLowerCase()+'" width="100%" height="100%" >'+"\n"; 
+           cadena+=' <'+nombre.toLocaleLowerCase()+':'+nombre+'Form/>'+"\n"; 
            cadena+='</s:TitleWindow>	'+"\n"; 	
 	       cadena+='</fx:Declarations>'+"\n"; 
            cadena+=CREATE_DATAGRID_WITH_OPTION(id,list_components);
@@ -108,16 +108,16 @@ package Clases
 				if(IF_CONTAIN_COMPONENTS(id)==1)
 				{
 				  //Create Index Mxml
-                 Zipfile.getInstance().add_file(Zipfile.getInstance().proyecto_name+"/src/Views/"+nombre.substr(0,1).toLocaleUpperCase()+nombre.substr(1,nombre.length-2)+"/"+nombre.substr(0,1).toLocaleUpperCase()+nombre.substr(1,nombre.length-2)+"Index.mxml",CREATE_INDEX_MXML(id,nombre,list_components));
+                 Zipfile.getInstance().add_file(Zipfile.getInstance().proyecto_name+"/src/Views/"+nombre.substr(0,1).toLocaleUpperCase()+nombre.substr(1,nombre.length)+"/"+nombre.substr(0,1).toLocaleUpperCase()+nombre.substr(1,nombre.length)+"Index.mxml",CREATE_INDEX_MXML(id,nombre,list_components));
                  //Create Form Mxml
                   cadena="";
-                  cadena+='<s:Group  '+CREATE_VIEW_PATH(id,nombre,list_components)+"\n";
+                  cadena+='<s:Group  '+CREATE_VIEW_PATH(id,list_components);
                   cadena+='xmlns:fx="http://ns.adobe.com/mxml/2009" ' + "\n";
                   cadena+=' xmlns:s="library://ns.adobe.com/flex/spark"'+"\n";
                   cadena+=' xmlns:mx="library://ns.adobe.com/flex/mx"  width="100%" height="100%">'+"\n";
                   cadena+='<mx:Canvas  width="100%" height="100%">'+"\n";
                   cadena+='<mx:Form  visible="true" width="95%" height="100%">'+"\n";
-		          cadena+=CREATE_FORM(id,nombre,list_components);
+		          cadena+=CREATE_FORM(id,list_components);
              	  cadena+="<mx:FormItem >"+"\n";             	  
              	  cadena+="<s:HGroup>"+"\n";
 			      cadena+='  <mx:Button  id="submitBtn" label="Create" enabled="true" width="86" x="25" y="20" />'+"\n";
@@ -131,7 +131,7 @@ package Clases
 	              cadena+='</mx:Form>'+"\n";
 	              cadena+='</mx:Canvas>'+"\n"; 
                   cadena+='</s:Group>'+"\n";
-                  Zipfile.getInstance().add_file(Zipfile.getInstance().proyecto_name+"/src/Views/"+nombre.substr(0,1).toLocaleUpperCase()+nombre.substr(1,nombre.length-2)+"/"+nombre.substr(0,1).toLocaleUpperCase()+nombre.substr(1,nombre.length-2)+"Form.mxml",cadena);
+                  Zipfile.getInstance().add_file(Zipfile.getInstance().proyecto_name+"/src/Views/"+nombre.substr(0,1).toLocaleUpperCase()+nombre.substr(1,nombre.length)+"/"+nombre.substr(0,1).toLocaleUpperCase()+nombre.substr(1,nombre.length)+"Form.mxml",cadena);
             	}
 			}//If not is null
 
@@ -169,7 +169,7 @@ package Clases
 		}
 		
 		
-		public function CREATE_FORM(id:String,nombre:String,list_components:Array):String
+		public function CREATE_FORM(id:String,list_components:Array):String
 		{
 		   var sw:int=0;
 		   var cadena:String="";
@@ -189,7 +189,7 @@ package Clases
 		}
 		
 		
-		public function CREATE_VIEW_PATH(id:String,nombre:String,list_components:Array):String
+		public function CREATE_VIEW_PATH(id:String,list_components:Array):String
 		{
 		   var sw:int=0;
 		   var cadena:String="";
@@ -278,7 +278,7 @@ package Clases
 						  sql_relations=IDEComponentes.getInstance().Create_database_sql("id_"+list_components[i].identificador,"8","5");
 						  sql_relations+=IDEComponentes.getInstance().Create_database_sql("id_"+nombre.toLowerCase(),"8","5");
 						  list_components[i].identificador=list_components[i].identificador.substr(0,1).toLowerCase()+list_components[i].identificador.substr(1,list_components[i].identificador.length-1);
-						   sql_relations="CREATE TABLE"+"`"+nombre.substring(0,nombre.length-1).toLowerCase()+"_"+list_components[i].identificador+"` ("+"\n"+"`id` bigint(11) NOT NULL AUTO_INCREMENT,"+"\n"+sql_relations;
+						   sql_relations="CREATE TABLE"+"`"+nombre+"_"+list_components[i].identificador+"s` ("+"\n"+"`id` bigint(11) NOT NULL AUTO_INCREMENT,"+"\n"+sql_relations;
 				          sql_relations+="PRIMARY KEY (`id`)"+" \n"+")"+"ENGINE=MyISAM AUTO_INCREMENT=40001 DEFAULT CHARSET=latin1;"+"\n"+"\n";
 				          Zipfile.getInstance().Head_database_sql+=sql_relations;
 						}
@@ -295,7 +295,7 @@ package Clases
 			}
 
 			if(Zipfile.getInstance().proyecto_zip=="amfphp.zip"){
-				Zipfile.getInstance().database_sql="CREATE TABLE"+"`"+nombre.toLowerCase()+"` ("+"\n"+"`id` bigint(11) NOT NULL AUTO_INCREMENT,"+"\n"+Zipfile.getInstance().database_sql;
+				Zipfile.getInstance().database_sql="CREATE TABLE"+"`"+nombre+"` ("+"\n"+"`id` bigint(11) NOT NULL AUTO_INCREMENT,"+"\n"+Zipfile.getInstance().database_sql;
 				Zipfile.getInstance().database_sql+="PRIMARY KEY (`id`)"+" \n"+")"+"ENGINE=MyISAM AUTO_INCREMENT=40001 DEFAULT CHARSET=latin1;"+"\n"+"\n";
 				Zipfile.getInstance().Head_database_sql+=Zipfile.getInstance().database_sql;
 				Zipfile.getInstance().database_sql="";

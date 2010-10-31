@@ -154,18 +154,16 @@ package Clases
 				list_modulos=Modulos;
 				for(var i:int=0;i<=list_modulos.length-1;i++){
 					name=list_modulos[i].name;
-					name_modelo=list_modulos[i].name;
-					name_modelo=name_modelo.substring(0,name_modelo.length-1);
-					name=name.substr(0,1).toLocaleUpperCase()+name.substr(1,name.length);
+					name=name.substr(0,1).toLocaleUpperCase()+name.substr(1,name.length)
 					BuildMxmlComponets.getInstance().init_value();
-					BuildMxmlComponets.getInstance().Create_ControllerAndModels(name,name_modelo,user_database,password_database,list_modulos[i].id,i);
-				    add_file(this.proyecto_name+"/src/Controllers/"+name.substr(0,name.length-1)+"Controller.as",CreateMVC.getInstance().CREATE_CONTROLLER(name.substr(0,name.length-1),list_modulos[i].id, BuildMxmlComponets.getInstance().IF_MODULO_RELATION(list_modulos[i].id)));
-					add_file(this.proyecto_name+"/src/Models/"+name.substr(0,name.length-1)+"Model.as",CreateMVC.getInstance().CREATE_MODEL(name.substr(0,name.length-1),list_modulos[i].id));
-					mediators_name+='<mediators:'+name.substr(0,name.length-1)+'Controller id="'+name.substr(0,name.length-1).toLocaleLowerCase()+'" />'+"\n";
+					BuildMxmlComponets.getInstance().CREATE_BACKEND(name,user_database,password_database,list_modulos[i].id,i);
+				    add_file(this.proyecto_name+"/src/Controllers/"+name+"Controller.as",CreateMVC.getInstance().CREATE_CONTROLLER(name,list_modulos[i].id, BuildMxmlComponets.getInstance().IF_MODULO_RELATION(list_modulos[i].id)));
+					add_file(this.proyecto_name+"/src/Models/"+name+"Model.as",CreateMVC.getInstance().CREATE_MODEL(name,list_modulos[i].id));
+					mediators_name+='<mediators:'+name+'Controller id="'+name+'" />'+"\n";
 					BuildMxmlComponets.getInstance().CREATE_SQL_MIGRATION(list_modulos[i].id,list_modulos[i].name,Zipfile.getInstance().list_components)
 					BuildMxmlComponets.getInstance().CREATE_VIEW(list_modulos[i].id,list_modulos[i].name,Zipfile.getInstance().list_components)
 					if(Verificar_Modulo_Relacion(list_components,list_modulos[i].id)==false){
-					   BuildMxmlComponets.getInstance().CREATE_MAIN_VIEW_TAB(list_modulos[i].id,list_modulos[i].id,name_modelo.substr(0,name.length-1));
+					   BuildMxmlComponets.getInstance().CREATE_MAIN_VIEW_TAB(list_modulos[i].id,list_modulos[i].id,name);
 				    }
 				}
 				if(proyecto_zip=="amfphp.zip"){

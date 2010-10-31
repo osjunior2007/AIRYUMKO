@@ -84,7 +84,7 @@ package Clases
 			var variableg:String=Controlador_nombre;
 			Controlador_nombre="<?php"+'\n';
 			Controlador_nombre+='include("lib/database.php");'+'\n';
-			Controlador_nombre+="class "+variableg+"Controller {"+'\n\n'; 
+			Controlador_nombre+="class "+variableg+"sController {"+'\n\n'; 
 			Controlador_nombre+=metodo_list(variableg)+'\n\n\n'; 
 			Controlador_nombre+=metodo_Crear(variableg)+'\n\n\n'; 
 			Controlador_nombre+=metodo_borrar(variableg)+'\n\n\n'; 
@@ -99,7 +99,7 @@ package Clases
 			var variableg:String=Controlador_nombre;
 			Controlador_nombre="<?php"+'\n';
 			Controlador_nombre+='include("lib/database.php");'+'\n';
-			Controlador_nombre+="class "+variableg+"Controller {"+'\n\n'; 
+			Controlador_nombre+="class "+variableg+"sController {"+'\n\n'; 
 			Controlador_nombre+=metodo_list_relation(variableg,attribute)+'\n\n\n'; 
 			Controlador_nombre+=metodo_Crear(variableg)+'\n\n\n'; 
 			Controlador_nombre+=metodo_borrar(variableg)+'\n\n\n'; 
@@ -111,8 +111,7 @@ package Clases
 		
 		public function set_modelo(modelo:String):String
 		{
-		   modelo=modelo.substring(0,1).toUpperCase()+modelo.substring(1,cadena.length)
-		   Modelo_nombre="<?php"+'\n\n';
+		    Modelo_nombre="<?php"+'\n\n';
 		   Modelo_nombre+="class "+modelo+" extends ActiveRecord\\\Model"+'\n';
 		   Modelo_nombre+="{"+'\n\n';
 		   Modelo_nombre+=" static $table_name = '"+modelo+"s';"+"\n";
