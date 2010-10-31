@@ -18,7 +18,7 @@ package Clases
 		  public function metodo_list(nombre:String):String
 		{ 
 			cadena="function index() {"+'\n';
-			cadena+=" return amf("+nombre.substr(0,nombre.length-1)+"::find(all));"+'\n'; 
+			cadena+=" return amf("+nombre+"::find(all));"+'\n'; 
             cadena+="}"+'\n';
             return cadena;
            
@@ -29,9 +29,9 @@ package Clases
 		{ 
 			cadena=" function index($param) {"+'\n';
 			cadena+=' if ($param[type]=="all") {'+'\n';
-			cadena+="   return amf("+nombre.substr(0,nombre.length-1)+"::find(all));"+'\n'; 
+			cadena+="   return amf("+nombre+"::find(all));"+'\n'; 
             cadena+=" }else{"+'\n';
-            cadena+="   return amf("+nombre.substr(0,nombre.length-1)+"::find(all,array('select' "+'=> "'+" 'false' as options,id,"+attribute+""+'")));'+'\n';
+            cadena+="   return amf("+nombre+"::find(all,array('select' "+'=> "'+" 'false' as options,id,"+attribute+""+'")));'+'\n';
             cadena+=" }"+'\n';
             cadena+="}"+'\n';
             return cadena;
@@ -40,9 +40,9 @@ package Clases
         public  function metodo_Crear(nombre:String):String
 		{ 
 			cadena=" function create($param) {"+'\n';
-			cadena+="$"+nombre.substr(0,nombre.length-1)+" = new "+nombre.substr(0,nombre.length-1)+"($param);"+'\n'; 
-			cadena+="if ($"+nombre.substr(0,nombre.length-1)+"->is_valid()){"+'\n'; 
-			cadena+="$"+nombre.substr(0,nombre.length-1)+"->save();"+'\n';
+			cadena+="$"+nombre+" = new "+nombre+"($param);"+'\n'; 
+			cadena+="if ($"+nombre+"->is_valid()){"+'\n'; 
+			cadena+="$"+nombre+"->save();"+'\n';
 			cadena+='return 0;';
 			cadena+="}else{"+'\n';
 			cadena+='return 1; '+"\n";
@@ -54,9 +54,9 @@ package Clases
 		  public  function metodo_actualizar(nombre:String):String
 		{ 
 			cadena=" function update($param) {"+'\n';
-			cadena+="$"+nombre.substr(0,nombre.length-1)+" = "+nombre.substr(0,nombre.length-1)+"::find_by_id($param[id]);"+'\n'; 
-			cadena+="if ($"+nombre.substr(0,nombre.length-1)+"->is_valid()){"+'\n'; 
-			cadena+="$"+nombre.substr(0,nombre.length-1)+"->update_attributes($param);"+'\n';
+			cadena+="$"+nombre+" = "+nombre+"::find_by_id($param[id]);"+'\n'; 
+			cadena+="if ($"+nombre+"->is_valid()){"+'\n'; 
+			cadena+="$"+nombre+"->update_attributes($param);"+'\n';
 			cadena+="return 0; "+'\n';
 			cadena+="}else{"+'\n';
 			cadena+="return 1; "+'\n';
@@ -68,9 +68,9 @@ package Clases
 	 public  function metodo_borrar(nombre:String):String
 		{ 
 			cadena="function destroy ($param) {"+'\n';
-			cadena+="$"+nombre.substr(0,nombre.length-1)+" = "+nombre.substr(0,nombre.length-1)+"::find($param[id]);"+'\n'; 
-			cadena+="if ($"+nombre.substr(0,nombre.length-1)+"->is_valid()){"+'\n'; 
-			cadena+="$"+nombre.substr(0,nombre.length-1)+"->delete();"+'\n';
+			cadena+="$"+nombre+" = "+nombre+"::find($param[id]);"+'\n'; 
+			cadena+="if ($"+nombre+"->is_valid()){"+'\n'; 
+			cadena+="$"+nombre+"->delete();"+'\n';
 			cadena+="return 0; "+'\n';
 			cadena+="}else{"+'\n';
 			cadena+="return  1; "+'\n';
@@ -111,7 +111,7 @@ package Clases
 		
 		public function set_modelo(modelo:String):String
 		{
-		    Modelo_nombre="<?php"+'\n\n';
+		   Modelo_nombre="<?php"+'\n\n';
 		   Modelo_nombre+="class "+modelo+" extends ActiveRecord\\\Model"+'\n';
 		   Modelo_nombre+="{"+'\n\n';
 		   Modelo_nombre+=" static $table_name = '"+modelo+"s';"+"\n";

@@ -67,7 +67,7 @@ package Clases
            cadena+='xmlns:s="library://ns.adobe.com/flex/spark"'+"\n";  
            cadena+='xmlns:mx="library://ns.adobe.com/flex/mx"'+"\n";  
            cadena+='width="100%" height="100%">'+"\n";  
-           cadena+='<mx:ViewStack    x="0" y="0" id="'+nombre+'View" width="100%" height="100%">'+"\n";
+           cadena+='<mx:ViewStack    x="0" y="0" id="'+nombre.substr(0,1).toLocaleUpperCase()+nombre.substr(1,nombre.length)+'View" width="100%" height="100%">'+"\n";
            cadena+='<s:NavigatorContent   x="0" y="0"  width="98%" height="98%" >'+"\n";
            cadena+=CREATE_DATAGRID(id,list_components);
            cadena+='<mx:Button   id="NewBtn" label="Crear" enabled="true" width="86" x="20" y="{datos.height+50}" />'+"\n";
@@ -75,7 +75,7 @@ package Clases
 	       cadena+='<mx:Button   id="DeleteBtn" label="Delete" enabled="true" width="86" x="212" y="{datos.height+50}" />'+"\n";
            cadena+='</s:NavigatorContent>'+"\n";
            cadena+='<s:NavigatorContent   x="0" y="0"  width="98%" height="98%" >'+"\n";
-           cadena+='<'+nombre.toLocaleLowerCase()+':'+nombre.substr(0,1).toLocaleUpperCase()+nombre.substr(1,nombre.length)+'Form id="'+nombre+'Form"/>'+"\n";
+           cadena+='<'+nombre.toLocaleLowerCase()+':'+nombre.substr(0,1).toLocaleUpperCase()+nombre.substr(1,nombre.length)+'Form id="'+nombre.substr(0,1).toLocaleUpperCase()+nombre.substr(1,nombre.length)+'Form"/>'+"\n";
            cadena+='</s:NavigatorContent>'+"\n";
            cadena+='</mx:ViewStack>'+"\n";
            cadena+='</s:Group>'+"\n";
@@ -87,7 +87,7 @@ package Clases
 		   cadena+=' xmlns:'+nombre.toLocaleLowerCase()+'="Views.'+nombre.substr(0,1).toLocaleUpperCase()+nombre.substr(1,nombre.length)+'.*">'+"\n"; 
 	       cadena+='<fx:Declarations>'+"\n"; 
 		   cadena+='<s:TitleWindow id="windows_'+nombre.toLocaleLowerCase()+'" title="'+nombre.toLocaleLowerCase()+'" width="100%" height="100%" >'+"\n"; 
-           cadena+=' <'+nombre.toLocaleLowerCase()+':'+nombre+'Form/>'+"\n"; 
+           cadena+=' <'+nombre.toLocaleLowerCase()+':'+nombre.substr(0,1).toLocaleUpperCase()+nombre.substr(1,nombre.length)+'Form/>'+"\n"; 
            cadena+='</s:TitleWindow>	'+"\n"; 	
 	       cadena+='</fx:Declarations>'+"\n"; 
            cadena+=CREATE_DATAGRID_WITH_OPTION(id,list_components);
