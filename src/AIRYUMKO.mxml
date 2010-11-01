@@ -19,6 +19,7 @@
 			import mx.managers.PopUpManager;
 			import Clases.Database;
             import mx.controls.Menu;
+            import mx.events.CloseEvent;
             ///////////////////////////////////////////////////////
             import flight.db.activeRecord.TableCreator;
 			import flash.utils.getQualifiedClassName;
@@ -285,15 +286,23 @@
 				myTree.dataProvider=IDEComponentes.getInstance().Crear_arbol(mymod.findBySQL("select id,name from Modulos"));
 				enabled_componente(true)
 			}
-
-			
+         //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+          public function Delete(event:Event):void
+        {
+          if (dataset.selectedIndex>=0){ 	
+            Alert.show( "Estas seguro?","Confirmación de Borrado", Alert.YES| Alert.NO,null,Delete_componente_BD,null,Alert.YES);
+           }else{
+          	Alert.show("Seleccione un elemento.");
+          }
+       }			
 
 		
 			/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-			public function Delete_componente_BD():void
+			public function Delete_componente_BD(event:CloseEvent):void
 			{
+			if( event.detail == Alert.YES)
+              {
 				if(dataset.selectedIndex>=0){
-					//Database.getInstance().dbStatement.addEventListener(SQLEvent.RESULT,Delete_relaciones_BD);
 					 this.id_modulo=((Database.getInstance().mod.findBySQL("select id from Modulos where name='"+Modulo_name.text+"'"))[0].id).toString();
 					 this.modulo_relacionado=dataset.selectedItem.modulo_relacionado;
 					 this.tipo_relacion=dataset.selectedItem.tipo_relacion
@@ -304,6 +313,7 @@
 	        	}else{
 					Alert.show("Seleccione un elemento !");
 				}
+              }
 			}
 			
 			/////////////////////////////////////////////////////////////////
@@ -454,9 +464,6 @@
 		   identificador_text.enabled=false;
 		   Max_caracter_text.enabled=false;
 		    requerido_componente.enabled=false;
-		   //componente_etiqueta.text="";
-		   //identificador_text.text="";
-		   //Max_caracter_text.text="";
 		  }
 		 }
 	    
@@ -547,7 +554,7 @@
 				<mx:CheckBox x="163" y="206" id="requerido_componente" enabled="true" selected="true"/>
 				<mx:ComboBox  dataProvider="{tipo_dato}" id="tipo_componente"  x="163" y="271" width="469" enabled="false"></mx:ComboBox>
 				<mx:Button click="Add_Elemento()"   id="agregar" x="163" y="302"  width="100" enabled="false"/>
-				<mx:Button click="Delete_componente_BD();"  id="borrar" width="95" x="10" y="{(dataset.y+dataset.height)+8}" enabled="false"/>
+				<mx:Button click="Delete(event)"  id="borrar" width="95" x="10" y="{(dataset.y+dataset.height)+8}" enabled="false"/>
 				<mx:Button click="showWindowDownload()"  x="110" y="{(dataset.y+dataset.height)+8}" enabled="false" id="boton_upload" width="77"/>
 				<mx:Label id="tipo_valores" x="10" y="274" fontSize="11" fontWeight="normal"/>
 				<mx:Label id="datos" x="10" y="335"/>
