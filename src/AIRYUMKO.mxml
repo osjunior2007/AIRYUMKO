@@ -320,20 +320,32 @@
 			
 			public function Add_Elemento():void
 			{
-			  if (componentes_text.selectedIndex.toString()!="5"){
-			     if(identificador_text.text!=""&&Max_caracter_text.text!=""&&componente_etiqueta.text!=""){
-				   Crear_elemento(dataset);
-			     }else{
-				  Alert.show(mensaje_validacion_vacio);
-				 }
-			  }else{
-			  	if (combox_associaciones.visible==true){
-			  	  Crear_elemento(dataset);	
-			  	 }
-			  	 else{
-			  	  Alert.show("Seleccione un modelo tipo associacion.");	
-			  	 }
-			  }	 
+				 var result:Array=new Array();
+				 this.id_modulo=((Database.getInstance().mod.findBySQL("select id from modulos where name='"+Modulo_name.text+"'"))[0].id).toString();
+				 result=Database.getInstance().relacion.findBySQL("select id from relacions where modulo_principal='"+this.id_modulo+"' and modulo_relacionado='"+combox_associaciones.selectedItem.id+"'")
+			   if(combox_relaciones.selectedItem.data!="0"){	
+				if(result==null){
+			     if (componentes_text.selectedIndex.toString()!="5"){
+					     if(identificador_text.text!=""&&Max_caracter_text.text!=""&&componente_etiqueta.text!=""){
+						   Crear_elemento(dataset);
+					     }else{
+						  Alert.show(mensaje_validacion_vacio);
+						 }
+					  }else{
+					  	if (combox_associaciones.visible==true){
+					  	  Crear_elemento(dataset);	
+					  	 }
+					  	 else{
+					  	  Alert.show("Seleccione un modelo tipo associacion.");	
+					  	 }
+					  }	 
+				  }else{
+				   Alert.show("Este componente relacion ya esta registrado.");	
+				  }
+			    }else{
+			    	  Alert.show("Seleccione el tipo de asociacion.");	
+				  }
+			  
 			}
 			
 			
@@ -341,10 +353,9 @@
 			///////////////////////////////////////////////////////////////////////////
 			public function Crear_elemento(datagrid:DataGrid):void
 			{
-				 this.id_modulo=((Database.getInstance().mod.findBySQL("select id from Modulos where name='"+Modulo_name.text+"'"))[0].id).toString();
-				 if((identificador_text.text!=""&&Max_caracter_text.text!=""&&componente_etiqueta.text!="")||(componentes_text.selectedIndex.toString()=="5"&&combox_associaciones.visible==true)){
-					cont_id++;
-					Create_relaciones()
+				    this.id_modulo=((Database.getInstance().mod.findBySQL("select id from Modulos where name='"+Modulo_name.text+"'"))[0].id).toString();
+					 cont_id++;
+					 Create_relaciones()
 					 id=componentes_text.selectedItem.data;
 					   if (id == "5" || id == "6" || id == "7"){
 			              var component:Componente=new Componente();
@@ -355,7 +366,7 @@
 						   component.componente=componentes_text.selectedItem.label;
 						   component.componente_id=componentes_text.selectedItem.data;
 						   component.requerido=requerido_componente.selected.toString();
-						   component.tipo=tipo_componente.selectedLabel;
+						   component.tipo="Indeterminado";
 						   component.modulo_relacionado=combox_associaciones.selectedItem.id;
 						   component.tipo_relacion=combox_relaciones.selectedItem.data;
 			           }else{
@@ -375,12 +386,7 @@
 				       component.save();
 				       myTree.dataProvider=IDEComponentes.getInstance().Crear_arbol(Database.getInstance().mod.findBySQL("select id,name from Modulos"));
 				       dataset.dataProvider=component.findBySQL("select id,etiqueta,identificador,tamano,requerido,componente,tipo,modulo_relacionado,tipo_relacion from componentes where modulo_id='"+this.id_modulo+"'");
-					
-			  	}else{
-					Alert.show(mensaje_validacion_vacio);
 				}
-
-			}
 		
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -394,7 +400,6 @@
 			       Database.getInstance().relacion.tipo_relacion=combox_relaciones.selectedItem.data;
                    Database.getInstance().relacion.modulo_relacionado= combox_associaciones.selectedItem.id;
                    Database.getInstance().relacion.save();
-                  
                 }
 			}
 
@@ -458,12 +463,14 @@
 		   identificador_text.enabled=true;
 		   Max_caracter_text.enabled=true;
 		   requerido_componente.enabled=true;
+		   tipo_componente.enabled=true;
 		  }else{
 		   combox_associaciones.visible=true;	
 		   componente_etiqueta.enabled=false;
 		   identificador_text.enabled=false;
 		   Max_caracter_text.enabled=false;
-		    requerido_componente.enabled=false;
+		   requerido_componente.enabled=false;
+		   tipo_componente.enabled=false;
 		  }
 		 }
 	    
@@ -515,7 +522,7 @@
 <mx:ViewStack x="10" y="10" id="viewstack1" width="100%" height="100%" >
 <mx:Canvas label="View 1" width="100%" height="100%">
 <mx:Panel x="7" y="10" width="97%" height="96%" layout="absolute" title="Yoomko work with Php &gt;= 5.3">
-	<mx:Button click="{proyecto_configuration();}" x="25" y="320" label="Button"/>
+	<mx:Button click="{proyecto_configuration();}" x="25" y="320" label="Crear"/>
 	<mx:Label x="24" y="33" text="Proyecto"/>
 	<mx:Label x="25" y="93" text="Base de datos"/>
 	<mx:Label x="25" y="123" text="Nombre"/>
