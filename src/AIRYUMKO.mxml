@@ -320,41 +320,45 @@
 			
 			public function Add_Elemento():void
 			{
-				 var result:Array=new Array();
-				 this.id_modulo=((Database.getInstance().mod.findBySQL("select id from modulos where name='"+Modulo_name.text+"'"))[0].id).toString();
-				 result=Database.getInstance().relacion.findBySQL("select id from relacions where modulo_principal='"+this.id_modulo+"' and modulo_relacionado='"+combox_associaciones.selectedItem.id+"'")
-			   if(combox_relaciones.selectedItem.data!="0"){	
-				if(result==null){
-			     if (componentes_text.selectedIndex.toString()!="5"){
-					     if(identificador_text.text!=""&&Max_caracter_text.text!=""&&componente_etiqueta.text!=""){
-						   Crear_elemento(dataset);
-					     }else{
-						  Alert.show(mensaje_validacion_vacio);
-						 }
-					  }else{
-					  	if (combox_associaciones.visible==true){
-					  	  Crear_elemento(dataset);	
-					  	 }
-					  	 else{
-					  	  Alert.show("Seleccione un modelo tipo associacion.");	
-					  	 }
-					  }	 
-				  }else{
-				   Alert.show("Este componente relacion ya esta registrado.");	
-				  }
-			    }else{
-			    	  Alert.show("Seleccione el tipo de asociacion.");	
-				  }
-			  
-			}
+		        if (componentes_text.selectedIndex.toString()!="5"){
+					if(identificador_text.text!=""&&Max_caracter_text.text!=""&&componente_etiqueta.text!=""){
+					 this.id_modulo=((Database.getInstance().mod.findBySQL("select id from Modulos where name='"+Modulo_name.text+"'"))[0].id).toString();
+					 result=Database.getInstance().component.findBySQL("select id from componentes where etiqueta='"+componente_etiqueta.text+"' and modulo_id='"+this.id_modulo+"'")
+		               if(result==null){
+					     Crear_elemento(dataset);
+		               }else{
+		               	Alert.show("Este componente ya esta registrado");
+		               }
+				     }else{
+					  Alert.show(mensaje_validacion_vacio);
+					  }
+				   }else{
+						 var result:Array=new Array();
+				          this.id_modulo=((Database.getInstance().mod.findBySQL("select id from modulos where name='"+Modulo_name.text+"'"))[0].id).toString();
+				           result=Database.getInstance().relacion.findBySQL("select id from relacions where modulo_principal='"+this.id_modulo+"' and modulo_relacionado='"+combox_associaciones.selectedItem.id+"'")
+		                  if(result==null){
+						   	  if(combox_relaciones.selectedItem.data!="0"){	
+							  	 if (combox_associaciones.visible==true){
+							  	      Crear_elemento(dataset);	
+							  	   }else{
+							  	  	 Alert.show("Seleccione el modelo a relacionar.");	
+							  	    }
+							  	}else{
+							  	  Alert.show("Seleccione el tipo associacion.");	
+							  	}
+							}else{
+				               Alert.show("Este componente relacion ya esta registrado.");	
+				          } 	
+					 }
+                     
+   		       }
 			
 			
 
 			///////////////////////////////////////////////////////////////////////////
 			public function Crear_elemento(datagrid:DataGrid):void
 			{
-				    this.id_modulo=((Database.getInstance().mod.findBySQL("select id from Modulos where name='"+Modulo_name.text+"'"))[0].id).toString();
-					 cont_id++;
+				     cont_id++;
 					 Create_relaciones()
 					 id=componentes_text.selectedItem.data;
 					   if (id == "5" || id == "6" || id == "7"){
