@@ -51,19 +51,12 @@
 
 			public var stado:Boolean=false;
 			public var cadena:String="";
-			/*public var mod:Modulo=new Modulo();
-		    public var component:Componente=new Componente();
-		    public var relacion:Relacion=new Relacion();*/
-		    public var TreeObject:Object
+			 public var TreeObject:Object
 			
 			///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 		   public function init():void
 			{
-				/*TableCreator.updateTable(mod);
-			    TableCreator.updateTable(component);
-				TableCreator.updateTable(relacion);*/
 				Database.getInstance().initAndOpenDatabase()
-				
 				if (Database.getInstance().mod.findBySQL("select id,name from Modulos")!=null){
 				myTree.dataProvider=IDEComponentes.getInstance().Crear_arbol(Database.getInstance().mod.findBySQL("select id,name from Modulos"));
 				myTree.selectedIndex=0;
@@ -156,7 +149,9 @@
 				selectedNode=Tree(event.target).selectedItem as XML;
 				if(selectedNode.@label!="App"){
 					Modulo_name.text=selectedNode.@label;
+					 if (componentes_text.selectedItem.data!="5"){
 					enabled_componente(true);
+					 }
 			 		dataset.dataProvider={};
 			 		tree_index=myTree.selectedIndex;
 			 		dataset.dataProvider=Database.getInstance().component.findBySQL("select id,etiqueta,identificador,tamano,requerido,componente,tipo,modulo_relacionado,tipo_relacion from componentes where modulo_id='"+selectedNode.@data+"'");
@@ -299,36 +294,59 @@
 			{
 				if(dataset.selectedIndex>=0){
 					//Database.getInstance().dbStatement.addEventListener(SQLEvent.RESULT,Delete_relaciones_BD);
-					this.modulo_relacionado=dataset.selectedItem.modulo_relacionado;
-					this.tipo_relacion=dataset.selectedItem.tipo_relacion
+					 this.id_modulo=((Database.getInstance().mod.findBySQL("select id from Modulos where name='"+Modulo_name.text+"'"))[0].id).toString();
+					 this.modulo_relacionado=dataset.selectedItem.modulo_relacionado;
+					 this.tipo_relacion=dataset.selectedItem.tipo_relacion
 					 Database.getInstance().component.deleteById(dataset.selectedItem.id);
+					 Database.getInstance().relacion.deleteAll(" modulo_principal='"+this.id_modulo+"' and modulo_relacionado='"+this.modulo_relacionado+"'",[]);
 					 dataset.dataProvider=Database.getInstance().component.findBySQL("select id,etiqueta,identificador,tamano,requerido,componente,tipo,modulo_relacionado,tipo_relacion from componentes where modulo_id='"+this.id_modulo+"'");
 					
 	        	}else{
 					Alert.show("Seleccione un elemento !");
 				}
 			}
+			
+			/////////////////////////////////////////////////////////////////
+			
+			public function Add_Elemento():void
+			{
+			  if (componentes_text.selectedIndex.toString()!="5"){
+			     if(identificador_text.text!=""&&Max_caracter_text.text!=""&&componente_etiqueta.text!=""){
+				   Crear_elemento(dataset);
+			     }else{
+				  Alert.show(mensaje_validacion_vacio);
+				 }
+			  }else{
+			  	if (combox_associaciones.visible==true){
+			  	  Crear_elemento(dataset);	
+			  	 }
+			  	 else{
+			  	  Alert.show("Seleccione un modelo tipo associacion.");	
+			  	 }
+			  }	 
+			}
+			
+			
 
 			///////////////////////////////////////////////////////////////////////////
 			public function Crear_elemento(datagrid:DataGrid):void
 			{
 				 this.id_modulo=((Database.getInstance().mod.findBySQL("select id from Modulos where name='"+Modulo_name.text+"'"))[0].id).toString();
-				 if(identificador_text.text!=""&&Max_caracter_text.text!=""&&componente_etiqueta.text!=""){
+				 if((identificador_text.text!=""&&Max_caracter_text.text!=""&&componente_etiqueta.text!="")||(componentes_text.selectedIndex.toString()=="5"&&combox_associaciones.visible==true)){
 					cont_id++;
-					//agregar.enabled=false;
 					Create_relaciones()
 					 id=componentes_text.selectedItem.data;
 					   if (id == "5" || id == "6" || id == "7"){
 			              var component:Componente=new Componente();
 				           component.modulo_id=this.id_modulo;
-						   component.etiqueta=componente_etiqueta.text;
-						   component.identificador=identificador_text.text;
-						   component.tamano=Max_caracter_text.text;
+						   component.etiqueta=combox_associaciones.selectedItem.name;
+						   component.identificador=combox_associaciones.selectedItem.name;
+						   component.tamano="0";
 						   component.componente=componentes_text.selectedItem.label;
 						   component.componente_id=componentes_text.selectedItem.data;
 						   component.requerido=requerido_componente.selected.toString();
 						   component.tipo=tipo_componente.selectedLabel;
-						   component.modulo_relacionado=combox_associaciones.selectedItem.id_modulo;
+						   component.modulo_relacionado=combox_associaciones.selectedItem.id;
 						   component.tipo_relacion=combox_relaciones.selectedItem.data;
 			           }else{
 				          var component:Componente=new Componente();
@@ -361,10 +379,12 @@
 			public function Create_relaciones():void
 			{
 				 if(combox_relaciones.selectedItem.data!="0"){
-			       Database.getInstance().relacion.modulo_principal=this.id_modulo;
+				   Database.getInstance().relacion=new Relacion();
+				   Database.getInstance().relacion.modulo_principal=this.id_modulo;
 			       Database.getInstance().relacion.tipo_relacion=combox_relaciones.selectedItem.data;
                    Database.getInstance().relacion.modulo_relacionado= combox_associaciones.selectedItem.id;
                    Database.getInstance().relacion.save();
+                  
                 }
 			}
 
@@ -420,17 +440,25 @@
 ///////////////////////////////////////////////////////////////////////////////////////
 		public function change_componente_combox():void
 		{
-	      if (componentes_text.selectedItem.data!="5"){
-	      pertencia.visible=false;
-		  combox_associaciones.visible=false;
+	     if (componentes_text.selectedItem.data!="5"){
+	       pertencia.visible=false;
+		   combox_associaciones.visible=false;
 		   combox_relaciones.selectedIndex=0;
+		   componente_etiqueta.enabled=true;
+		   identificador_text.enabled=true;
+		   Max_caracter_text.enabled=true;
+		   requerido_componente.enabled=true;
 		  }else{
-		  	if(combox_relaciones.selectedItem.data!=0){
-		  	  pertencia.visible=true;
-		     combox_associaciones.visible=true;
-		  	}
+		   combox_associaciones.visible=true;	
+		   componente_etiqueta.enabled=false;
+		   identificador_text.enabled=false;
+		   Max_caracter_text.enabled=false;
+		    requerido_componente.enabled=false;
+		   //componente_etiqueta.text="";
+		   //identificador_text.text="";
+		   //Max_caracter_text.text="";
 		  }
-	    }
+		 }
 	    
 ///////////////////////////////////////////////////////////////////////////////////////
 
@@ -518,7 +546,7 @@
 				<mx:TextInput restrict="0-9"  id="Max_caracter_text" x="163" y="179" width="469" maxChars="5" enabled="false"/>
 				<mx:CheckBox x="163" y="206" id="requerido_componente" enabled="true" selected="true"/>
 				<mx:ComboBox  dataProvider="{tipo_dato}" id="tipo_componente"  x="163" y="271" width="469" enabled="false"></mx:ComboBox>
-				<mx:Button click="Crear_elemento(dataset)"   id="agregar" x="163" y="302"  width="100" enabled="false"/>
+				<mx:Button click="Add_Elemento()"   id="agregar" x="163" y="302"  width="100" enabled="false"/>
 				<mx:Button click="Delete_componente_BD();"  id="borrar" width="95" x="10" y="{(dataset.y+dataset.height)+8}" enabled="false"/>
 				<mx:Button click="showWindowDownload()"  x="110" y="{(dataset.y+dataset.height)+8}" enabled="false" id="boton_upload" width="77"/>
 				<mx:Label id="tipo_valores" x="10" y="274" fontSize="11" fontWeight="normal"/>
