@@ -180,7 +180,7 @@ package Clases
 				   	cadena+=IDEComponentes.getInstance().CREATE_COMPONENTS(list_components[i].componente_id,list_components[i].identificador,list_components[i].etiqueta,list_components[i].tamano,list_components[i].tipo,list_components[i].requerido,list_components[i].tipo_relacion,list_components[i].modulo_relacionado,id)+"\n";
 		           }else{
 		            cadena+='<mx:FormItem label="'+list_components[i].etiqueta+'" width="100%">'+"\n";
-		 	        cadena+='<'+list_components[i].etiqueta.substr(0,1).toLocaleLowerCase()+list_components[i].etiqueta.substr(1,list_components[i].etiqueta.length-2)+':'+list_components[i].etiqueta.substr(0,1).toLocaleUpperCase()+list_components[i].etiqueta.substr(1,list_components[i].etiqueta.length-2)+'Index  width="100%" height="100%" />'+"\n";
+		 	        cadena+='<'+list_components[i].etiqueta.toLocaleLowerCase()+':'+list_components[i].etiqueta.substr(0,1).toLocaleUpperCase()+list_components[i].etiqueta.substr(1,list_components[i].etiqueta.length)+'Index  width="100%" height="100%" />'+"\n";
 			        cadena+='</mx:FormItem>'+"\n";
 		           }  
 		        }
@@ -197,7 +197,7 @@ package Clases
 		   for(var i:int=1;i<=list_components.length-1;i++){
 				if(list_components[i].modulo_id==id){
 				   if(list_components[i].componente_id=="5"){
-				    cadena+='xmlns:'+list_components[i].etiqueta.substr(0,1).toLocaleLowerCase()+list_components[i].etiqueta.substr(1,list_components[i].etiqueta.length-2)+'="Views.'+list_components[i].etiqueta.substr(0,1).toLocaleUpperCase()+list_components[i].etiqueta.substr(1,list_components[i].etiqueta.length-2)+'.*"'+"\n"	
+				    cadena+='xmlns:'+list_components[i].etiqueta.toLocaleLowerCase()+'="Views.'+list_components[i].etiqueta.substr(0,1).toLocaleUpperCase()+list_components[i].etiqueta.substr(1,list_components[i].etiqueta.length)+'.*"'+"\n"	
 		           }  
 		        }
 		     }
@@ -244,9 +244,9 @@ package Clases
 		   cadena+='<mx:DataGrid   horizontalScrollPolicy="auto" id="datos" x="20" y="46" width="95%" height="85%" >'+"\n"
            cadena+='<mx:columns>'+"\n"
 		  	
-			for(var i:int=1;i<=list_components.length-1;i++){
+			for(var i:int=0;i<=list_components.length-1;i++){
 				if(list_components[i].modulo_id==id){
-				   if(list_components[i].componente_id!="5"){
+				  if(list_components[i].componente_id!="5"){
 			  	    cadena+=IDEComponentes.getInstance().Crear_Column_DataGrid(list_components[i].etiqueta,list_components[i].identificador,list_components[i].tamano);
 				    }	
 			 		
