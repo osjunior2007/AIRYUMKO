@@ -24,9 +24,9 @@ package Clases
 			if( Zipfile.getInstance().proyecto_zip=="amfphp.zip"){
 
 				if(Zipfile.getInstance().Verificar_Modulo_Relacion(Zipfile.getInstance().list_components,id_modulo)==false){
-				 Zipfile.getInstance().add_file("amfphp/services/"+name+"Controller.php",ActiveRecords.getInstance().set_controllador(name));
+				 Zipfile.getInstance().add_file("amfphp/services/"+name+"sController.php",ActiveRecords.getInstance().set_controllador(name));
 				}else{
-			     Zipfile.getInstance().add_file("amfphp/services/"+name+"Controller.php",ActiveRecords.getInstance().set_controllador_relation(name, Get_All_Modoule_Elements(Zipfile.getInstance().list_components,id_modulo)));
+			     Zipfile.getInstance().add_file("amfphp/services/"+name+"sController.php",ActiveRecords.getInstance().set_controllador_relation(name, Get_All_Modoule_Elements(Zipfile.getInstance().list_components,id_modulo)));
 				}
 
 				Zipfile.getInstance().add_file("amfphp/services/models/"+name.toLocaleLowerCase()+".php",ActiveRecords.getInstance().set_modelo(name));
@@ -295,7 +295,7 @@ package Clases
 			}
 
 			if(Zipfile.getInstance().proyecto_zip=="amfphp.zip"){
-				Zipfile.getInstance().database_sql="CREATE TABLE"+"`"+nombre+"` ("+"\n"+"`id` bigint(11) NOT NULL AUTO_INCREMENT,"+"\n"+Zipfile.getInstance().database_sql;
+				Zipfile.getInstance().database_sql="CREATE TABLE"+"`"+nombre+"s` ("+"\n"+"`id` bigint(11) NOT NULL AUTO_INCREMENT,"+"\n"+Zipfile.getInstance().database_sql;
 				Zipfile.getInstance().database_sql+="PRIMARY KEY (`id`)"+" \n"+")"+"ENGINE=MyISAM AUTO_INCREMENT=40001 DEFAULT CHARSET=latin1;"+"\n"+"\n";
 				Zipfile.getInstance().Head_database_sql+=Zipfile.getInstance().database_sql;
 				Zipfile.getInstance().database_sql="";
