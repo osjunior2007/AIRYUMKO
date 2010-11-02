@@ -264,7 +264,7 @@ package Clases
 		{
 			var sw:int=0;
 			var sql_relations:String="";
-			for(var i:int=1;i<=list_components.length-1;i++){
+			for(var i:int=0;i<=list_components.length-1;i++){
 				if(list_components[i].modulo_id==id){
 					sw=1;
 					 
