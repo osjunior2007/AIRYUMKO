@@ -174,7 +174,7 @@ package Clases
 		   var sw:int=0;
 		   var cadena:String="";
 		   
-		   for(var i:int=1;i<=list_components.length-1;i++){
+		   for(var i:int=0;i<=list_components.length-1;i++){
 				if(list_components[i].modulo_id==id){
 				   if(list_components[i].componente_id!="5"){
 				   	cadena+=IDEComponentes.getInstance().CREATE_COMPONENTS(list_components[i].componente_id,list_components[i].identificador,list_components[i].etiqueta,list_components[i].tamano,list_components[i].tipo,list_components[i].requerido,list_components[i].tipo_relacion,list_components[i].modulo_relacionado,id)+"\n";
@@ -194,7 +194,7 @@ package Clases
 		   var sw:int=0;
 		   var cadena:String="";
 		   
-		   for(var i:int=1;i<=list_components.length-1;i++){
+		   for(var i:int=0;i<=list_components.length-1;i++){
 				if(list_components[i].modulo_id==id){
 				   if(list_components[i].componente_id=="5"){
 				    cadena+='xmlns:'+list_components[i].etiqueta.toLocaleLowerCase()+'="Views.'+list_components[i].etiqueta.substr(0,1).toLocaleUpperCase()+list_components[i].etiqueta.substr(1,list_components[i].etiqueta.length)+'.*"'+"\n"	
@@ -222,7 +222,7 @@ package Clases
 		   cadena+=' </mx:itemRenderer>'+"\n"
 		   cadena+='</mx:DataGridColumn>'+"\n"
 		
-			for(var i:int=1;i<=list_components.length-1;i++){
+			for(var i:int=0;i<=list_components.length-1;i++){
 				if(list_components[i].modulo_id==id){
 				   if(list_components[i].componente_id!="5"){
 			  	    cadena+=IDEComponentes.getInstance().Crear_Column_DataGrid(list_components[i].etiqueta,list_components[i].identificador,list_components[i].tamano);
@@ -472,7 +472,7 @@ package Clases
 		public function Get_All_Modoule_Elements(list_components:Array,id_modulo:String):String
 		{
 		  var cadena:String="";
-		  for(var i:int=1;i<=list_components.length-1;i++){
+		  for(var i:int=0;i<=list_components.length-1;i++){
 				if(list_components[i].id_modulo==id_modulo){
 				cadena+=list_components[i].identificador+",";
 				}

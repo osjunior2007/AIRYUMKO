@@ -15,6 +15,7 @@ package Clases
 		 var cadena:String=""
 		 cadena+="    public function Create(event:Event):void"+"\n";
 		 cadena+="     {"+"\n";
+		 cadena+="        "+value.toLocaleLowerCase()+"=new "+value.substr(0,1).toLocaleUpperCase()+ value.substr(1,value.length).toString()+"Model();";
 		 cadena+=model_var;
 		 cadena+='       this.Save('+value.toLocaleLowerCase()+',{title:"'+value.substr(0,1).toLocaleUpperCase()+ value.substr(1,value.length).toString()+' Insert",body:"Operacion Exitosa"});'+"\n";
 		 cadena+='       List({type:"all"},_view.datos);'+"\n";
@@ -241,8 +242,8 @@ package Clases
 		  var View_model_var:String=""; 
 		  var Clear_model_var:String=""; 
 
-	    	for(var i:int=1;i<=Zipfile.getInstance().list_components.length-1;i++){
-  			  if(Zipfile.getInstance().list_components[i].id_modulo==id){
+	    	for(var i:int=0;i<=Zipfile.getInstance().list_components.length-1;i++){
+  			  if(Zipfile.getInstance().list_components[i].modulo_id==id){
   			  	   name=Zipfile.getInstance().get_modulo_name(Zipfile.getInstance().list_components[i].modulo_relacionado);
   			  	   name=name.substr(0,1).toUpperCase()+name.substr(1,name.length-2);
   			    if(Zipfile.getInstance().list_components[i].componente_id!="5"){  
@@ -321,8 +322,8 @@ package Clases
 		  var Global_Variables:String='     public var id:String=""'+"\n";	
 		  var name_model:String=value.substr(0,1).toLocaleUpperCase()+value.substr(1,value.length);
 	
- 		for(var i:int=1;i<=Zipfile.getInstance().list_components.length-1;i++){
-  			  if(Zipfile.getInstance().list_components[i].id_modulo==id){
+ 		for(var i:int=0;i<=Zipfile.getInstance().list_components.length-1;i++){
+  			  if(Zipfile.getInstance().list_components[i].modulo_id==id){
   			 if(Zipfile.getInstance().list_components[i].componente_id!="5"){  	
 	  				if(i==1){
 	  				    if(Zipfile.getInstance().list_components[i].componente_id=="5"){
@@ -348,7 +349,7 @@ package Clases
 		    cadena+=Model_Source(name_model)+"\n";
 		    cadena+="  }"+"\n"
 		    cadena+="}";
-		    return cadena;
+		     return cadena;
 		}
 
 
