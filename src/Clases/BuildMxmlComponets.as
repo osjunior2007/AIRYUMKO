@@ -246,7 +246,7 @@ package Clases
 		   cadena+='<mx:DataGridColumn visible="false" width="110" headerText="id" dataField="id"/>'+"\n";	
 			for(var i:int=0;i<=list_components.length-1;i++){
 				if(list_components[i].modulo_id==id){
-				  if(list_components[i].componente_id!="5"){
+				  if(list_components[i].etiqueta.toLocaleLowerCase()!="id"&&list_components[i].componente_id!="5"){
 			  	    cadena+=IDEComponentes.getInstance().Crear_Column_DataGrid(list_components[i].etiqueta,list_components[i].identificador,list_components[i].tamano);
 				    }	
 			 		
@@ -268,25 +268,25 @@ package Clases
 				if(list_components[i].modulo_id==id){
 					sw=1;
 					 
-				    
-					if(Zipfile.getInstance().proyecto_zip=="amfphp.zip"){
-						if(list_components[i].tipo_relacion=="0"&&list_components[i].identificador!="id"&&list_components[i].identificador!="ID"){
-							Zipfile.getInstance().database_sql+=IDEComponentes.getInstance().Create_database_sql(list_components[i].identificador,list_components[i].componente_id,list_components[i].tamano);
+				  	if(Zipfile.getInstance().proyecto_zip=="amfphp.zip"){
+							if(list_components[i].tipo_relacion=="0"&&list_components[i].etiqueta.toLocaleLowerCase()!="id"&&list_components[i].identificador.toLocaleLowerCase()!="id"){
+								Zipfile.getInstance().database_sql+=IDEComponentes.getInstance().Create_database_sql(list_components[i].identificador,list_components[i].componente_id,list_components[i].tamano);
+							}
+							//Relation Many to Many
+							if(list_components[i].tipo_relacion=="2"&&list_components[i].etiqueta.toLocaleLowerCase()!="id"&&list_components[i].identificador.toLocaleLowerCase()!="id"){
+							  sql_relations=IDEComponentes.getInstance().Create_database_sql("id_"+list_components[i].identificador,"8","5");
+							  sql_relations+=IDEComponentes.getInstance().Create_database_sql("id_"+nombre.toLowerCase(),"8","5");
+							  list_components[i].identificador=list_components[i].identificador.substr(0,1).toLowerCase()+list_components[i].identificador.substr(1,list_components[i].identificador.length-1);
+							   sql_relations="CREATE TABLE"+"`"+nombre+"_"+list_components[i].identificador+"s` ("+"\n"+"`id` bigint(11) NOT NULL AUTO_INCREMENT,"+"\n"+sql_relations;
+					          sql_relations+="PRIMARY KEY (`id`)"+" \n"+")"+"ENGINE=MyISAM AUTO_INCREMENT=40001 DEFAULT CHARSET=latin1;"+"\n"+"\n";
+					          Zipfile.getInstance().Head_database_sql+=sql_relations;
+							}
+		
 						}
-						//Relation Many to Many
-						if(list_components[i].tipo_relacion=="2"&&list_components[i].identificador!="id"&&list_components[i].identificador!="ID"){
-						  sql_relations=IDEComponentes.getInstance().Create_database_sql("id_"+list_components[i].identificador,"8","5");
-						  sql_relations+=IDEComponentes.getInstance().Create_database_sql("id_"+nombre.toLowerCase(),"8","5");
-						  list_components[i].identificador=list_components[i].identificador.substr(0,1).toLowerCase()+list_components[i].identificador.substr(1,list_components[i].identificador.length-1);
-						   sql_relations="CREATE TABLE"+"`"+nombre+"_"+list_components[i].identificador+"s` ("+"\n"+"`id` bigint(11) NOT NULL AUTO_INCREMENT,"+"\n"+sql_relations;
-				          sql_relations+="PRIMARY KEY (`id`)"+" \n"+")"+"ENGINE=MyISAM AUTO_INCREMENT=40001 DEFAULT CHARSET=latin1;"+"\n"+"\n";
-				          Zipfile.getInstance().Head_database_sql+=sql_relations;
-						}
-
-					}
-
+                   
+                    
 					if(Zipfile.getInstance().proyecto_zip=="Rails.zip"){
-						if(list_components[i].identificador!="id"&&list_components[i].identificador!="ID"){
+						if(list_components[i].identificador.toLocaleLowerCase()!="id"&&list_components[i].etiqueta.toLocaleLowerCase()!="id"){
 							Zipfile.getInstance().migrationBody+=IDEComponentes.getInstance().Create_migration(list_components[i].identificador,list_components[i].componente_id,list_components[i].tamano);
 						}
 					}

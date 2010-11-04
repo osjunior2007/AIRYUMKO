@@ -15,7 +15,7 @@ package Clases
 		 var cadena:String=""
 		 cadena+="    public function Create(event:Event):void"+"\n";
 		 cadena+="     {"+"\n";
-		 cadena+="        "+value.toLocaleLowerCase()+"=new "+value.substr(0,1).toLocaleUpperCase()+ value.substr(1,value.length).toString()+"Model();"+"\n";
+		 cadena+="       "+value.toLocaleLowerCase()+"=new "+value.substr(0,1).toLocaleUpperCase()+ value.substr(1,value.length).toString()+"Model();"+"\n";
 		 cadena+=model_var;
 		 cadena+='       this.Save('+value.toLocaleLowerCase()+',{title:"'+value.substr(0,1).toLocaleUpperCase()+ value.substr(1,value.length).toString()+' Insert",body:"Operacion Exitosa"});'+"\n";
 		 cadena+='       List({type:"all"},_view.datos);'+"\n";
@@ -29,7 +29,7 @@ package Clases
 		   var cadena:String=""
 		   cadena+="    public function Update(event:Event):void"+"\n";
 		   cadena+="     {"+"\n";
-		   cadena+"       "+value.toLocaleLowerCase()+".id=_view.datos.selectedItem.id;"+"\n";
+		   cadena+="       "+value.toLocaleLowerCase()+".id=_view.datos.selectedItem.id;"+"\n";
 		   cadena+=model_var;
 		   cadena+='       this.UpdateAttribute('+value.toLocaleLowerCase()+',{title:"'+value.substr(0,1).toLocaleUpperCase()+ value.substr(1,value.length).toString()+' Update",body:"Operacion Exitosa"});'+"\n";
 		   cadena+='       List({type:"all"},_view.datos);'+"\n";
@@ -247,7 +247,7 @@ package Clases
   			  if(Zipfile.getInstance().list_components[i].modulo_id==id){
   			  	   name=Zipfile.getInstance().get_modulo_name(Zipfile.getInstance().list_components[i].modulo_relacionado);
   			  	   name=name.substr(0,1).toUpperCase()+name.substr(1,name.length-2);
-  			    if(Zipfile.getInstance().list_components[i].componente_id!="5"){  
+  			    if(Zipfile.getInstance().list_components[i].identificador.toLocaleLowerCase()!="id"&&Zipfile.getInstance().list_components[i].etiqueta.toLocaleLowerCase()!="id"&&Zipfile.getInstance().list_components[i].componente_id!="5"){  
   			        if(i==1){
   			        init_model_var="        "+value.substr(0,1).toLocaleLowerCase()+value.substr(1,value.length)+"."+Zipfile.getInstance().list_components[i].etiqueta+'="";'+"\n";
   			  	    datagrid_model_var="      "+value.substr(0,1).toLocaleLowerCase()+value.substr(1,value.length)+"."+Zipfile.getInstance().list_components[i].etiqueta+'=_view.datos.selectedItem.'+Zipfile.getInstance().list_components[i].etiqueta+';'+"\n";
@@ -324,20 +324,20 @@ package Clases
 		  var name_model:String=value.substr(0,1).toLocaleUpperCase()+value.substr(1,value.length);
 	
  		for(var i:int=0;i<=Zipfile.getInstance().list_components.length-1;i++){
-  			  if(Zipfile.getInstance().list_components[i].modulo_id==id){
-  			 if(Zipfile.getInstance().list_components[i].componente_id!="5"){  	
+  	       if(Zipfile.getInstance().list_components[i].modulo_id==id){
+  			 if(Zipfile.getInstance().list_components[i].identificador.toLocaleLowerCase()!="id"&&Zipfile.getInstance().list_components[i].etiqueta.toLocaleLowerCase()!="id"&&Zipfile.getInstance().list_components[i].componente_id!="5"){  	
 	  				if(i==1){
-	  				    if(Zipfile.getInstance().list_components[i].componente_id=="5"){
+	  				   if(Zipfile.getInstance().list_components[i].componente_id=="5"){
 	  			          Global_Variables+="     public var "+Zipfile.getInstance().get_modulo_name(Zipfile.getInstance().list_components[i].modulo_relacionado)+':String="";'+"\n";
-		  			    }else{
+		  			   }else{
 		  				 Global_Variables+="     public var "+Zipfile.getInstance().list_components[i].etiqueta+':String="";'+"\n";
-		  				  }
+		  			   }
 	  				}else
 	  				{
 		  			 if(Zipfile.getInstance().list_components[i].componente_id=="5"){
-		  			       Global_Variables+="     public var "+Zipfile.getInstance().get_modulo_name(Zipfile.getInstance().list_components[i].modulo_relacionado)+':String="";'+"\n";
-		  				  }else{
-		  			     Global_Variables+="     public var "+Zipfile.getInstance().list_components[i].etiqueta+':String="";'+"\n";
+		  			  Global_Variables+="     public var "+Zipfile.getInstance().get_modulo_name(Zipfile.getInstance().list_components[i].modulo_relacionado)+':String="";'+"\n";
+		  		      }else{
+		  			  Global_Variables+="     public var "+Zipfile.getInstance().list_components[i].etiqueta+':String="";'+"\n";
 		  			  }
 	  			 	}
   			   }
