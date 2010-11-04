@@ -15,7 +15,7 @@ package Clases
 		 var cadena:String=""
 		 cadena+="    public function Create(event:Event):void"+"\n";
 		 cadena+="     {"+"\n";
-		 cadena+="        "+value.toLocaleLowerCase()+"=new "+value.substr(0,1).toLocaleUpperCase()+ value.substr(1,value.length).toString()+"Model();";
+		 cadena+="        "+value.toLocaleLowerCase()+"=new "+value.substr(0,1).toLocaleUpperCase()+ value.substr(1,value.length).toString()+"Model();"+"\n";
 		 cadena+=model_var;
 		 cadena+='       this.Save('+value.toLocaleLowerCase()+',{title:"'+value.substr(0,1).toLocaleUpperCase()+ value.substr(1,value.length).toString()+' Insert",body:"Operacion Exitosa"});'+"\n";
 		 cadena+='       List({type:"all"},_view.datos);'+"\n";
@@ -29,6 +29,7 @@ package Clases
 		   var cadena:String=""
 		   cadena+="    public function Update(event:Event):void"+"\n";
 		   cadena+="     {"+"\n";
+		   cadena+"       "+value.toLocaleLowerCase()+".id=_view.datos.selectedItem.id;"+"\n";
 		   cadena+=model_var;
 		   cadena+='       this.UpdateAttribute('+value.toLocaleLowerCase()+',{title:"'+value.substr(0,1).toLocaleUpperCase()+ value.substr(1,value.length).toString()+' Update",body:"Operacion Exitosa"});'+"\n";
 		   cadena+='       List({type:"all"},_view.datos);'+"\n";

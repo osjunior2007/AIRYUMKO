@@ -243,7 +243,7 @@ package Clases
 		  	
 		   cadena+='<mx:DataGrid   horizontalScrollPolicy="auto" id="datos" x="20" y="46" width="95%" height="85%" >'+"\n"
            cadena+='<mx:columns>'+"\n"
-		  	
+		   cadena+='<mx:DataGridColumn visible="false" width="110" headerText="id" dataField="id"/>'+"\n";	
 			for(var i:int=0;i<=list_components.length-1;i++){
 				if(list_components[i].modulo_id==id){
 				  if(list_components[i].componente_id!="5"){
