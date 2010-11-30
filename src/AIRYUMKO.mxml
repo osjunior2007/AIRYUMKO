@@ -145,7 +145,7 @@
 
 				}
 			}
-			//////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////
 			public function treeChanged(event:Event):void {
 				selectedNode=Tree(event.target).selectedItem as XML;
 				if(selectedNode.@label!="App"){
@@ -158,11 +158,9 @@
 			 		dataset.dataProvider=Database.getInstance().component.findBySQL("select id,etiqueta,identificador,tamano,requerido,componente,tipo,modulo_relacionado,tipo_relacion from componentes where modulo_id='"+selectedNode.@data+"'");
 				    this.id_modulo=selectedNode.@data;
 				    combox_associaciones.dataProvider=Database.getInstance().mod.findBySQL("select id,name from modulos where id!="+this.id_modulo+"");
-			        
-				}
-
-			}
-			///////////////////////////////////////////////////////////////////////////////////////////
+			  }
+ 	       }
+///////////////////////////////////////////////////////////////////////////////////////////
 
 			private function showWindowDownload():void
 			{

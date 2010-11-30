@@ -2,13 +2,12 @@ package Clases
 {
 	import deng.fzip.FZip;
 	import deng.fzip.FZipFile;
-	
 	import flash.events.*;
 	import flash.filesystem.*;
 	import flash.net.URLRequest;
 	import flash.utils.ByteArray;
-	
 	import mx.controls.Alert;
+	import Clases.Mobile.CreateMobileApp;
 	public class Zipfile
 	{  private static var instancia:Zipfile;
 		public var zip:FZip = new FZip();
@@ -17,6 +16,7 @@ package Clases
 		public var done:Boolean = false;
 		public var proyecto_zip:String="amfphp.zip";
 		public var proyecto_name:String="";
+		public var proyecto_type:String="mobile";
 		public var database_name:String="";
 		public var user_database:String="root";
 		public var password_database:String="";
@@ -138,13 +138,19 @@ package Clases
 			}
 			 list_relaciones=Database.getInstance().relacion.findBySQL("select id,modulo_principal,tipo_relacion,modulo_relacionado from relacions");;
 			 list_components=Database.getInstance().component.findBySQL("select componente_id,modulo_id,etiqueta,identificador,tamano,replace(replace(tipo,'Numerico','0'),'Alfanumerico','1') as tipo,requerido,tipo_relacion,modulo_relacionado from componentes");
-             Result_build_MainMXML (Database.getInstance().mod.findBySQL("select name,id from modulos"));
-
-			
+          
+			 if(this.proyecto_type!="Desktop"){
+			   CreateDesktopApp(Database.getInstance().mod.findBySQL("select name,id from modulos"));
+			 }
+			 
+			 if(this.proyecto_type!="Mobile"){
+			   CreateMobileApp.getInstance().CreateApp(Database.getInstance().mod.findBySQL("select name,id from modulos"));
+			 }
+				
 		}
 		
 		//Esta funcion Construye el Main.xml y tambien el Amfphp server
-		public function Result_build_MainMXML (Modulos:Array):void
+		public function CreateDesktopApp (Modulos:Array):void
 		{
 			var name_modelo:String="";
 			var name:String="";
