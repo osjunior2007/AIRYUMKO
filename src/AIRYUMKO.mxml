@@ -365,7 +365,7 @@
 						   component.etiqueta=combox_associaciones.selectedItem.name;
 						   component.identificador=combox_associaciones.selectedItem.name;
 						   component.tamano="0";
-						   component.componente=componentes_text.selectedItem.label;
+						   component.componente=componentes_text.selectedItem.data;
 						   component.componente_id=componentes_text.selectedItem.data;
 						   component.requerido=requerido_componente.selected.toString();
 						   component.tipo="Indeterminado";
@@ -377,7 +377,7 @@
 						   component.etiqueta=componente_etiqueta.text;
 						   component.identificador=identificador_text.text;
 						   component.tamano=Max_caracter_text.text;
-						   component.componente=componentes_text.selectedItem.label;
+						   component.componente=componentes_text.selectedItem.data;
 						   component.componente_id=componentes_text.selectedItem.data;
 						   component.requerido=requerido_componente.selected.toString();
 						   component.tipo=tipo_componente.selectedLabel;

@@ -86,7 +86,7 @@ package Clases.Mobile
 			var cadena:String="";
 			for(var i:int=0;i<=components.length-1;i++)
 			{
-				if(components[i].componente=="Campo de Texto"){
+				if(components[i].componente=="0"){
 					cadena+=MobileComponents.getInstance().CreateTextInput(components[i].identificador,components[i].tamano,components[i].tipo,0,components[i].requerido,"false")+"\n";	
 				}
 			}
