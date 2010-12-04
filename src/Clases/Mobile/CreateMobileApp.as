@@ -21,23 +21,24 @@ package Clases.Mobile
 				relation=Database.getInstance().relacion.findBySQL("select * from relacions")
 				for(var i:int=0;i<=list_modulos.length-1;i++)
 				{
-					if(GetTypeRelation(relation,list_modulos[i].id,"relacionado")&&!GetTypeRelation(relation,list_modulos[i].id,"principal")){
-						
-					}
-					if(!GetTypeRelation(relation,list_modulos[i].id,"relacionado")&&GetTypeRelation(relation,list_modulos[i].id,"principal")){
-						
-					}
-					if(GetTypeRelation(relation,list_modulos[i].id,"relacionado")&&GetTypeRelation(relation,list_modulos[i].id,"principal")){
+				   if(TypeRelation(relation,list_modulos[i].id,"relacionado")&&!TypeRelation(relation,list_modulos[i].id,"principal")){
 						
 					}
 					
+				    if(!TypeRelation(relation,list_modulos[i].id,"relacionado")&&TypeRelation(relation,list_modulos[i].id,"principal")){
+						
+					}
+					
+					if(TypeRelation(relation,list_modulos[i].id,"relacionado")&&TypeRelation(relation,list_modulos[i].id,"principal")){
+						
+					}
 				
 				}
 				
 			}	
 	    }	
 		
-		public function GetTypeRelation(list:Array,id:String,type:String):Boolean
+		public function TypeRelation(list:Array,id:String,type:String):Boolean
 		{
 			var sw:Boolean=false;
 			var i:int=0;
