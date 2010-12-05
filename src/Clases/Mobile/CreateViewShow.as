@@ -12,7 +12,14 @@ package Clases.Mobile
 		
 		public function CreateShowFucntion(id:String,Object:String):String
 		{
-			
+			var cadena:String="";
+			cadena+='<fx:Script>'+"\n";
+			cadena+='	<![CDATA['+"\n";
+			cadena+='	import Clases.Database;'+"\n";
+			cadena+='	import Models.'+Object+';'+"\n";
+			cadena+=CreateImportViewLibrary(Database.getInstance().relacion.findBySQL("select * from componentes where tipo_relacion='5' and modulo_id='"+id+"'"));
+			cadena+='	import mx.collections.ArrayCollection;'+"\n";
+			cadena+='	public var DB:Database=new Database()'+"\n"+"\n";
 			cadena+='public function Show(data:Object):void'+"\n";
 			cadena+='{'+"\n";
 			cadena+='   var '+Object.toLocaleLowerCase()+':'+Object+'=new '+Object+'();'+"\n";
@@ -20,8 +27,25 @@ package Clases.Mobile
 			cadena+=SetAttributeValue(Object,Database.getInstance().relacion.findBySQL("select * from componentes where modulo_id='"+id+"'"));
 			cadena+='}'+"\n"+"\n";
 			cadena+=CreateListEventRelation(Object,Database.getInstance().relacion.findBySQL("select * from componentes where modulo_id='"+id+"'"));
-			
+			cadena+="\n"; 	
+			cadena+=' ]]>'+"\n"
+			cadena+='</fx:Script>'+"\n"
 		} 
+		
+		
+		public function CreateImportViewLibrary(components:Array):String
+		{
+			var cadena:String="";
+			var NameComponent:String=""
+			for(var i:int=0;i<=components.length-1;i++)
+			{
+				NameComponent=components[i].identificador.substring(0,1).toUpperCase()+components[i].identificador.substring(1,components[i].identificador.length-1);
+				cadena+='	import Views.'+NameComponent+'.'+NameComponent+'SelectedIndex;'+"\n";	
+			}
+			if(cadena!="")cadena+="\n";
+			return cadena;
+		}	
+		
 		
 		public function SetAttributeValue(Object:String,components:Array):String
 		{
@@ -37,7 +61,6 @@ package Clases.Mobile
 		public function CreateListRelation(Object:String,components:Array):String
 		{
 			var NameComponent:String=""
-			
 			for(var i:int=0;i<=components.length-1;i++)
 			{
 				
@@ -55,6 +78,7 @@ package Clases.Mobile
 				cadena+='</s:List>'+"\n";
 				
 			}
+			if(cadena!="")cadena+="\n";
 			return cadena;
 		} 
 		
@@ -90,7 +114,8 @@ package Clases.Mobile
 					cadena+=MobileComponents.getInstance().CreateTextInput(components[i].identificador,components[i].tamano,components[i].tipo,0,components[i].requerido,"false")+"\n";	
 				}
 			}
-			return cadena;	
+			if(cadena!="")cadena+="\n";
+			return cadena;
 		}
 		
 		
@@ -107,8 +132,8 @@ package Clases.Mobile
 			cadena+='</s:actionContent>'+"\n";
 			cadena+='<s:VGroup width="100%" paddingLeft="10" paddingTop="35" paddingRight="20" paddingBottom="20" gap="5">'+"\n";
 			cadena+='	<s:VGroup width="100%">'+"\n";
-			cadena+=CreateFields(Object,Database.getInstance().relacion.findBySQL("select * from componentes where modulo_id='"+id+"'"))+"\n";
-			cadena+=CreateListRelation(Object,Database.getInstance().relacion.findBySQL("select * from componentes where modulo_id='"+id+"'"))+"\n";
+			cadena+=CreateFields(Object,Database.getInstance().relacion.findBySQL("select * from componentes where tipo_relacion='0' and modulo_id='"+id+"'"));
+			cadena+=CreateListRelation(Object,Database.getInstance().relacion.findBySQL("select * from componentes where tipo_relacion='5' and modulo_id='"+id+"'"));
 			cadena+='	</s:VGroup>'+"\n";
 			cadena+='</s:VGroup>'+"\n";
 		}	
