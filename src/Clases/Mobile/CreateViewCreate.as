@@ -23,7 +23,7 @@ package Clases.Mobile
 		}
 		
 		
-		public function CreateFucntion(id:String,Object:String):String
+		public function CreateFunction(id:String,Object:String):String
 		{
 			var cadena:String="";
 			cadena+='<fx:Script>'+"\n";
@@ -42,7 +42,7 @@ package Clases.Mobile
 			cadena+='{  '+"\n";
 			cadena+='	'+Object.toLocaleLowerCase()+'=new '+Object+'();'+"\n";
 			cadena+=ShareFunctions.getInstance().SetAttributeValue(Object,Database.getInstance().relacion.findBySQL("select * from componentes where modulo_id='"+id+"'"));
-			cadena+=SaveElementsRelationship(Object,Database.getInstance().relacion.findBySQL("select * from componentes where tipo_relacion='5' and modulo_id='"+id+"'"));
+			cadena+=ShareFunctions.getInstance().SaveElementsRelationship(Object,Database.getInstance().relacion.findBySQL("select * from componentes where tipo_relacion='5' and modulo_id='"+id+"'"));
 			cadena+='	DB.em.save('+Object.toLocaleLowerCase()+');'+"\n";
 			cadena+='	this.navigator.pushView('+Object+'Index);'+"\n";
 			cadena+='}	'+"\n";
@@ -50,18 +50,6 @@ package Clases.Mobile
 			cadena+=' ]]>'+"\n"
 			cadena+='</fx:Script>'+"\n"
 		} 
-		
-		public function SaveElementsRelationship(Object:String,components:Array):String
-		{
-			var cadena:String="";
-			var NameComponent:String=""
-			for(var i:int=0;i<=components.length-1;i++)
-			{
-			 NameComponent=components[i].identificador.substring(0,1).toUpperCase()+components[i].identificador.substring(1,components[i].identificador.length-1);
-			 cadena+='if(this.data.'+Object.toLocaleLowerCase()+'.'+components[i].identificador+')'+Object.toLocaleLowerCase()+'.'+components[i].identificador+'='+Object.toLocaleLowerCase()+'.Save'+NameComponent+'(DB.em,this.data.'+Object.toLocaleLowerCase()+'.'+components[i].identificador+');'+"\n";
-			}
-		  return cadena;
-		}
 		
 		
 		public function CreateView(id:String,Object:String):String
