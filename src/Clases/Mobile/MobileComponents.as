@@ -7,24 +7,35 @@ package Clases.Mobile
 		}
 		
 		
-		public function CreateTextInput(idenficador:String,longitud:String,restricion:String,pass:int,requiredtype:String,Enable:String):String
-		{ var cadena:String="";
-			if(pass==0){
-				cadena='  <mx:TextInput enable="'+Enable+'" width="350" x="'+(posx)+'" y="'+posy+'"';
+		public function CreateTextInput(params:Object):String
+		{ 
+			
+			var cadena:String="";
+			var NameComponent:String=""
+				
+			if(params.pass=="0"){
+				cadena='  <mx:TextInput enable="'+params.Enable+'" width="100%"';
 			}else{
-				cadena='  <mx:TextInput displayAsPassword="true" width="350" x="'+(posx)+'" y="'+posy+'"';	
+				cadena='  <mx:TextInput displayAsPassword="true" width="100%"';	
 			}
 			cadena+=" ";
-			cadena+='id="Att_'+idenficador.toLowerCase()+'" '+'maxChars="'+longitud+'"';
-			if(restricion=="Numerico"){
+			
+			if(params.focus=="true"){
+				NameObject=Object.substring(0,1).toUpperCase()+Object.substring(1,Object.length-1);
+				cadena+='focusOut'+"="+"{("+params.idenficador.toLowerCase()+".text=='')?"+params.idenficador.toLowerCase()+".text='"+NameObject+" :' :"+params.idenficador.toLowerCase()+".text}" +"focusIn="+"{"+params.idenficador.toLowerCase()+".text=''}";
+			}
+			
+			cadena+='id="Att_'+params.idenficador.toLowerCase()+'" '+'maxChars="'+params.longitud+'"';
+			if(params.restricion=="Numerico"){
 				cadena+=' restrict="0-9"'	
 			}
-			if(requiredtype=="true"){
+			if(params.requiredtype=="true"){
 				cadena+=' name="required"'		
 			}
 			cadena+=' />'	 
 			return cadena; 	
 		}
+		
 		
 		
 		public static function getInstance():MobileComponents

@@ -23,7 +23,7 @@ package Clases.Mobile
 		} 
 		
 	
-		public function CreateIndexFunction(Object:String):String
+		public function IndexFunction(Object:String):String
 		{
 			var cadena:String="";
 			cadena+='<fx:Script>'+"\n";
@@ -66,7 +66,7 @@ package Clases.Mobile
 		
 		
 		
-		public function CreateIndex(id:String,Object:String):String
+		public function IndexView(id:String,Object:String):String
 		{
 			var cadena:String="";
 			cadena+='<?xml version="1.0" encoding="utf-8"?>'+"\n";
