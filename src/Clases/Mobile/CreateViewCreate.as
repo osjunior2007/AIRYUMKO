@@ -35,7 +35,7 @@ package Clases.Mobile
 			cadena+='	public var DB:Database=new Database()'+"\n"+"\n";
 			cadena+='public function Create(data:Object):void'+"\n";
 			cadena+='{'+"\n";
-			cadena+='	this.data={};'+"\n";
+			cadena+='	this.data=data;'+"\n";
 			cadena+='}'+"\n";
 			
 			cadena+='public function '+Object+'_Create(event:Event):void'+"\n";
