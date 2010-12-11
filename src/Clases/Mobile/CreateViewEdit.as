@@ -18,7 +18,9 @@ public class CreateViewEdit
 		cadena+='	<![CDATA['+"\n";
 		cadena+='	import Clases.Database;'+"\n";
 		cadena+='	import Models.'+Object+';'+"\n";
+		if(type!="R0"){
 		cadena+=ShareFunctions.getInstance().CreateImportViewLibrary(Database.getInstance().relacion.findBySQL("select * from componentes where tipo_relacion='5' and modulo_id='"+id+"'"));
+		}
 		cadena+='	import mx.collections.ArrayCollection;'+"\n";
 		cadena+='	public var DB:Database=new Database()'+"\n"+"\n";
 		
@@ -27,15 +29,15 @@ public class CreateViewEdit
 		cadena+='{'+"\n";
 		cadena+='	var '+Object.toLocaleLowerCase()+':'+Object+'=new '+Object+'();'+"\n";
 		cadena+='	'+Object.toLocaleLowerCase()+'=DB.em.loadItem('+Object+',this.data.'+Object.toLocaleLowerCase()+'.id)as '+Object+' ;'+"\n";
-		cadena+=ShareFunctions.getInstance().SetAttributeValue(Object,Database.getInstance().relacion.findBySQL("select * from componentes where modulo_id='"+id+"'"));
+		cadena+=ShareFunctions.getInstance().SetAttributeValue(Object,Database.getInstance().component.findBySQL("select * from componentes where modulo_id='"+id+"'"));
 		cadena+='}'+"\n";
 		
 		cadena+='public function '+Object+'_Update(event:Event):void'+"\n";
 		cadena+='{'+"\n";
 		cadena+='	'+Object.toLocaleLowerCase()+'=DB.em.load('+Object+',this.data.estudiante.id) as '+Object+';'+"\n";
-		cadena+=ShareFunctions.getInstance().SetAttributeValue(Object,Database.getInstance().relacion.findBySQL("select * from componentes where modulo_id='"+id+"'"));
+		cadena+=ShareFunctions.getInstance().SetAttributeValue(Object,Database.getInstance().component.findBySQL("select * from componentes where modulo_id='"+id+"'"));
 		if(type!="R0"){
-		cadena+=ShareFunctions.getInstance().SaveElementsRelationship(Object,Database.getInstance().relacion.findBySQL("select * from componentes where tipo_relacion='5' and modulo_id='"+id+"'"));
+		cadena+=ShareFunctions.getInstance().SaveElementsRelationship(Object,Database.getInstance().component.findBySQL("select * from componentes where tipo_relacion='5' and modulo_id='"+id+"'"));
 		}
 		cadena+='	DB.em.save('+Object.toLocaleLowerCase()+');'+"\n";
 		cadena+='	this.navigator.pushView('+Object+'Index); '+"\n";
@@ -45,7 +47,7 @@ public class CreateViewEdit
 		cadena+='{  '+"\n"; 
 		cadena+='	'+Object.toLocaleLowerCase()+'=DB.em.load('+Object+',this.data.estudiante.id) as '+Object+';'+"\n";
 		if(type!="R0"){
-		cadena+=ShareFunctions.getInstance().RemoveElementsRelationship(Object,Database.getInstance().relacion.findBySQL("select * from componentes where tipo_relacion='5' and modulo_id='"+id+"'"));
+		cadena+=ShareFunctions.getInstance().RemoveElementsRelationship(Object,Database.getInstance().component.findBySQL("select * from componentes where tipo_relacion='5' and modulo_id='"+id+"'"));
 		}
 		cadena+='	DB.em.save('+Object.toLocaleLowerCase()+');'+"\n";
 		cadena+='	DB.em.remove('+Object.toLocaleLowerCase()+');'+"\n";

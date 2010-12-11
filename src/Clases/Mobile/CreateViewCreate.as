@@ -31,7 +31,9 @@ package Clases.Mobile
 			cadena+='	<![CDATA['+"\n";
 			cadena+='	import Clases.Database;'+"\n";
 			cadena+='	import Models.'+Object+';'+"\n";
-			cadena+=ShareFunctions.getInstance().CreateImportViewLibrary(Database.getInstance().relacion.findBySQL("select * from componentes where tipo_relacion='5' and modulo_id='"+id+"'"));
+			if(type!="R0"){
+			cadena+=ShareFunctions.getInstance().CreateImportViewLibrary(Database.getInstance().component.findBySQL("select * from componentes where tipo_relacion='5' and modulo_id='"+id+"'"));
+			}
 			cadena+='	import mx.collections.ArrayCollection;'+"\n";
 			cadena+='	public var DB:Database=new Database()'+"\n"+"\n";
 			cadena+='public function Create(data:Object):void'+"\n";
@@ -42,9 +44,9 @@ package Clases.Mobile
 			cadena+='public function '+Object+'_Create(event:Event):void'+"\n";
 			cadena+='{  '+"\n";
 			cadena+='	'+Object.toLocaleLowerCase()+'=new '+Object+'();'+"\n";
-			cadena+=ShareFunctions.getInstance().SetAttributeValue(Object,Database.getInstance().relacion.findBySQL("select * from componentes where modulo_id='"+id+"'"));
+			cadena+=ShareFunctions.getInstance().SetAttributeValue(Object,Database.getInstance().component.findBySQL("select * from componentes where modulo_id='"+id+"'"));
 			if(type!="R0"){
-			cadena+=ShareFunctions.getInstance().SaveElementsRelationship(Object,Database.getInstance().relacion.findBySQL("select * from componentes where tipo_relacion='5' and modulo_id='"+id+"'"));
+			cadena+=ShareFunctions.getInstance().SaveElementsRelationship(Object,Database.getInstance().component.findBySQL("select * from componentes where tipo_relacion='5' and modulo_id='"+id+"'"));
 			}
 			cadena+='	DB.em.save('+Object.toLocaleLowerCase()+');'+"\n";
 			cadena+='	this.navigator.pushView('+Object+'Index);'+"\n";
@@ -74,7 +76,7 @@ package Clases.Mobile
 			cadena+='		 <s:Label text="'+Object+' Information"/>	'+"\n";		
 			cadena+='	  <mx:Spacer/>'+"\n";
 			cadena+='	  <mx:Spacer/>	'+"\n";
-			cadena+=CreateFields(Object,Database.getInstance().relacion.findBySQL("select * from componentes where modulo_id='"+id+"'"));
+			cadena+=CreateFields(Object,Database.getInstance().component.findBySQL("select * from componentes where modulo_id='"+id+"'"));
 			cadena+='		 <mx:Spacer/>'+"\n";
 			cadena+='		 <mx:Spacer/>	'+"\n";
 			cadena+='		 <s:Button click="'+Object+'_Create(event)" id="Btn_create" width="100%" label="Create"/>'+"\n";
