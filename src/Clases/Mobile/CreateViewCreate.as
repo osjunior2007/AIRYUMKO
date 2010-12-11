@@ -3,7 +3,8 @@ package Clases.Mobile
 	import Clases.Database;
 	import Clases.Mobile.ShareFunctions;
 	public class CreateViewCreate
-	{
+	{  
+		private static var instancia:CreateViewCreate; 
 		public function CreateViewCreate()
 		{
 		}
@@ -49,6 +50,7 @@ package Clases.Mobile
 		  	cadena+="\n"; 	
 			cadena+=' ]]>'+"\n"
 			cadena+='</fx:Script>'+"\n"
+			return cadena;	
 		} 
 		
 		
@@ -61,7 +63,7 @@ package Clases.Mobile
 			cadena+='			xmlns:s="library://ns.adobe.com/flex/spark"'+"\n";
 			cadena+='			xmlns:mx="library://ns.adobe.com/flex/mx"'+"\n";
 			cadena+='			creationComplete="Create(this.data);" title="'+Object+'">'+"\n";
-			cadena+CreateFucntion(id,Object);
+			cadena+CreateFunction(id,Object);
 			cadena+='<s:navigationContent>'+"\n";
 			cadena+='	 <s:Button id="homeButton"  icon="@Embed'+"('assets/home.png')"+'"  click="{this.navigator.pushView('+Object+'Index)}"/>'+"\n";
 			cadena+='</s:navigationContent>'+"\n";
@@ -79,6 +81,15 @@ package Clases.Mobile
 			cadena+='</s:View>'+"\n";
 			
 			return cadena;
-		}	
+		}
+		
+		
+		public static function getInstance():CreateViewCreate
+		{
+			if( instancia==null ) 
+				instancia = new CreateViewCreate();
+			return instancia;
+		}
+		
 	}
 }

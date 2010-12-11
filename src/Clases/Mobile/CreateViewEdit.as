@@ -51,6 +51,7 @@ public class CreateViewEdit
 		
 		cadena+=' ]]>'+"\n";
 		cadena+='</fx:Script>'+"\n"
+		return cadena;	
 	} 
 	
 	public function EditView(id:String,Object:String):String
@@ -59,7 +60,7 @@ public class CreateViewEdit
 		cadena+='<?xml version="1.0" encoding="utf-8"?>'+"\n";
 		cadena+='<s:View creationComplete="Index(this,this.data);" xmlns:fx="http://ns.adobe.com/mxml/2009"'+"\n"; 
 		cadena+='xmlns:s="library://ns.adobe.com/flex/spark" title="'+Object+'">'+"\n";
-		cadena+= CreateIndexFunction(Object)+"\n";		
+		//cadena+= CreateIndexFunction(Object)+"\n";		
 		cadena+='<s:actionContent>'+"\n";		
 		cadena+='	 <s:Button click="'+Object+'_New(event)" id="Btn_new" label="New" />'+"\n";		
 		cadena+='</s:actionContent>'+"\n";	
@@ -68,36 +69,18 @@ public class CreateViewEdit
 		cadena+='	 <s:itemRenderer>'+"\n";		
 		cadena+='		 <fx:Component>'+"\n";		
 		cadena+='			 <s:MobileIconItemRenderer    '+"\n";		 
-		cadena+=IndexListItemrender(id,Object,Database.getInstance().relacion.findBySQL("select * from componentes where modulo_id='"+id+"'"))+"\n";		 
+		//cadena+=IndexListItemrender(id,Object,Database.getInstance().relacion.findBySQL("select * from componentes where modulo_id='"+id+"'"))+"\n";		 
 		cadena+='			  messageField="title">'+"\n";		
 		cadena+='			 </s:MobileIconItemRenderer> '+"\n";		
 		cadena+='		 </fx:Component>'+"\n";		
 		cadena+='	 </s:itemRenderer>	'+"\n";		
 		cadena+=' </s:List>'+"\n";		
 		cadena+="</s:View>";
-		
+		return cadena;	
 	}
 	
 	
-	/*public function EditListEventRelation(Object:String,components:Array):String
-	{
-		var cadena:String="";
-		var NameObject:String=""
-		var NameComponent:String=""
-		NameObject=Object.substring(0,1).toUpperCase()+Object.substring(1,Object.length-1);
-		
-		for(var i:int=0;i<=components.length-1;i++)
-		{
-			NameComponent=components[i].identificador.substring(0,1).toUpperCase()+components[i].identificador.substring(1,components[i].identificador.length-1);
-			cadena="public function List_"+NameComponent+"s(event:Event):void"+"\n";
-			cadena="{"+"\n";
-			cadena="	this.data.action=Views."+NameObject+"."+NameObject+"Show;"+"\n";
-			cadena="	this.navigator.pushView("+NameComponent+"SelectedIndex,this.data)	"+"\n";
-			cadena="}"+"\n"+"\n"+"\n";
-			
-		}
-		return cadena;
-	} */
+
 	
 	public static function getInstance():CreateViewEdit
 	{

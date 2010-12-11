@@ -32,6 +32,7 @@ package Clases.Mobile
 			cadena+="\n"; 	
 			cadena+=' ]]>'+"\n"
 			cadena+='</fx:Script>'+"\n"
+			return cadena;	
 		} 
 		
 		
@@ -40,6 +41,7 @@ package Clases.Mobile
 		public function CreateListRelation(Object:String,components:Array):String
 		{
 			var NameComponent:String=""
+			var cadena:String=""
 			for(var i:int=0;i<=components.length-1;i++)
 			{
 				
@@ -101,14 +103,14 @@ package Clases.Mobile
 		public function ShowView(id:String,Object:String):String
 		{
 			var cadena:String="";
-			var NameComponent:String=""
+			var NameObject:String=""
 			NameObject=Object.substring(0,1).toUpperCase()+Object.substring(1,Object.length-1);
 			cadena+='<?xml version="1.0" encoding="utf-8"?>'+"\n";
 			cadena+='	<s:View creationComplete="Show(this.data)" xmlns:fx="http://ns.adobe.com/mxml/2009"'+"\n";
 			cadena+='			xmlns:s="library://ns.adobe.com/flex/spark"'+"\n";
 			cadena+='			fontStyle="normal" fontWeight="bold" textDecoration="none" '+"\n";
 			cadena+='			title="Show '+Object+'">'+"\n";
-			cadena+=CreateShowFucntion(id,Object)+"\n";
+			cadena+=ShowFucntion(id,Object)+"\n";
 			cadena+='<s:navigationContent>'+"\n";
 			cadena+='	<s:Button id="homeButton"  icon="'+"@Embed('assets/home.png')"+'click="{this.navigator.pushView('+NameObject+'Index)}"/>'+"\n";
 			cadena+='</s:navigationContent>'+"\n";
@@ -122,6 +124,7 @@ package Clases.Mobile
 			cadena+='	</s:VGroup>'+"\n";
 			cadena+='</s:VGroup>'+"\n";
 			cadena+='</s:View>'+"\n";
+			return cadena;
 		}	
 		
 		

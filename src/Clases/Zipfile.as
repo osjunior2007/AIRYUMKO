@@ -139,18 +139,18 @@ package Clases
 			 list_relaciones=Database.getInstance().relacion.findBySQL("select id,modulo_principal,tipo_relacion,modulo_relacionado from relacions");;
 			 list_components=Database.getInstance().component.findBySQL("select componente_id,modulo_id,etiqueta,identificador,tamano,replace(replace(tipo,'Numerico','0'),'Alfanumerico','1') as tipo,requerido,tipo_relacion,modulo_relacionado from componentes");
           
-			 if(this.proyecto_type!="Desktop"){
-			   CreateDesktopApp(Database.getInstance().mod.findBySQL("select name,id from modulos"));
+			 if(this.proyecto_type=="Web"){
+				 CreateWebpApp(Database.getInstance().mod.findBySQL("select name,id from modulos"));
 			 }
 			 
-			 if(this.proyecto_type!="Mobile"){
+			 if(this.proyecto_type=="Mobile"){
 			   CreateMobileApp.getInstance().CreateApp(Database.getInstance().mod.findBySQL("select name,id from modulos"));
 			 }
 				
 		}
 		
 		//Esta funcion Construye el Main.xml y tambien el Amfphp server
-		public function CreateDesktopApp (Modulos:Array):void
+		public function CreateWebpApp(Modulos:Array):void
 		{
 			var name_modelo:String="";
 			var name:String="";

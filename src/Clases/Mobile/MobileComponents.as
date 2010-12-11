@@ -2,6 +2,8 @@ package Clases.Mobile
 {
 	public class MobileComponents
 	{
+		private static var instancia:MobileComponents; 
+		
 		public function MobileComponents()
 		{
 		}
@@ -11,7 +13,7 @@ package Clases.Mobile
 		{ 
 			
 			var cadena:String="";
-			var NameComponent:String=""
+			var NameObject:String=""
 				
 			if(params.pass=="0"){
 				cadena='  <mx:TextInput enable="'+params.Enable+'" width="100%"';
@@ -21,8 +23,8 @@ package Clases.Mobile
 			cadena+=" ";
 			
 			if(params.focus=="true"){
-				NameObject=Object.substring(0,1).toUpperCase()+Object.substring(1,Object.length-1);
-				cadena+='focusOut'+"="+"{("+params.idenficador.toLowerCase()+".text=='')?"+params.idenficador.toLowerCase()+".text='"+NameObject+" :' :"+params.idenficador.toLowerCase()+".text}" +"focusIn="+"{"+params.idenficador.toLowerCase()+".text=''}";
+				//NameObject=Object.substring(0,1).toUpperCase()+Object.substring(1,Object.length-1);
+				cadena+='focusOut'+"="+"{("+params.idenficador.toLowerCase()+".text=='')?"+params.idenficador.toLowerCase()+".text='"+params.etiqueta+" : "+params.idenficador.toLowerCase()+".text}" +"focusIn="+"{"+params.idenficador.toLowerCase()+".text=''}";
 			}
 			
 			cadena+='id="Att_'+params.idenficador.toLowerCase()+'" '+'maxChars="'+params.longitud+'"';

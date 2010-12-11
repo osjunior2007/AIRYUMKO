@@ -61,7 +61,7 @@ package Clases.Mobile
 			cadena+="\n"; 	
 			cadena+=' ]]>'+"\n"
 			cadena+='</fx:Script>'+"\n"
-			
+			return cadena;	
 		}	
 		
 		
@@ -72,7 +72,7 @@ package Clases.Mobile
 			cadena+='<?xml version="1.0" encoding="utf-8"?>'+"\n";
 			cadena+='<s:View creationComplete="Index(this,this.data);" xmlns:fx="http://ns.adobe.com/mxml/2009"'+"\n"; 
 			cadena+='xmlns:s="library://ns.adobe.com/flex/spark" title="'+Object+'">'+"\n";
-			cadena+= CreateIndexFunction(Object)+"\n";		
+			cadena+= IndexFunction(Object)+"\n";		
 			cadena+='<s:actionContent>'+"\n";		
 			cadena+='	 <s:Button click="'+Object+'_New(event)" id="Btn_new" label="New" />'+"\n";		
 			cadena+='</s:actionContent>'+"\n";	
@@ -88,6 +88,7 @@ package Clases.Mobile
 			cadena+='	 </s:itemRenderer>	'+"\n";		
 			cadena+=' </s:List>'+"\n";		
 			cadena+="</s:View>";
+			return cadena;	
 			
 		}
 		
