@@ -40,8 +40,8 @@ package Clases.Mobile
 		{
 			var NameObj:String=""
 			NameObj=Obj.name.toUpperCase()+Obj.name.substring(1,Obj.name.length-1);
-			Zipfile.getInstance().add_file(Zipfile.getInstance().proyecto_name+"/src/Views/"+NameObj+"/EstudianteIndez.mxml",CreateViewIndex.getInstance().IndexView(Obj.id,Obj.name));
-			Zipfile.getInstance().add_file(Zipfile.getInstance().proyecto_name+"/src/Views/"+NameObj+"/EstudianteShow.mxml",CreateViewShow.getInstance().ShowView(Obj.id,Obj.name));
+			Zipfile.getInstance().add_file(Zipfile.getInstance().proyecto_name+"/src/Views/"+NameObj+"/EstudianteIndez.mxml",CreateViewIndex.getInstance().IndexView(Obj.id,Obj.name,"R0"));
+			Zipfile.getInstance().add_file(Zipfile.getInstance().proyecto_name+"/src/Views/"+NameObj+"/EstudianteShow.mxml",CreateViewShow.getInstance().ShowView(Obj.id,Obj.name,"R0"));
 			Zipfile.getInstance().add_file(Zipfile.getInstance().proyecto_name+"/src/Views/"+NameObj+"/EstudianteEdit.mxml",CreateViewEdit.getInstance().EditView(Obj.id,Obj.name));
 			Zipfile.getInstance().add_file(Zipfile.getInstance().proyecto_name+"/src/Views/"+NameObj+"/EstudianteCreate.mxml",CreateViewCreate.getInstance().CreateView(Obj.id,Obj.name));
 		}	
