@@ -27,7 +27,7 @@ package Clases.Mobile
 			var cadena:String="";
 			for(var i:int=0;i<=components.length-1;i++)
 			{
-				cadena+="Att_"+components[i].identificador+".text="+Object.toLocaleLowerCase()+"."+components[i].identificador;
+				cadena+="Att_"+components[i].identificador+".text="+Object.toLocaleLowerCase()+"."+components[i].identificador+"\n";
 			}
 			return cadena;
 		} 
