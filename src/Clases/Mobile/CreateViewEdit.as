@@ -11,7 +11,7 @@ public class CreateViewEdit
 	}
 	
 	
-	public function CreateFunction(id:String,Object:String):String
+	public function EditFunction(id:String,Object:String,type:String):String
 	{
 		var cadena:String="";
 		cadena+='<fx:Script>'+"\n";
@@ -34,7 +34,9 @@ public class CreateViewEdit
 		cadena+='{'+"\n";
 		cadena+='	'+Object.toLocaleLowerCase()+'=DB.em.load('+Object+',this.data.estudiante.id) as '+Object+';'+"\n";
 		cadena+=ShareFunctions.getInstance().SetAttributeValue(Object,Database.getInstance().relacion.findBySQL("select * from componentes where modulo_id='"+id+"'"));
+		if(type!="R0"){
 		cadena+=ShareFunctions.getInstance().SaveElementsRelationship(Object,Database.getInstance().relacion.findBySQL("select * from componentes where tipo_relacion='5' and modulo_id='"+id+"'"));
+		}
 		cadena+='	DB.em.save('+Object.toLocaleLowerCase()+');'+"\n";
 		cadena+='	this.navigator.pushView('+Object+'Index); '+"\n";
 		cadena+='}'+"\n";
@@ -42,8 +44,9 @@ public class CreateViewEdit
 		cadena+='public function '+Object+'_Delete(event:Event):void'+"\n";
 		cadena+='{  '+"\n"; 
 		cadena+='	'+Object.toLocaleLowerCase()+'=DB.em.load('+Object+',this.data.estudiante.id) as '+Object+';'+"\n";
+		if(type!="R0"){
 		cadena+=ShareFunctions.getInstance().RemoveElementsRelationship(Object,Database.getInstance().relacion.findBySQL("select * from componentes where tipo_relacion='5' and modulo_id='"+id+"'"));
-		cadena+='	estudiante.materias.removeAll();'+"\n";
+		}
 		cadena+='	DB.em.save('+Object.toLocaleLowerCase()+');'+"\n";
 		cadena+='	DB.em.remove('+Object.toLocaleLowerCase()+');'+"\n";
 		cadena+='	this.navigator.pushView('+Object+'Index); '+"\n";
@@ -54,13 +57,13 @@ public class CreateViewEdit
 		return cadena;	
 	} 
 	
-	public function EditView(id:String,Object:String):String
+	public function EditView(id:String,Object:String,type:String):String
 	{
 		var cadena:String="";
 		cadena+='<?xml version="1.0" encoding="utf-8"?>'+"\n";
 		cadena+='<s:View creationComplete="Index(this,this.data);" xmlns:fx="http://ns.adobe.com/mxml/2009"'+"\n"; 
 		cadena+='xmlns:s="library://ns.adobe.com/flex/spark" title="'+Object+'">'+"\n";
-		//cadena+= CreateIndexFunction(Object)+"\n";		
+		cadena+= EditFunction(id,Object,type)+"\n";		
 		cadena+='<s:actionContent>'+"\n";		
 		cadena+='	 <s:Button click="'+Object+'_New(event)" id="Btn_new" label="New" />'+"\n";		
 		cadena+='</s:actionContent>'+"\n";	

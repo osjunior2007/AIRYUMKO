@@ -24,7 +24,7 @@ package Clases.Mobile
 		}
 		
 		
-		public function CreateFunction(id:String,Object:String):String
+		public function CreateFunction(id:String,Object:String,type:String):String
 		{
 			var cadena:String="";
 			cadena+='<fx:Script>'+"\n";
@@ -43,7 +43,9 @@ package Clases.Mobile
 			cadena+='{  '+"\n";
 			cadena+='	'+Object.toLocaleLowerCase()+'=new '+Object+'();'+"\n";
 			cadena+=ShareFunctions.getInstance().SetAttributeValue(Object,Database.getInstance().relacion.findBySQL("select * from componentes where modulo_id='"+id+"'"));
+			if(type!="R0"){
 			cadena+=ShareFunctions.getInstance().SaveElementsRelationship(Object,Database.getInstance().relacion.findBySQL("select * from componentes where tipo_relacion='5' and modulo_id='"+id+"'"));
+			}
 			cadena+='	DB.em.save('+Object.toLocaleLowerCase()+');'+"\n";
 			cadena+='	this.navigator.pushView('+Object+'Index);'+"\n";
 			cadena+='}	'+"\n";
@@ -54,7 +56,7 @@ package Clases.Mobile
 		} 
 		
 		
-		public function CreateView(id:String,Object:String):String
+		public function CreateView(id:String,Object:String,type:String):String
 		{
 			var cadena:String="";
 			
@@ -63,7 +65,7 @@ package Clases.Mobile
 			cadena+='			xmlns:s="library://ns.adobe.com/flex/spark"'+"\n";
 			cadena+='			xmlns:mx="library://ns.adobe.com/flex/mx"'+"\n";
 			cadena+='			creationComplete="Create(this.data);" title="'+Object+'">'+"\n";
-			cadena+CreateFunction(id,Object);
+			cadena+CreateFunction(id,Object,type);
 			cadena+='<s:navigationContent>'+"\n";
 			cadena+='	 <s:Button id="homeButton"  icon="@Embed'+"('assets/home.png')"+'"  click="{this.navigator.pushView('+Object+'Index)}"/>'+"\n";
 			cadena+='</s:navigationContent>'+"\n";
