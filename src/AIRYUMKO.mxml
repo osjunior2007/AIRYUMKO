@@ -52,10 +52,13 @@
 
 			public var stado:Boolean=false;
 			public var cadena:String="";
-			 public var TreeObject:Object
+			public var TreeObject:Object
 			
 			///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-		   public function init():void
+		   
+			
+			
+			public function init():void
 			{
 				Database.getInstance().initAndOpenDatabase()
 				if (Database.getInstance().mod.findBySQL("select id,name from Modulos")!=null){
@@ -74,9 +77,11 @@
 				idiomas.send();
 				enabled_componente(false);	
 				}
+				if(!stado){
 				var screenBounds:Rectangle = Screen.mainScreen.bounds;
 				this.move((screenBounds.width-this.width)/2,(screenBounds.height-this.height)/2);
 				this.usePreloader=true;
+				}
 	        }
 
 
@@ -151,7 +156,7 @@
 				if(selectedNode.@label!="App"){
 					Modulo_name.text=selectedNode.@label;
 					 if (componentes_text.selectedItem.data!="5"){
-					enabled_componente(true);
+					   enabled_componente(true);
 					 }
 			 		dataset.dataProvider={};
 			 		tree_index=myTree.selectedIndex;
@@ -542,7 +547,7 @@
 <mx:Canvas label="Editor" width="100%" height="100%" showEffect="WipeDown" hideEffect="WipeUp">
 <mx:HDividedBox creationComplete="init();hbox1.moveDivider(0,90);Hbox_divider()" id="hbox1" y="10"  width="99%" height="100%">
 		<mx:Panel  click=" Hbox_divider();" id="panel_arbol" width="95%" height="98%" >
-		   <mx:Tree rightClick="{showMenu(event)}" click="stado=true;" defaultLeafIcon="{ico}"  id="myTree" width="100%" height="100%" labelField="@label" showRoot="false" change="treeChanged(event)" />
+		   <mx:Tree rightClick="{showMenu(event)}" click="stado=true;init();" defaultLeafIcon="{ico}"  id="myTree" width="100%" height="100%" labelField="@label" showRoot="false" change="treeChanged(event)" />
 		</mx:Panel>
 		<mx:Panel titleIcon="{ico}" click=" Hbox_divider();" id="panel_builder" width="837" height="98%" >
 			<mx:Canvas click="stado=true;" id="builder"  height="100%" width="100%">
