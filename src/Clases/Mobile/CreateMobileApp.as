@@ -22,23 +22,26 @@ package Clases.Mobile
 				relation=Database.getInstance().relacion.findBySQL("select * from relacions")
 				for(var i:int=0;i<=list_modulos.length-1;i++)
 				{
-				   if(relation){
-					if(TypeRelation(relation,list_modulos[i].id,"relacionado")&&!TypeRelation(relation,list_modulos[i].id,"principal")){
-					}
-					if(!TypeRelation(relation,list_modulos[i].id,"relacionado")&&TypeRelation(relation,list_modulos[i].id,"principal")){
-						
-					}
-					if(TypeRelation(relation,list_modulos[i].id,"relacionado")&&TypeRelation(relation,list_modulos[i].id,"principal")){
-						
-					}
-				   }else{
-					   CreateViews(list_modulos[i],"R0");  
-				   }	
-				
+					if(relation){
+						//if modulo just principal module
+						if(!TypeRelation(relation,list_modulos[i].id,"relacionado")&&TypeRelation(relation,list_modulos[i].id,"principal")){
+						CreateViews(list_modulos[i],"R1");  	
+						}
+						//if modulo just relacionado module
+						if(TypeRelation(relation,list_modulos[i].id,"relacionado")&&!TypeRelation(relation,list_modulos[i].id,"principal")){
+						}
+						//if modulo is relacionado and principal 
+						if(TypeRelation(relation,list_modulos[i].id,"relacionado")&&TypeRelation(relation,list_modulos[i].id,"principal")){
+							
+						}
+					}else{
+						CreateViews(list_modulos[i],"R0");  
+					}	
+					
 				}
 				
 			}	
-	    }
+		}
 		
 		public function CreateViews(Obj:Object,type:String):void
 		{
