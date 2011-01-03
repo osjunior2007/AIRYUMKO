@@ -9,7 +9,7 @@ package Clases
     import flight.db.activeRecord.TableCreator;
 	import flash.utils.getQualifiedClassName;
     import Clases.Models.*;  
-      
+    import mx.controls.Alert;  
 	public class Database
 	{   private static var instancia:Database;
 	   	public var exampleDB:SQLConnection;
@@ -37,7 +37,10 @@ package Clases
 
 			public function initAndOpenDatabase():void
 			{
-			    TableCreator.updateTable(mod);
+			   //native path
+			  //* /Users/oscarrodriguez/Library/Preferences/AIRYUMKO/Local Store	
+				//Alert.show(File.applicationStorageDirectory.nativePath);
+				TableCreator.updateTable(mod);
 			    TableCreator.updateTable(component);
 				TableCreator.updateTable(relacion);
 			}

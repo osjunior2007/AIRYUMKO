@@ -11,6 +11,19 @@ package Clases.Mobile
 		{
 		}
 		
+		//Only for Object pricipal in a relationship  or without relationship
+		public function PricipalObject(id:String,Object:String,type:String):String
+		{
+			var cadena:String="";
+			cadena+='public function Show(data:Object):void'+"\n";
+			cadena+='{'+"\n";
+			cadena+='   var '+Object.toLocaleLowerCase()+':'+Object+'=new '+Object+'();'+"\n";
+			cadena+='   '+Object.toLocaleLowerCase()+'=DB.em.loadItem('+Object+',this.data.'+Object.toLocaleLowerCase()+'.id)as '+Object+' ;'+"\n";
+			cadena+=ShareFunctions.getInstance().SetAttributeValue(Object,Database.getInstance().component.findBySQL("select * from componentes where modulo_id='"+id+"'"));
+			cadena+='}'+"\n"+"\n";
+			return cadena;
+		}	
+		
 		
 		public function ShowFunction(id:String,Object:String,type:String):String
 		{
@@ -19,11 +32,14 @@ package Clases.Mobile
 			cadena+='	<![CDATA['+"\n";
 			cadena+='	import Clases.Database;'+"\n";
 			cadena+='	import Models.'+Object+';'+"\n";
+			cadena+='	import mx.collections.ArrayCollection;'+"\n";
+			cadena+='	public var DB:Database=new Database()'+"\n"+"\n";
+			
+			//create import libary for modelo with attributes relation type bx example one to many, many to many,etc.
 			if(type!="R0"){
 			cadena+=ShareFunctions.getInstance().CreateImportViewLibrary(Database.getInstance().relacion.findBySQL("select * from componentes where tipo_relacion='5' and modulo_id='"+id+"'"));
 			} 
-			cadena+='	import mx.collections.ArrayCollection;'+"\n";
-			cadena+='	public var DB:Database=new Database()'+"\n"+"\n";
+			
 			cadena+='public function Show(data:Object):void'+"\n";
 			cadena+='{'+"\n";
 			cadena+='   var '+Object.toLocaleLowerCase()+':'+Object+'=new '+Object+'();'+"\n";

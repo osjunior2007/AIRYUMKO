@@ -61,7 +61,6 @@ ComboBox {
 }
 @font-face
 {
-	fontFamily: "MS Reference Sans Serif";
 	fontWeight: bold;
 	fontStyle: normal;
 	src: local("MS Reference Sans Serif");
