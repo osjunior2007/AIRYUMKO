@@ -104,7 +104,7 @@ package Clases.Mobile
 			return cadena;	
 		}	
 		
-		public function IndexView(id:String,Object:String,type:String):String
+		public function IndexView(id:String,Object:String,type:int):String
 		{
 			var cadena:String="";
 			cadena+='<?xml version="1.0" encoding="utf-8"?>'+"\n";

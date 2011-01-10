@@ -11,21 +11,10 @@ package Clases.Mobile
 		{
 		}
 		
-		//Only for Object pricipal in a relationship  or without relationship
-		public function PricipalObject(id:String,Object:String,type:String):String
-		{
-			var cadena:String="";
-			cadena+='public function Show(data:Object):void'+"\n";
-			cadena+='{'+"\n";
-			cadena+='   var '+Object.toLocaleLowerCase()+':'+Object+'=new '+Object+'();'+"\n";
-			cadena+='   '+Object.toLocaleLowerCase()+'=DB.em.loadItem('+Object+',this.data.'+Object.toLocaleLowerCase()+'.id)as '+Object+' ;'+"\n";
-			cadena+=ShareFunctions.getInstance().SetAttributeValue(Object,Database.getInstance().component.findBySQL("select * from componentes where modulo_id='"+id+"'"));
-			cadena+='}'+"\n"+"\n";
-			return cadena;
-		}	
 		
 		
-		public function ShowFunction(id:String,Object:String,type:String):String
+		
+		public function ShowFunction(id:String,Object:String,type:int):String
 		{
 			var cadena:String="";
 			cadena+='<fx:Script>'+"\n";
@@ -36,18 +25,44 @@ package Clases.Mobile
 			cadena+='	public var DB:Database=new Database()'+"\n"+"\n";
 			
 			//create import libary for modelo with attributes relation type bx example one to many, many to many,etc.
-			if(type!="R0"){
-			cadena+=ShareFunctions.getInstance().CreateImportViewLibrary(Database.getInstance().relacion.findBySQL("select * from componentes where tipo_relacion='5' and modulo_id='"+id+"'"));
+			if(type!=0){
+				cadena+=ShareFunctions.getInstance().CreateImportViewLibrary(Database.getInstance().relacion.findBySQL("select * from componentes where tipo_relacion='5' and modulo_id='"+id+"'"));
 			} 
 			
-			cadena+='public function Show(data:Object):void'+"\n";
-			cadena+='{'+"\n";
-			cadena+='   var '+Object.toLocaleLowerCase()+':'+Object+'=new '+Object+'();'+"\n";
-			cadena+='   '+Object.toLocaleLowerCase()+'=DB.em.loadItem('+Object+',this.data.'+Object.toLocaleLowerCase()+'.id)as '+Object+' ;'+"\n";
-			cadena+=ShareFunctions.getInstance().SetAttributeValue(Object,Database.getInstance().component.findBySQL("select * from componentes where modulo_id='"+id+"'"));
-			cadena+='}'+"\n"+"\n";
-			if(type!="R0"){
-			cadena+=CreateListEventRelation(Object,Database.getInstance().relacion.findBySQL("select * from componentes where modulo_id='"+id+"'"));
+			//If the module is principal or without relationship type
+			if(type==0){
+				cadena+='public function Show(data:Object):void'+"\n";
+				cadena+='{'+"\n";
+				cadena+='   var '+Object.toLocaleLowerCase()+':'+Object+'=new '+Object+'();'+"\n";
+				cadena+='   '+Object.toLocaleLowerCase()+'=DB.em.loadItem('+Object+',this.data.'+Object.toLocaleLowerCase()+'.id)as '+Object+' ;'+"\n";
+				cadena+=ShareFunctions.getInstance().SetAttributeValue(Object,Database.getInstance().component.findBySQL("select * from componentes where modulo_id='"+id+"'"));
+				cadena+='}'+"\n"+"\n";
+			}else
+			{
+				cadena+='public function Show(data:Object):void'+"\n";
+				cadena+='{'+"\n";
+				cadena+='	var '+Object.toLocaleLowerCase()+':'+Object+' =new '+Object+'();'+"\n";
+				cadena+='	'+Object.toLocaleLowerCase()+'=DB.em.loadItem('+Object+',this.data.'+Object.toLocaleLowerCase()+'.id)as '+Object+' ;'+"\n";
+				cadena+='	if('+Object.toLocaleLowerCase()+'){'+"\n";
+				cadena+=ShareFunctions.getInstance().SetAttributeValue(Object,Database.getInstance().component.findBySQL("select * from componentes where modulo_id='"+id+"'"));
+				//if the model have attributes with many to many,many to one and one to many relationship
+				if(type==1){
+				cadena+=ActiveListEventRelation(Object,Database.getInstance().component.findBySQL("select * from componentes where modulo_id='"+id+"'"),"true");
+				}
+				cadena+='	}else{'+"\n";
+				cadena+='		'+Object.toLocaleLowerCase()+'=Object_parser.FindObject(this.data.'+Object.toLocaleLowerCase()+'s,this.data.'+Object.toLocaleLowerCase()+'.id) as '+Object+' '+"\n";
+				cadena+=ShareFunctions.getInstance().SetAttributeValue(Object,Database.getInstance().component.findBySQL("select * from componentes where modulo_id='"+id+"'"));
+				//if the model have attributes with many to many,many to one and one to many relationship
+				if(type==1){
+				cadena+=ActiveListEventRelation(Object,Database.getInstance().component.findBySQL("select * from componentes where modulo_id='"+id+"'"),"false");
+				}
+				cadena+='	}'+"\n";
+				cadena+='}'+"\n";	
+			}
+			
+			//if the model have attributes with many to many,many to one and one to many relationship
+			if(type==1){
+				cadena+=CreateListEventRelation(Object,Database.getInstance().relacion.findBySQL("select * from componentes where modulo_id='"+id+"'"));
 			}
 			cadena+="\n"; 	
 			cadena+=' ]]>'+"\n"
@@ -82,6 +97,25 @@ package Clases.Mobile
 			if(cadena!="")cadena+="\n";
 			return cadena;
 		} 
+		
+		
+		
+		
+		public function ActiveListEventRelation(Object:String,components:Array,state:String):String
+		{
+			var cadena:String="";
+			var NameObject:String=""
+			var NameComponent:String=""
+			NameObject=Object.substring(0,1).toUpperCase()+Object.substring(1,Object.length-1);
+			for(var i:int=0;i<=components.length-1;i++)
+			{
+				NameComponent=components[i].identificador.substring(0,1).toUpperCase()+components[i].identificador.substring(1,components[i].identificador.length-1);
+				cadena="list_"+NameComponent+"s.enabled='"+state+"';"+"\n";
+			}
+			return cadena;
+		} 
+		
+		
 		
 		
 		
@@ -120,11 +154,11 @@ package Clases.Mobile
 		}
 		
 		
-		public function ShowView(id:String,Object:String,type:String):String
+		public function ShowView(id:String,Object:String,type:int):String
 		{
 			var cadena:String="";
 			var NameObject:String=""
-		  	NameObject=Object.substring(0,1).toUpperCase()+Object.substring(1,Object.length-1);
+			NameObject=Object.substring(0,1).toUpperCase()+Object.substring(1,Object.length-1);
 			cadena+='<?xml version="1.0" encoding="utf-8"?>'+"\n";
 			cadena+='	<s:View creationComplete="Show(this.data)" xmlns:fx="http://ns.adobe.com/mxml/2009"'+"\n";
 			cadena+='			xmlns:s="library://ns.adobe.com/flex/spark"'+"\n";
@@ -140,8 +174,8 @@ package Clases.Mobile
 			cadena+='<s:VGroup width="100%" paddingLeft="10" paddingTop="35" paddingRight="20" paddingBottom="20" gap="5">'+"\n";
 			cadena+='	<s:VGroup width="100%">'+"\n";
 			cadena+=CreateFields(Object,Database.getInstance().component.findBySQL("select * from componentes where tipo_relacion='0' and modulo_id='"+id+"'"));
-			if(type!="R0"){
-			cadena+=CreateListRelation(Object,Database.getInstance().component.findBySQL("select * from componentes where tipo_relacion='5' and modulo_id='"+id+"'"));
+			if(type!=0){
+				cadena+=CreateListRelation(Object,Database.getInstance().component.findBySQL("select * from componentes where tipo_relacion='5' and modulo_id='"+id+"'"));
 			}
 			cadena+='	</s:VGroup>'+"\n";
 			cadena+='</s:VGroup>'+"\n";

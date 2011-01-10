@@ -25,7 +25,7 @@ package Clases.Mobile
 					if(relation){
 						//if modulo just principal module
 						if(!TypeRelation(relation,list_modulos[i].id,"relacionado")&&TypeRelation(relation,list_modulos[i].id,"principal")){
-						CreateViews(list_modulos[i],"R1");  	
+						CreateViews(list_modulos[i],0);  	
 						}
 						//if modulo just relacionado module
 						if(TypeRelation(relation,list_modulos[i].id,"relacionado")&&!TypeRelation(relation,list_modulos[i].id,"principal")){
@@ -35,7 +35,7 @@ package Clases.Mobile
 							
 						}
 					}else{
-						CreateViews(list_modulos[i],"R0");  
+						CreateViews(list_modulos[i],0);  
 					}	
 					
 				}
@@ -43,15 +43,15 @@ package Clases.Mobile
 			}	
 		}
 		
-		public function CreateViews(Obj:Object,type:String):void
+		public function CreateViews(Obj:Object,type:int):void
 		{
 			var NameObj:String=""
 			NameObj=Obj.name.substring(0,1).toUpperCase()+Obj.name.substring(1,Obj.name.length);
 			Zipfile.getInstance().add_file(Zipfile.getInstance().proyecto_name+"/src/Views/"+NameObj+"/EstudianteIndex.mxml",CreateViewIndex.getInstance().IndexView(Obj.id,NameObj,type));
 			Zipfile.getInstance().add_file(Zipfile.getInstance().proyecto_name+"/src/Views/"+NameObj+"/EstudianteShow.mxml",CreateViewShow.getInstance().ShowView(Obj.id,NameObj,type));
-			Zipfile.getInstance().add_file(Zipfile.getInstance().proyecto_name+"/src/Views/"+NameObj+"/EstudianteEdit.mxml",CreateViewEdit.getInstance().EditView(Obj.id,NameObj,type));
-			Zipfile.getInstance().add_file(Zipfile.getInstance().proyecto_name+"/src/Views/"+NameObj+"/EstudianteCreate.mxml",CreateViewCreate.getInstance().CreateView(Obj.id,NameObj,type));
-			Zipfile.getInstance().add_file(Zipfile.getInstance().proyecto_name+"/src/Models/"+NameObj+".as",CreateModel.getInstance().New_Model(Obj.id,NameObj,type));
+			//Zipfile.getInstance().add_file(Zipfile.getInstance().proyecto_name+"/src/Views/"+NameObj+"/EstudianteEdit.mxml",CreateViewEdit.getInstance().EditView(Obj.id,NameObj,type));
+			//Zipfile.getInstance().add_file(Zipfile.getInstance().proyecto_name+"/src/Views/"+NameObj+"/EstudianteCreate.mxml",CreateViewCreate.getInstance().CreateView(Obj.id,NameObj,type));
+			//Zipfile.getInstance().add_file(Zipfile.getInstance().proyecto_name+"/src/Models/"+NameObj+".as",CreateModel.getInstance().New_Model(Obj.id,NameObj,type));
 			Zipfile.getInstance().open();
 		}	
 		
