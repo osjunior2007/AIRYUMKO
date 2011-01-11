@@ -22,6 +22,21 @@ package Clases.Mobile
 		}	
 		
 		
+		public function ActiveListEventRelation(Object:String,components:Array,state:String):String
+		{
+			var cadena:String="";
+			var NameObject:String=""
+			var NameComponent:String=""
+			NameObject=Object.substring(0,1).toUpperCase()+Object.substring(1,Object.length-1);
+			for(var i:int=0;i<=components.length-1;i++)
+			{
+				NameComponent=components[i].identificador.substring(0,1).toUpperCase()+components[i].identificador.substring(1,components[i].identificador.length-1);
+				cadena="list_"+NameComponent+"s.enabled='"+state+"';"+"\n";
+			}
+			return cadena;
+		} 
+		
+		
 		public function SetAttributeValue(Object:String,components:Array):String
 		{
 			var cadena:String="";

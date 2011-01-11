@@ -45,17 +45,11 @@ package Clases.Mobile
 				cadena+='	'+Object.toLocaleLowerCase()+'=DB.em.loadItem('+Object+',this.data.'+Object.toLocaleLowerCase()+'.id)as '+Object+' ;'+"\n";
 				cadena+='	if('+Object.toLocaleLowerCase()+'){'+"\n";
 				cadena+=ShareFunctions.getInstance().SetAttributeValue(Object,Database.getInstance().component.findBySQL("select * from componentes where modulo_id='"+id+"'"));
-				//if the model have attributes with many to many,many to one and one to many relationship
-				if(type==1){
-				cadena+=ActiveListEventRelation(Object,Database.getInstance().component.findBySQL("select * from componentes where modulo_id='"+id+"'"),"true");
-				}
+				cadena+=ShareFunctions.getInstance().ActiveListEventRelation(Object,Database.getInstance().component.findBySQL("select * from componentes where modulo_id='"+id+"' and (tipo_relacion='3' or tipo_relacion='2')"),"true");
 				cadena+='	}else{'+"\n";
 				cadena+='		'+Object.toLocaleLowerCase()+'=Object_parser.FindObject(this.data.'+Object.toLocaleLowerCase()+'s,this.data.'+Object.toLocaleLowerCase()+'.id) as '+Object+' '+"\n";
 				cadena+=ShareFunctions.getInstance().SetAttributeValue(Object,Database.getInstance().component.findBySQL("select * from componentes where modulo_id='"+id+"'"));
-				//if the model have attributes with many to many,many to one and one to many relationship
-				if(type==1){
-				cadena+=ActiveListEventRelation(Object,Database.getInstance().component.findBySQL("select * from componentes where modulo_id='"+id+"'"),"false");
-				}
+				cadena+=ShareFunctions.getInstance().ActiveListEventRelation(Object,Database.getInstance().component.findBySQL("select * from componentes where modulo_id='"+id+"' and (tipo_relacion='3' or tipo_relacion='2')"),"false");
 				cadena+='	}'+"\n";
 				cadena+='}'+"\n";	
 			}
@@ -97,26 +91,6 @@ package Clases.Mobile
 			if(cadena!="")cadena+="\n";
 			return cadena;
 		} 
-		
-		
-		
-		
-		public function ActiveListEventRelation(Object:String,components:Array,state:String):String
-		{
-			var cadena:String="";
-			var NameObject:String=""
-			var NameComponent:String=""
-			NameObject=Object.substring(0,1).toUpperCase()+Object.substring(1,Object.length-1);
-			for(var i:int=0;i<=components.length-1;i++)
-			{
-				NameComponent=components[i].identificador.substring(0,1).toUpperCase()+components[i].identificador.substring(1,components[i].identificador.length-1);
-				cadena="list_"+NameComponent+"s.enabled='"+state+"';"+"\n";
-			}
-			return cadena;
-		} 
-		
-		
-		
 		
 		
 		public function CreateListEventRelation(Object:String,components:Array):String
