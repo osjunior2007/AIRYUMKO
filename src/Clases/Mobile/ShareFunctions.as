@@ -22,6 +22,21 @@ package Clases.Mobile
 		}	
 		
 		
+		public function clear_data_params(Object:String,components:Array):String
+		{
+			var cadena:String="";
+			var NameComponent:String=""
+			var NameObject:String=""
+			NameObject=Object.substring(0,1).toUpperCase()+Object.substring(1,Object.length-1);
+			for(var i:int=0;i<=components.length-1;i++)
+			{
+		      cadena="this.data."+NameComponent+"s={};"+"\n";	
+			}
+			return cadena;
+		}	
+		
+		
+		
 		public function ActiveListEventRelation(Object:String,components:Array,state:String):String
 		{
 			var cadena:String="";

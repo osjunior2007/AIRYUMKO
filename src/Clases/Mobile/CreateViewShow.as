@@ -55,9 +55,7 @@ package Clases.Mobile
 			}
 			
 			//if the model have attributes with many to many,many to one and one to many relationship
-			if(type==1){
-				cadena+=CreateListEventRelation(Object,Database.getInstance().relacion.findBySQL("select * from componentes where modulo_id='"+id+"'"));
-			}
+			cadena+=CreateListEventRelation(Object,Database.getInstance().relacion.findBySQL("select * from componentes where modulo_id='"+id+"' and (tipo_relacion='3' or tipo_relacion='2')"));
 			cadena+="\n"; 	
 			cadena+=' ]]>'+"\n"
 			cadena+='</fx:Script>'+"\n"
