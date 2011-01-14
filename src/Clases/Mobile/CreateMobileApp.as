@@ -23,17 +23,18 @@ package Clases.Mobile
 				for(var i:int=0;i<=list_modulos.length-1;i++)
 				{
 					if(relation){
+						
 						//if modulo just principal module
 						if(!TypeRelation(relation,list_modulos[i].id,"relacionado")&&TypeRelation(relation,list_modulos[i].id,"principal")){
-						CreateViews(list_modulos[i],0);  	
+						  CreateViews(list_modulos[i],0);  	
 						}
 						//if modulo just relacionado module
-						if(TypeRelation(relation,list_modulos[i].id,"relacionado")&&!TypeRelation(relation,list_modulos[i].id,"principal")){
+						/*if(TypeRelation(relation,list_modulos[i].id,"relacionado")&&!TypeRelation(relation,list_modulos[i].id,"principal")){
 						}
 						//if modulo is relacionado and principal 
 						if(TypeRelation(relation,list_modulos[i].id,"relacionado")&&TypeRelation(relation,list_modulos[i].id,"principal")){
 							
-						}
+						}*/
 					}else{
 						CreateViews(list_modulos[i],0);  
 					}	
@@ -48,11 +49,11 @@ package Clases.Mobile
 			var NameObj:String=""
 			NameObj=Obj.name.substring(0,1).toUpperCase()+Obj.name.substring(1,Obj.name.length);
 			Zipfile.getInstance().add_file(Zipfile.getInstance().proyecto_name+"/src/Views/"+NameObj+"/EstudianteIndex.mxml",CreateViewIndex.getInstance().IndexView(Obj.id,NameObj,type));
-			Zipfile.getInstance().add_file(Zipfile.getInstance().proyecto_name+"/src/Views/"+NameObj+"/EstudianteShow.mxml",CreateViewShow.getInstance().ShowView(Obj.id,NameObj,type));
+			//Zipfile.getInstance().add_file(Zipfile.getInstance().proyecto_name+"/src/Views/"+NameObj+"/EstudianteShow.mxml",CreateViewShow.getInstance().ShowView(Obj.id,NameObj,type));
 			//Zipfile.getInstance().add_file(Zipfile.getInstance().proyecto_name+"/src/Views/"+NameObj+"/EstudianteEdit.mxml",CreateViewEdit.getInstance().EditView(Obj.id,NameObj,type));
 			//Zipfile.getInstance().add_file(Zipfile.getInstance().proyecto_name+"/src/Views/"+NameObj+"/EstudianteCreate.mxml",CreateViewCreate.getInstance().CreateView(Obj.id,NameObj,type));
 			//Zipfile.getInstance().add_file(Zipfile.getInstance().proyecto_name+"/src/Models/"+NameObj+".as",CreateModel.getInstance().New_Model(Obj.id,NameObj,type));
-			Zipfile.getInstance().open();
+			//Zipfile.getInstance().open();
 		}	
 		
 		
@@ -60,15 +61,15 @@ package Clases.Mobile
 		{
 			var sw:Boolean=false;
 			var i:int=0;
-			while(i<=(list.length-1)&&!sw)
+			while(i<=(list.length-1)&&sw==false)
 			{ 
 			   if(type=="relacionado"){
 					if(list[i].modulo_relacionado==id){
 						sw=true;
 					}
 				}
-			    if(type=="pricipal"){
-			      if(list[i].modulo_principal==id){
+			   if(type=="principal"){
+				  if(list[i].modulo_principal==id){
 						sw=true;
 				   }	
 				}

@@ -144,7 +144,7 @@ package Clases
 			 }
 			 
 			 if(this.proyecto_type=="Mobile"){
-			   CreateMobileApp.getInstance().CreateApp(Database.getInstance().mod.findBySQL("select name,id from modulos"));
+				 CreateMobileApp.getInstance().CreateApp(Database.getInstance().mod.findBySQL("select name,id from modulos"));
 			 }
 				
 		}

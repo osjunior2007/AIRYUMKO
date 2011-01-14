@@ -24,14 +24,14 @@ package Clases.Mobile
 		}
 		
 		
-		public function CreateFunction(id:String,Object:String,type:String):String
+		public function CreateFunction(id:String,Object:String,type:int):String
 		{
 			var cadena:String="";
 			cadena+='<fx:Script>'+"\n";
 			cadena+='	<![CDATA['+"\n";
 			cadena+='	import Clases.Database;'+"\n";
 			cadena+='	import Models.'+Object+';'+"\n";
-			if(type!="R0"){
+			if(type!=0){
 			cadena+=ShareFunctions.getInstance().CreateImportViewLibrary(Database.getInstance().component.findBySQL("select * from componentes where tipo_relacion='5' and modulo_id='"+id+"'"));
 			}
 			cadena+='	import mx.collections.ArrayCollection;'+"\n";
@@ -45,8 +45,8 @@ package Clases.Mobile
 			cadena+='{  '+"\n";
 			cadena+='	'+Object.toLocaleLowerCase()+'=new '+Object+'();'+"\n";
 			cadena+=ShareFunctions.getInstance().SetAttributeValue(Object,Database.getInstance().component.findBySQL("select * from componentes where modulo_id='"+id+"'"));
-			if(type!="R0"){
 			cadena+=ShareFunctions.getInstance().SaveElementsRelationship(Object,Database.getInstance().component.findBySQL("select * from componentes where tipo_relacion='5' and modulo_id='"+id+"'"));
+			if(type!){
 			}
 			cadena+='	DB.em.save('+Object.toLocaleLowerCase()+');'+"\n";
 			cadena+='	this.navigator.pushView('+Object+'Index);'+"\n";

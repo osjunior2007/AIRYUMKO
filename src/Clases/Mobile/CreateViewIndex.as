@@ -110,7 +110,7 @@ package Clases.Mobile
 			cadena+='<?xml version="1.0" encoding="utf-8"?>'+"\n";
 			cadena+='<s:View creationComplete="Index(this,this.data);" xmlns:fx="http://ns.adobe.com/mxml/2009"'+"\n"; 
 			cadena+='xmlns:s="library://ns.adobe.com/flex/spark" title="'+Object+'">'+"\n";
-			//cadena+= IndexFunction(Object)+"\n";		
+			cadena+= IndexFunction(Object,type)+"\n";		
 			cadena+='<s:actionContent>'+"\n";		
 			cadena+='	 <s:Button click="'+Object+'_New(event)" id="Btn_new" label="New" />'+"\n";		
 			cadena+='</s:actionContent>'+"\n";	
@@ -119,7 +119,7 @@ package Clases.Mobile
 			cadena+='	 <s:itemRenderer>'+"\n";		
 			cadena+='		 <fx:Component>'+"\n";		
 			cadena+='			 <s:MobileIconItemRenderer    '+"\n";		 
-			cadena+=IndexListItemrender(id,Object,Database.getInstance().relacion.findBySQL("select * from componentes where modulo_id='"+id+"'"))+"\n";		 
+			cadena+=IndexListItemrender(id,Object,Database.getInstance().component.findBySQL("select * from componentes where modulo_id='"+id+"'"))+"\n";		 
 			cadena+='			  messageField="title">'+"\n";		
 			cadena+='			 </s:MobileIconItemRenderer> '+"\n";		
 			cadena+='		 </fx:Component>'+"\n";		
