@@ -28,7 +28,7 @@ package Clases.Mobile
 		}
 		
 		
-		public function IndexFunction(Object:String,type:int):String
+		public function IndexFunction(Object:String,type:int,type_relation:int):String
 		{
 			var cadena:String="";
 			cadena+='<fx:Script>'+"\n";
@@ -49,14 +49,10 @@ package Clases.Mobile
 				cadena+='	list.dataProvider=DB.em.findAll('+Object+');'+"\n";
 				cadena+=' }'+"\n";
 			}else{
-				cadena+='this.data.'+Object.toLocaleLowerCase()+'s=Object_parser.ObjectsParse(true,this.data.'+Object.toLocaleLowerCase()+'s);'+"\n";
-				//If the model is related and principal 
-				if(type==1){   
-					cadena+='list.dataProvider=Object_parser.JOIN_OBJECT_SELECT(this.data.'+Object.toLocaleLowerCase()+'s,DB.em.findAll('+Object+'));'+"\n";
-				}else{
-					//If the model is related 
-					cadena+='	list.dataProvider=this.data.'+Object.toLocaleLowerCase()+'s;'+"\n";
-				}
+				cadena+='public function Index(_view:'+Object+'Index,data:Object):void'+"\n";
+				cadena+='{'+"\n";
+				cadena+="list.dataProvider=this.data."+Object.toLocaleLowerCase()+";";
+				cadena+='}'+"\n";
 			}
 			
 			//Pricipal Model or Modelo without relation 
@@ -104,13 +100,13 @@ package Clases.Mobile
 			return cadena;	
 		}	
 		
-		public function IndexView(id:String,Object:String,type:int):String
+		public function IndexView(id:String,Object:String,type:int,type_relation:int):String
 		{
 			var cadena:String="";
 			cadena+='<?xml version="1.0" encoding="utf-8"?>'+"\n";
 			cadena+='<s:View creationComplete="Index(this,this.data);" xmlns:fx="http://ns.adobe.com/mxml/2009"'+"\n"; 
 			cadena+='xmlns:s="library://ns.adobe.com/flex/spark" title="'+Object+'">'+"\n";
-			cadena+= IndexFunction(Object,type)+"\n";		
+			cadena+= IndexFunction(Object,type,type_relation)+"\n";		
 			cadena+='<s:actionContent>'+"\n";		
 			cadena+='	 <s:Button click="'+Object+'_New(event)" id="Btn_new" label="New" />'+"\n";		
 			cadena+='</s:actionContent>'+"\n";	
