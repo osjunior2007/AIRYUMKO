@@ -23,7 +23,6 @@ package Clases.Mobile
 				for(var i:int=0;i<=list_modulos.length-1;i++)
 				{
 					if(relation){
-						Alert.show(relation.tipo_relacion.toString());
 						//if modulo just principal module
 						if(!TypeRelation(relation,list_modulos[i].id,"relacionado")&&TypeRelation(relation,list_modulos[i].id,"principal")){
 						  CreateViews(list_modulos[i],0,relation.tipo_relacion);  	
@@ -51,7 +50,8 @@ package Clases.Mobile
 		{
 			var NameObj:String=""
 			NameObj=Obj.name.substring(0,1).toUpperCase()+Obj.name.substring(1,Obj.name.length);
-			//Zipfile.getInstance().add_file(Zipfile.getInstance().proyecto_name+"/src/Views/"+NameObj+"/EstudianteIndex.mxml",CreateViewIndex.getInstance().IndexView(Obj.id,NameObj,type,Obj.tipo_relacion));
+			Alert.show(CreateViewIndex.getInstance().IndexView(Obj.id,NameObj,type,Obj.tipo_relacion),type.toString());
+			Zipfile.getInstance().add_file(Zipfile.getInstance().proyecto_name+"/src/Views/"+NameObj+"/EstudianteIndex.mxml",CreateViewIndex.getInstance().IndexView(Obj.id,NameObj,type,Obj.tipo_relacion));
 			//Alert.show(CreateViewIndex.getInstance().IndexView(Obj.id,NameObj,type,Obj.tipo_relacion));
 			//Zipfile.getInstance().add_file(Zipfile.getInstance().proyecto_name+"/src/Views/"+NameObj+"/EstudianteShow.mxml",CreateViewShow.getInstance().ShowView(Obj.id,NameObj,type));
 			//Zipfile.getInstance().add_file(Zipfile.getInstance().proyecto_name+"/src/Views/"+NameObj+"/EstudianteEdit.mxml",CreateViewEdit.getInstance().EditView(Obj.id,NameObj,type));

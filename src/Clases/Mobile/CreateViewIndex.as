@@ -56,7 +56,7 @@ package Clases.Mobile
 			}
 			
 			//Pricipal Model or Modelo without relation 
-			if (type==0){
+			if (type!=0){
 				cadena+='public function Btn_Back(event:Event):void '+"\n";
 				cadena+='{ '+"\n";
 				cadena+='	this.data.'+Object.toLocaleLowerCase()+'s=new ArrayCollection(); '+"\n";
