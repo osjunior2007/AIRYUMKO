@@ -28,7 +28,7 @@ package Clases.Mobile
 		}
 		
 		
-		public function IndexFunction(Object:String,type:int,type_relation:int):String
+		public function IndexFunction(Object:String,type:int):String
 		{
 			var cadena:String="";
 			cadena+='<fx:Script>'+"\n";
@@ -100,13 +100,13 @@ package Clases.Mobile
 			return cadena;	
 		}	
 		
-		public function IndexView(id:String,Object:String,type:int,type_relation:int):String
+		public function IndexView(id:String,Object:String,type:int):String
 		{
 			var cadena:String="";
 			cadena+='<?xml version="1.0" encoding="utf-8"?>'+"\n";
 			cadena+='<s:View creationComplete="Index(this,this.data);" xmlns:fx="http://ns.adobe.com/mxml/2009"'+"\n"; 
 			cadena+='xmlns:s="library://ns.adobe.com/flex/spark" title="'+Object+'">'+"\n";
-			cadena+= IndexFunction(Object,type,type_relation)+"\n";		
+			cadena+= IndexFunction(Object,type)+"\n";		
 			cadena+='<s:actionContent>'+"\n";		
 			cadena+='	 <s:Button click="'+Object+'_New(event)" id="Btn_new" label="New" />'+"\n";		
 			cadena+='</s:actionContent>'+"\n";	
