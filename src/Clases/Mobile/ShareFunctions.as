@@ -12,12 +12,14 @@ package Clases.Mobile
 		{
 			var cadena:String="";
 			var NameComponent:String=""
-			for(var i:int=0;i<=components.length-1;i++)
-			{
-				NameComponent=components[i].identificador.substring(0,1).toUpperCase()+components[i].identificador.substring(1,components[i].identificador.length-1);
-				cadena+='	import Views.'+NameComponent+'.'+NameComponent+'SelectedIndex;'+"\n";	
+			if(components){
+				for(var i:int=0;i<=components.length-1;i++)
+				{
+					NameComponent=components[i].identificador.substring(0,1).toUpperCase()+components[i].identificador.substring(1,components[i].identificador.length-1);
+					cadena+='	import Views.'+NameComponent+'.'+NameComponent+'SelectedIndex;'+"\n";	
+				}
+				if(cadena!="")cadena+="\n";
 			}
-			if(cadena!="")cadena+="\n";
 			return cadena;
 		}	
 		
@@ -30,7 +32,7 @@ package Clases.Mobile
 			NameObject=Object.substring(0,1).toUpperCase()+Object.substring(1,Object.length-1);
 			for(var i:int=0;i<=components.length-1;i++)
 			{
-		      cadena="this.data."+NameComponent+"s={};"+"\n";	
+				cadena="this.data."+NameComponent+"s={};"+"\n";	
 			}
 			return cadena;
 		}	
@@ -43,10 +45,12 @@ package Clases.Mobile
 			var NameObject:String=""
 			var NameComponent:String=""
 			NameObject=Object.substring(0,1).toUpperCase()+Object.substring(1,Object.length-1);
-			for(var i:int=0;i<=components.length-1;i++)
-			{
-				NameComponent=components[i].identificador.substring(0,1).toUpperCase()+components[i].identificador.substring(1,components[i].identificador.length-1);
-				cadena="list_"+NameComponent+"s.enabled='"+state+"';"+"\n";
+			if (components){
+				for(var i:int=0;i<=components.length-1;i++)
+				{
+					NameComponent=components[i].identificador.substring(0,1).toUpperCase()+components[i].identificador.substring(1,components[i].identificador.length-1);
+					cadena="list_"+NameComponent+"s.enabled='"+state+"';"+"\n";
+				}
 			}
 			return cadena;
 		} 
@@ -55,9 +59,11 @@ package Clases.Mobile
 		public function SetAttributeValue(Object:String,components:Array):String
 		{
 			var cadena:String="";
-			for(var i:int=0;i<=components.length-1;i++)
-			{
-				cadena+="Att_"+components[i].identificador+".text="+Object.toLocaleLowerCase()+"."+components[i].identificador+"\n";
+			if (components){
+				for(var i:int=0;i<=components.length-1;i++)
+				{
+					cadena+="Att_"+components[i].identificador+".text="+Object.toLocaleLowerCase()+"."+components[i].identificador+"\n";
+				}
 			}
 			return cadena;
 		} 
@@ -67,10 +73,12 @@ package Clases.Mobile
 		{
 			var cadena:String="";
 			var NameComponent:String=""
-			for(var i:int=0;i<=components.length-1;i++)
-			{
-				NameComponent=components[i].identificador.substring(0,1).toUpperCase()+components[i].identificador.substring(1,components[i].identificador.length-1);
-				cadena+='if(this.data.'+components[i].identificador+')'+Object.toLocaleLowerCase()+'.'+components[i].identificador+'='+Object.toLocaleLowerCase()+'.Save'+NameComponent+'(DB.em,this.data.'+components[i].identificador+');'+"\n";
+			if (components){		
+				for(var i:int=0;i<=components.length-1;i++)
+				{
+					NameComponent=components[i].identificador.substring(0,1).toUpperCase()+components[i].identificador.substring(1,components[i].identificador.length-1);
+					cadena+='if(this.data.'+components[i].identificador+')'+Object.toLocaleLowerCase()+'.'+components[i].identificador+'='+Object.toLocaleLowerCase()+'.Save'+NameComponent+'(DB.em,this.data.'+components[i].identificador+');'+"\n";
+				}
 			}
 			return cadena;
 		}
@@ -79,10 +87,12 @@ package Clases.Mobile
 		public function RemoveElementsRelationship(Object:String,components:Array):String
 		{
 			var cadena:String="";
-			for(var i:int=0;i<=components.length-1;i++)
-			{
-			  cadena+=Object.toLocaleLowerCase()+'.'+components[i].identificador+'.removeAll();'+"\n";
-			}
+			if (components){	
+				for(var i:int=0;i<=components.length-1;i++)
+				{
+					cadena+=Object.toLocaleLowerCase()+'.'+components[i].identificador+'.removeAll();'+"\n";
+				}
+			}	
 			return cadena;
 		}
 		

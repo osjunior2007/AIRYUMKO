@@ -3,6 +3,7 @@ package Clases.Mobile
 	import Clases.Database;
 	import Clases.Mobile.MobileComponents;
 	import Clases.Mobile.ShareFunctions;
+	import mx.controls.Alert;
 	public class CreateViewShow
 	{
 		private static var instancia:CreateViewShow; 
@@ -26,7 +27,7 @@ package Clases.Mobile
 			
 			//create import libary for modelo with attributes relation type bx example one to many, many to many,etc.
 			if(type!=0){
-				cadena+=ShareFunctions.getInstance().CreateImportViewLibrary(Database.getInstance().relacion.findBySQL("select * from componentes where tipo_relacion='5' and modulo_id='"+id+"'"));
+				cadena+=ShareFunctions.getInstance().CreateImportViewLibrary(Database.getInstance().component.findBySQL("select * from componentes where tipo_relacion='5' and modulo_id='"+id+"'"));
 			} 
 			
 			//If the module is principal or without relationship type
@@ -55,7 +56,7 @@ package Clases.Mobile
 			}
 			
 			//if the model have attributes with many to many,many to one and one to many relationship
-			cadena+=CreateListEventRelation(Object,Database.getInstance().relacion.findBySQL("select * from componentes where modulo_id='"+id+"' and (tipo_relacion='3' or tipo_relacion='2')"));
+			cadena+=CreateListEventRelation(Object,Database.getInstance().component.findBySQL("select * from componentes where modulo_id='"+id+"' and (tipo_relacion='3' or tipo_relacion='2')"));
 			cadena+="\n"; 	
 			cadena+=' ]]>'+"\n"
 			cadena+='</fx:Script>'+"\n"
@@ -69,22 +70,23 @@ package Clases.Mobile
 		{
 			var NameComponent:String=""
 			var cadena:String=""
-			for(var i:int=0;i<=components.length-1;i++)
-			{
-				
-				NameComponent=components[i].identificador.substring(0,1).toUpperCase()+components[i].identificador.substring(1,components[i].identificador.length-1);
-				cadena+='<s:List change="{List_'+NameComponent+'(event)}" width="100%" id="list_mat" left="0" right="0" top="0" bottom="401" fontSize="20">';
-				cadena+='	<s:layout>'+"\n";
-				cadena+='		<s:VerticalLayout gap="0" horizontalAlign="justify" paddingBottom="-9"'+"\n";
-				cadena+='						  paddingLeft="-8" paddingTop="-12" requestedRowCount="1"/>'+"\n";
-				cadena+='	</s:layout>'+"\n";
-				cadena+='	<s:dataProvider>'+"\n";
-				cadena+='		<s:ArrayList>'+"\n";
-				cadena+='			<fx:String>'+NameComponent+'  >></fx:String>'+"\n";
-				cadena+='		</s:ArrayList>'+"\n";
-				cadena+='	</s:dataProvider>'+"\n";
-				cadena+='</s:List>'+"\n";
-				
+			if (components!=null){
+				for(var i:int=0;i<=components.length-1;i++)
+				{
+					NameComponent=components[i].identificador.substring(0,1).toUpperCase()+components[i].identificador.substring(1,components[i].identificador.length-1);
+					cadena+='<s:List change="{List_'+NameComponent+'(event)}" width="100%" id="list_mat" left="0" right="0" top="0" bottom="401" fontSize="20">';
+					cadena+='	<s:layout>'+"\n";
+					cadena+='		<s:VerticalLayout gap="0" horizontalAlign="justify" paddingBottom="-9"'+"\n";
+					cadena+='						  paddingLeft="-8" paddingTop="-12" requestedRowCount="1"/>'+"\n";
+					cadena+='	</s:layout>'+"\n";
+					cadena+='	<s:dataProvider>'+"\n";
+					cadena+='		<s:ArrayList>'+"\n";
+					cadena+='			<fx:String>'+NameComponent+'  >></fx:String>'+"\n";
+					cadena+='		</s:ArrayList>'+"\n";
+					cadena+='	</s:dataProvider>'+"\n";
+					cadena+='</s:List>'+"\n";
+					
+				}
 			}
 			if(cadena!="")cadena+="\n";
 			return cadena;
@@ -96,17 +98,20 @@ package Clases.Mobile
 			var cadena:String="";
 			var NameObject:String=""
 			var NameComponent:String=""
-			NameObject=Object.substring(0,1).toUpperCase()+Object.substring(1,Object.length-1);
-			
-			for(var i:int=0;i<=components.length-1;i++)
-			{
-				NameComponent=components[i].identificador.substring(0,1).toUpperCase()+components[i].identificador.substring(1,components[i].identificador.length-1);
-				cadena="public function List_"+NameComponent+"s(event:Event):void"+"\n";
-				cadena="{"+"\n";
-				cadena="	this.data.action=Views."+NameObject+"."+NameObject+"Show;"+"\n";
-				cadena="	this.navigator.pushView("+NameComponent+"SelectedIndex,this.data)	"+"\n";
-				cadena="}"+"\n"+"\n"+"\n";
-				
+			NameObject=Object.substring(0,1).toUpperCase()+Object.substring(1,Object.length);
+			if (components!=null){
+				for(var i:int=0;i<=components.length-1;i++)
+				{
+					NameComponent=components[i].identificador.substring(0,1).toUpperCase()+components[i].identificador.substring(1,components[i].identificador.length);
+					cadena+="public function List_"+NameComponent+"s(event:Event):void"+"\n";
+					cadena+="{"+"\n";
+					cadena+="this.data."+NameComponent.toLocaleLowerCase()+"s=new ArrayCollection()"+"\n";
+					cadena+="this.data."+NameComponent.toLocaleLowerCase()+"s=(DB.em.load(Estudiante,this.data.estudiante.id) as Estudiante).materias as ArrayCollection"+"\n";
+					cadena+="this.data."+NameComponent.toLocaleLowerCase()+"={}"+"\n";
+					cadena+="this.data."+NameComponent.toLocaleLowerCase()+".back="+NameObject+"Show"+"\n";
+					cadena+="this.navigator.pushView("+NameComponent+"SelectedIndex,this.data)"+"\n";	
+					cadena+="}"+"\n"+"\n"+"\n";
+				}
 			}
 			return cadena;
 		} 
