@@ -59,7 +59,7 @@ package Clases.Mobile
 			 cadena+=ShareFunctions.getInstance().SetAttributeValue(Object,Database.getInstance().component.findBySQL("select * from componentes where modulo_id='"+id+"'"));
 			 if(with_relation)cadena+='this.data.'+Object.toLocaleLowerCase()+'s=Object_parser.UpdateObjects(this.data.'+Object.toLocaleLowerCase()+'s,'+Object.toLocaleLowerCase()+')'+"\n";
 			 cadena+=ShareFunctions.getInstance().SaveElementsRelationship(Object,Database.getInstance().component.findBySQL("select * from componentes where (tipo_relacion='3' or tipo_relacion='2') and modulo_id='"+id+"'"));
-			 cadena+=ShareFunctions.getInstance().clear_data_params(Object,Database.getInstance().component.findBySQL("select * from componentes where modulo_id='"+id+"' and (tipo_relacion='3' or tipo_relacion='2')"));
+			 cadena+="Clear_Relations_Params();"+"\n";
 			 cadena+='	DB.em.save('+Object.toLocaleLowerCase()+');'+"\n";
 		 	 cadena+='	this.navigator.pushView('+Object+'Index,this.data); '+"\n";
 			 if(type!=0){
@@ -67,7 +67,7 @@ package Clases.Mobile
 			 cadena+=''+Object.toLocaleLowerCase()+'=Object_parser.FindObject(this.data.'+Object.toLocaleLowerCase()+'s,this.data.'+Object.toLocaleLowerCase()+'.id) as '+Object+' '+"\n";
 			 cadena+=ShareFunctions.getInstance().SetAttributeValue(Object,Database.getInstance().component.findBySQL("select * from componentes where modulo_id='"+id+"' "));
 			 cadena+='this.data.'+Object.toLocaleLowerCase()+'s=Object_parser.UpdateObjects(this.data.'+Object.toLocaleLowerCase()+'s,'+Object.toLocaleLowerCase()+')'+"\n";
-			 cadena+=ShareFunctions.getInstance().clear_data_params(Object,Database.getInstance().component.findBySQL("select * from componentes where modulo_id='"+id+"' and (tipo_relacion='3' or tipo_relacion='2')"));
+			 cadena+="Clear_Relations_Params();"+"\n";
 			 cadena+='this.navigator.pushView('+Object+'Index,this.data);'+"\n";
 			 cadena+='}'+"\n";
 			}
@@ -81,7 +81,6 @@ package Clases.Mobile
 		cadena+=ShareFunctions.getInstance().RemoveElementsRelationship(Object,Database.getInstance().component.findBySQL("select * from componentes where (tipo_relacion='3' or tipo_relacion='2') and modulo_id='"+id+"'"));
 		}
 		cadena+='	DB.em.remove('+Object.toLocaleLowerCase()+');'+"\n";
-		cadena+=ShareFunctions.getInstance().clear_data_params(Object,Database.getInstance().component.findBySQL("select * from componentes where modulo_id='"+id+"' and (tipo_relacion='3' or tipo_relacion='2')"));
 		if(type!=0){
 		   cadena+='}else{'+"\n";
 		   cadena+=' '+Object.toLocaleLowerCase()+'=Object_parser.FindObject(this.data.'+Object.toLocaleLowerCase()+'s,this.data.'+Object.toLocaleLowerCase()+'.id) as '+Object+' '+"\n";
@@ -89,8 +88,12 @@ package Clases.Mobile
 		   cadena+="this.data."+Object.toLocaleLowerCase()+"s=Object_parser.RemoveObject(this.data."+Object.toLocaleLowerCase()+"s,"+Object.toLocaleLowerCase()+")"+"\n";	
 		}	
 		cadena+='	this.navigator.pushView('+Object+'Index); '+"\n";
-		cadena+=ShareFunctions.getInstance().clear_data_params(Object,Database.getInstance().component.findBySQL("select * from componentes where modulo_id='"+id+"' and (tipo_relacion='3' or tipo_relacion='2')"));
+		cadena+="Clear_Relations_Params();"+"\n";
 		cadena+='}'+"\n";
+		
+		
+		cadena+=ShareFunctions.getInstance().clear_data_params(Object,Database.getInstance().component.findBySQL("select * from componentes where modulo_id='"+id+"' and (tipo_relacion='3' or tipo_relacion='2')"));
+		
 			
 		cadena+=' ]]>'+"\n";
 		cadena+='</fx:Script>'+"\n"
