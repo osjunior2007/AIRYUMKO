@@ -1,5 +1,5 @@
 package Clases.Mobile
-{
+{   import mx.controls.Alert;
 	public class ShareFunctions
 	{   
 		private static var instancia:ShareFunctions; 
@@ -30,9 +30,15 @@ package Clases.Mobile
 			var NameComponent:String=""
 			var NameObject:String=""
 			NameObject=Object.substring(0,1).toUpperCase()+Object.substring(1,Object.length-1);
-			for(var i:int=0;i<=components.length-1;i++)
-			{
-				cadena="this.data."+NameComponent+"s={};"+"\n";	
+			if(components!=null){
+				cadena+="public function Clear_Relations_Params(event:Event):void"+"\n";
+		        cadena+="{"+"\n";
+				for(var i:int=0;i<=components.length-1;i++)
+				{
+				 NameComponent=components[i].identificador.substring(0,1).toUpperCase()+components[i].identificador.substring(1,components[i].identificador.length-1);
+				  cadena+="this.data."+NameComponent+"s={};"+"\n";	
+				}
+				cadena+="}"+"\n";
 			}
 			return cadena;
 		}	
@@ -62,7 +68,7 @@ package Clases.Mobile
 			if (components){
 				for(var i:int=0;i<=components.length-1;i++)
 				{
-					cadena+="Att_"+components[i].identificador+".text="+Object.toLocaleLowerCase()+"."+components[i].identificador+"\n";
+					cadena+="Att_"+components[i].identificador+".text="+Object.toLocaleLowerCase()+"."+components[i].identificador+";"+"\n";
 				}
 			}
 			return cadena;
