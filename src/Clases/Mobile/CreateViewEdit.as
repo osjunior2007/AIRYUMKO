@@ -13,7 +13,7 @@ package Clases.Mobile
 		}
 		
 		
-		public function EditFunction(id:String,Object:String,type:int,with_relation:Boolean):String
+		public function EditFunction(id:String,Object:String,type:int):String
 		{
 			var cadena:String="";
 			cadena+='<fx:Script>'+"\n";
@@ -55,9 +55,9 @@ package Clases.Mobile
 			cadena+='{'+"\n";
 			cadena+='	'+Object.toLocaleLowerCase()+'=DB.em.load('+Object+',this.data.'+Object.toLocaleLowerCase()+'.id) as '+Object+';'+"\n";
 		
-			 cadena+="if("+Object.toLocaleLowerCase()+"){"+"\n";
+			if(type!=0)cadena+="if("+Object.toLocaleLowerCase()+"){"+"\n";
 			 cadena+=ShareFunctions.getInstance().SetAttributeValue(Object,Database.getInstance().component.findBySQL("select * from componentes where modulo_id='"+id+"'"));
-			 if(with_relation)cadena+='this.data.'+Object.toLocaleLowerCase()+'s=Object_parser.UpdateObjects(this.data.'+Object.toLocaleLowerCase()+'s,'+Object.toLocaleLowerCase()+')'+"\n";
+			 if(type!=0)cadena+='this.data.'+Object.toLocaleLowerCase()+'s=Object_parser.UpdateObjects(this.data.'+Object.toLocaleLowerCase()+'s,'+Object.toLocaleLowerCase()+')'+"\n";
 			 cadena+=ShareFunctions.getInstance().SaveElementsRelationship(Object,Database.getInstance().component.findBySQL("select * from componentes where (tipo_relacion='3' or tipo_relacion='2') and modulo_id='"+id+"'"));
 			 cadena+="Clear_Relations_Params();"+"\n";
 			 cadena+='	DB.em.save('+Object.toLocaleLowerCase()+');'+"\n";
@@ -100,13 +100,13 @@ package Clases.Mobile
 		return cadena;	
 	} 
 	
-	public function EditView(id:String,Object:String,type:int,with_relation:Boolean):String
+	public function EditView(id:String,Object:String,type:int):String
 	{
 		var cadena:String="";
 		cadena+='<?xml version="1.0" encoding="utf-8"?>'+"\n";
 		cadena+='<s:View creationComplete="Index(this,this.data);" xmlns:fx="http://ns.adobe.com/mxml/2009"'+"\n"; 
 		cadena+='xmlns:s="library://ns.adobe.com/flex/spark" title="'+Object+'">'+"\n";
-		cadena+= EditFunction(id,Object,type,with_relation)+"\n";		
+		cadena+= EditFunction(id,Object,type)+"\n";		
 		cadena+='<s:actionContent>'+"\n";		
 		cadena+='	 <s:Button click="'+Object+'_New(event)" id="Btn_new" label="New" />'+"\n";		
 		cadena+='</s:actionContent>'+"\n";	
