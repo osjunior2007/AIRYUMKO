@@ -98,6 +98,7 @@ package Clases.Mobile
 				{
 					cadena+=Object.toLocaleLowerCase()+'.'+components[i].identificador+'.removeAll();'+"\n";
 				}
+				cadena+='DB.em.save('+Object.toLocaleLowerCase()+');';
 			}	
 			return cadena;
 		}

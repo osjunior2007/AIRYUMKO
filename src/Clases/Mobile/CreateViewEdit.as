@@ -5,6 +5,9 @@ package Clases.Mobile
 	import Clases.Mobile.ShareFunctions;
 	
 	import mx.controls.Alert;
+	
+	import org.hamcrest.mxml.collection.Array;
+
 	public class CreateViewEdit
 	{   
 		private static var instancia:CreateViewEdit; 
@@ -20,6 +23,8 @@ package Clases.Mobile
 			cadena+='	<![CDATA['+"\n";
 			cadena+='	import Clases.Database;'+"\n";
 			cadena+='	import Models.'+Object+';'+"\n";
+			var components:Array= new Array() ;
+			components=Database.getInstance().component.findBySQL("select * from componentes where modulo_id='"+id+"' and (tipo_relacion='3' or tipo_relacion='2')");
 			if(type!=0){
 				cadena+=ShareFunctions.getInstance().CreateImportViewLibrary(Database.getInstance().relacion.findBySQL("select * from componentes where tipo_relacion='5' and modulo_id='"+id+"'"));
 			}
@@ -41,11 +46,11 @@ package Clases.Mobile
 				cadena+='	'+Object.toLocaleLowerCase()+'=DB.em.loadItem('+Object+',this.data.'+Object.toLocaleLowerCase()+'.id)as '+Object+';'+"\n";
 				cadena+='	if('+Object.toLocaleLowerCase()+'){'+"\n";
 				cadena+=ShareFunctions.getInstance().SetAttributeValue(Object,Database.getInstance().component.findBySQL("select * from componentes where modulo_id='"+id+"'"));
-			    cadena+=ShareFunctions.getInstance().ActiveListEventRelation(Object,Database.getInstance().component.findBySQL("select * from componentes where modulo_id='"+id+"' and (tipo_relacion='3' or tipo_relacion='2')"),"true");
+			    cadena+=ShareFunctions.getInstance().ActiveListEventRelation(Object,components,"true");
 			    cadena+='	}else{'+"\n";
 			    cadena+='		'+Object.toLocaleLowerCase()+'=Object_parser.FindObject(this.data.'+Object.toLocaleLowerCase()+'s,this.data.'+Object.toLocaleLowerCase()+'.id) as '+Object+' '+"\n";
 			    cadena+=ShareFunctions.getInstance().SetAttributeValue(Object,Database.getInstance().component.findBySQL("select * from componentes where modulo_id='"+id+"'"));
-			    cadena+=ShareFunctions.getInstance().ActiveListEventRelation(Object,Database.getInstance().component.findBySQL("select * from componentes where modulo_id='"+id+"' and (tipo_relacion='3' or tipo_relacion='2')"),"true");
+			    cadena+=ShareFunctions.getInstance().ActiveListEventRelation(Object,components,"true");
 			    cadena+='	}'+"\n";
 		  	    cadena+='}	'+"\n";
 			}
@@ -58,8 +63,10 @@ package Clases.Mobile
 			if(type!=0)cadena+="if("+Object.toLocaleLowerCase()+"){"+"\n";
 			 cadena+=ShareFunctions.getInstance().SetAttributeValue(Object,Database.getInstance().component.findBySQL("select * from componentes where modulo_id='"+id+"'"));
 			 if(type!=0)cadena+='this.data.'+Object.toLocaleLowerCase()+'s=Object_parser.UpdateObjects(this.data.'+Object.toLocaleLowerCase()+'s,'+Object.toLocaleLowerCase()+')'+"\n";
-			 cadena+=ShareFunctions.getInstance().SaveElementsRelationship(Object,Database.getInstance().component.findBySQL("select * from componentes where (tipo_relacion='3' or tipo_relacion='2') and modulo_id='"+id+"'"));
+			 cadena+=ShareFunctions.getInstance().SaveElementsRelationship(Object,components);
+			 if(components!=null){
 			 cadena+="Clear_Relations_Params();"+"\n";
+			 }
 			 cadena+='	DB.em.save('+Object.toLocaleLowerCase()+');'+"\n";
 		 	 cadena+='	this.navigator.pushView('+Object+'Index,this.data); '+"\n";
 			 if(type!=0){
@@ -67,7 +74,9 @@ package Clases.Mobile
 			 cadena+=''+Object.toLocaleLowerCase()+'=Object_parser.FindObject(this.data.'+Object.toLocaleLowerCase()+'s,this.data.'+Object.toLocaleLowerCase()+'.id) as '+Object+' '+"\n";
 			 cadena+=ShareFunctions.getInstance().SetAttributeValue(Object,Database.getInstance().component.findBySQL("select * from componentes where modulo_id='"+id+"' "));
 			 cadena+='this.data.'+Object.toLocaleLowerCase()+'s=Object_parser.UpdateObjects(this.data.'+Object.toLocaleLowerCase()+'s,'+Object.toLocaleLowerCase()+')'+"\n";
-			 cadena+="Clear_Relations_Params();"+"\n";
+			 if(components!=null){
+				 cadena+="Clear_Relations_Params();"+"\n";
+			 }
 			 cadena+='this.navigator.pushView('+Object+'Index,this.data);'+"\n";
 			 cadena+='}'+"\n";
 			}
@@ -78,8 +87,8 @@ package Clases.Mobile
 		cadena+='	'+Object.toLocaleLowerCase()+'=DB.em.load('+Object+',this.data.'+Object.toLocaleLowerCase()+'.id) as '+Object+';'+"\n";
 		if(type!=0){
 		cadena+="if("+Object.toLocaleLowerCase()+"){"+"\n";
-		cadena+=ShareFunctions.getInstance().RemoveElementsRelationship(Object,Database.getInstance().component.findBySQL("select * from componentes where (tipo_relacion='3' or tipo_relacion='2') and modulo_id='"+id+"'"));
-		}
+	    }
+		cadena+=ShareFunctions.getInstance().RemoveElementsRelationship(Object,components);
 		cadena+='	DB.em.remove('+Object.toLocaleLowerCase()+');'+"\n";
 		if(type!=0){
 		   cadena+='}else{'+"\n";
@@ -88,7 +97,9 @@ package Clases.Mobile
 		   cadena+="this.data."+Object.toLocaleLowerCase()+"s=Object_parser.RemoveObject(this.data."+Object.toLocaleLowerCase()+"s,"+Object.toLocaleLowerCase()+")"+"\n";	
 		}	
 		cadena+='	this.navigator.pushView('+Object+'Index); '+"\n";
-		cadena+="Clear_Relations_Params();"+"\n";
+		if(components!=null){
+			cadena+="Clear_Relations_Params();"+"\n";
+		}
 		cadena+='}'+"\n";
 		
 		
