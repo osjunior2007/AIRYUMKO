@@ -141,7 +141,8 @@
 				cadena+=Relationship_Inverse_Column(Object,Database.getInstance().relacion.findBySQL("select * from relacions where tipo_relacion='3' and modulo_relacionado='"+id+"'"))+"\n";
 				cadena+=CreateAttributes(Object,Database.getInstance().component.findBySQL("select * from componentes where modulo_id='"+id+"'"));
 				cadena+=Relationship_GetterAndSetter_Functions(Object,Database.getInstance().component.findBySQL("select * from componentes where modulo_id='"+id+"'"));
-				cadena+='	}'+"\n";
+				cadena+=Relationship_SaveItems_Functions(Object,Database.getInstance().component.findBySQL("select * from componentes where modulo_id='"+id+"' and (tipo_relacion='3' or tipo_relacion='2')"));
+				cadena+='}'+"\n";
 				return cadena;
 			}	
 			
