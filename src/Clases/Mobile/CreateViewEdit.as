@@ -32,7 +32,6 @@ package Clases.Mobile
 			cadena+='	public var DB:Database=new Database()'+"\n"+"\n";
 			
 			if(type==0){
-				Alert.show(type.toString(),Object);
 				cadena+='public function Edit(data:Object):void'+"\n";
 				cadena+='{'+"\n";
 				cadena+='	var '+Object.toLocaleLowerCase()+':'+Object+'=new '+Object+'();'+"\n";
