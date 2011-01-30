@@ -46,8 +46,6 @@ package Clases.Mobile
 			cadena+='	'+Object.toLocaleLowerCase()+'=new '+Object+'();'+"\n";
 			cadena+=ShareFunctions.getInstance().SetAttributeValue(Object,Database.getInstance().component.findBySQL("select * from componentes where modulo_id='"+id+"'"));
 			cadena+=ShareFunctions.getInstance().SaveElementsRelationship(Object,Database.getInstance().component.findBySQL("select * from componentes where tipo_relacion='5' and modulo_id='"+id+"'"));
-			if(type!){
-			}
 			cadena+='	DB.em.save('+Object.toLocaleLowerCase()+');'+"\n";
 			cadena+='	this.navigator.pushView('+Object+'Index);'+"\n";
 			cadena+='}	'+"\n";
@@ -58,7 +56,7 @@ package Clases.Mobile
 		} 
 		
 		
-		public function CreateView(id:String,Object:String,type:String):String
+		public function CreateView(id:String,Object:String,type:int):String
 		{
 			var cadena:String="";
 			

@@ -125,7 +125,7 @@ package Clases.Mobile
 		cadena+='	 <s:itemRenderer>'+"\n";		
 		cadena+='		 <fx:Component>'+"\n";		
 		cadena+='			 <s:MobileIconItemRenderer    '+"\n";		 
-		//cadena+=IndexListItemrender(id,Object,Database.getInstance().relacion.findBySQL("select * from componentes where modulo_id='"+id+"'"))+"\n";		 
+		cadena+=ShareFunctions.getInstance().IndexListItemrender(id,Object,Database.getInstance().relacion.findBySQL("select * from componentes where modulo_id='"+id+"'"))+"\n";		 
 		cadena+='			  messageField="title">'+"\n";		
 		cadena+='			 </s:MobileIconItemRenderer> '+"\n";		
 		cadena+='		 </fx:Component>'+"\n";		

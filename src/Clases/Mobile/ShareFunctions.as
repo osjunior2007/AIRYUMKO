@@ -43,6 +43,21 @@ package Clases.Mobile
 			return cadena;
 		}	
 		
+		public function IndexListItemrender(id:String,Object:String,components:Array):String
+		{
+			var cadena:String="label=";
+			var i:int=0;
+			var SizeItemRenderLable:int=2;
+			if(components.length<=SizeItemRenderLable){
+				SizeItemRenderLable=components.length;
+			}
+			while(i<=SizeItemRenderLable-1)
+			{
+				cadena+="{data."+components[i].identificador+"} ";
+				i++;	
+			}
+			return cadena;
+		}
 		
 		
 		public function ActiveListEventRelation(Object:String,components:Array,state:String):String

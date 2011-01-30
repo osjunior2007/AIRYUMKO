@@ -6,26 +6,13 @@ package Clases.Mobile
 	public class CreateViewIndex
 	{
 		private static var instancia:CreateViewIndex; 
-		private var SizeItemRenderLable:int=2;
+		
 		public function CreateViewIndex()
 		{
 		}
 		
 		
-		public function IndexListItemrender(id:String,Object:String,components:Array):String
-		{
-			var cadena:String="label=";
-			var i:int=0;
-			if(components.length<=SizeItemRenderLable){
-				SizeItemRenderLable=components.length;
-			}
-			while(i<=SizeItemRenderLable-1)
-			{
-				cadena+="{data."+components[i].identificador+"} ";
-				i++;	
-			}
-			return cadena;
-		}
+		
 		
 		
 		public function IndexFunction(Object:String,type:int):String
@@ -115,7 +102,7 @@ package Clases.Mobile
 			cadena+='	 <s:itemRenderer>'+"\n";		
 			cadena+='		 <fx:Component>'+"\n";		
 			cadena+='			 <s:MobileIconItemRenderer    '+"\n";		 
-			cadena+=IndexListItemrender(id,Object,Database.getInstance().component.findBySQL("select * from componentes where modulo_id='"+id+"'"))+"\n";		 
+			cadena+=ShareFunctions.getInstance().IndexListItemrender(id,Object,Database.getInstance().component.findBySQL("select * from componentes where modulo_id='"+id+"'"))+"\n";		 
 			cadena+='			  messageField="title">'+"\n";		
 			cadena+='			 </s:MobileIconItemRenderer> '+"\n";		
 			cadena+='		 </fx:Component>'+"\n";		
