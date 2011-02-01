@@ -1,13 +1,16 @@
 package Clases
 {
+	import Clases.Mobile.CreateMobileApp;
+	
 	import deng.fzip.FZip;
 	import deng.fzip.FZipFile;
+	
 	import flash.events.*;
 	import flash.filesystem.*;
 	import flash.net.URLRequest;
 	import flash.utils.ByteArray;
+	
 	import mx.controls.Alert;
-	import Clases.Mobile.CreateMobileApp;
 	public class Zipfile
 	{  private static var instancia:Zipfile;
 		public var zip:FZip = new FZip();
@@ -48,7 +51,7 @@ package Clases
 		public var Relation_Remote_name:String=""
 		public var XmlParamert:String="";
 		public var view_path:String="";
-		public var mediators_name="";
+	    public var mediators_name:String="";
 		public function Zipfile()
 		{
 		}

@@ -20,17 +20,16 @@
 					{	
 						if(components[i].tipo=="Indeterminado"){
 							if(components[i].tipo_relacion==3){  	
-								cadena+="public function SaveMaterias(em:IEntityManager,data:ArrayCollection):ArrayCollection"+"\n";  
+								cadena+="public function Save"+Object+"s(em:IEntityManager,data:ArrayCollection):ArrayCollection"+"\n";  
 								cadena+="{"+"\n";  
-								cadena+="	var materias:ArrayCollection = new ArrayCollection();"+"\n";  
+								cadena+="	var "+Object.toLocaleLowerCase()+"s:ArrayCollection = new ArrayCollection();"+"\n";  
 								cadena+="	for (var i:int=0;i<=data.length-1;i++)"+"\n";  
 								cadena+="	{"+"\n";  
-								cadena+="		if (!(em.loadItem(Materia,data.getItemAt(i).id)as Materia)){"+"\n";  
-								cadena+="			var materia:Materia=new Materia();"+"\n";  
-								cadena+="			materia.codigo=data.getItemAt(i).codigo;"+"\n";  
-								cadena+="			materia.name=data.getItemAt(i).name;"+"\n";  
-								cadena+="			em.save(materia);"+"\n";  
-								cadena+="			data.setItemAt(materia,i);"+"\n";  
+								cadena+="		if (!(em.loadItem("+Object+",data.getItemAt(i).id)as "+Object+")){"+"\n";  
+								cadena+="			var "+Object.toLocaleLowerCase()+":"+Object+"=new "+Object+"();"+"\n";  
+								cadena+=CreateModelAttributes(Object,components)+"\n";  
+								cadena+="			em.save("+Object.toLocaleLowerCase()+");"+"\n";  
+								cadena+="			data.setItemAt("+Object.toLocaleLowerCase()+",i);"+"\n";  
 								cadena+="		}else{"+"\n";  
 								cadena+="			data.setItemAt(data.getItemAt(i),i);"+"\n";  
 								cadena+="		}"+"\n";  
@@ -40,15 +39,15 @@
 				           }
 				
 							if(components[i].tipo_relacion==2){
-								cadena+="public function SaveOrders(em:IEntityManager,data:ArrayCollection):ArrayCollection"+"\n";  
+								cadena+="public function Save"+Object+"s(em:IEntityManager,data:ArrayCollection):ArrayCollection"+"\n";  
 								cadena+="{"+"\n";  
 								cadena+="	var list:ArrayCollection = new ArrayCollection();"+"\n";  
 								cadena+="	for (var i:int=0;i<=data.length-1;i++)"+"\n";  
 								cadena+="	{"+"\n";  
-								cadena+="		if (!(em.loadItem(Order,data.getItemAt(i).id)as Order)){"+"\n";  
-								cadena+="			var order:Order= new Order();"+"\n";  
-								cadena+="			order.item=data.getItemAt(i).item;"+"\n";  
-								cadena+="			list.addItem(order);"+"\n";  
+								cadena+="		if (!(em.loadItem("+Object+",data.getItemAt(i).id)as "+Object+")){"+"\n";  
+								cadena+="			var "+Object.toLocaleLowerCase()+":"+Object+"= new "+Object+"();"+"\n";  
+								cadena+="			"+Object.toLocaleLowerCase()+".item=data.getItemAt(i).item;"+"\n";  
+								cadena+="			list.addItem("+Object.toLocaleLowerCase()+");"+"\n";  
 								cadena+="		}"+"\n";  
 								cadena+="	}"+"\n";  
 								cadena+="	return list;"+"\n";  
@@ -65,22 +64,25 @@
 			public function Relationship_GetterAndSetter_Functions(Object:String,components:Array):String
 			{  
 				var cadena:String="";
+				var NameObject:String="";
 				if(components!=null){	
 					for(var i:int=0;i<=components.length-1;i++)
 					{	
 						if(components[i].tipo=="Indeterminado"){
 							if(components[i].tipo_relacion==3){  
-								cadena+="public function set orders(value:IList):void"+"\n";  
+								NameObject=components[i].identificador;
+								NameObject=NameObject.substring(0,1).toUpperCase()+NameObject.substring(1,NameObject.length);
+								cadena+="public function set "+NameObject.toLocaleLowerCase()+"s(value:IList):void"+"\n";  
 								cadena+="{"+"\n";  
-								cadena+="	_orders = value;"+"\n";  
-								cadena+="	for each(var order:Order in value)"+"\n";  
+								cadena+="	_"+NameObject.toLocaleLowerCase()+"s = value;"+"\n";  
+								cadena+="	for each(var "+NameObject.toLocaleLowerCase()+":"+NameObject+" in value)"+"\n";  
 								cadena+="	{"+"\n";  
-								cadena+="		order.estudiante = this;"+"\n";  
+								cadena+="		"+NameObject.toLocaleLowerCase()+"."+Object.toLocaleLowerCase()+" = this;"+"\n";  
 								cadena+="	}"+"\n";  
 								cadena+="}"+"\n";  
-								cadena+="public function get orders():IList"+"\n";  
+								cadena+="public function get "+NameObject.toLocaleLowerCase()+"s():IList"+"\n";  
 								cadena+="{"+"\n";  
-								cadena+="return _orders;"+"\n";  
+								cadena+="return _"+NameObject.toLocaleLowerCase()+"s;"+"\n";  
 								cadena+="}"+"\n";
 							}
 						}	
@@ -98,8 +100,8 @@
 					for(var i:int=0;i<=relations.length-1;i++)
 					{
 						if(relations[i].modulo_relacion=="3"){
-							cadena+='[ManyToOne(name="estudiante_id", inverse="true")]'+"\n";  
-							cadena+='public var estudiante:Estudiante;'+"\n";  
+							cadena+='[ManyToOne(name="'+Object.toLocaleLowerCase()+'_id", inverse="true")]'+"\n";  
+							cadena+='public var '+Object.toLocaleLowerCase()+':'+Object+';'+"\n";  
 						}	
 					}
 				}
@@ -112,15 +114,15 @@
 				var cadena:String="";	
 				//Relation  ManyToOne	
 				if(type==1){
-					cadena+="[ManyToOne]public var organization:Organization;"+"\n";  
+					cadena+="[ManyToOne]public var "+Object.toLocaleLowerCase()+":"+Object+";"+"\n";  
 				}
 				
 				if(type==2){
-					cadena+='[ManyToMany(type="Models.Materia",cascade="save-update-delete")]public var materias:IList;'+"\n";   
+					cadena+='[ManyToMany(type="Models.'+Object+'",cascade="save-update-delete")]public var '+Object.toLocaleLowerCase()+'s:IList;'+"\n";   
 				}
 				
 				if(type==3){
-					cadena+='[OneToMany(type="Models.Order",cascade="save-update",indexed="true")]private var _orders:IList;'+"\n"; 
+					cadena+='[OneToMany(type="Models.'+Object+'",cascade="save-update",indexed="true")]private var _'+Object.toLocaleLowerCase()+'s:IList;'+"\n"; 
 				}
 				
 				return cadena;	
@@ -167,6 +169,16 @@
 				return cadena;
 			}	
 			
+			
+			public function CreateModelAttributes(Object:String,components:Array):String
+			{
+				var cadena:String="";
+				for(var i:int=0;i<=components.length-1;i++)
+				{
+					cadena+="		"+Object.toLocaleLowerCase()+"."+components[i].identificador+"=data.getItemAt(i)."+components[i].identificador+";"+"\n";  
+				}
+				return cadena;
+			}
 			
 			public static function getInstance():CreateModel
 			{
