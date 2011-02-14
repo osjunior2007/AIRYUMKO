@@ -135,7 +135,7 @@ package Clases
 						&&file.filename!="bin-debug/ejemplo.html"&&file.filename!="bin-debug/ejemplo.swf"&&file.filename!="bin-debug/swfobject.js"&&file.filename!="bin-debug/AC_OETags.js"&&file.filename!="bin-debug/playerProductInstall.swf"
 						&&file.filename!="html-template/history/"&&file.filename!="html-template/"&&file.filename!="html-template/index.template.html"&&file.filename!="html-template/AC_OETags.js"&&file.filename!="html-template/playerProductInstall.swf"&&file.filename!="html-template/history/history.css"
 						&&file.filename!="html-template/history/history.js"&&file.filename!="html-template/history/historyFrame.html"){
-						add_file(file.filename,file.content.toString());
+						adupd_file(file.filename,file.content.toString());
 					}
 				}
 			}*/
