@@ -112,7 +112,7 @@ package Clases
 		
 		
 		private function onComplete(evt:Event):void {
-			for(var i:int=0;i<=New_zip.getFileCount()-1;i++) {
+			/*for(var i:int=0;i<=New_zip.getFileCount()-1;i++) {
 				var file:FZipFile = New_zip.getFileAt(i);
 				if (file.filename=="libs/catalog.xml"||file.filename=="libs/library.swf"||file.filename=="src/Clases/ServiceRecords.as"||file.filename==".settings/org.eclipse.core.resources.prefs"||file.filename=="bin-debug/history/history.css"
 					||file.filename=="bin-debug/history/historyFrame.html"||file.filename=="bin-debug/history/history.js"
@@ -138,16 +138,16 @@ package Clases
 						add_file(file.filename,file.content.toString());
 					}
 				}
-			}
+			}*/
 			 list_relaciones=Database.getInstance().relacion.findBySQL("select id,modulo_principal,tipo_relacion,modulo_relacionado from relacions");;
 			 list_components=Database.getInstance().component.findBySQL("select componente_id,modulo_id,etiqueta,identificador,tamano,replace(replace(tipo,'Numerico','0'),'Alfanumerico','1') as tipo,requerido,tipo_relacion,modulo_relacionado from componentes");
           
 			 if(this.proyecto_type=="Web"){
-				 CreateWebpApp(Database.getInstance().mod.findBySQL("select name,id from modulos"));
+				CreateWebpApp(Database.getInstance().mod.findBySQL("select name,id from modulos"));
 			 }
 			 
 			 if(this.proyecto_type=="Mobile"){
-				 CreateMobileApp.getInstance().CreateApp(Database.getInstance().mod.findBySQL("select name,id from modulos"));
+				CreateMobileApp.getInstance().CreateApp(Database.getInstance().mod.findBySQL("select name,id from modulos"));
 			 }
 				
 		}

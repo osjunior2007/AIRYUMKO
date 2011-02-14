@@ -1,8 +1,7 @@
 	package Clases.Mobile
 	{   
 		import Clases.Database;
-		
-		import org.hamcrest.mxml.collection.Array;
+	
 
 		public class CreateModel
 		{
