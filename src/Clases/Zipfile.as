@@ -1,6 +1,8 @@
 package Clases
 {
+	import Clases.Mobile.CreateLoginPage;
 	import Clases.Mobile.CreateMobileApp;
+	import Clases.Mobile.MobileAirFileGenerate;
 	
 	import deng.fzip.FZip;
 	import deng.fzip.FZipFile;
@@ -111,41 +113,43 @@ package Clases
 		
 	public  function CreateAirMobileSystemFile(filename:String,content:String):void
 	  {
+	
+		var ProjectName=this.proyecto_name.substr(0,1).toUpperCase()+this.proyecto_name.substr(1,this.proyecto_name.length);
 		if (filename=="Example/bin-debug/Example-app.xml"){
-			 add_file(this.proyecto_name+"/bin-debug/"+this.proyecto_name+"-app.xml",BuildMxmlComponets.getInstance().Build_Html_Template(this.proyecto_name));
+			 add_file(ProjectName+"/bin-debug/"+ProjectName+"-app.xml",BuildMxmlComponets.getInstance().Build_Html_Template(this.proyecto_name));
 			 }
 		   
 		   if (filename=="Example/bin-debug/Example.swf"){
-			   add_file(this.proyecto_name+"/bin-debug/"+this.proyecto_name+".swf",content);
+			   add_file(ProjectName+"/bin-debug/"+ProjectName+".swf",content);
 		   }
 		  
 		   
 		   if (filename=="Example/src/Example.swf"){
-			   add_file(this.proyecto_name+"/src/"+this.proyecto_name+".swf",content);
+			   add_file(ProjectName+"/src/"+ProjectName+".swf",content);
 		   }
 		   if (filename=="Example/src/Example.mxml"){
-			   add_file(this.proyecto_name+"/src/"+this.proyecto_name+".mxml",content);
+			   add_file(ProjectName+"/src/"+ProjectName+".mxml",MobileAirFileGenerate.getInstance().CreateMobileApplication(ProjectName));
 		   }
 		  
 		   if (filename=="Example/src/Example-app.xml"){
-			   add_file(this.proyecto_name+"/src/"+this.proyecto_name+"-app.xml",BuildMxmlComponets.getInstance().Build_Html_Template(this.proyecto_name));
+			   add_file(ProjectName+"/src/"+ProjectName+"-app.xml",MobileAirFileGenerate.getInstance().Create_App_Xml(ProjectName));
 		   }
 		   
 		   if (filename=="Example/.settings/org.eclipse.core.resources.prefs"){
-			   add_file(this.proyecto_name+"/.settings/org.eclipse.core.resources.prefs",content);
+			   add_file(ProjectName+"/.settings/org.eclipse.core.resources.prefs",content);
 		   }
 		   if (filename=="Example/.project"){
-			   add_file(this.proyecto_name+"/.project",content);
+			   add_file(ProjectName+"/.project",content);
 		   }
 		   if (filename=="Example/.flexProperties"){
-			   add_file(this.proyecto_name+"/.flexProperties",content);
+			   add_file(ProjectName+"/.flexProperties",content);
 		   }
 		   if (filename=="Example/.actionScriptProperties"){
-			   add_file(this.proyecto_name+"/.actionScriptProperties",content);
+			   add_file(ProjectName+"/.actionScriptProperties",content);
 		   }
 		   
 		   if (filename=="Example/libs/"){
-			   add_file(this.proyecto_name+"/libs/","");
+			   add_file(ProjectName+"/libs/","");
 		   }
 	   }
 	
@@ -153,39 +157,20 @@ package Clases
 	
 		
 		private function onComplete(evt:Event):void {
+			
+			var ProjectName:String="";
 			for(var i:int=0;i<=New_zip.getFileCount()-1;i++) {
 				var file:FZipFile = New_zip.getFileAt(i);
 				if(this.proyecto_zip.substr(0,this.proyecto_zip.length-4)=="AirMobile"){
 					CreateAirMobileSystemFile(file.filename,file.content.toString());
 				}
-				
-				
-				
-				
-				/*if (file.filename=="bin-debug/Example-app.xml"||file.filename=="bin-debug/Example.swf"
-					||file.filename=="bin-debug/ejemplo.html"||file.filename=="bin-debug/ejemplo.swf"||file.filename=="bin-debug/AC_OETags.js"||file.filename=="bin-debug/playerProductInstall.swf"
-					||file.filename=="html-template/index.template.html"||file.filename=="html-template/AC_OETags.js"||file.filename=="html-template/playerProductInstall.swf"||file.filename=="html-template/history/history.css"
-					||file.filename=="html-template/history/history.js" ||file.filename=="html-template/history/historyFrame.html"){
-					if (file.filename!="bin-debug/Example-app.xml"&& file.filename!="bin-debug/Example.sw"){
-						add_file(this.proyecto_name+"/"+file.filename,file.content.toString());
-					}else{
-						if (file.filename=="bin-debug/Example-app.xml"){
-							add_file(this.proyecto_name+"/bin-debug/"+this.proyecto_name+"-app.xml",BuildMxmlComponets.getInstance().Build_Html_Template(this.proyecto_name));
-						}
-						if (file.filename=="bin-debug/Example.swf"){
-							add_file(this.proyecto_name+"/bin-debug/"+this.proyecto_name+".swf",file.content.toString());
-						}
-					}
-				}else{
-					if(file.filename!="libs/"&&file.filename!="libs/library.swf"&&file.filename!="libs/catalog.xml"&&file.filename!="src/Clases/"&&file.filename!="src/"&&file.filename!=".settings/"&&file.filename!=".settings/org.eclipse.core.resources.prefs"&&file.filename!="bin-debug/history/history.css"
-						&&file.filename!="bin-debug/"&&file.filename!="bin-debug/history/"&&file.filename!="bin-debug/history/historyFrame.html"&&file.filename!="bin-debug/history/history.js"
-						&&file.filename!="bin-debug/ejemplo.html"&&file.filename!="bin-debug/ejemplo.swf"&&file.filename!="bin-debug/swfobject.js"&&file.filename!="bin-debug/AC_OETags.js"&&file.filename!="bin-debug/playerProductInstall.swf"
-						&&file.filename!="html-template/history/"&&file.filename!="html-template/"&&file.filename!="html-template/index.template.html"&&file.filename!="html-template/AC_OETags.js"&&file.filename!="html-template/playerProductInstall.swf"&&file.filename!="html-template/history/history.css"
-						&&file.filename!="html-template/history/history.js"&&file.filename!="html-template/history/historyFrame.html"){
-						adupd_file(file.filename,file.content.toString());
-					}
-				}*/
 			}
+			
+			
+			
+			ProjectName=this.proyecto_name.substr(0,1).toUpperCase()+this.proyecto_name.substr(1,this.proyecto_name.length);
+			add_file(ProjectName+"/src/Views/login.mxml",CreateLoginPage.getInstance().CreateLoginView(ProjectName));
+			
 			 list_relaciones=Database.getInstance().relacion.findBySQL("select id,modulo_principal,tipo_relacion,modulo_relacionado from relacions");;
 			 list_components=Database.getInstance().component.findBySQL("select componente_id,modulo_id,etiqueta,identificador,tamano,replace(replace(tipo,'Numerico','0'),'Alfanumerico','1') as tipo,requerido,tipo_relacion,modulo_relacionado from componentes");
           

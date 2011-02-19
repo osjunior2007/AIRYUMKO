@@ -112,6 +112,9 @@ package Clases.Mobile
 			return cadena;
 		}
 		
+		
+		
+		
 		public static function getInstance():CreateViewIndex
 		{
 			if( instancia==null ) 
