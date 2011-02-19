@@ -20,7 +20,6 @@ package Clases
 		public var proyecto_zip:String="amfphp.zip";
 		public var proyecto_name:String="";
 		public var proyecto_type:String="Mobile";
-		public var mobile_platform:String="Air Mobile";
 		public var database_name:String="";
 		public var user_database:String="root";
 		public var password_database:String="";
@@ -110,23 +109,72 @@ package Clases
 			New_zip.load(new URLRequest(file));
 		}
 		
-		
+	public  function CreateAirMobileSystemFile(filename:String,content:String):void
+	  {
+		Alert.show(filename);
+		  
+		if (filename=="Example/bin-debug/Example-app.xml"){
+			 add_file(this.proyecto_name+"/bin-debug/"+this.proyecto_name+"-app.xml",BuildMxmlComponets.getInstance().Build_Html_Template(this.proyecto_name));
+			 }
+		   
+		   if (filename=="Example/bin-debug/Example.swf"){
+			   add_file(this.proyecto_name+"/bin-debug/"+this.proyecto_name+".swf",content);
+		   }
+		  
+		   
+		   if (filename=="Example/src/Example.swf"){
+			   add_file(this.proyecto_name+"/src/"+this.proyecto_name+".swf",content);
+		   }
+		   if (filename=="Example/src/Example.mxml"){
+			   add_file(this.proyecto_name+"/src/"+this.proyecto_name+".mxml",content);
+		   }
+		  
+		   if (filename=="Example/src/Example-app.xml"){
+			   add_file(this.proyecto_name+"/src/"+this.proyecto_name+"-app.xml",BuildMxmlComponets.getInstance().Build_Html_Template(this.proyecto_name));
+		   }
+		   
+		   if (filename=="Example/.settings/org.eclipse.core.resources.prefs"){
+			   add_file(this.proyecto_name+"/.settings/org.eclipse.core.resources.prefs",content);
+		   }
+		   if (filename=="Example/.project"){
+			   add_file(this.proyecto_name+"/.project","");
+		   }
+		   if (filename=="Example/.flexProperties"){
+			   add_file(this.proyecto_name+"/.flexProperties",content);
+		   }
+		   if (filename=="Example/.actionScriptProperties"){
+			   add_file(this.proyecto_name+"/.actionScriptProperties",content);
+		   }
+		   
+		   if (filename=="Example/libs/"){
+			   add_file(this.proyecto_name+"/libs/","");
+		   }
+	   }
+	
+	
+	
 		
 		private function onComplete(evt:Event):void {
-			/*for(var i:int=0;i<=New_zip.getFileCount()-1;i++) {
+			for(var i:int=0;i<=New_zip.getFileCount()-1;i++) {
 				var file:FZipFile = New_zip.getFileAt(i);
-				if (file.filename=="libs/catalog.xml"||file.filename=="libs/library.swf"||file.filename=="src/Clases/ServiceRecords.as"||file.filename==".settings/org.eclipse.core.resources.prefs"||file.filename=="bin-debug/history/history.css"
-					||file.filename=="bin-debug/history/historyFrame.html"||file.filename=="bin-debug/history/history.js"
+				if(this.proyecto_zip.substr(0,this.proyecto_zip.length-4)=="AirMobile"){
+					CreateAirMobileSystemFile(file.filename,file.content.toString());
+				}
+				
+				
+				
+				
+				/*if (file.filename=="bin-debug/Example-app.xml"||file.filename=="bin-debug/Example.swf"
 					||file.filename=="bin-debug/ejemplo.html"||file.filename=="bin-debug/ejemplo.swf"||file.filename=="bin-debug/AC_OETags.js"||file.filename=="bin-debug/playerProductInstall.swf"
 					||file.filename=="html-template/index.template.html"||file.filename=="html-template/AC_OETags.js"||file.filename=="html-template/playerProductInstall.swf"||file.filename=="html-template/history/history.css"
 					||file.filename=="html-template/history/history.js" ||file.filename=="html-template/history/historyFrame.html"){
-					if (file.filename!="bin-debug/ejemplo.html"&& file.filename!="bin-debug/ejemplo.swf"){
+					if (file.filename!="bin-debug/Example-app.xml"&& file.filename!="bin-debug/Example.sw"){
 						add_file(this.proyecto_name+"/"+file.filename,file.content.toString());
 					}else{
-						if (file.filename=="bin-debug/ejemplo.html"){
-							add_file(this.proyecto_name+"/bin-debug/"+this.proyecto_name+".html",BuildMxmlComponets.getInstance().Build_Html_Template(this.proyecto_name));
+						if (file.filename=="bin-debug/Example-app.xml"){
+							add_file(this.proyecto_name+"/bin-debug/"+this.proyecto_name+"-app.xml",BuildMxmlComponets.getInstance().Build_Html_Template(this.proyecto_name));
 						}
-						if (file.filename=="bin-debug/ejemplo.swf"){
+						if (file.filename=="bin-debug/Example.swf"){
 							add_file(this.proyecto_name+"/bin-debug/"+this.proyecto_name+".swf",file.content.toString());
 						}
 					}
@@ -138,16 +186,18 @@ package Clases
 						&&file.filename!="html-template/history/history.js"&&file.filename!="html-template/history/historyFrame.html"){
 						adupd_file(file.filename,file.content.toString());
 					}
-				}
-			}*/
+				}*/
+			}
 			 list_relaciones=Database.getInstance().relacion.findBySQL("select id,modulo_principal,tipo_relacion,modulo_relacionado from relacions");;
 			 list_components=Database.getInstance().component.findBySQL("select componente_id,modulo_id,etiqueta,identificador,tamano,replace(replace(tipo,'Numerico','0'),'Alfanumerico','1') as tipo,requerido,tipo_relacion,modulo_relacionado from componentes");
           
 			 if(this.proyecto_type=="Web"){
 				CreateWebpApp(Database.getInstance().mod.findBySQL("select name,id from modulos"));
 			 }
+			
 			 
-			 if(this.proyecto_type=="Mobile"&&this.mobile_platform=="Air Mobile"){
+			 //To Air Platform
+			 if(this.proyecto_type=="Mobile"&&this.proyecto_zip=="AirMobile.zip"){
 				CreateMobileApp.getInstance().CreateApp(Database.getInstance().mod.findBySQL("select name,id from modulos"));
 			 }
 				
