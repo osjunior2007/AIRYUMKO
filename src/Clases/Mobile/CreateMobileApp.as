@@ -23,7 +23,7 @@ package Clases.Mobile
 				{
 					relation=Database.getInstance().relacion.findBySQL("select * from relacions where (modulo_principal="+list_modulos[i].id+" or modulo_relacionado="+list_modulos[i].id+")")
 					if(relation){
-						//if modulo just principal module
+						//if modulo principal module only
 						if(!TypeRelation(relation,list_modulos[i].id,"relacionado")&&TypeRelation(relation,list_modulos[i].id,"principal")){
 						  CreateViews(list_modulos[i],0);  	
 						}
@@ -33,7 +33,7 @@ package Clases.Mobile
 							CreateViews(list_modulos[i],1); 	
 						}
 						
-						//if modulo just relacionado module
+						//if modulo relacionado module only
 						if(TypeRelation(relation,list_modulos[i].id,"relacionado")&&!TypeRelation(relation,list_modulos[i].id,"principal")){
 							CreateViews(list_modulos[i],2); 
 						}
@@ -56,6 +56,7 @@ package Clases.Mobile
 			Zipfile.getInstance().add_file(Zipfile.getInstance().proyecto_name+"/src/Views/"+NameObj+"/EstudianteEdit.mxml",CreateViewEdit.getInstance().EditView(Obj.id,NameObj,type));
 			Zipfile.getInstance().add_file(Zipfile.getInstance().proyecto_name+"/src/Views/"+NameObj+"/EstudianteCreate.mxml",CreateViewCreate.getInstance().CreateView(Obj.id,NameObj,type));
 			Zipfile.getInstance().add_file(Zipfile.getInstance().proyecto_name+"/src/Models/"+NameObj+".as",CreateModel.getInstance().New_Model(Obj.id,NameObj,type));
+		  
 		}	
 		
 		

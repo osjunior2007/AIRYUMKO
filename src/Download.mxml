@@ -1,16 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<mx:TitleWindow   xmlns:mx="http://www.adobe.com/2006/mxml"   x="168" y="86" width="358" height="136"  borderColor="#DDEDFA" fontWeight="bold" fontSize="11" title="Download App">
+<mx:TitleWindow   xmlns:mx="http://www.adobe.com/2006/mxml"   x="168" y="86" width="460" height="170"  borderColor="#DDEDFA" fontWeight="bold" fontSize="11" title="Download App">
 	<mx:Canvas width="100%" height="100%">
 		<mx:Script>
 			<![CDATA[
 				import Clases.Zipfile;
 				import mx.collections.ArrayCollection;
 				import mx.managers.PopUpManager;
+				[Bindable] public var IphonePlatform:ArrayCollection = new ArrayCollection([{label:"Android", data:"0"},{label:"BlackBerry", data:"1"},{label:"Iphone", data:"2"},{label:"Air Mobile", data:"3"}]);
 				[Bindable] public var TipoFrameWork:ArrayCollection = new ArrayCollection([{label:"Ruby on Ralis", data:"Rails.zip"},{label:"CakePhp", data:"cake_1.2.3.8166.zip"},{label:"PhpActiveRecords", data:"amfphp.zip"}]);
 			]]>
 		</mx:Script>			
-		<mx:ComboBox id="framework" dataProvider="{TipoFrameWork}" x="99" y="9.5" width="229"></mx:ComboBox>
-		<mx:Label x="10" y="14" text="FrameWork"/>
-		<mx:Button click="Zipfile.getInstance().proyecto_zip=framework.selectedItem.data;Zipfile.getInstance().Load_File(framework.selectedItem.data);PopUpManager.removePopUp(this);" x="99" y="40" label="Download"/>
+		<mx:ComboBox id="framework" dataProvider="{TipoFrameWork}" x="143" y="48.5" width="229"></mx:ComboBox>
+		<mx:Label x="11" y="51" text="Backe - End"/>
+		<mx:Label x="10" y="14" text="Mobile - Platform"/>
+		<mx:Button click="Zipfile.getInstance().mobile_platform=platform.selectedItem.data;Zipfile.getInstance().proyecto_zip=framework.selectedItem.data;Zipfile.getInstance().Load_File(framework.selectedItem.data);PopUpManager.removePopUp(this);" x="145.5" y="78" label="Download"/>
+		<mx:ComboBox id="platform" dataProvider="{IphonePlatform}" x="143" y="11.5" width="229"></mx:ComboBox>
 	</mx:Canvas> 
 </mx:TitleWindow>  

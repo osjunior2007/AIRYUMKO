@@ -181,31 +181,7 @@
 
 			}
 
-			///////////////////////////////////////////////////////////////////////////////////////////
-
-
-			private function showWindow():void
-			{
-				if(Modulo_name.text!=""){
-					var abrir:Modelo_Relaciones=Modelo_Relaciones(PopUpManager.createPopUp(this, Modelo_Relaciones , true));
-					abrir.id_modulo=this.id_modulo;
-					abrir.showCloseButton=true;
-					abrir.Modulo_name.text=Modulo_name.text;
-					abrir.tiporelaciones.dataProvider=relaciones;
-					abrir.buscar_todos_componentes(this.id_modulo);
-					abrir.M_principal.text=modulo_principal;
-					abrir.M_Relacionado.text=modulo_relacionado;
-					abrir.T_relacion.text=tipo_relacion;
-					abrir.modulo_lable_name.text=relacion_modulo_name;
-					abrir.buscar_relaciones();
-					abrir.myTree=this.myTree;
-					PopUpManager.centerPopUp(abrir);
-					abrir.addEventListener("close",function(){PopUpManager.removePopUp(abrir)});
-					PopUpManager.centerPopUp(abrir);
-				}else{
-					Alert.show(mensaje_modulo_vacio);
-				}
-			}
+			
 
 			//////////////////////////////////////////////////////////////////////////////////////////
 

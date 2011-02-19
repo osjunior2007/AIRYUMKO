@@ -20,6 +20,7 @@ package Clases
 		public var proyecto_zip:String="amfphp.zip";
 		public var proyecto_name:String="";
 		public var proyecto_type:String="Mobile";
+		public var mobile_platform:String="Air Mobile";
 		public var database_name:String="";
 		public var user_database:String="root";
 		public var password_database:String="";
@@ -146,7 +147,7 @@ package Clases
 				CreateWebpApp(Database.getInstance().mod.findBySQL("select name,id from modulos"));
 			 }
 			 
-			 if(this.proyecto_type=="Mobile"){
+			 if(this.proyecto_type=="Mobile"&&this.mobile_platform=="Air Mobile"){
 				CreateMobileApp.getInstance().CreateApp(Database.getInstance().mod.findBySQL("select name,id from modulos"));
 			 }
 				
