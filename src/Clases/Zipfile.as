@@ -111,8 +111,6 @@ package Clases
 		
 	public  function CreateAirMobileSystemFile(filename:String,content:String):void
 	  {
-		Alert.show(filename);
-		  
 		if (filename=="Example/bin-debug/Example-app.xml"){
 			 add_file(this.proyecto_name+"/bin-debug/"+this.proyecto_name+"-app.xml",BuildMxmlComponets.getInstance().Build_Html_Template(this.proyecto_name));
 			 }
@@ -137,7 +135,7 @@ package Clases
 			   add_file(this.proyecto_name+"/.settings/org.eclipse.core.resources.prefs",content);
 		   }
 		   if (filename=="Example/.project"){
-			   add_file(this.proyecto_name+"/.project","");
+			   add_file(this.proyecto_name+"/.project",content);
 		   }
 		   if (filename=="Example/.flexProperties"){
 			   add_file(this.proyecto_name+"/.flexProperties",content);
