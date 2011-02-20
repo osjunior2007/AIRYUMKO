@@ -10,15 +10,15 @@ package Clases.Mobile
 		
 		
 		
-		public function CreateImportAllViewLibrary(components:Array):String
+		public function CreateImportAllViewLibrary(modulos:Array):String
 		{
 			var cadena:String="";
-			var NameComponent:String=""
-			if(components){
-				for(var i:int=0;i<=components.length-1;i++)
+			var NameModulos:String=""
+			if(modulos){
+				for(var i:int=0;i<=modulos.length-1;i++)
 				{
-					NameComponent=components[i].identificador.substring(0,1).toUpperCase()+components[i].identificador.substring(1,components[i].identificador.length-1);
-					cadena+='	import Views.'+NameComponent+';'+"\n";	
+					NameModulos=modulos[i].name.substring(0,1).toUpperCase()+modulos[i].name.substring(1,modulos[i].name.length);
+					cadena+='	                  import Views.'+NameModulos+';'+"\n";	
 				}
 				if(cadena!="")cadena+="\n";
 			}
@@ -27,15 +27,15 @@ package Clases.Mobile
 		
 		
 		
-		public function CreateButtonTabBar(components:Array):String
+		public function CreateButtonTabBar(modulos:Array):String
 		{
 			var cadena:String="";
-			var NameComponent:String=""
-			if(components){
-				for(var i:int=0;i<=components.length-1;i++)
+			var NameModulos:String=""
+			if(modulos){
+				for(var i:int=0;i<=modulos.length-1;i++)
 				{
-					NameComponent=components[i].identificador.substring(0,1).toUpperCase()+components[i].identificador.substring(1,components[i].identificador.length-1);
-					cadena+='<s:Button id="two" width="100%" height="58" label="'+NameComponent+'" click="{this.myNavigator.pushView('+NameComponent+'Index)}" fontSize="15"/>'+"\n";
+					NameModulos=modulos[i].name.substring(0,1).toUpperCase()+modulos[i].name.substring(1,modulos[i].name.length);
+					cadena+='             <s:Button id="two" width="100%" height="58" label="'+NameModulos+'" click="{this.myNavigator.pushView('+NameModulos+'Index)}" fontSize="15"/>'+"\n";
 				}
 				if(cadena!="")cadena+="\n";
 			}

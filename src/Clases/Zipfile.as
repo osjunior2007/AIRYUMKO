@@ -180,7 +180,7 @@ package Clases
 			add_file(ProjectName+"/src/Views/login.mxml",CreateLoginPage.getInstance().CreateLoginView(ProjectName));
 			
 			ProjectName=this.proyecto_name.substr(0,1).toUpperCase()+this.proyecto_name.substr(1,this.proyecto_name.length);
-			add_file(ProjectName+"/src/Views/MainView.mxml",CreateLoginPage.getInstance().CreateLoginView(ProjectName));
+			add_file(ProjectName+"/src/Views/MainView.mxml",CreateLoginPage.getInstance().CreateMainView(ProjectName));
 			
 			 list_relaciones=Database.getInstance().relacion.findBySQL("select id,modulo_principal,tipo_relacion,modulo_relacionado from relacions");;
 			 list_components=Database.getInstance().component.findBySQL("select componente_id,modulo_id,etiqueta,identificador,tamano,replace(replace(tipo,'Numerico','0'),'Alfanumerico','1') as tipo,requerido,tipo_relacion,modulo_relacionado from componentes");
