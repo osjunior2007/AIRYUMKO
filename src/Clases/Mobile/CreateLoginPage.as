@@ -39,6 +39,40 @@ package Clases.Mobile
     	}
 		
 		
+		
+		public function CreateMainView():String
+		{
+			var cadena:String="";	
+			cadena+='<?xml version="1.0" encoding="utf-8"?>'+"\n";	
+			cadena+='	<s:View xmlns:fx="http://ns.adobe.com/mxml/2009" creationComplete="{this.myNavigator.pushView(EstudianteIndex)}" '+"\n";	
+			cadena+='			xmlns:s="library://ns.adobe.com/flex/spark" actionBarVisible="false">'+"\n";	
+			cadena+='		<s:layout>'+"\n";	
+			cadena+='			<s:BasicLayout/>'+"\n";	
+			cadena+='		</s:layout>'+"\n";	
+			cadena+='		<fx:Script>'+"\n";	
+			cadena+='			<![CDATA['+"\n";	
+			//cadena+='				import Views.Products.*;
+	        cadena+='			]]>'+"\n";	
+			cadena+='		</fx:Script>'+"\n";	
+					
+			cadena+='		<fx:Declarations>'+"\n";	
+			cadena+='			<!-- Place non-visual elements (e.g., services, value objects) here -->'+"\n";	
+			cadena+='		</fx:Declarations>'+"\n";	
+					
+			cadena+='		<s:VGroup  height="100%" width="100%" gap="0">'+"\n";	
+			cadena+='			<s:ViewNavigator  id="myNavigator" width="100%" height="100%" />'+"\n";	
+			cadena+='			<s:HGroup left="0" right="0" bottom="0" gap="0" width="100%" >'+"\n";	
+			//cadena+='				<s:Button id="two" width="100%" height="58" label="Estudiante"'+"\n";	
+			//cadena+='						  click="{this.myNavigator.pushView(EstudianteIndex)}" fontSize="15"/> '+"\n";	
+			cadena+='			</s:HGroup>'+"\n";	
+			cadena+='		</s:VGroup>'+"\n";	
+			cadena+='	</s:View>'+"\n";	
+
+			
+		 return "";
+		}	
+		
+		
 		public static function getInstance():CreateLoginPage
 		{
 			if( instancia==null ) 
