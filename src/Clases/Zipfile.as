@@ -115,41 +115,49 @@ package Clases
 	  {
 	
 		var ProjectName=this.proyecto_name.substr(0,1).toUpperCase()+this.proyecto_name.substr(1,this.proyecto_name.length);
-		if (filename=="Example/bin-debug/Example-app.xml"){
+		if (filename=="AirMobile/bin-debug/Example-app.xml"){
 			 add_file(ProjectName+"/bin-debug/"+ProjectName+"-app.xml",BuildMxmlComponets.getInstance().Build_Html_Template(this.proyecto_name));
 			 }
 		   
-		   if (filename=="Example/bin-debug/Example.swf"){
+		   if (filename=="AirMobile/bin-debug/Example.swf"){
 			   add_file(ProjectName+"/bin-debug/"+ProjectName+".swf",content);
 		   }
 		  
 		   
-		   if (filename=="Example/src/Example.swf"){
+		   if (filename=="AirMobile/src/Example.swf"){
 			   add_file(ProjectName+"/src/"+ProjectName+".swf",content);
 		   }
-		   if (filename=="Example/src/Example.mxml"){
+		   if (filename=="AirMobile/src/Example.mxml"){
 			   add_file(ProjectName+"/src/"+ProjectName+".mxml",MobileAirFileGenerate.getInstance().CreateMobileApplication(ProjectName));
 		   }
 		  
-		   if (filename=="Example/src/Example-app.xml"){
+		   if (filename=="AirMobile/src/Example-app.xml"){
 			   add_file(ProjectName+"/src/"+ProjectName+"-app.xml",MobileAirFileGenerate.getInstance().Create_App_Xml(ProjectName));
 		   }
 		   
-		   if (filename=="Example/.settings/org.eclipse.core.resources.prefs"){
+		   if (filename=="AirMobile/.settings/org.eclipse.core.resources.prefs"){
 			   add_file(ProjectName+"/.settings/org.eclipse.core.resources.prefs",content);
 		   }
-		   if (filename=="Example/.project"){
+		   if (filename=="AirMobile/.project"){
 			   add_file(ProjectName+"/.project",content);
 		   }
-		   if (filename=="Example/.flexProperties"){
+		   if (filename=="AirMobile/.flexProperties"){
 			   add_file(ProjectName+"/.flexProperties",content);
 		   }
-		   if (filename=="Example/.actionScriptProperties"){
+		   if (filename=="AirMobile/.actionScriptProperties"){
 			   add_file(ProjectName+"/.actionScriptProperties",content);
 		   }
 		   
-		   if (filename=="Example/libs/"){
+		   if (filename=="AirMobile/libs/"){
 			   add_file(ProjectName+"/libs/","");
+		   }
+		   
+		  if (filename=="AirMobile/Clases/Database.as"){
+			   add_file(ProjectName+"/Clases/Database.as",content);
+		   }
+		   
+		   if (filename=="AirMobile/src/Clases/ObjectParse.as"){
+			   add_file(ProjectName+"/src/Clases/ObjectParse.as",content);
 		   }
 	   }
 	
@@ -170,6 +178,9 @@ package Clases
 			
 			ProjectName=this.proyecto_name.substr(0,1).toUpperCase()+this.proyecto_name.substr(1,this.proyecto_name.length);
 			add_file(ProjectName+"/src/Views/login.mxml",CreateLoginPage.getInstance().CreateLoginView(ProjectName));
+			
+			ProjectName=this.proyecto_name.substr(0,1).toUpperCase()+this.proyecto_name.substr(1,this.proyecto_name.length);
+			add_file(ProjectName+"/src/Views/MainView.mxml",CreateLoginPage.getInstance().CreateLoginView(ProjectName));
 			
 			 list_relaciones=Database.getInstance().relacion.findBySQL("select id,modulo_principal,tipo_relacion,modulo_relacionado from relacions");;
 			 list_components=Database.getInstance().component.findBySQL("select componente_id,modulo_id,etiqueta,identificador,tamano,replace(replace(tipo,'Numerico','0'),'Alfanumerico','1') as tipo,requerido,tipo_relacion,modulo_relacionado from componentes");
