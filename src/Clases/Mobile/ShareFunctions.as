@@ -8,6 +8,43 @@ package Clases.Mobile
 		{
 		}
 		
+		
+		
+		public function CreateImportAllViewLibrary(components:Array):String
+		{
+			var cadena:String="";
+			var NameComponent:String=""
+			if(components){
+				for(var i:int=0;i<=components.length-1;i++)
+				{
+					NameComponent=components[i].identificador.substring(0,1).toUpperCase()+components[i].identificador.substring(1,components[i].identificador.length-1);
+					cadena+='	import Views.'+NameComponent+';'+"\n";	
+				}
+				if(cadena!="")cadena+="\n";
+			}
+			return cadena;
+		}
+		
+		
+		
+		public function CreateButtonTabBar(components:Array):String
+		{
+			var cadena:String="";
+			var NameComponent:String=""
+			if(components){
+				for(var i:int=0;i<=components.length-1;i++)
+				{
+					NameComponent=components[i].identificador.substring(0,1).toUpperCase()+components[i].identificador.substring(1,components[i].identificador.length-1);
+					cadena+='<s:Button id="two" width="100%" height="58" label="'+NameComponent+'" click="{this.myNavigator.pushView('+NameComponent+'Index)}" fontSize="15"/>'+"\n";
+				}
+				if(cadena!="")cadena+="\n";
+			}
+			return cadena;
+		}
+		
+		
+		
+		
 		public function CreateImportViewLibrary(components:Array):String
 		{
 			var cadena:String="";

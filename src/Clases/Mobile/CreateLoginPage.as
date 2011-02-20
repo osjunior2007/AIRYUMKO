@@ -1,5 +1,8 @@
 package Clases.Mobile
 {
+	import Clases.Mobile.ShareFunctions;
+	import Clases.Database;
+	
 	public class CreateLoginPage
 	{
 		private static var instancia:CreateLoginPage; 
@@ -40,7 +43,7 @@ package Clases.Mobile
 		
 		
 		
-		public function CreateMainView():String
+		public function CreateMainView(projectname:String):String
 		{
 			var cadena:String="";	
 			cadena+='<?xml version="1.0" encoding="utf-8"?>'+"\n";	
@@ -51,8 +54,8 @@ package Clases.Mobile
 			cadena+='		</s:layout>'+"\n";	
 			cadena+='		<fx:Script>'+"\n";	
 			cadena+='			<![CDATA['+"\n";	
-			//cadena+='				import Views.Products.*;
-	        cadena+='			]]>'+"\n";	
+			cadena+=ShareFunctions.getInstance().CreateImportAllViewLibrary(Database.getInstance().mod.findBySQL("select name,id from modulos"));
+			cadena+='			]]>'+"\n";	
 			cadena+='		</fx:Script>'+"\n";	
 					
 			cadena+='		<fx:Declarations>'+"\n";	
@@ -62,14 +65,12 @@ package Clases.Mobile
 			cadena+='		<s:VGroup  height="100%" width="100%" gap="0">'+"\n";	
 			cadena+='			<s:ViewNavigator  id="myNavigator" width="100%" height="100%" />'+"\n";	
 			cadena+='			<s:HGroup left="0" right="0" bottom="0" gap="0" width="100%" >'+"\n";	
-			//cadena+='				<s:Button id="two" width="100%" height="58" label="Estudiante"'+"\n";	
-			//cadena+='						  click="{this.myNavigator.pushView(EstudianteIndex)}" fontSize="15"/> '+"\n";	
+			cadena+=ShareFunctions.getInstance().CreateButtonTabBar(Database.getInstance().mod.findBySQL("select name,id from modulos"));
 			cadena+='			</s:HGroup>'+"\n";	
 			cadena+='		</s:VGroup>'+"\n";	
 			cadena+='	</s:View>'+"\n";	
 
-			
-		 return "";
+		   return cadena;
 		}	
 		
 		
