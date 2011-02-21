@@ -18,7 +18,7 @@ package Clases.Mobile
 				for(var i:int=0;i<=modulos.length-1;i++)
 				{
 					NameModulos=modulos[i].name.substring(0,1).toUpperCase()+modulos[i].name.substring(1,modulos[i].name.length);
-					cadena+='	                  import Views.'+NameModulos+';'+"\n";	
+					cadena+='	                  import Views.'+NameModulos+'.*;'+"\n";	
 				}
 				if(cadena!="")cadena+="\n";
 			}
@@ -35,7 +35,7 @@ package Clases.Mobile
 				for(var i:int=0;i<=modulos.length-1;i++)
 				{
 					NameModulos=modulos[i].name.substring(0,1).toUpperCase()+modulos[i].name.substring(1,modulos[i].name.length);
-					cadena+='             <s:Button id="two" width="100%" height="58" label="'+NameModulos+'" click="{this.myNavigator.pushView('+NameModulos+'Index)}" fontSize="15"/>'+"\n";
+					cadena+='             <s:Button id="'+modulos[i].name+'_button" width="100%" height="58" label="'+NameModulos+'" click="{this.myNavigator.pushView('+NameModulos+'Index)}" fontSize="15"/>'+"\n";
 				}
 				if(cadena!="")cadena+="\n";
 			}
@@ -82,7 +82,7 @@ package Clases.Mobile
 		
 		public function IndexListItemrender(id:String,Object:String,components:Array):String
 		{
-			var cadena:String="label=";
+			var cadena:String='             label="';
 			var i:int=0;
 			var SizeItemRenderLable:int=2;
 			if(components.length<=SizeItemRenderLable){
@@ -90,9 +90,10 @@ package Clases.Mobile
 			}
 			while(i<=SizeItemRenderLable-1)
 			{
-				cadena+="{data."+components[i].identificador+"} ";
+				cadena+='{data.'+components[i].identificador+'}';
 				i++;	
 			}
+			cadena+='"';
 			return cadena;
 		}
 		

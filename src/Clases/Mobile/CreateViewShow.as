@@ -123,7 +123,7 @@ package Clases.Mobile
 			for(var i:int=0;i<=components.length-1;i++)
 			{
 				if(components[i].componente=="0"){
-					cadena+=MobileComponents.getInstance().CreateTextInput({"idenficador":components[i].identificador,"longitud":components[i].tamano,"restricion":components[i].tipo,"pass":"0","requiredtype":components[i].requerido,"Enable":"false","focus":"false"})+"\n";	
+					cadena+=MobileComponents.getInstance().CreateTextInput({"identificador":components[i].identificador,"longitud":components[i].tamano,"restricion":components[i].tipo,"pass":"0","requiredtype":components[i].requerido,"Enable":"false","focus":"false"})+"\n";	
 				}
 			}
 			if(cadena!="")cadena+="\n";
@@ -135,7 +135,7 @@ package Clases.Mobile
 		{
 			var cadena:String="";
 			var NameObject:String=""
-			NameObject=Object.substring(0,1).toUpperCase()+Object.substring(1,Object.length-1);
+			NameObject=Object.substring(0,1).toUpperCase()+Object.substring(1,Object.length);
 			cadena+='<?xml version="1.0" encoding="utf-8"?>'+"\n";
 			cadena+='	<s:View creationComplete="Show(this.data)" xmlns:fx="http://ns.adobe.com/mxml/2009"'+"\n";
 			cadena+='			xmlns:s="library://ns.adobe.com/flex/spark"'+"\n";
@@ -143,7 +143,7 @@ package Clases.Mobile
 			cadena+='			title="Show '+Object+'">'+"\n";
 			cadena+=ShowFunction(id,Object,type)+"\n";
 			cadena+='<s:navigationContent>'+"\n";
-			cadena+='	<s:Button id="homeButton"  icon="'+"@Embed('assets/home.png')"+'click="{this.navigator.pushView('+NameObject+'Index)}"/>'+"\n";
+			cadena+='	<s:Button id="homeButton"  icon="'+"@Embed('assets/home.png')"+'" click="{this.navigator.pushView('+NameObject+'Index)}"/>'+"\n";
 			cadena+='</s:navigationContent>'+"\n";
 			cadena+='<s:actionContent>'+"\n";		
 			cadena+='	<s:Button click="{this.navigator.pushView('+NameObject+'Edit,this.data)}" id="Btn_update" label="Edit" />'+"\n";		

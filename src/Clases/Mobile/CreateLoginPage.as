@@ -1,7 +1,9 @@
 package Clases.Mobile
 {
-	import Clases.Mobile.ShareFunctions;
 	import Clases.Database;
+	import Clases.Mobile.ShareFunctions;
+	
+	import org.hamcrest.mxml.collection.Array;
 	
 	public class CreateLoginPage
 	{
@@ -46,15 +48,17 @@ package Clases.Mobile
 		public function CreateMainView(projectname:String):String
 		{
 			var cadena:String="";	
+			var modulos:Array=new Array();
+			modulos=Database.getInstance().mod.findBySQL("select name,id from modulos");
 			cadena+='<?xml version="1.0" encoding="utf-8"?>'+"\n";	
-			cadena+='	<s:View xmlns:fx="http://ns.adobe.com/mxml/2009" creationComplete="{this.myNavigator.pushView(EstudianteIndex)}" '+"\n";	
+			cadena+='	<s:View xmlns:fx="http://ns.adobe.com/mxml/2009" creationComplete="{this.myNavigator.pushView('+modulos[0].name.substring(0,1).toUpperCase()+modulos[0].name.substring(1,modulos[0].name.length)+'Index)}" '+"\n";	
 			cadena+='			xmlns:s="library://ns.adobe.com/flex/spark" actionBarVisible="false">'+"\n";	
 			cadena+='		<s:layout>'+"\n";	
 			cadena+='			<s:BasicLayout/>'+"\n";	
 			cadena+='		</s:layout>'+"\n";	
 			cadena+='		<fx:Script>'+"\n";	
 			cadena+='			<![CDATA['+"\n";	
-			cadena+=ShareFunctions.getInstance().CreateImportAllViewLibrary(Database.getInstance().mod.findBySQL("select name,id from modulos"));
+			cadena+=ShareFunctions.getInstance().CreateImportAllViewLibrary(modulos);
 			cadena+='			]]>'+"\n";	
 			cadena+='		</fx:Script>'+"\n";	
 					

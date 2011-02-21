@@ -143,6 +143,7 @@
 				cadena+=CreateAttributes(Object,Database.getInstance().component.findBySQL("select * from componentes where modulo_id='"+id+"'"));
 				cadena+=Relationship_GetterAndSetter_Functions(Object,Database.getInstance().component.findBySQL("select * from componentes where modulo_id='"+id+"'"));
 				cadena+=Relationship_SaveItems_Functions(Object,Database.getInstance().component.findBySQL("select * from componentes where modulo_id='"+id+"' and (tipo_relacion='3' or tipo_relacion='2')"));
+				cadena+='   }'+"\n";
 				cadena+='}'+"\n";
 				return cadena;
 			}	

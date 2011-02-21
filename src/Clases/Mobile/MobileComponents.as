@@ -1,5 +1,6 @@
 package Clases.Mobile
 {
+	import mx.controls.Alert; 
 	public class MobileComponents
 	{
 		private static var instancia:MobileComponents; 
@@ -14,20 +15,18 @@ package Clases.Mobile
 			
 			var cadena:String="";
 			var NameObject:String=""
-				
 			if(params.pass=="0"){
-				cadena='  <mx:TextInput enable="'+params.Enable+'" width="100%"';
+				cadena='  <s:TextInput  width="100%" ';
 			}else{
-				cadena='  <mx:TextInput displayAsPassword="true" width="100%"';	
+				cadena='  <s:TextInput displayAsPassword="true" width="100%" ';	
 			}
 			cadena+=" ";
 			
 			if(params.focus=="true"){
 				//NameObject=Object.substring(0,1).toUpperCase()+Object.substring(1,Object.length-1);
-				cadena+='focusOut'+"="+"{("+params.idenficador.toLowerCase()+".text=='')?"+params.idenficador.toLowerCase()+".text='"+params.etiqueta+" : "+params.idenficador.toLowerCase()+".text}" +"focusIn="+"{"+params.idenficador.toLowerCase()+".text=''}";
+				cadena+='focusOut'+'="'+"{("+"Att_"+params.identificador.toLowerCase()+".text=='')?"+"Att_"+params.identificador.toLowerCase()+".text='"+params.etiqueta+"' : "+params.identificador.toLowerCase()+".text}" +' focusIn="'+"{"+params.identificador.toLowerCase()+".text=''}"+'"';
 			}
-			
-			cadena+='id="Att_'+params.idenficador.toLowerCase()+'" '+'maxChars="'+params.longitud+'"';
+			cadena+=' id="Att_'+params.identificador.toLowerCase()+'" '+'maxChars="'+params.longitud+'"';
 			if(params.restricion=="Numerico"){
 				cadena+=' restrict="0-9"'	
 			}

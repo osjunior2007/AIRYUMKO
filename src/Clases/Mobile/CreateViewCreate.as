@@ -2,6 +2,7 @@ package Clases.Mobile
 {  
 	import Clases.Database;
 	import Clases.Mobile.ShareFunctions;
+	import mx.controls.Alert;
 	public class CreateViewCreate
 	{  
 		private static var instancia:CreateViewCreate; 
@@ -15,8 +16,9 @@ package Clases.Mobile
 			var cadena:String="";
 			for(var i:int=0;i<=components.length-1;i++)
 			{
+				
 				if(components[i].componente=="0"){
-					cadena+=MobileComponents.getInstance().CreateTextInput({"idenficador":components[i].identificador,"longitud":components[i].tamano,"restricion":components[i].tipo,"pass":"0","requiredtype":components[i].requerido,"Enable":"false","focus":"true"})+"\n";	
+					cadena+=MobileComponents.getInstance().CreateTextInput({"identificador":components[i].identificador,"longitud":components[i].tamano,"restricion":components[i].tipo,"pass":"0","requiredtype":components[i].requerido,"Enable":"false","focus":"true"})+"\n";	
 				}
 			}
 			if(cadena!="")cadena+="\n";

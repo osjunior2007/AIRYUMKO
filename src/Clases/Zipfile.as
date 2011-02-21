@@ -153,10 +153,15 @@ package Clases
 		   }
 		   
 		  if (filename=="AirMobile/Clases/Database.as"){
-			   add_file(ProjectName+"/Clases/Database.as",content);
+			   add_file(ProjectName+"/src/Clases/Database.as",content);
 		   }
+		  
+		  
+		  if (filename=="AirMobile/src/assets/home.png"){
+			  add_file(ProjectName+"/src/assets/home.png",content);
+		  }
 		   
-		   if (filename=="AirMobile/src/Clases/ObjectParse.as"){
+		   if (filename=="AirMobile/Clases/ObjectParse.as"){
 			   add_file(ProjectName+"/src/Clases/ObjectParse.as",content);
 		   }
 	   }
