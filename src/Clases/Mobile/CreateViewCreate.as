@@ -67,7 +67,7 @@ package Clases.Mobile
 			cadena+='			xmlns:s="library://ns.adobe.com/flex/spark"'+"\n";
 			cadena+='			xmlns:mx="library://ns.adobe.com/flex/mx"'+"\n";
 			cadena+='			creationComplete="Create(this.data);" title="'+Object+'">'+"\n";
-			cadena+CreateFunction(id,Object,type);
+			cadena+=CreateFunction(id,Object,type);
 			cadena+='<s:navigationContent>'+"\n";
 			cadena+='	 <s:Button id="homeButton"  icon="@Embed'+"('assets/home.png')"+'"  click="{this.navigator.pushView('+Object+'Index)}"/>'+"\n";
 			cadena+='</s:navigationContent>'+"\n";
@@ -83,7 +83,6 @@ package Clases.Mobile
 			cadena+=' </s:VGroup>'+"\n";
 			cadena+='</s:Scroller>	'+"\n";
 			cadena+='</s:View>'+"\n";
-			
 			return cadena;
 		}
 		

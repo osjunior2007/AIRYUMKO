@@ -53,8 +53,6 @@ package Clases.Mobile
 			    cadena+='	}'+"\n";
 		  	    cadena+='}	'+"\n";
 			}
-			
-		
 			cadena+='public function '+Object+'_Update(event:Event):void'+"\n";
 			cadena+='{'+"\n";
 			cadena+='	'+Object.toLocaleLowerCase()+'=DB.em.load('+Object+',this.data.'+Object.toLocaleLowerCase()+'.id) as '+Object+';'+"\n";
@@ -101,13 +99,12 @@ package Clases.Mobile
 		}
 		cadena+='}'+"\n";
 		
-		
 		cadena+=ShareFunctions.getInstance().clear_data_params(Object,Database.getInstance().component.findBySQL("select * from componentes where modulo_id='"+id+"' and (tipo_relacion='3' or tipo_relacion='2')"));
 		
-			
 		cadena+=' ]]>'+"\n";
 		cadena+='</fx:Script>'+"\n"
 		return cadena;	
+
 	} 
 	
 	public function EditView(id:String,Object:String,type:int):String

@@ -51,7 +51,7 @@ package Clases.Mobile
 		{
 			var NameObj:String=""
 			NameObj=Obj.name.substring(0,1).toUpperCase()+Obj.name.substring(1,Obj.name.length);
-		    Zipfile.getInstance().add_file(Zipfile.getInstance().proyecto_name+"/src/Views/"+NameObj+"/"+NameObj+"Index.mxml",CreateViewIndex.getInstance().IndexView(Obj.id,NameObj,type));
+			Zipfile.getInstance().add_file(Zipfile.getInstance().proyecto_name+"/src/Views/"+NameObj+"/"+NameObj+"Index.mxml",CreateViewIndex.getInstance().IndexView(Obj.id,NameObj,type));
 		    Zipfile.getInstance().add_file(Zipfile.getInstance().proyecto_name+"/src/Views/"+NameObj+"/"+NameObj+"Show.mxml",CreateViewShow.getInstance().ShowView(Obj.id,NameObj,type));
 			Zipfile.getInstance().add_file(Zipfile.getInstance().proyecto_name+"/src/Views/"+NameObj+"/"+NameObj+"Edit.mxml",CreateViewEdit.getInstance().EditView(Obj.id,NameObj,type));
 			Zipfile.getInstance().add_file(Zipfile.getInstance().proyecto_name+"/src/Views/"+NameObj+"/"+NameObj+"Create.mxml",CreateViewCreate.getInstance().CreateView(Obj.id,NameObj,type));
